@@ -1,0 +1,920 @@
+<title>SAT · Cierre de la mañana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F4F5F7; --surface:#FFFFFF; --surface-2:#FAFBFC;
+  --ink:#101620; --ink-soft:#2A3340; --muted:#5B6472; --muted-2:#8891A0;
+  --divider:#E4E7EC; --divider-soft:#EEF0F3;
+  --accent:#B44A29;
+  --critical:#B0292F; --critical-bg:#FDECEC;
+  --warn:#B37600; --warn-bg:#FBF3E1;
+  --good:#2C7A4B; --good-bg:#E7F3EC;
+  --neutral-bg:#EEF1F4;
+  --shadow:0 1px 2px rgba(16,22,32,.04), 0 4px 16px rgba(16,22,32,.05);
+  --radius:14px;
+  --sans:'IBM Plex Sans', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --mono:'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --bg:#0E1218; --surface:#161B23; --surface-2:#1B2029;
+    --ink:#F1F3F6; --ink-soft:#D6DAE1; --muted:#98A0AE; --muted-2:#6C7482;
+    --divider:#242A34; --divider-soft:#1F252E;
+    --accent:#E3714A;
+    --critical:#E96A6F; --critical-bg:#3A1D20;
+    --warn:#D9A64B; --warn-bg:#3A2E13;
+    --good:#5DBB86; --good-bg:#173224;
+    --neutral-bg:#212832;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 6px 20px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1218; --surface:#161B23; --surface-2:#1B2029;
+  --ink:#F1F3F6; --ink-soft:#D6DAE1; --muted:#98A0AE; --muted-2:#6C7482;
+  --divider:#242A34; --divider-soft:#1F252E;
+  --accent:#E3714A;
+  --critical:#E96A6F; --critical-bg:#3A1D20;
+  --warn:#D9A64B; --warn-bg:#3A2E13;
+  --good:#5DBB86; --good-bg:#173224;
+  --neutral-bg:#212832;
+  --shadow:0 1px 2px rgba(0,0,0,.35), 0 6px 20px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--sans); font-size:15px; line-height:1.4;
+  -webkit-font-smoothing:antialiased;
+}
+.page{max-width:1240px; margin:0 auto; padding:28px 28px 60px}
+
+/* ---------- Header ---------- */
+.head{display:flex; align-items:baseline; justify-content:space-between; gap:24px; padding-bottom:20px; border-bottom:1px solid var(--divider); margin-bottom:24px}
+.head h1{margin:0; font-size:20px; font-weight:600; letter-spacing:-0.01em}
+.head .kicker{font-size:11px; text-transform:uppercase; letter-spacing:.14em; color:var(--muted); font-weight:600; margin-bottom:4px}
+.head .meta{color:var(--muted); font-size:13px; font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap}
+.head .meta b{color:var(--ink-soft); font-weight:500}
+
+/* ---------- Mensaje de hoy ---------- */
+.today{
+  background:var(--surface); border-radius:var(--radius); box-shadow:var(--shadow);
+  padding:22px 26px 26px; margin-bottom:22px; border-left:4px solid var(--accent);
+}
+.today .label{font-size:11px; text-transform:uppercase; letter-spacing:.14em; color:var(--accent); font-weight:600; margin-bottom:14px}
+.today .items{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+@media (max-width:820px){.today .items{grid-template-columns:1fr}}
+.today .item{display:flex; gap:14px; align-items:flex-start}
+.today .n{
+  flex:none; width:32px; height:32px; border-radius:8px;
+  background:var(--neutral-bg); color:var(--ink);
+  font-family:var(--mono); font-weight:600; font-size:14px;
+  display:flex; align-items:center; justify-content:center;
+}
+.today .item h3{margin:0 0 6px; font-size:17px; font-weight:600; letter-spacing:-0.01em; text-wrap:balance}
+.today .item p{margin:0 0 8px; color:var(--ink-soft); font-size:14px}
+.today .item .say{
+  display:inline-block; margin-top:4px; padding:6px 10px; border-radius:8px;
+  background:var(--surface-2); border:1px solid var(--divider);
+  color:var(--ink); font-size:13px;
+}
+.today .item .say::before{content:"“"; color:var(--muted-2); margin-right:2px}
+.today .item .say::after{content:"”"; color:var(--muted-2); margin-left:2px}
+
+/* ---------- Row KPI ---------- */
+.kpis{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:22px}
+@media (max-width:1000px){.kpis{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{
+  background:var(--surface); border-radius:var(--radius); box-shadow:var(--shadow);
+  padding:16px 18px 18px; display:flex; flex-direction:column; gap:6px; text-align:left;
+  border:0; font-family:inherit; color:inherit; cursor:pointer; transition:transform .08s ease;
+}
+.kpi:hover{transform:translateY(-1px)}
+.kpi:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.kpi .k{font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-weight:600}
+.kpi .v{font-family:var(--mono); font-size:34px; font-weight:600; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; color:var(--ink); line-height:1.05; margin-top:2px}
+.kpi .t{font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; display:flex; align-items:center; gap:6px; margin-top:2px}
+.kpi .t.up{color:var(--critical)}
+.kpi .t.down{color:var(--good)}
+.kpi .arrow{font-family:var(--mono); font-weight:600}
+
+/* ---------- Bloques ---------- */
+.grid{display:grid; grid-template-columns:1.15fr 1fr; gap:18px; margin-bottom:22px}
+@media (max-width:960px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px 22px}
+.card h2{margin:0 0 4px; font-size:14px; font-weight:600; letter-spacing:.02em; color:var(--ink)}
+.card .sub{color:var(--muted); font-size:12px; margin-bottom:14px}
+
+/* Tabla */
+.tbl{width:100%; border-collapse:separate; border-spacing:0}
+.tbl th, .tbl td{padding:9px 8px; text-align:left; font-size:13px; border-bottom:1px solid var(--divider-soft)}
+.tbl th{color:var(--muted); font-weight:500; font-size:11px; text-transform:uppercase; letter-spacing:.08em; padding-bottom:8px; border-bottom-color:var(--divider)}
+.tbl td.num, .tbl th.num{text-align:right; font-family:var(--mono); font-variant-numeric:tabular-nums; padding-right:10px}
+.tbl td:first-child{padding-left:2px}
+.tbl td:last-child{padding-right:2px}
+.tbl tbody tr:last-child td{border-bottom:0}
+.tbl tr.tot td{border-top:1px solid var(--divider); border-bottom:0; font-weight:600; color:var(--ink); padding-top:12px}
+.tbl .who{color:var(--muted); font-size:12px; margin-left:4px}
+.tbl .cell-name{font-weight:500}
+
+/* Pills / severity */
+.pill{display:inline-flex; align-items:center; padding:2px 8px; border-radius:999px; font-size:12px; font-weight:500; font-family:var(--sans)}
+.pill.critical{background:var(--critical-bg); color:var(--critical)}
+.pill.warn{background:var(--warn-bg); color:var(--warn)}
+.pill.good{background:var(--good-bg); color:var(--good)}
+.pill.mut{background:var(--neutral-bg); color:var(--ink-soft)}
+
+/* Barras horizontales para técnicos */
+.bar-row{display:grid; grid-template-columns:130px 1fr 44px; gap:10px; align-items:center; padding:7px 0; border-bottom:1px solid var(--divider-soft)}
+.bar-row:last-child{border-bottom:0}
+.bar-row .name{font-size:13px; color:var(--ink-soft); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.bar-row .bar{position:relative; height:8px; background:var(--divider-soft); border-radius:999px; overflow:hidden}
+.bar-row .fill{position:absolute; top:0; left:0; bottom:0; background:var(--ink-soft); border-radius:999px}
+.bar-row.hilite .fill{background:var(--accent)}
+.bar-row .val{font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:13px; color:var(--ink); text-align:right; font-weight:500}
+
+/* Stacked bar (por tipo) */
+.stack{display:flex; height:14px; border-radius:6px; overflow:hidden; margin:8px 0 12px}
+.stack .seg{height:100%}
+.stack .seg.a{background:#B44A29}
+.stack .seg.b{background:#D9A64B}
+.stack .seg.c{background:#7091BC}
+.stack .seg.d{background:#8C95A2}
+.legend{display:flex; flex-wrap:wrap; gap:12px 16px; font-size:12px; color:var(--ink-soft)}
+.legend span{display:inline-flex; align-items:center; gap:6px; font-variant-numeric:tabular-nums}
+.legend i{width:9px; height:9px; border-radius:2px; display:inline-block}
+
+/* Footer */
+.foot{margin-top:14px; padding-top:18px; border-top:1px solid var(--divider); color:var(--muted); font-size:12px; display:flex; flex-wrap:wrap; gap:6px 18px; align-items:baseline}
+.foot a{color:var(--ink-soft); text-decoration:underline; text-decoration-color:var(--divider); text-underline-offset:3px}
+.foot .dot{color:var(--muted-2)}
+
+/* Dialog drill-down */
+dialog{
+  border:0; border-radius:16px; background:var(--surface); color:var(--ink);
+  box-shadow:0 24px 80px rgba(16,22,32,.28); padding:0; max-width:520px; width:calc(100vw - 40px);
+}
+dialog::backdrop{background:rgba(16,22,32,.35); backdrop-filter:blur(2px)}
+.dlg{padding:22px 26px 24px}
+.dlg h3{margin:0 0 4px; font-size:16px; font-weight:600}
+.dlg .k{font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-weight:600; margin-bottom:10px}
+.dlg .rows{margin:12px 0 6px}
+.dlg .r{display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--divider-soft); font-size:13px; gap:16px}
+.dlg .r:last-child{border-bottom:0}
+.dlg .r .l{color:var(--muted); flex:none}
+.dlg .r .v{font-family:var(--mono); font-variant-numeric:tabular-nums; text-align:right}
+.dlg .src{margin-top:14px; padding:12px 14px; background:var(--surface-2); border:1px solid var(--divider); border-radius:10px; font-size:12px; color:var(--muted); line-height:1.5}
+.dlg .src code{font-family:var(--mono); font-size:12px; color:var(--ink-soft); background:transparent}
+.dlg .src a{color:var(--accent); text-decoration:none; border-bottom:1px solid transparent}
+.dlg .src a:hover{border-bottom-color:var(--accent)}
+.dlg .row-close{display:flex; justify-content:flex-end; margin-top:16px}
+.dlg button.x{background:transparent; border:1px solid var(--divider); color:var(--ink-soft); font-family:inherit; font-size:13px; padding:6px 14px; border-radius:8px; cursor:pointer}
+.dlg button.x:hover{background:var(--surface-2)}
+
+/* Hidden visually helper for tap targets on tds */
+.tbl button.cell{background:transparent; border:0; padding:0; color:inherit; font:inherit; cursor:pointer; text-align:inherit}
+.tbl button.cell:hover{color:var(--accent)}
+
+/* ---------- Reclamaciones ---------- */
+.claims{background:var(--surface); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px 22px 6px; margin-bottom:22px}
+.claims header{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:4px; gap:16px; flex-wrap:wrap}
+.claims h2{margin:0; font-size:14px; font-weight:600; letter-spacing:.02em}
+.claims .sub{color:var(--muted); font-size:12px; margin:0 0 14px}
+.claims .tabs{display:flex; gap:4px; background:var(--surface-2); padding:3px; border-radius:10px; border:1px solid var(--divider)}
+.claims .tabs button{
+  background:transparent; border:0; font:inherit; font-size:12px; color:var(--muted);
+  padding:5px 10px; border-radius:7px; cursor:pointer; font-weight:500;
+}
+.claims .tabs button.on{background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(16,22,32,.08)}
+.claims .tabs .count{font-family:var(--mono); margin-left:5px; color:var(--muted-2); font-size:11px}
+.claims .tabs button.on .count{color:var(--accent)}
+
+.claim-list{padding-bottom:14px}
+.claim{display:grid; grid-template-columns:24px 1fr auto; gap:12px; padding:14px 0; border-bottom:1px solid var(--divider-soft); align-items:start}
+.claim:last-child{border-bottom:0}
+.claim .chk{
+  appearance:none; -webkit-appearance:none; width:18px; height:18px; margin-top:2px;
+  border:1.5px solid var(--divider); border-radius:5px; background:var(--surface);
+  cursor:pointer; position:relative;
+}
+.claim .chk:checked{background:var(--good); border-color:var(--good)}
+.claim .chk:checked::after{content:"✓"; position:absolute; top:-3px; left:2px; color:#fff; font-size:14px; font-weight:700}
+.claim.done .top .who, .claim.done .top .ref{text-decoration:line-through; color:var(--muted-2)}
+.claim.done .text{opacity:.5}
+.claim .top{display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 12px; margin-bottom:6px}
+.claim .who{font-weight:600; font-size:14px; color:var(--ink)}
+.claim .ref{font-family:var(--mono); font-size:12px; color:var(--muted)}
+.claim .ref a{color:var(--muted); text-decoration:underline; text-decoration-color:var(--divider); text-underline-offset:2px}
+.claim .ref a:hover{color:var(--accent); text-decoration-color:var(--accent)}
+.claim .days{font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:12px}
+.claim .days.crit{color:var(--critical); font-weight:600}
+.claim .days.warn{color:var(--warn); font-weight:600}
+.claim .text{
+  background:var(--surface-2); border:1px solid var(--divider); border-radius:8px;
+  padding:9px 12px; font-size:13px; color:var(--ink-soft); line-height:1.5;
+  grid-column:2/-1;
+}
+.claim .copy{
+  align-self:start; background:transparent; border:1px solid var(--divider);
+  color:var(--muted); font:inherit; font-size:11px; padding:5px 10px; border-radius:7px;
+  cursor:pointer; white-space:nowrap; font-weight:500; letter-spacing:.02em; text-transform:uppercase;
+}
+.claim .copy:hover{background:var(--surface-2); color:var(--ink)}
+.claim .copy.ok{color:var(--good); border-color:var(--good)}
+
+.pane{display:none}
+.pane.on{display:block}
+</style>
+
+<div class="page">
+
+  <header class="head">
+    <div>
+      <div class="kicker">SAT Leaseir · Cierre de la mañana</div>
+      <h1>Foco del día para el equipo</h1>
+    </div>
+    <div class="meta">
+      <div><b>Jueves, 3 de septiembre 2026</b></div>
+      <div>Corte 09:30 (Europe/Madrid)</div>
+    </div>
+  </header>
+
+  <!-- Mensaje de hoy -->
+  <section class="today">
+    <div class="label">Mensaje de hoy · lo que hay que trasladar al equipo</div>
+    <div class="items">
+      <div class="item">
+        <div class="n">1</div>
+        <div>
+          <h3>10 equipos de sustitución en préstamo &gt;15 días</h3>
+          <p>Clientes con su equipo original sin cerrar y máquina de flota bloqueada. La flota de préstamo se está acumulando y expone a reclamación comercial.</p>
+          <span class="say">Hoy pasamos por los 10 préstamos abiertos: dos cierres mínimos y agenda de recogida del resto antes del viernes.</span>
+        </div>
+      </div>
+      <div class="item">
+        <div class="n">2</div>
+        <div>
+          <h3>83 de 100 tickets abiertos sin técnico asignado</h3>
+          <p>El flujo de asignación no está corriendo: hay carga escondida y no podemos medir productividad por técnico. Bloquea cualquier rendimiento comparable.</p>
+          <span class="say">Antes del café: pasar la cola LEAS y asignar por cadena. Regla clara: quien no se auto-asigna al aceptar, lo asigna Alejandro.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reclamaciones del día -->
+  <section class="claims" aria-label="Reclamaciones del día">
+    <header>
+      <div>
+        <h2>Reclamaciones de hoy</h2>
+        <p class="sub">Lo que hay que reclamar antes de comer. Marca al terminar. Texto listo para copiar.</p>
+      </div>
+      <div class="tabs" role="tablist">
+        <button class="on" onclick="tab(this,'p-cli')" role="tab">Clientes <span class="count">10</span></button>
+        <button onclick="tab(this,'p-cad')" role="tab">Cadenas <span class="count">3</span></button>
+        <button onclick="tab(this,'p-tec')" role="tab">Técnicos internos <span class="count">3</span></button>
+      </div>
+    </header>
+
+    <!-- Clientes finales -->
+    <div id="p-cli" class="pane on">
+      <div class="claim-list">
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Cliente Sin Vello — préstamo sin cerrar</span>
+              <span class="ref"><a href="https://leaseir.atlassian.net/browse/LEAS-5697" target="_blank" rel="noopener">LEAS-5697</a></span>
+              <span class="days crit">105 d</span>
+            </div>
+            <div class="text">Hola, seguimos con la máquina de sustitución en tu centro desde hace más de tres meses. Necesitamos cerrar el préstamo esta semana: ¿confirmamos recogida de la sustitución o la damos como venta y regularizamos? Nos dices y lo agendamos.</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Hola, seguimos con la máquina de sustitución en tu centro desde hace más de tres meses. Necesitamos cerrar el préstamo esta semana: ¿confirmamos recogida de la sustitución o la damos como venta y regularizamos? Nos dices y lo agendamos.')">Copiar</button>
+        </label>
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Cliente Sin Vello — presupuesto sin respuesta</span>
+              <span class="ref"><a href="https://leaseir.atlassian.net/browse/LEAS-4443" target="_blank" rel="noopener">LEAS-4443</a></span>
+              <span class="days crit">101 d</span>
+            </div>
+            <div class="text">Buenos días, te enviamos hace tiempo el presupuesto y sigue sin confirmar. ¿Lo aprobamos y arrancamos la reparación o cerramos el ticket? Si necesitas que lo revisemos por precio o alcance, dínoslo hoy y lo ajustamos.</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Buenos días, te enviamos hace tiempo el presupuesto y sigue sin confirmar. ¿Lo aprobamos y arrancamos la reparación o cerramos el ticket? Si necesitas que lo revisemos por precio o alcance, dínoslo hoy y lo ajustamos.')">Copiar</button>
+        </label>
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Cliente Sin Vello — presupuesto sin respuesta</span>
+              <span class="ref"><a href="https://leaseir.atlassian.net/browse/LEAS-6889" target="_blank" rel="noopener">LEAS-6889</a></span>
+              <span class="days crit">62 d</span>
+            </div>
+            <div class="text">Hola, presupuesto pendiente de tu confirmación desde hace dos meses. Necesitamos un SÍ o un NO esta semana para liberar el equipo del taller — llevamos ocupando espacio y no podemos parar aquí. ¿Adelante o lo cerramos?</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Hola, presupuesto pendiente de tu confirmación desde hace dos meses. Necesitamos un SÍ o un NO esta semana para liberar el equipo del taller — llevamos ocupando espacio y no podemos parar aquí. ¿Adelante o lo cerramos?')">Copiar</button>
+        </label>
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Cliente Sin Vello — presupuesto sin respuesta</span>
+              <span class="ref"><a href="https://leaseir.atlassian.net/browse/LEAS-6888" target="_blank" rel="noopener">LEAS-6888</a></span>
+              <span class="days crit">59 d</span>
+            </div>
+            <div class="text">Buenas, insisto con el presupuesto pendiente. Hoy es la fecha límite que nos marcamos internamente antes de devolver el equipo sin intervenir. Si nos das el OK antes de las 17 h, arrancamos mañana.</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Buenas, insisto con el presupuesto pendiente. Hoy es la fecha límite que nos marcamos internamente antes de devolver el equipo sin intervenir. Si nos das el OK antes de las 17 h, arrancamos mañana.')">Copiar</button>
+        </label>
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Cliente Gonzalo — préstamo &gt;1 mes</span>
+              <span class="ref"><a href="https://leaseir.atlassian.net/browse/LEAS-7140" target="_blank" rel="noopener">LEAS-7140</a></span>
+              <span class="days warn">41 d</span>
+            </div>
+            <div class="text">Hola, la sustitución que te dejamos lleva más de un mes contigo. ¿Está ya reparado tu equipo original y podemos agendar el intercambio esta semana? Confírmanos día y franja horaria.</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Hola, la sustitución que te dejamos lleva más de un mes contigo. ¿Está ya reparado tu equipo original y podemos agendar el intercambio esta semana? Confírmanos día y franja horaria.')">Copiar</button>
+        </label>
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Cliente cadena Isaac — préstamo &gt;1 mes</span>
+              <span class="ref"><a href="https://leaseir.atlassian.net/browse/LEAS-7054" target="_blank" rel="noopener">LEAS-7054</a></span>
+              <span class="days warn">38 d</span>
+            </div>
+            <div class="text">Buenas, la máquina de sustitución sigue en tu centro desde hace más de un mes. Necesitamos cerrar el préstamo: ¿recogemos la sustitución esta semana o cambiamos de opción?</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Buenas, la máquina de sustitución sigue en tu centro desde hace más de un mes. Necesitamos cerrar el préstamo: ¿recogemos la sustitución esta semana o cambiamos de opción?')">Copiar</button>
+        </label>
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Cliente cadena Isaac — préstamo</span>
+              <span class="ref"><a href="https://leaseir.atlassian.net/browse/LEAS-7148" target="_blank" rel="noopener">LEAS-7148</a></span>
+              <span class="days warn">38 d</span>
+            </div>
+            <div class="text">Buenas, seguimos con la sustitución en tu centro. ¿Tu equipo original está reparado y listo para intercambio? Cerramos operación esta semana.</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Buenas, seguimos con la sustitución en tu centro. ¿Tu equipo original está reparado y listo para intercambio? Cerramos operación esta semana.')">Copiar</button>
+        </label>
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Cliente Gonzalo — presupuesto sin respuesta</span>
+              <span class="ref"><a href="https://leaseir.atlassian.net/browse/LEAS-7190" target="_blank" rel="noopener">LEAS-7190</a></span>
+              <span class="days warn">22 d</span>
+            </div>
+            <div class="text">Hola, presupuesto pendiente hace tres semanas. Necesitamos confirmar hoy para poder programar la intervención esta misma semana. ¿Adelante?</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Hola, presupuesto pendiente hace tres semanas. Necesitamos confirmar hoy para poder programar la intervención esta misma semana. ¿Adelante?')">Copiar</button>
+        </label>
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Cliente Gonzalo — presupuesto sin respuesta</span>
+              <span class="ref"><a href="https://leaseir.atlassian.net/browse/LEAS-6198" target="_blank" rel="noopener">LEAS-6198</a></span>
+              <span class="days warn">21 d</span>
+            </div>
+            <div class="text">Hola, insistimos con el presupuesto pendiente. ¿Confirmamos y arrancamos o lo cerramos y te devolvemos el equipo tal cual llegó? Necesitamos respuesta hoy.</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Hola, insistimos con el presupuesto pendiente. ¿Confirmamos y arrancamos o lo cerramos y te devolvemos el equipo tal cual llegó? Necesitamos respuesta hoy.')">Copiar</button>
+        </label>
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Cliente Elha — préstamo</span>
+              <span class="ref"><a href="https://leaseir.atlassian.net/browse/LEAS-7227" target="_blank" rel="noopener">LEAS-7227</a></span>
+              <span class="days warn">24 d</span>
+            </div>
+            <div class="text">Buenas, préstamo activo desde hace más de tres semanas. Coordinamos con la central de Elha o directamente con el centro para agendar recogida y devolución en la misma visita.</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Buenas, préstamo activo desde hace más de tres semanas. Coordinamos con la central de Elha o directamente con el centro para agendar recogida y devolución en la misma visita.')">Copiar</button>
+        </label>
+
+      </div>
+    </div>
+
+    <!-- Cadenas -->
+    <div id="p-cad" class="pane">
+      <div class="claim-list">
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Elha (SAT ELHA)</span>
+              <span class="ref">41 abiertas · 13 entradas 24 h</span>
+              <span class="days warn">Volumen</span>
+            </div>
+            <div class="text">Hola, os cuento la foto: 41 tickets abiertos de vuestros centros, con 13 entradas ayer. Estamos priorizando taller, pero necesitamos que confirméis recogidas y que los centros nos den franja horaria en 24 h para no acumular. ¿Podemos cerrar mañana una llamada corta para revisar los 5 más antiguos?</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Hola, os cuento la foto: 41 tickets abiertos de vuestros centros, con 13 entradas ayer. Estamos priorizando taller, pero necesitamos que confirméis recogidas y que los centros nos den franja horaria en 24 h para no acumular. ¿Podemos cerrar mañana una llamada corta para revisar los 5 más antiguos?')">Copiar</button>
+        </label>
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Sin Vello (Borja Canteli)</span>
+              <span class="ref">12 técnicas atascadas · foco del día</span>
+              <span class="days crit">Bloqueo</span>
+            </div>
+            <div class="text">Borja, buenos días. Doce tickets técnicos vuestros parados más de 15 días, cinco con presupuesto sin confirmar de más de 50 días. Necesito hoy: 1) confirmación o rechazo de esos cinco presupuestos, 2) plan para los cuatro préstamos abiertos y 3) recogida de los dos equipos con presupuesto ya aceptado. ¿Nos hablamos a las 12?</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Borja, buenos días. Doce tickets técnicos vuestros parados más de 15 días, cinco con presupuesto sin confirmar de más de 50 días. Necesito hoy: 1) confirmación o rechazo de esos cinco presupuestos, 2) plan para los cuatro préstamos abiertos y 3) recogida de los dos equipos con presupuesto ya aceptado. ¿Nos hablamos a las 12?')">Copiar</button>
+        </label>
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Cadena Isaac (Únicolaser)</span>
+              <span class="ref">4 atascadas · 2 préstamos &gt;35 d</span>
+              <span class="days warn">Vigilar</span>
+            </div>
+            <div class="text">Isaac, dos préstamos vuestros llevan más de un mes sin cerrar. ¿Podemos alinear una recogida agrupada esta semana para los dos centros? Ganamos flota y no os cambiamos rutinas.</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Isaac, dos préstamos vuestros llevan más de un mes sin cerrar. ¿Podemos alinear una recogida agrupada esta semana para los dos centros? Ganamos flota y no os cambiamos rutinas.')">Copiar</button>
+        </label>
+
+      </div>
+    </div>
+
+    <!-- Técnicos internos -->
+    <div id="p-tec" class="pane">
+      <div class="claim-list">
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Francisco Fernández Porrúa</span>
+              <span class="ref"><a href="https://leaseir.atlassian.net/browse/LEAS-6779" target="_blank" rel="noopener">LEAS-6779</a> · en reparación</span>
+              <span class="days warn">38 d</span>
+            </div>
+            <div class="text">Fran, este ticket lleva 38 días en reparación sin transición. ¿Se ha bloqueado por pieza, por diodo o queda por diagnóstico? Necesito el estado real hoy para poder mover el tablero.</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Fran, este ticket lleva 38 días en reparación sin transición. ¿Se ha bloqueado por pieza, por diodo o queda por diagnóstico? Necesito el estado real hoy para poder mover el tablero.')">Copiar</button>
+        </label>
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Iván Lozano Fernández</span>
+              <span class="ref"><a href="https://leaseir.atlassian.net/browse/LEAS-6906" target="_blank" rel="noopener">LEAS-6906</a> · en reparación</span>
+              <span class="days warn">17 d</span>
+            </div>
+            <div class="text">Iván, ¿cómo va este? Lleva 17 días abierto asignado a ti. Pasa siguiente estado o dime bloqueo para escalarlo.</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Iván, ¿cómo va este? Lleva 17 días abierto asignado a ti. Pasa siguiente estado o dime bloqueo para escalarlo.')">Copiar</button>
+        </label>
+
+        <label class="claim">
+          <input type="checkbox" class="chk" onchange="mark(this)">
+          <div>
+            <div class="top">
+              <span class="who">Jonathan Zarauza</span>
+              <span class="ref">8 tickets asignados · varios en cola taller</span>
+              <span class="days warn">Carga</span>
+            </div>
+            <div class="text">Jonathan, tienes 8 tickets asignados hoy — la carga más alta del equipo. Pásame en 10 min cuáles quieres cerrar tú esta mañana y cuáles reasigno a Fran o a Iván para no bloquear el tablero.</div>
+          </div>
+          <button class="copy" onclick="cp(this,'Jonathan, tienes 8 tickets asignados hoy — la carga más alta del equipo. Pásame en 10 min cuáles quieres cerrar tú esta mañana y cuáles reasigno a Fran o a Iván para no bloquear el tablero.')">Copiar</button>
+        </label>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- KPIs -->
+  <section class="kpis" aria-label="Indicadores del día">
+    <button class="kpi" onclick="dlg('dlg-abiertas')">
+      <span class="k">Abiertas</span>
+      <span class="v">100</span>
+      <span class="t up"><span class="arrow">▲</span>+17 vs semana pasada</span>
+    </button>
+    <button class="kpi" onclick="dlg('dlg-atascadas')">
+      <span class="k">Atascadas &gt;15 días</span>
+      <span class="v">31</span>
+      <span class="t">técnicas · sin cobros</span>
+    </button>
+    <button class="kpi" onclick="dlg('dlg-nuevas')">
+      <span class="k">Entradas últimas 24 h</span>
+      <span class="v">13</span>
+      <span class="t">ritmo cerca del pico de mayo</span>
+    </button>
+    <button class="kpi" onclick="dlg('dlg-resueltas')">
+      <span class="k">Resueltas 7 días</span>
+      <span class="v">40</span>
+      <span class="t down"><span class="arrow">▼</span>bajo el ritmo de entrada</span>
+    </button>
+    <button class="kpi" onclick="dlg('dlg-sinasig')">
+      <span class="k">Sin asignar</span>
+      <span class="v">83%</span>
+      <span class="t up">83 de 100 abiertas</span>
+    </button>
+  </section>
+
+  <!-- Cadenas & Técnicos -->
+  <div class="grid">
+    <section class="card">
+      <h2>Por cadena</h2>
+      <div class="sub">Abiertas totales y cuántas están atascadas hoy</div>
+      <table class="tbl" aria-label="Incidencias por cadena">
+        <thead><tr><th>Cadena</th><th>Reporter Jira</th><th class="num">Abiertas</th><th class="num">Atascadas</th><th>Estado</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="cell-name">Elha</td>
+            <td class="who">SAT ELHA</td>
+            <td class="num">41</td>
+            <td class="num">4</td>
+            <td><span class="pill warn">Volumen alto</span></td>
+          </tr>
+          <tr>
+            <td class="cell-name">Sin Vello</td>
+            <td class="who">Borja Canteli</td>
+            <td class="num">16</td>
+            <td class="num">12</td>
+            <td><span class="pill critical">Foco atascos</span></td>
+          </tr>
+          <tr>
+            <td class="cell-name">Epil Point</td>
+            <td class="who">Jesús Fdez.</td>
+            <td class="num">14</td>
+            <td class="num">4</td>
+            <td><span class="pill mut">Normal</span></td>
+          </tr>
+          <tr>
+            <td class="cell-name">Únicolaser / cadena Isaac</td>
+            <td class="who">Isaac Sánchez</td>
+            <td class="num">14</td>
+            <td class="num">4</td>
+            <td><span class="pill mut">Normal</span></td>
+          </tr>
+          <tr>
+            <td class="cell-name">Otros / directos</td>
+            <td class="who">Gonzalo</td>
+            <td class="num">14</td>
+            <td class="num">5</td>
+            <td><span class="pill warn">Vigilar</span></td>
+          </tr>
+          <tr>
+            <td class="cell-name">Automatismos calidad</td>
+            <td class="who">Automation for Jira</td>
+            <td class="num">12</td>
+            <td class="num">2</td>
+            <td><span class="pill mut">Quejas auto</span></td>
+          </tr>
+          <tr class="tot">
+            <td>Total</td>
+            <td></td>
+            <td class="num">100</td>
+            <td class="num">31</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Técnicos internos</h2>
+      <div class="sub">Carga asignada abierta hoy y rendimiento del mes (presupuestos + reparaciones)</div>
+      <div style="margin-top:6px">
+        <div class="bar-row hilite">
+          <span class="name">Francisco Fdez. Porrúa</span>
+          <span class="bar"><span class="fill" style="width:100%"></span></span>
+          <span class="val">12</span>
+        </div>
+        <div class="bar-row">
+          <span class="name">Jonathan Zarauza</span>
+          <span class="bar"><span class="fill" style="width:41.6%"></span></span>
+          <span class="val">5</span>
+        </div>
+        <div class="bar-row">
+          <span class="name">Isaac Sánchez</span>
+          <span class="bar"><span class="fill" style="width:8.3%"></span></span>
+          <span class="val">1</span>
+        </div>
+      </div>
+      <div class="sub" style="margin-top:16px">Carga viva asignada (tickets abiertos con técnico)</div>
+      <div>
+        <div class="bar-row">
+          <span class="name">Jonathan Zarauza</span>
+          <span class="bar"><span class="fill" style="width:100%"></span></span>
+          <span class="val">8</span>
+        </div>
+        <div class="bar-row">
+          <span class="name">Iván Lozano Fdez.</span>
+          <span class="bar"><span class="fill" style="width:62.5%"></span></span>
+          <span class="val">5</span>
+        </div>
+        <div class="bar-row">
+          <span class="name">Francisco Fdez. Porrúa</span>
+          <span class="bar"><span class="fill" style="width:50%"></span></span>
+          <span class="val">4</span>
+        </div>
+        <div class="bar-row">
+          <span class="name" style="color:var(--critical)">Sin asignar</span>
+          <span class="bar"><span class="fill" style="width:100%; background:var(--critical)"></span></span>
+          <span class="val" style="color:var(--critical)">83</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Tiempos -->
+  <section class="card" style="margin-bottom:22px">
+    <h2>Tiempos de trabajo</h2>
+    <div class="sub">Cuánto tarda un ticket en cerrar y cuánto se le está quedando parado a cada técnico y en cada fase</div>
+
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:14px 0 22px">
+      <div style="background:var(--surface-2); border:1px solid var(--divider); border-radius:12px; padding:14px 16px">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-weight:600">MTTR mediano</div>
+        <div style="font-family:var(--mono); font-size:26px; font-weight:600; letter-spacing:-0.02em; color:var(--ink); margin-top:4px">11,3<span style="font-size:14px; color:var(--muted); margin-left:4px">días</span></div>
+        <div style="font-size:12px; color:var(--muted); margin-top:2px">La mitad se resuelve en ≤11 días</div>
+      </div>
+      <div style="background:var(--surface-2); border:1px solid var(--divider); border-radius:12px; padding:14px 16px">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-weight:600">MTTR medio</div>
+        <div style="font-family:var(--mono); font-size:26px; font-weight:600; letter-spacing:-0.02em; color:var(--ink); margin-top:4px">27,0<span style="font-size:14px; color:var(--muted); margin-left:4px">días</span></div>
+        <div style="font-size:12px; color:var(--muted); margin-top:2px">Distorsionado por la cola larga</div>
+      </div>
+      <div style="background:var(--surface-2); border:1px solid var(--divider); border-radius:12px; padding:14px 16px">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-weight:600">Percentil 90</div>
+        <div style="font-family:var(--mono); font-size:26px; font-weight:600; letter-spacing:-0.02em; color:var(--critical); margin-top:4px">84,4<span style="font-size:14px; color:var(--muted); margin-left:4px">días</span></div>
+        <div style="font-size:12px; color:var(--muted); margin-top:2px">10% tarda más de 3 meses</div>
+      </div>
+      <div style="background:var(--surface-2); border:1px solid var(--divider); border-radius:12px; padding:14px 16px">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-weight:600">Percentil 10</div>
+        <div style="font-family:var(--mono); font-size:26px; font-weight:600; letter-spacing:-0.02em; color:var(--good); margin-top:4px">1,0<span style="font-size:14px; color:var(--muted); margin-left:4px">día</span></div>
+        <div style="font-size:12px; color:var(--muted); margin-top:2px">Los rápidos van bien</div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-bottom:0; grid-template-columns:1fr 1fr">
+
+      <div>
+        <h2 style="margin:0 0 4px; font-size:13px">Tiempo por fase de la incidencia</h2>
+        <div class="sub">De los abiertos hoy: en qué fase están y cuánto llevan parados sin mover</div>
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Fase</th>
+              <th class="num">N</th>
+              <th class="num">Sin mover</th>
+              <th class="num">Edad total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Presupuesto aceptado</td><td class="num">2</td><td class="num" style="color:var(--critical)">142 d</td><td class="num">142 d</td></tr>
+            <tr><td>Inspección de salida</td><td class="num">1</td><td class="num" style="color:var(--critical)">111 d</td><td class="num">129 d</td></tr>
+            <tr><td>Solicitado (cobros)</td><td class="num">20</td><td class="num" style="color:var(--critical)">77 d</td><td class="num">77 d</td></tr>
+            <tr><td>Pdte. confirmación presupuesto</td><td class="num">5</td><td class="num" style="color:var(--warn)">59 d</td><td class="num">64 d</td></tr>
+            <tr><td>Abierto</td><td class="num">4</td><td class="num" style="color:var(--warn)">43 d</td><td class="num">43 d</td></tr>
+            <tr><td>Investigación (quejas)</td><td class="num">2</td><td class="num" style="color:var(--warn)">41 d</td><td class="num">43 d</td></tr>
+            <tr><td>En préstamo</td><td class="num">10</td><td class="num" style="color:var(--warn)">29 d</td><td class="num">35 d</td></tr>
+            <tr><td>Pendiente recogida</td><td class="num">1</td><td class="num">27 d</td><td class="num">29 d</td></tr>
+            <tr><td>En reparación</td><td class="num">3</td><td class="num">21 d</td><td class="num">63 d</td></tr>
+            <tr><td>En preparación presupuesto</td><td class="num">1</td><td class="num">21 d</td><td class="num">35 d</td></tr>
+            <tr><td>En cola taller</td><td class="num">1</td><td class="num">20 d</td><td class="num">76 d</td></tr>
+          </tbody>
+        </table>
+        <p class="sub" style="margin-top:10px">La fase que más frena hoy es "Pdte. confirmación presupuesto" (5 tickets, 59 d de mediana). Se resuelve reclamando al cliente — ver arriba.</p>
+      </div>
+
+      <div>
+        <h2 style="margin:0 0 4px; font-size:13px">Tiempo por técnico</h2>
+        <div class="sub">Carga asignada abierta hoy, cuánto llevan sin moverla y edad media</div>
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Técnico</th>
+              <th class="num">Carga viva</th>
+              <th class="num">Sin mover</th>
+              <th class="num">Edad media</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="cell-name">Jonathan Zarauza</td>
+              <td class="num">8</td>
+              <td class="num">0,2 d</td>
+              <td class="num" style="color:var(--warn)">21,5 d</td>
+            </tr>
+            <tr>
+              <td class="cell-name">Iván Lozano Fdez.</td>
+              <td class="num">5</td>
+              <td class="num">0,0 d</td>
+              <td class="num">8,2 d</td>
+            </tr>
+            <tr>
+              <td class="cell-name">Fco. Fernández Porrúa</td>
+              <td class="num">4</td>
+              <td class="num">1,2 d</td>
+              <td class="num">4,5 d</td>
+            </tr>
+            <tr class="tot">
+              <td>Con asignee</td>
+              <td class="num">17</td>
+              <td class="num">0,4 d</td>
+              <td class="num">11,4 d</td>
+            </tr>
+            <tr>
+              <td style="color:var(--critical)">Sin asignar</td>
+              <td class="num" style="color:var(--critical)">83</td>
+              <td class="num">0,8 d</td>
+              <td class="num" style="color:var(--warn)">9,8 d</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="sub" style="margin-top:10px">Jonathan lleva la carga más antigua (21,5 d media) y la más grande. Iván y Fran mueven rápido pero tienen menos volumen. La bolsa "sin asignar" es lo que impide medir de verdad.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Atascadas por tipo -->
+  <section class="card" style="margin-bottom:22px">
+    <h2>Dónde están los 31 tickets atascados</h2>
+    <div class="sub">Excluye 19 comprobaciones de cobro (flujo administrativo). El foco es el bloque técnico.</div>
+
+    <div class="stack" aria-hidden="true">
+      <div class="seg a" style="width:32.3%"></div>
+      <div class="seg b" style="width:16.1%"></div>
+      <div class="seg c" style="width:12.9%"></div>
+      <div class="seg d" style="width:38.7%"></div>
+    </div>
+    <div class="legend">
+      <span><i style="background:#B44A29"></i> En préstamo · 10</span>
+      <span><i style="background:#D9A64B"></i> Presupuesto por confirmar · 5</span>
+      <span><i style="background:#7091BC"></i> En reparación · 4</span>
+      <span><i style="background:#8C95A2"></i> Otros (abiertos, presup. aceptados, calidad…) · 12</span>
+    </div>
+
+    <table class="tbl" style="margin-top:18px" aria-label="Los diez tickets más antiguos en el bloque técnico">
+      <thead>
+        <tr>
+          <th>Ticket</th>
+          <th>Cliente/Cadena</th>
+          <th>Estado</th>
+          <th>Técnico</th>
+          <th class="num">Sin mover</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-5904" target="_blank" rel="noopener">LEAS-5904</a></td><td>Sin Vello (Borja)</td><td>Presupuesto aceptado</td><td>—</td><td class="num">142 d</td></tr>
+        <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-6048" target="_blank" rel="noopener">LEAS-6048</a></td><td>Epil Point (Jesús)</td><td>Inspección de salida</td><td>—</td><td class="num">111 d</td></tr>
+        <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-5697" target="_blank" rel="noopener">LEAS-5697</a></td><td>Sin Vello (Borja)</td><td>En préstamo</td><td>—</td><td class="num">105 d</td></tr>
+        <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-4443" target="_blank" rel="noopener">LEAS-4443</a></td><td>Sin Vello (Borja)</td><td>Pdte. confirmación presupuesto</td><td>Borja Canteli</td><td class="num">101 d</td></tr>
+        <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-4908" target="_blank" rel="noopener">LEAS-4908</a></td><td>Sin Vello (Borja)</td><td>Abierto</td><td>—</td><td class="num">100 d</td></tr>
+        <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-6888" target="_blank" rel="noopener">LEAS-6888</a></td><td>Sin Vello (Borja)</td><td>Pdte. confirmación presupuesto</td><td>Fco. Fernández</td><td class="num">59 d</td></tr>
+        <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-6889" target="_blank" rel="noopener">LEAS-6889</a></td><td>Sin Vello (Borja)</td><td>Pdte. confirmación presupuesto</td><td>Fco. Fernández</td><td class="num">62 d</td></tr>
+        <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7048" target="_blank" rel="noopener">LEAS-7048</a></td><td>Sin Vello (Borja)</td><td>Presupuesto aceptado</td><td>—</td><td class="num">49 d</td></tr>
+        <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7054" target="_blank" rel="noopener">LEAS-7054</a></td><td>Cadena Isaac</td><td>En préstamo (máq. sustitución)</td><td>—</td><td class="num">38 d</td></tr>
+        <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7095" target="_blank" rel="noopener">LEAS-7095</a></td><td>Calidad (auto)</td><td>Investigación</td><td>—</td><td class="num">41 d</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer class="foot">
+    <span><b style="color:var(--ink-soft); font-weight:500">Fuentes</b></span>
+    <span>Fuente oficial de tickets: <a href="https://leaseir.atlassian.net/jira/servicedesk/projects/LEAS/queues/custom/8" target="_blank" rel="noopener">Jira Service Desk · cola LEAS</a></span>
+    <span class="dot">·</span>
+    <span>Contraste operativo: <a href="https://iortizfigueroa.github.io/leaseir-sat-dashboard/" target="_blank" rel="noopener">dashboard SAT</a></span>
+    <span class="dot">·</span>
+    <span>Corte de datos 09:30 Europe/Madrid</span>
+    <span class="dot">·</span>
+    <span>Cuadre: 100 abiertas (Jira) vs 98 (dashboard) — 2 tickets en cierre en curso</span>
+  </footer>
+
+</div>
+
+<!-- Drill-down dialogs -->
+<dialog id="dlg-abiertas">
+  <div class="dlg">
+    <div class="k">Trazabilidad</div>
+    <h3>Tickets abiertos: 100</h3>
+    <div class="rows">
+      <div class="r"><span class="l">Todo LEAS abierto (statusCategory ≠ Done)</span><span class="v">100</span></div>
+      <div class="r"><span class="l">Semana pasada mismo corte</span><span class="v">83</span></div>
+      <div class="r"><span class="l">Variación 7 días</span><span class="v">+17</span></div>
+    </div>
+    <div class="src">Consulta directa a Jira:<br><code>project = LEAS AND statusCategory != Done</code><br><a href="https://leaseir.atlassian.net/issues?jql=project%20%3D%20LEAS%20AND%20statusCategory%20!%3D%20Done%20ORDER%20BY%20updated%20DESC" target="_blank" rel="noopener">Abrir en Jira</a></div>
+    <div class="row-close"><button class="x" onclick="this.closest('dialog').close()">Cerrar</button></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-atascadas">
+  <div class="dlg">
+    <div class="k">Trazabilidad</div>
+    <h3>Atascadas &gt;15 días: 31 técnicas</h3>
+    <div class="rows">
+      <div class="r"><span class="l">Sin actualizar hace &gt;15 días</span><span class="v">50</span></div>
+      <div class="r"><span class="l">— de las que son "Comprobación cobro cliente" (admin)</span><span class="v">19</span></div>
+      <div class="r"><span class="l">= Bloque técnico atascado</span><span class="v">31</span></div>
+    </div>
+    <div class="src">JQL fuente:<br><code>project = LEAS AND statusCategory != Done AND updated &lt; -15d</code><br>Regla de separación: se excluyen los tickets con summary "Comprobación cobro cliente" porque es flujo administrativo que no toca al equipo SAT.</div>
+    <div class="row-close"><button class="x" onclick="this.closest('dialog').close()">Cerrar</button></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-nuevas">
+  <div class="dlg">
+    <div class="k">Trazabilidad</div>
+    <h3>Entradas últimas 24 h: 13</h3>
+    <div class="rows">
+      <div class="r"><span class="l">Creadas &lt; 24 h en LEAS</span><span class="v">13</span></div>
+      <div class="r"><span class="l">Contexto: pico de mayo 2026 (30-abr)</span><span class="v">46 en taller</span></div>
+    </div>
+    <div class="src">JQL fuente:<br><code>project = LEAS AND created &gt;= -1d</code><br><a href="https://leaseir.atlassian.net/issues?jql=project%20%3D%20LEAS%20AND%20created%20%3E%3D%20-1d" target="_blank" rel="noopener">Abrir en Jira</a></div>
+    <div class="row-close"><button class="x" onclick="this.closest('dialog').close()">Cerrar</button></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-resueltas">
+  <div class="dlg">
+    <div class="k">Trazabilidad</div>
+    <h3>Resueltas 7 días: 40</h3>
+    <div class="rows">
+      <div class="r"><span class="l">Cerradas los últimos 7 días</span><span class="v">40</span></div>
+      <div class="r"><span class="l">Ritmo diario resolución</span><span class="v">~5,7</span></div>
+      <div class="r"><span class="l">Ritmo diario entrada estimado</span><span class="v">~13</span></div>
+    </div>
+    <div class="src">JQL fuente:<br><code>project = LEAS AND resolved &gt;= -7d</code><br>Nota: entradas &gt; resoluciones · el backlog crece. Ver mensaje del día.</div>
+    <div class="row-close"><button class="x" onclick="this.closest('dialog').close()">Cerrar</button></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-sinasig">
+  <div class="dlg">
+    <div class="k">Trazabilidad</div>
+    <h3>Sin técnico asignado: 83%</h3>
+    <div class="rows">
+      <div class="r"><span class="l">Abiertas con assignee vacío</span><span class="v">83</span></div>
+      <div class="r"><span class="l">Con assignee</span><span class="v">17</span></div>
+      <div class="r"><span class="l">— Jonathan Zarauza</span><span class="v">8</span></div>
+      <div class="r"><span class="l">— Iván Lozano Fdez.</span><span class="v">5</span></div>
+      <div class="r"><span class="l">— Fco. Fernández Porrúa</span><span class="v">4</span></div>
+    </div>
+    <div class="src">JQL fuente:<br><code>project = LEAS AND statusCategory != Done AND assignee is EMPTY</code><br>Regla de gestión sugerida: al aceptar la petición el técnico se auto-asigna; el resto se asigna al triage.</div>
+    <div class="row-close"><button class="x" onclick="this.closest('dialog').close()">Cerrar</button></div>
+  </div>
+</dialog>
+
+<script>
+function dlg(id){ const d=document.getElementById(id); if(d && typeof d.showModal==='function') d.showModal(); }
+document.querySelectorAll('dialog').forEach(d=>{
+  d.addEventListener('click',e=>{
+    const r=d.getBoundingClientRect();
+    if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom) d.close();
+  });
+});
+
+// Tabs de reclamaciones
+function tab(btn, id){
+  const wrap = btn.closest('.claims');
+  wrap.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('on'));
+  wrap.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById(id).classList.add('on');
+}
+
+// Marcar reclamación como hecha
+function mark(chk){
+  const claim = chk.closest('.claim');
+  claim.classList.toggle('done', chk.checked);
+}
+
+// Copiar texto
+function cp(btn, text){
+  navigator.clipboard.writeText(text).then(()=>{
+    const orig = btn.textContent;
+    btn.textContent = 'Copiado ✓';
+    btn.classList.add('ok');
+    setTimeout(()=>{ btn.textContent = orig; btn.classList.remove('ok'); }, 1600);
+  }).catch(()=>{
+    btn.textContent = 'Selecciona y copia';
+  });
+}
+</script>
