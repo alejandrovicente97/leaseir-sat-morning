@@ -170,6 +170,24 @@ body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); 
 .foot a{color:var(--ink-soft); text-decoration:underline; text-decoration-color:var(--divider); text-underline-offset:3px}
 .foot .d{color:var(--muted-2)}
 
+
+/* ═══ Todo pulsable ═══ */
+.calc{cursor:pointer; border-bottom:1px dashed var(--muted-2); transition:color .1s}
+.calc:hover{color:var(--accent); border-bottom-color:var(--accent)}
+td.calc, th.calc{border-bottom:1px solid var(--divider-soft)}
+td.calc:hover{color:var(--accent); background:var(--surface-2)}
+.tbl td.n.calc{text-decoration:underline; text-decoration-style:dotted; text-decoration-color:var(--muted-2); text-underline-offset:3px}
+.tbl td.n.calc:hover{text-decoration-color:var(--accent)}
+.nm, .act .go, .statebar .lead, .statebar .aside{cursor:pointer}
+.statebar .lead:hover b, .statebar .aside:hover b{color:var(--accent)}
+a.jira{font-family:var(--mono); font-size:.94em; font-weight:600; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--divider); white-space:nowrap}
+a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
+.dlg .big{font-family:var(--mono); font-size:38px; font-weight:600; letter-spacing:-0.03em; line-height:1; color:var(--crit); margin-bottom:2px}
+.dlg .bigu{font-size:12px; text-transform:uppercase; letter-spacing:.11em; color:var(--muted); font-weight:600; margin-bottom:15px}
+.dlg .sec2{font-size:11px; text-transform:uppercase; letter-spacing:.11em; color:var(--muted); font-weight:600; margin:16px 0 7px}
+.dlg .fsrc{margin-top:11px; font-family:var(--mono); font-size:11px; color:var(--muted-2)}
+.hint{font-size:11.5px; color:var(--muted-2); margin-left:6px; font-weight:400}
+
 /* ═══ Modales ═══ */
 dialog{border:0; border-radius:16px; background:var(--surface); color:var(--ink); box-shadow:0 26px 80px rgba(15,22,32,.3); padding:0; max-width:600px; width:calc(100vw - 36px); max-height:86vh}
 dialog::backdrop{background:rgba(15,22,32,.4)}
@@ -224,17 +242,17 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
 <div id="p-hoy" class="pane on">
 
   <section class="statebar">
-    <div class="lead"><i></i><b>35 estancadas · sube desde mayo</b></div>
+    <div class="lead" onclick="calc('estancadas')"><i></i><b>35 estancadas · sube desde mayo</b></div>
     <svg viewBox="0 0 600 44" preserveAspectRatio="none" role="img" aria-label="Estancadas de mayo a septiembre: sube de 14 a 23">
       <path d="M6,17.3 L38.1,24 L70.1,21.3 L102.2,21.3 L134.3,18.7 L166.4,20 L198.4,25.3 L230.5,20 L262.6,18.7 L294.7,21.3 L326.7,17.3 L358.8,10.7 L390.9,14.7 L422.9,21.3 L455,16 L487.1,16 L519.2,14.7 L551.2,12 L572.6,5.3 L594,5.3 L594,38 L6,38 Z" fill="var(--crit)" opacity="0.13"/>
       <path d="M6,17.3 L38.1,24 L70.1,21.3 L102.2,21.3 L134.3,18.7 L166.4,20 L198.4,25.3 L230.5,20 L262.6,18.7 L294.7,21.3 L326.7,17.3 L358.8,10.7 L390.9,14.7 L422.9,21.3 L455,16 L487.1,16 L519.2,14.7 L551.2,12 L572.6,5.3 L594,5.3" fill="none" stroke="var(--crit)" stroke-width="2" stroke-linejoin="round"/>
       <circle cx="594" cy="5.3" r="3.2" fill="var(--crit)"/>
     </svg>
-    <div class="aside"><b>14 → 23</b>mayo → hoy</div>
+    <div class="aside" onclick="calc('sube')"><b>14 → 23</b>mayo → hoy</div>
   </section>
 
   <section class="nums">
-    <button class="nm c" onclick="dlg('d-perdido')">
+    <button class="nm c" onclick="calc('perdido')">
       <span class="v">168<small style="font-size:15px;color:var(--muted);margin-left:2px">d</small></span>
       <span class="t">Equipo sin volver</span><span class="s">C03143 · Smart Duck Paris</span>
     </button>
@@ -242,15 +260,15 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
       <span class="v">110<small style="font-size:15px;color:var(--muted);margin-left:2px">k€</small></span>
       <span class="t">Vencido sin cobrar</span><span class="s">73 facturas</span>
     </button>
-    <button class="nm c" onclick="dlg('d-fabrica')">
+    <button class="nm c" onclick="calc('fabrica')">
       <span class="v">13</span>
       <span class="t">En fábrica sin volver</span><span class="s">el mayor, 301 días</span>
     </button>
-    <button class="nm w" onclick="dlg('d-duenyo')">
+    <button class="nm w" onclick="calc('sindueno')">
       <span class="v">74</span>
       <span class="t">Sin dueño</span><span class="s">de 112 abiertas</span>
     </button>
-    <button class="nm w" onclick="dlg('d-flota')">
+    <button class="nm w" onclick="calc('flota')">
       <span class="v">34</span>
       <span class="t">Flota fuera</span><span class="s">3 por encima de 60 d</span>
     </button>
@@ -258,29 +276,32 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
 
   <section class="todo">
     <header><h2>Hoy</h2><span class="n">6 acciones</span></header>
-    <label class="act"><input type="checkbox"><span class="txt">Localizar la consola C03143 en Smart Duck Paris</span><span class="tag c">168 d</span><button class="go" onclick="event.preventDefault();dlg('d-perdido')">Ver</button></label>
+    <label class="act"><input type="checkbox"><span class="txt">Localizar la consola C03143 en Smart Duck Paris</span><span class="tag c">168 d</span><button class="go" onclick="event.preventDefault();calc('perdido')">Ver</button></label>
     <label class="act"><input type="checkbox"><span class="txt">Reclamar el bloque de facturas vencidas de junio</span><span class="tag c">74 k€</span><button class="go" onclick="event.preventDefault();tabGo('p-cobros')">Ver</button></label>
-    <label class="act"><input type="checkbox"><span class="txt">Reclamar a fábrica los 13 equipos sin devolver</span><span class="tag c">13</span><button class="go" onclick="event.preventDefault();dlg('d-fabrica')">Ver</button></label>
-    <label class="act"><input type="checkbox"><span class="txt">Cerrar los 14 tickets ya terminados</span><span class="tag w">−13 d MTTR</span><button class="go" onclick="event.preventDefault();dlg('d-cerrables')">Ver</button></label>
-    <label class="act"><input type="checkbox"><span class="txt">Asignar responsable a la cola sin dueño</span><span class="tag w">74</span><button class="go" onclick="event.preventDefault();dlg('d-duenyo')">Ver</button></label>
-    <label class="act"><input type="checkbox"><span class="txt">Cuatro fechas comprometidas con el cliente ya vencidas</span><span class="tag w">4</span><button class="go" onclick="event.preventDefault();dlg('d-vencidos')">Ver</button></label>
+    <label class="act"><input type="checkbox"><span class="txt">Reclamar a fábrica los 13 equipos sin devolver</span><span class="tag c">13</span><button class="go" onclick="event.preventDefault();calc('fabrica')">Ver</button></label>
+    <label class="act"><input type="checkbox"><span class="txt">Cerrar los 14 tickets ya terminados</span><span class="tag w">−13 d MTTR</span><button class="go" onclick="event.preventDefault();calc('cerrables')">Ver</button></label>
+    <label class="act"><input type="checkbox"><span class="txt">Asignar responsable a la cola sin dueño</span><span class="tag w">74</span><button class="go" onclick="event.preventDefault();calc('sindueno')">Ver</button></label>
+    <label class="act"><input type="checkbox"><span class="txt">Cuatro fechas comprometidas con el cliente ya vencidas</span><span class="tag w">4</span><button class="go" onclick="event.preventDefault();calc('vencidos')">Ver</button></label>
   </section>
 
   <section class="sec">
-    <h2>Estancadas por cliente</h2>
+    <h2>Estancadas por cliente <span class="hint">— por cliente real del ticket, no por quién lo abrió</span></h2>
     <div class="card" style="padding:6px 20px 10px">
       <table class="tbl">
-        <thead><tr><th>Cliente</th><th class="n">Tickets</th><th class="n">Máx parado</th><th class="n">Importe</th><th>Tickets</th></tr></thead>
+        <thead><tr><th>Cadena / cliente</th><th class="n">Abiertas</th><th class="n">Estancadas</th><th class="n">% atasco</th><th class="n">Máx parado</th><th class="n">Importe</th><th>Tickets</th></tr></thead>
         <tbody>
-          <tr><td>Dermoscan</td><td class="n">3</td><td class="n" style="color:var(--crit)">288 d</td><td class="n">12.560 €</td><td class="num" style="font-size:11.5px;color:var(--muted)">5454 · 4443 · 4076</td></tr>
-          <tr><td>Bedda</td><td class="n">2</td><td class="n" style="color:var(--crit)">301 d</td><td class="n">—</td><td class="num" style="font-size:11.5px;color:var(--muted)">1351 · 3144</td></tr>
-          <tr><td>Nur Clinics Cuenca</td><td class="n">1</td><td class="n" style="color:var(--crit)">294 d</td><td class="n">7.333 €</td><td class="num" style="font-size:11.5px;color:var(--muted)">3852</td></tr>
-          <tr><td>Binatural</td><td class="n">1</td><td class="n" style="color:var(--crit)">271 d</td><td class="n">—</td><td class="num" style="font-size:11.5px;color:var(--muted)">4149</td></tr>
-          <tr><td>Clínica Cibeles CC Holea</td><td class="n">1</td><td class="n" style="color:var(--crit)">226 d</td><td class="n">7.333 €</td><td class="num" style="font-size:11.5px;color:var(--muted)">3827</td></tr>
-          <tr><td>Elha Pintor Felo Monzón</td><td class="n">1</td><td class="n" style="color:var(--crit)">218 d</td><td class="n">—</td><td class="num" style="font-size:11.5px;color:var(--muted)">4908</td></tr>
-          <tr><td>L Medical G point</td><td class="n">2</td><td class="n" style="color:var(--warn)">61 d</td><td class="n">1.385 €</td><td class="num" style="font-size:11.5px;color:var(--muted)">6889 · 6888</td></tr>
-          <tr><td>NR Clinics</td><td class="n">2</td><td class="n" style="color:var(--warn)">42 d</td><td class="n">—</td><td class="num" style="font-size:11.5px;color:var(--muted)">7104 · 7103</td></tr>
-          <tr class="tot"><td>Resto (22 clientes)</td><td class="n">22</td><td class="n">—</td><td class="n">9.500 €</td><td></td></tr>
+          <tr><td data-c="otros">Otros y directos</td><td class="n">41</td><td class="n" style="color:var(--crit);font-weight:600">18</td><td class="n" style="color:var(--crit)">44%</td><td class="n">294 d</td><td class="n" style="font-weight:600">42.993 €</td><td style="font-size:11.5px;color:var(--muted)">LEAS-3852 LEAS-4149 LEAS-3827</td></tr>
+          <tr><td data-c="cadenas">Unico Italia</td><td class="n">7</td><td class="n" style="color:var(--crit);font-weight:600">4</td><td class="n" style="color:var(--crit)">57%</td><td class="n">111 d</td><td class="n">4.549 €</td><td style="font-size:11.5px;color:var(--muted)">LEAS-6196 LEAS-5851 LEAS-6779</td></tr>
+          <tr><td>Dermoscan</td><td class="n">5</td><td class="n" style="color:var(--crit);font-weight:600">3</td><td class="n" style="color:var(--crit)">60%</td><td class="n" style="color:var(--crit)">288 d</td><td class="n" style="font-weight:600">12.560 €</td><td style="font-size:11.5px;color:var(--muted)">LEAS-4076 LEAS-5454 LEAS-4443</td></tr>
+          <tr><td>Zurimed</td><td class="n">3</td><td class="n" style="color:var(--warn);font-weight:600">2</td><td class="n" style="color:var(--crit)">67%</td><td class="n">106 d</td><td class="n">—</td><td style="font-size:11.5px;color:var(--muted)">LEAS-6193 LEAS-6909</td></tr>
+          <tr><td>Bedda</td><td class="n">2</td><td class="n" style="color:var(--warn);font-weight:600">2</td><td class="n" style="color:var(--crit)">100%</td><td class="n" style="color:var(--crit)">301 d</td><td class="n">—</td><td style="font-size:11.5px;color:var(--muted)">LEAS-1351 LEAS-3144</td></tr>
+          <tr><td data-c="cadenas">Elha</td><td class="n">23</td><td class="n">2</td><td class="n" style="color:var(--good)">9%</td><td class="n">218 d</td><td class="n">—</td><td style="font-size:11.5px;color:var(--muted)">LEAS-4908 LEAS-7311</td></tr>
+          <tr><td data-c="cadenas">Epil Point</td><td class="n">9</td><td class="n">2</td><td class="n" style="color:var(--warn)">22%</td><td class="n">69 d</td><td class="n">—</td><td style="font-size:11.5px;color:var(--muted)">LEAS-6586 LEAS-7213</td></tr>
+          <tr><td data-c="cadenas">Smart Duck</td><td class="n">4</td><td class="n">1</td><td class="n" style="color:var(--warn)">25%</td><td class="n">126 d</td><td class="n">—</td><td style="font-size:11.5px;color:var(--muted)">LEAS-5774</td></tr>
+          <tr><td data-c="cadenas">Sin Vello</td><td class="n">15</td><td class="n">1</td><td class="n" style="color:var(--good)">7%</td><td class="n">26 d</td><td class="n">—</td><td style="font-size:11.5px;color:var(--muted)">LEAS-7230</td></tr>
+          <tr><td data-c="cadenas">Laser Factory</td><td class="n">2</td><td class="n" style="color:var(--good)">0</td><td class="n" style="color:var(--good)">0%</td><td class="n">—</td><td class="n">—</td><td></td></tr>
+          <tr><td data-c="cadenas">Dermasana</td><td class="n">1</td><td class="n" style="color:var(--good)">0</td><td class="n" style="color:var(--good)">0%</td><td class="n">—</td><td class="n">—</td><td></td></tr>
+          <tr class="tot"><td data-c="estancadas">Total</td><td class="n">112</td><td class="n">35</td><td class="n">31%</td><td class="n">301 d</td><td class="n">60.102 €</td><td></td></tr>
         </tbody>
       </table>
     </div>
@@ -348,7 +369,7 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
           <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7112" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12px;color:var(--ink)">7112</a></td><td style="color:var(--muted-2)">sin cliente informado</td><td class="num">—</td><td class="num">H01061</td><td class="n" style="color:var(--warn);font-weight:600">43 d</td><td><span class="pill w">Identificar</span></td></tr>
           <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7148" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12px;color:var(--ink)">7148</a></td><td>Laser Factory Hospitalet</td><td class="num">C00410</td><td class="num">h00410</td><td class="n" style="color:var(--warn);font-weight:600">41 d</td><td><span class="pill w">Recoger</span></td></tr>
           <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7140" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12px;color:var(--ink)">7140</a></td><td>Smart Duck Paris 15</td><td class="num">C003258</td><td class="num">H003258</td><td class="n" style="color:var(--warn);font-weight:600">41 d</td><td><span class="pill w">Recoger</span></td></tr>
-          <tr class="tot"><td colspan="4">34 sustituciones activas · mediana normal 27 d</td><td class="n">—</td><td><span class="pill n">26 en rango</span></td></tr>
+          <tr class="tot"><td colspan="4" data-c="flota">34 sustituciones activas · mediana normal 27 d</td><td class="n">—</td><td><span class="pill n">26 en rango</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -360,22 +381,22 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
 <div id="p-cobros" class="pane">
 
   <section class="nums" style="grid-template-columns:repeat(4,1fr)">
-    <div class="nm c" style="cursor:default">
+    <button class="nm c" onclick="calc('cobro_total')">
       <span class="v">120,1<small style="font-size:15px;color:var(--muted);margin-left:2px">k€</small></span>
       <span class="t">Pendiente total</span><span class="s">79 facturas únicas</span>
-    </div>
-    <div class="nm c" style="cursor:default">
+    </button>
+    <button class="nm c" onclick="calc('cobro_vencido')">
       <span class="v">109,7<small style="font-size:15px;color:var(--muted);margin-left:2px">k€</small></span>
       <span class="t">Ya vencido</span><span class="s">73 facturas · 91% del total</span>
-    </div>
-    <div class="nm c" style="cursor:default">
+    </button>
+    <button class="nm c" onclick="calc('cobro_junio')">
       <span class="v">74,5<small style="font-size:15px;color:var(--muted);margin-left:2px">k€</small></span>
       <span class="t">Tramo 61–90 días</span><span class="s">68% del vencido</span>
-    </div>
-    <div class="nm w" style="cursor:default">
+    </button>
+    <button class="nm w" onclick="calc('brull')">
       <span class="v">29,9<small style="font-size:15px;color:var(--muted);margin-left:2px">k€</small></span>
       <span class="t">Mayor deudor</span><span class="s">Brull · 80 días</span>
-    </div>
+    </button>
   </section>
 
   <div class="two" style="margin-bottom:14px">
@@ -386,10 +407,10 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
         <tbody>
           <tr><td>1 – 30 días</td><td class="n">21</td><td class="n">24.211 €</td><td class="n">22,1%</td><td><span style="display:block;height:9px;border-radius:3px;background:var(--warn);width:32%"></span></td></tr>
           <tr><td>31 – 60 días</td><td class="n">15</td><td class="n">6.693 €</td><td class="n">6,1%</td><td><span style="display:block;height:9px;border-radius:3px;background:var(--warn);width:9%"></span></td></tr>
-          <tr><td><b>61 – 90 días</b></td><td class="n">29</td><td class="n" style="color:var(--crit);font-weight:600">74.498 €</td><td class="n" style="color:var(--crit);font-weight:600">67,9%</td><td><span style="display:block;height:9px;border-radius:3px;background:var(--crit);width:100%"></span></td></tr>
+          <tr><td><b>61 – 90 días</b></td><td class="n">29</td><td class="n" data-c="cobro_junio" style="color:var(--crit);font-weight:600">74.498 €</td><td class="n" style="color:var(--crit);font-weight:600">67,9%</td><td><span style="display:block;height:9px;border-radius:3px;background:var(--crit);width:100%"></span></td></tr>
           <tr><td>91 – 180 días</td><td class="n">4</td><td class="n">3.214 €</td><td class="n">2,9%</td><td><span style="display:block;height:9px;border-radius:3px;background:var(--crit);width:4%"></span></td></tr>
           <tr><td>Más de 180 días</td><td class="n">4</td><td class="n">1.065 €</td><td class="n">1,0%</td><td><span style="display:block;height:9px;border-radius:3px;background:var(--crit);width:2%"></span></td></tr>
-          <tr class="tot"><td>Total vencido</td><td class="n">73</td><td class="n">109.681 €</td><td class="n">100%</td><td></td></tr>
+          <tr class="tot"><td data-c="cobro_vencido">Total vencido</td><td class="n">73</td><td class="n" data-c="cobro_vencido">109.681 €</td><td class="n">100%</td><td></td></tr>
         </tbody>
       </table>
     </div>
@@ -399,7 +420,7 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
       <table class="tbl">
         <thead><tr><th>Grupo</th><th class="n">Facturas</th><th class="n">Vencido</th><th class="n">Máx</th></tr></thead>
         <tbody>
-          <tr><td>Brull</td><td class="n">1</td><td class="n" style="color:var(--crit);font-weight:600">29.911 €</td><td class="n">80 d</td></tr>
+          <tr><td data-c="brull">Brull</td><td class="n">1</td><td class="n" data-c="brull" style="color:var(--crit);font-weight:600">29.911 €</td><td class="n">80 d</td></tr>
           <tr><td>Epil Point</td><td class="n">15</td><td class="n" style="color:var(--crit);font-weight:600">22.045 €</td><td class="n">86 d</td></tr>
           <tr><td>Centro Unico</td><td class="n">23</td><td class="n" style="color:var(--crit);font-weight:600">20.190 €</td><td class="n">87 d</td></tr>
           <tr><td>Centri Unico</td><td class="n">2</td><td class="n">6.780 €</td><td class="n">87 d</td></tr>
@@ -420,7 +441,7 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
       <table class="tbl">
         <thead><tr><th>Factura</th><th>Cliente</th><th class="n">Importe</th><th class="n">Vencida hace</th><th class="n">Tickets</th><th>Acción</th></tr></thead>
         <tbody>
-          <tr><td class="num">SInv26-202601198</td><td>Brull · Comodín 9</td><td class="n" style="font-weight:600">29.911 €</td><td class="n" style="color:var(--crit)">80 d</td><td class="n">4</td><td><span class="pill c">Escalar hoy</span></td></tr>
+          <tr><td class="num" data-c="brull">SInv26-202601198</td><td>Brull · Comodín 9</td><td class="n" data-c="brull" style="font-weight:600">29.911 €</td><td class="n" style="color:var(--crit)">80 d</td><td class="n">4</td><td><span class="pill c">Escalar hoy</span></td></tr>
           <tr><td class="num">SInv26-202601143</td><td>Epil Point Caracciolo</td><td class="n" style="font-weight:600">12.078 €</td><td class="n" style="color:var(--crit)">86 d</td><td class="n">1</td><td><span class="pill c">Escalar hoy</span></td></tr>
           <tr><td class="num">SInv26-202601115</td><td>Centri Unico Ostia</td><td class="n">6.460 €</td><td class="n" style="color:var(--crit)">87 d</td><td class="n">1</td><td><span class="pill c">Bloque junio</span></td></tr>
           <tr><td class="num">SInv26-202601107</td><td>Centro Unico Olbia</td><td class="n">6.460 €</td><td class="n" style="color:var(--crit)">87 d</td><td class="n">2</td><td><span class="pill c">Bloque junio</span></td></tr>
@@ -459,11 +480,16 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
 <div id="p-report" class="pane">
 
   <section class="nums" style="grid-template-columns:repeat(5,1fr)">
-    <div class="nm c" style="cursor:default"><span class="v">22,3</span><span class="t">Estancadas (media sep)</span><span class="s">ago 15,9 · +40%</span></div>
-    <div class="nm w" style="cursor:default"><span class="v">95,0</span><span class="t">Abiertas (media sep)</span><span class="s">may 90,5 · plano</span></div>
-    <div class="nm g" style="cursor:default"><span class="v">32,0</span><span class="t">En taller</span><span class="s">may 28,1 · estable</span></div>
-    <div class="nm c" style="cursor:default"><span class="v">110<small style="font-size:15px;color:var(--muted);margin-left:2px">k€</small></span><span class="t">Vencido sin cobrar</span><span class="s">73 facturas</span></div>
-    <div class="nm w" style="cursor:default"><span class="v">34</span><span class="t">Flota fuera</span><span class="s">1 desde hace 168 d</span></div>
+    <button class="nm c" onclick="calc('sube')"><span class="v">22,3</span><span class="t">Estancadas (media sep)</span><span class="s">ago 15,9 · +40%</span>
+    </button>
+    <button class="nm w" onclick="calc('abiertas')"><span class="v">95,0</span><span class="t">Abiertas (media sep)</span><span class="s">may 90,5 · plano</span>
+    </button>
+    <button class="nm g" onclick="calc('sube')"><span class="v">32,0</span><span class="t">En taller</span><span class="s">may 28,1 · estable</span>
+    </button>
+    <button class="nm c" onclick="calc('cobro_vencido')"><span class="v">110<small style="font-size:15px;color:var(--muted);margin-left:2px">k€</small></span><span class="t">Vencido sin cobrar</span><span class="s">73 facturas</span>
+    </button>
+    <button class="nm w" onclick="calc('flota')"><span class="v">34</span><span class="t">Flota fuera</span><span class="s">1 desde hace 168 d</span>
+    </button>
   </section>
 
   <section class="sec">
@@ -476,8 +502,8 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
           <tr><td>Junio</td><td class="n">93,2</td><td class="n">11,1</td><td class="n">27,6</td><td class="n">204</td><td class="n">90</td><td class="n" style="color:var(--good)">−4%</td><td><span class="pill g">Estable</span></td></tr>
           <tr><td>Julio</td><td class="n">97,3</td><td class="n">14,5</td><td class="n">32,4</td><td class="n">178</td><td class="n">82</td><td class="n" style="color:var(--warn)">+31%</td><td><span class="pill w">Empieza a subir</span></td></tr>
           <tr><td>Agosto</td><td class="n">79,2</td><td class="n">15,9</td><td class="n">30,2</td><td class="n">128</td><td class="n">49</td><td class="n" style="color:var(--warn)">+10%</td><td><span class="pill w">Vacaciones</span></td></tr>
-          <tr class="tot"><td>Septiembre</td><td class="n">95,0</td><td class="n" style="color:var(--crit)">22,3</td><td class="n">32,0</td><td class="n">29</td><td class="n">7</td><td class="n" style="color:var(--crit)">+40%</td><td><span class="pill c">Máximo</span></td></tr>
-          <tr><td style="color:var(--muted)">Variación may → sep</td><td class="n" style="color:var(--muted)">+5%</td><td class="n" style="color:var(--crit);font-weight:600">+92%</td><td class="n" style="color:var(--muted)">+14%</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td></td></tr>
+          <tr class="tot"><td>Septiembre</td><td class="n">95,0</td><td class="n" data-c="sube" style="color:var(--crit)">22,3</td><td class="n">32,0</td><td class="n">29</td><td class="n">7</td><td class="n" style="color:var(--crit)">+40%</td><td><span class="pill c">Máximo</span></td></tr>
+          <tr><td style="color:var(--muted)">Variación may → sep</td><td class="n" style="color:var(--muted)">+5%</td><td class="n" data-c="sube" style="color:var(--crit);font-weight:600">+92%</td><td class="n" style="color:var(--muted)">+14%</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td></td></tr>
         </tbody>
       </table>
     </div>
@@ -494,7 +520,7 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
           <tr><td>16 – 30 días</td><td class="n">7</td><td class="n">6%</td><td><span style="display:block;height:9px;border-radius:3px;background:var(--warn);width:11%"></span></td><td><span class="pill w">Vigilar</span></td></tr>
           <tr><td>31 – 60 días</td><td class="n">7</td><td class="n">6%</td><td><span style="display:block;height:9px;border-radius:3px;background:var(--warn);width:11%"></span></td><td><span class="pill w">Reclamar</span></td></tr>
           <tr><td>Más de 60 días</td><td class="n">16</td><td class="n">14%</td><td><span style="display:block;height:9px;border-radius:3px;background:var(--crit);width:24%"></span></td><td><span class="pill c">Sanear</span></td></tr>
-          <tr class="tot"><td>Total abiertas</td><td class="n">112</td><td class="n">100%</td><td></td><td><span class="pill n">Mediana 11,3 d</span></td></tr>
+          <tr class="tot"><td>Total abiertas</td><td class="n" data-c="aging">112</td><td class="n">100%</td><td></td><td data-c="mttr"><span class="pill n">Mediana 11,3 d</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -506,13 +532,13 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
       <table class="tbl">
         <thead><tr><th>Técnico</th><th class="n">Carga</th><th class="n">Sin mover</th><th class="n">Edad med.</th><th class="n">Estanc.</th><th></th></tr></thead>
         <tbody>
-          <tr><td>Jonathan Zarauza</td><td class="n">12</td><td class="n">0 d</td><td class="n">26 d</td><td class="n">2</td><td><span class="pill g">Al día</span></td></tr>
+          <tr><td data-c="tecnicos">Jonathan Zarauza</td><td class="n">12</td><td class="n">0 d</td><td class="n">26 d</td><td class="n">2</td><td><span class="pill g">Al día</span></td></tr>
           <tr><td>Fran Fernández</td><td class="n">10</td><td class="n">1 d</td><td class="n">15 d</td><td class="n">3</td><td><span class="pill g">Al día</span></td></tr>
           <tr><td>Iván Lozano</td><td class="n">8</td><td class="n">9 d</td><td class="n">23 d</td><td class="n">2</td><td><span class="pill w">Vigilar</span></td></tr>
-          <tr><td>Borja Canteli</td><td class="n">4</td><td class="n" style="color:var(--crit)">37 d</td><td class="n">73 d</td><td class="n">3</td><td><span class="pill c">No mueve</span></td></tr>
+          <tr><td data-c="tecnicos">Borja Canteli</td><td class="n">4</td><td class="n" style="color:var(--crit)">37 d</td><td class="n">73 d</td><td class="n">3</td><td><span class="pill c">No mueve</span></td></tr>
           <tr><td>Jesús Fernández</td><td class="n">2</td><td class="n" style="color:var(--crit)">83 d</td><td class="n">114 d</td><td class="n">2</td><td><span class="pill c">No mueve</span></td></tr>
-          <tr><td>Daniel Rodríguez</td><td class="n">1</td><td class="n" style="color:var(--crit)">294 d</td><td class="n">317 d</td><td class="n">1</td><td><span class="pill c">Olvidado</span></td></tr>
-          <tr class="tot"><td>Sin asignar</td><td class="n" style="color:var(--crit)">74</td><td class="n">5 d</td><td class="n">7 d</td><td class="n" style="color:var(--crit)">22</td><td><span class="pill c">66% del total</span></td></tr>
+          <tr><td data-c="tecnicos">Daniel Rodríguez</td><td class="n">1</td><td class="n" style="color:var(--crit)">294 d</td><td class="n">317 d</td><td class="n">1</td><td><span class="pill c">Olvidado</span></td></tr>
+          <tr class="tot"><td>Sin asignar</td><td class="n" data-c="sindueno" style="color:var(--crit)">74</td><td class="n">5 d</td><td class="n">7 d</td><td class="n" style="color:var(--crit)">22</td><td><span class="pill c">66% del total</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -528,7 +554,7 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
           <tr><td>Innet</td><td class="n">3</td><td class="n">6 d</td><td class="n">1</td><td><span class="pill g">Rápido</span></td></tr>
           <tr><td>Carlos Mora</td><td class="n">2</td><td class="n">7 d</td><td class="n">0</td><td><span class="pill g">Rápido</span></td></tr>
           <tr><td>Distribuidor</td><td class="n">1</td><td class="n">41 d</td><td class="n">1</td><td><span class="pill c">Reclamar</span></td></tr>
-          <tr class="tot"><td>Total circuito externo</td><td class="n">23</td><td class="n">7,1 d</td><td class="n">5</td><td><span class="pill g">Sano</span></td></tr>
+          <tr class="tot"><td data-c="externos">Total circuito externo</td><td class="n">23</td><td class="n" data-c="externos">7,1 d</td><td class="n">5</td><td><span class="pill g">Sano</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -541,13 +567,13 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
         <thead><tr><th>Cadena</th><th class="n">Parque</th><th class="n">Incid. YTD</th><th class="n">Bloqueantes</th><th class="n">Tasa avería</th><th class="n">Bloq/eq/año</th><th class="n">Abiertas</th><th></th></tr></thead>
         <tbody>
           <tr><td>Elha</td><td class="n">506</td><td class="n">474</td><td class="n">230</td><td class="n">5,05%</td><td class="n">0,61</td><td class="n">23</td><td><span class="pill n">Mayor parque</span></td></tr>
-          <tr><td>Sin Vello</td><td class="n">298</td><td class="n">251</td><td class="n">91</td><td class="n" style="color:var(--good);font-weight:600">3,39%</td><td class="n">0,41</td><td class="n">15</td><td><span class="pill g">Mejor tasa</span></td></tr>
-          <tr><td>Epil Point</td><td class="n">116</td><td class="n">195</td><td class="n">126</td><td class="n" style="color:var(--crit);font-weight:600">12,07%</td><td class="n" style="color:var(--crit)">1,45</td><td class="n">8</td><td><span class="pill c">Peor tasa</span></td></tr>
+          <tr><td>Sin Vello</td><td class="n">298</td><td class="n">251</td><td class="n">91</td><td class="n" data-c="cadenas" style="color:var(--good);font-weight:600">3,39%</td><td class="n">0,41</td><td class="n">15</td><td><span class="pill g">Mejor tasa</span></td></tr>
+          <tr><td>Epil Point</td><td class="n">116</td><td class="n">195</td><td class="n">126</td><td class="n" data-c="cadenas" style="color:var(--crit);font-weight:600">12,07%</td><td class="n" style="color:var(--crit)">1,45</td><td class="n">8</td><td><span class="pill c">Peor tasa</span></td></tr>
           <tr><td>Smart Duck</td><td class="n">62</td><td class="n">14</td><td class="n">10</td><td class="n" style="color:var(--good)">1,79%</td><td class="n">0,22</td><td class="n">3</td><td><span class="pill g">Muy sana</span></td></tr>
           <tr><td>Laser Factory</td><td class="n">55</td><td class="n">43</td><td class="n">14</td><td class="n">2,83%</td><td class="n">0,34</td><td class="n">2</td><td><span class="pill g">Sana</span></td></tr>
           <tr><td>Dermasana</td><td class="n">53</td><td class="n">86</td><td class="n">45</td><td class="n" style="color:var(--warn)">9,43%</td><td class="n">1,13</td><td class="n">1</td><td><span class="pill w">Tasa alta</span></td></tr>
           <tr><td>Unico Italia</td><td class="n">37</td><td class="n">86</td><td class="n">40</td><td class="n" style="color:var(--crit);font-weight:600">12,01%</td><td class="n" style="color:var(--crit)">1,44</td><td class="n">5</td><td><span class="pill c">Peor tasa</span></td></tr>
-          <tr class="tot"><td>Total</td><td class="n">1.127</td><td class="n">1.149</td><td class="n">556</td><td class="n">—</td><td class="n">—</td><td class="n">57</td><td></td></tr>
+          <tr class="tot"><td data-c="cadenas">Total</td><td class="n" data-c="cadenas">1.127</td><td class="n">1.149</td><td class="n">556</td><td class="n">—</td><td class="n">—</td><td class="n">57</td><td></td></tr>
         </tbody>
       </table>
     </div>
@@ -560,8 +586,8 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
         <thead><tr><th>Línea</th><th class="n">Importe</th><th class="n">Estado</th><th>Fuente</th></tr></thead>
         <tbody>
           <tr class="sep"><td colspan="4">Facturación identificada en Jira</td></tr>
-          <tr><td>Facturado pendiente de cobro</td><td class="n" style="font-weight:600">120.057 €</td><td class="n">79 fras</td><td><span class="pill n">Jira × Holded</span></td></tr>
-          <tr><td>— de ello vencido</td><td class="n" style="color:var(--crit);font-weight:600">109.681 €</td><td class="n">73 fras</td><td><span class="pill c">91%</span></td></tr>
+          <tr><td>Facturado pendiente de cobro</td><td class="n" data-c="cobro_total" style="font-weight:600">120.057 €</td><td class="n">79 fras</td><td><span class="pill n">Jira × Holded</span></td></tr>
+          <tr><td>— de ello vencido</td><td class="n" data-c="cobro_vencido" style="color:var(--crit);font-weight:600">109.681 €</td><td class="n">73 fras</td><td><span class="pill c">91%</span></td></tr>
           <tr><td>— pendiente no vencido</td><td class="n">10.376 €</td><td class="n">6 fras</td><td><span class="pill g">9%</span></td></tr>
           <tr class="sep"><td colspan="4">Pendiente de completar</td></tr>
           <tr><td>Ingreso total facturado del mes</td><td class="n" style="color:var(--muted-2)">—</td><td class="n">—</td><td><span class="pill w">Falta Holded</span></td></tr>
@@ -734,7 +760,12 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
   <button class="x" onclick="this.closest('dialog').close()">Cerrar</button>
 </div></dialog>
 
+
+<dialog id="dlg-calc"><div class="dlg" id="calc-body"></div></dialog>
+
 <script>
+const CALC = {"estancadas": {"t": "Estancadas más de 15 días", "v": "35", "u": "tickets", "rows": [["Tickets abiertos en Jira (proyecto LEAS)", "112"], ["− Con cambio de estado en los últimos 15 días", "77"], ["= Sin moverse hace más de 15 días", "35"], ["De ellos, sin técnico asignado", "22"], ["El más antiguo (LEAS-1351)", "301 d"]], "src": "Se mide el tiempo desde la <b>última transición de estado</b> registrada en el timeline, no desde la última edición del ticket. Un ticket puede editarse a diario y llevar meses en la misma fase — esa es justo la diferencia que buscamos.", "f": "cache/jira_status_timeline.json · campo transitions[-1]"}, "abiertas": {"t": "Incidencias abiertas", "v": "112", "u": "tickets", "rows": [["Tickets en el timeline", "2 271"], ["− Finalizada", "1 717"], ["− Cancelado", "387"], ["− Resuelto", "35"], ["− Finalizado técnico externo", "20"], ["= Abiertas", "112"]], "src": "La serie diaria del dashboard marca <b>99</b> a las 23:14 de ayer; la consulta directa a Jira de esta mañana da <b>112</b>. La diferencia son las 13 entradas de la noche. Manda la consulta directa.", "f": "cache/jira_status_timeline.json · current_status"}, "sindueno": {"t": "Tickets sin responsable", "v": "74", "u": "de 112", "rows": [["Abiertas totales", "112"], ["Con técnico asignado", "38"], ["Sin asignar", "74"], ["% sin dueño", "66%"], ["De ellas estancadas más de 15 d", "22"], ["La más antigua (LEAS-1351)", "301 d"]], "src": "Sin dueño nadie cierra el ticket ni entra en la medida de ningún técnico. Es la causa de que las estancadas lleven cuatro meses subiendo y de que 14 tickets ya terminados sigan abiertos.", "f": "campos tec_taller y asignado, ambos vacíos"}, "perdido": {"t": "Consola C03143 · posible pérdida", "v": "168", "u": "días fuera", "rows": [["Ticket", "LEAS-5697"], ["Cliente", "Smart Duck Paris"], ["Consola prestada", "C03143"], ["Manípulo prestado", "H03143"], ["Fecha de envío", "19 mar 2026"], ["Días fuera a hoy", "168"], ["Duración mediana de un préstamo", "27 d"], ["Veces por encima de lo normal", "6,2×"], ["Comentarios de seguimiento en Jira", "0"]], "src": "Cálculo: hoy (3 sep) menos la fecha de envío. La mediana de 27 días sale de las 31 sustituciones activas con fecha registrada. <b>Los diez préstamos abiertos tienen cero comentarios</b>, así que de ninguno hay rastro de gestión — este es solo el más extremo.", "f": "cache/sustis_activas.json · campo fecha_envio"}, "flota": {"t": "Sustituciones activas", "v": "34", "u": "equipos fuera", "rows": [["Total sustituciones activas", "34"], ["Con fecha de envío registrada", "31"], ["Solicitadas, aún sin enviar", "3"], ["Mediana de días fuera", "27 d"], ["Por encima de 60 días", "3"], ["Por encima de 90 días", "1"], ["Marcadas como devueltas y aún activas", "4"]], "src": "Consultar Jira por estado <code>En préstamo</code> solo devuelve <b>10</b>. Los otros 24 están en tránsito, con recogida gestionada o marcados como devueltos sin cerrar el ticket. Por eso se usa el fichero de sustituciones, que cruza la subtarea con el ticket padre.", "f": "cache/sustis_activas.json · 34 registros", "tk": [["LEAS-5697", "Smart Duck Paris · C03143", "168 d"], ["LEAS-6716", "Elha Santa Coloma · C00503", "79 d"], ["LEAS-6780", "Centri Unico Campania · BS00019", "72 d"], ["LEAS-7028", "SinVello Tomares · H00340", "51 d"], ["LEAS-7054", "Centro Unico Boccea · c00677", "49 d"], ["LEAS-7112", "sin cliente · H01061", "43 d"], ["LEAS-7148", "Laser Factory Hospitalet · C00410", "41 d"], ["LEAS-7140", "Smart Duck Paris 15 · C003258", "41 d"]]}, "fabrica": {"t": "Equipos en fábrica sin volver", "v": "13", "u": "equipos", "rows": [["Tickets en estado Devuelto a fábrica", "13"], ["Con más de 100 días", "10"], ["Con más de 200 días", "6"], ["El más antiguo (LEAS-1351)", "301 d"], ["Con técnico asignado", "1"], ["Importe presupuestado acumulado", "19 215 €"]], "src": "Equipos enviados a fábrica cuyo ticket nunca se cerró. No se sabe si siguen allí, si volvieron sin registrarse o si hay que darlos de baja del inmovilizado. <b>Ninguno tiene seguimiento.</b>", "f": "current_status = Devuelto a fábrica", "tk": [["LEAS-1351", "Bedda Lugo · consola 90405", "301 d"], ["LEAS-3852", "Nur Clinics Cuenca · 7 333 €", "294 d"], ["LEAS-4076", "Dermoscan · C03063", "288 d"], ["LEAS-4149", "Binatural · 20047", "271 d"], ["LEAS-3144", "Bedda San Bartolomé · 90929", "233 d"], ["LEAS-3827", "Clínica Cibeles Holea · 7 333 €", "226 d"], ["LEAS-5454", "Dermoscan", "161 d"], ["LEAS-5774", "Smart Duck Les Halles", "126 d"], ["LEAS-6196", "Centro Unico Astermas · 91128", "111 d"], ["LEAS-6193", "Zurimed Parque Principado", "106 d"], ["LEAS-5851", "Único Life Jerez · 4 549 €", "78 d"], ["LEAS-6586", "Epil Point Alessandria · 91410", "69 d"], ["LEAS-6909", "Zurimed Los Fresnos", "43 d"]]}, "cerrables": {"t": "Tickets terminados sin cerrar", "v": "14", "u": "tickets", "rows": [["En fase de salida (devuelto, recogido, inspeccionado)", "12"], ["Con informe de reparación puesto y sin cerrar", "1"], ["Con decisión del cliente de no reparar", "1"], ["Total cerrables hoy", "14"], ["Resolución media actual", "27,0 d"], ["Resolución media tras cerrarlos", "≈14 d"], ["Resolución mediana (no cambia)", "11,3 d"]], "src": "La diferencia entre la mediana (11 d) y la media (27 d) <b>no mide servicio, mide papeleo</b>. Estos 14 tickets son la cola que infla la media. Cerrarlos no requiere tocar un destornillador.", "f": "revisión de los comentarios de los 31 tickets atascados", "tk": [["LEAS-6779", "Fran, 24 jul: carcasas cambiadas, conexiones comprobadas, 2 h mano de obra", "41 d"], ["LEAS-4443", "Borja, 17 abr: la aseguradora rechazó el siniestro, el cliente lo canjea", "118 d"], ["LEAS-6716", "Recogida gestionada", "79 d"], ["LEAS-7028", "Equipo devuelto", "51 d"], ["LEAS-7112", "Recogida gestionada", "43 d"], ["LEAS-7124", "Devuelto a cliente", "42 d"], ["LEAS-7158", "Recogida gestionada", "38 d"], ["LEAS-7224", "Devuelto a cliente", "30 d"], ["LEAS-7255", "Devuelto a cliente", "27 d"], ["LEAS-7315", "Inspección de salida", "17 d"]]}, "vencidos": {"t": "Compromisos vencidos con el cliente", "v": "4", "u": "tickets", "rows": [["Tickets con fecha prometida por escrito", "4"], ["Fechas ya pasadas a 3 sep", "4"], ["Con comentario posterior a la promesa", "0"]], "src": "Salen de leer los comentarios uno a uno. Son los que generan reclamación del cliente si no te adelantas tú.", "f": "comentarios de Jira de los tickets atascados", "tk": [["LEAS-7103", "Isaac, 22 jul: se avisa a la clienta que se va a hacer en septiembre", "NR Clinics"], ["LEAS-7104", "Isaac, 22 jul: se avisa a la clienta que lo vamos a hacer en septiembre", "NR Clinics"], ["LEAS-7118", "Borja, 13 ago: en teoría lo van a hacer a finales de agosto", "vencido"], ["LEAS-6906", "Borja, 13 ago: acepta presupuesto, falta forma de pago. Lo necesita para finales de agosto", "vencido"]]}, "cobro_total": {"t": "Pendiente de cobro", "v": "120 057", "u": "euros", "rows": [["Tickets con importe pendiente", "85"], ["− Facturas repetidas en varios tickets", "6"], ["= Facturas únicas", "79"], ["Importe sin deduplicar (erróneo)", "216 833 €"], ["Importe real deduplicado", "120 057 €"], ["Diferencia por duplicidad", "96 776 €"]], "src": "<b>Cuidado con este número.</b> En bruto salen 216 833 €, pero es falso: la factura de Brull (SInv26-202601198, 29 911 €) aparece en cuatro tickets distintos, y otras cinco están repetidas en dos. Se deduplica por número de factura antes de sumar.", "f": "campo factura_pendiente agrupado por factura"}, "cobro_vencido": {"t": "Vencido sin cobrar", "v": "109 681", "u": "euros", "rows": [["Facturas únicas pendientes", "79"], ["De ellas vencidas", "73"], ["Importe vencido", "109 681 €"], ["Importe pendiente no vencido", "10 376 €"], ["% vencido sobre el total", "91%"]], "src": "Un 91% de la deuda pendiente ya está fuera de plazo. La concentración está en un solo tramo: el de 61-90 días.", "f": "factura_estado = Vencido, deduplicado"}, "cobro_junio": {"t": "El bloque de junio", "v": "74 498", "u": "euros · 29 facturas", "rows": [["Facturas vencidas hace 61-90 días", "29"], ["Importe", "74 498 €"], ["% del total vencido", "67,9%"], ["Días vencidas (casi todas)", "87 d"], ["Mayor: Brull SInv26-202601198", "29 911 €"], ["Epil Point Caracciolo (2 facturas)", "15 350 €"], ["Bloque Centro Unico Italia", "≈20 000 €"]], "src": "Casi todas comparten fecha de vencimiento, así que <b>es un único bloque de facturación de junio que nadie ha reclamado</b>. El grueso son muchas facturas pequeñas de Centro Unico Italia: se pueden reclamar de una sola vez a la central.", "f": "aging sobre factura_fecha_venc"}, "brull": {"t": "Brull · mayor deudor", "v": "29 911", "u": "euros", "rows": [["Factura", "SInv26-202601198"], ["Importe pendiente", "29 911 €"], ["Vencida hace", "80 días"], ["Tickets que la referencian", "4"], ["% del total vencido", "27,3%"]], "src": "Una sola factura es el <b>27% de toda la deuda vencida</b>. Aparece repetida en los tickets LEAS-6435, 6436, 6437 y 6438 — por eso el importe bruto engaña. Se cuenta una vez.", "f": "SInv26-202601198", "tk": [["LEAS-6435", "Brull", "80 d"], ["LEAS-6436", "Brull", "80 d"], ["LEAS-6437", "Brull", "80 d"], ["LEAS-6438", "Brull · Comodín 9", "80 d"]]}, "mttr": {"t": "Tiempo de resolución", "v": "11,3", "u": "días (mediana)", "rows": [["Tickets resueltos en 7 días", "40"], ["Mediana", "11,3 d"], ["Media", "27,0 d"], ["Percentil 10 (los rápidos)", "1,0 d"], ["Percentil 90 (los lentos)", "84,4 d"], ["Media tras cerrar los 14 terminados", "≈14 d"]], "src": "<b>Usa la mediana, no la media.</b> La media está inflada por una cola de tickets que estaban acabados y nadie cerró. El servicio real es de 11 días.", "f": "created → resolutiondate de los resueltos en 7 días"}, "sube": {"t": "Estancadas: la única curva que sube", "v": "+92", "u": "% desde mayo", "rows": [["Media mayo", "11,6"], ["Media junio", "11,1"], ["Media julio", "14,5"], ["Media agosto", "15,9"], ["Media septiembre", "22,3"], ["Variación mayo → septiembre", "+92%"], ["Abiertas: variación mayo → septiembre", "+5%"], ["En taller: variación mayo → septiembre", "+14%"]], "src": "Con solo 7 días de datos parecía que el backlog crecía. Con <b>111 días</b> se ve que no: las abiertas oscilan sin tendencia (72-109) y el taller lleva cuatro meses plano. Lo único que crece de forma sostenida es lo estancado. No es capacidad, es seguimiento.", "f": "cache/kpi_history.json · 111 días, 14 may → 3 sep"}, "tecnicos": {"t": "Carga y ritmo por técnico", "v": "38", "u": "tickets asignados", "rows": [["Jonathan Zarauza · 12 tickets", "0 d sin mover"], ["Fran Fernández · 10 tickets", "1 d sin mover"], ["Iván Lozano · 8 tickets", "9 d sin mover"], ["Borja Canteli · 4 tickets", "37 d sin mover"], ["Jesús Fernández · 2 tickets", "83 d sin mover"], ["Daniel Rodríguez · 1 ticket", "294 d sin mover"], ["Sin asignar · 74 tickets", "5 d sin mover"]], "src": "La columna que importa es <b>días sin mover</b>, no la carga. Jonathan y Fran llevan más volumen y lo tocan a diario. El problema está en los que tienen poca carga y no la mueven: Borja, Jesús y sobre todo Daniel, con un ticket olvidado desde hace casi un año.", "f": "mediana de días desde la última transición, por técnico"}, "cadenas": {"t": "Siniestralidad por cadena", "v": "1 127", "u": "equipos en parque", "rows": [["Elha · 506 equipos", "5,05% avería"], ["Sin Vello · 298 equipos", "3,39% avería"], ["Epil Point · 116 equipos", "12,07% avería"], ["Smart Duck · 62 equipos", "1,79% avería"], ["Laser Factory · 55 equipos", "2,83% avería"], ["Dermasana · 53 equipos", "9,43% avería"], ["Unico Italia · 37 equipos", "12,01% avería"]], "src": "Ojo con confundir volumen y calidad. Sin Vello concentra el atasco operativo pero tiene la <b>mejor tasa de avería del grupo</b>. Los que fallan de verdad son Epil Point y Unico Italia, al 12% — cada equipo suyo da problema 1,45 veces al año.", "f": "dashboard SAT · resumen por cadena, histórico completo"}, "externos": {"t": "Circuito de técnico externo", "v": "7,1", "u": "días de media", "rows": [["GEE · 6 tickets", "21 d de media"], ["Sincronis · 5 tickets", "5 d"], ["Leaseir interno · 5 tickets", "2 d"], ["Innet · 3 tickets", "6 d"], ["Carlos Mora · 2 tickets", "7 d"], ["Distribuidor · 1 ticket", "41 d"], ["Total en circuito externo", "23 tickets"]], "src": "<b>El circuito externo es lo que mejor funciona de todo el SAT.</b> 7 días de media frente a los 27 del circuito interno. No es aquí donde está el problema.", "f": "campo tec_externo sobre tickets abiertos"}, "aging": {"t": "Antigüedad del backlog", "v": "112", "u": "tickets abiertos", "rows": [["0 – 7 días", "66 tickets · 59%"], ["8 – 15 días", "16 tickets · 14%"], ["16 – 30 días", "7 tickets · 6%"], ["31 – 60 días", "7 tickets · 6%"], ["Más de 60 días", "16 tickets · 14%"], ["Mediana de antigüedad", "11,3 d"]], "src": "Tres de cada cuatro tickets tienen menos de 15 días: el flujo normal funciona. El problema es la cola: <b>16 tickets con más de 60 días</b> que nadie toca y que arrastran todas las medias.", "f": "created → hoy, sobre los 112 abiertos"}, "otros": {"t": "Clientes fuera de cadena", "v": "18", "u": "estancadas de 41", "rows": [["Abiertas de clientes directos", "41"], ["Estancadas más de 15 días", "18"], ["% de atasco", "44%"], ["Importe presupuestado parado", "42.993 €"], ["El más antiguo (LEAS-3852)", "294 d"], ["Sobre el total de estancadas (35)", "51%"]], "src": "<b>Aquí está el atasco real.</b> Las cadenas grandes están sanas: Elha atasca el 9% y Sin Vello el 7%. Más de la mitad de todo lo estancado son clientes sueltos sin cadena detrás — nadie los reclama porque no hay un interlocutor único que pregunte por ellos.", "f": "cliente del ticket, agrupado por cadena · 112 abiertas", "tk": [["LEAS-3852", "Nur Clinics Cuenca · devuelto a fábrica · 7.333 €", "294 d"], ["LEAS-4149", "Binatural 20047 · devuelto a fábrica", "271 d"], ["LEAS-3827", "Clínica Cibeles Holea · devuelto a fábrica · 7.333 €", "226 d"], ["LEAS-6048", "Daniel Jaramillo Grupo Dos · inspección de salida · 2.898 €", "111 d"], ["LEAS-6198", "Luxlaser Andre Bélgica · pdte. confirmar presupuesto", "83 d"]]}};
+
 function tab(btn,id){
   document.querySelectorAll('.tabbar button[role="tab"]').forEach(b=>b.classList.remove('on'));
   document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
@@ -747,6 +778,70 @@ function tabGo(id){
   const idx={'p-hoy':0,'p-cobros':1,'p-report':2}[id];
   if(idx!==undefined) tab(btns[idx],id);
 }
+
+// ── Modal de cálculo ──
+function calc(key){
+  const c = CALC[key]; if(!c) return;
+  let h = '<div class="k">Cómo sale este número</div>';
+  h += '<div class="big">'+c.v+'</div><div class="bigu">'+c.u+'</div>';
+  h += '<h3 style="margin:0 0 10px">'+c.t+'</h3>';
+  h += '<div class="sec2">Desglose del cálculo</div>';
+  c.rows.forEach(r=>{ h += '<div class="r"><span class="l">'+r[0]+'</span><span class="v">'+r[1]+'</span></div>'; });
+  if(c.tk && c.tk.length){
+    h += '<div class="sec2">Tickets ('+c.tk.length+')</div>';
+    c.tk.forEach(t=>{ h += '<div class="tk"><span>'+t[0]+'</span><span class="q">'+t[1]+'</span><span class="d">'+t[2]+'</span></div>'; });
+  }
+  h += '<div class="src">'+c.src+'<div class="fsrc">Origen: '+c.f+'</div></div>';
+  h += '<button class="x" onclick="this.closest(\'dialog\').close()">Cerrar</button>';
+  const b = document.getElementById('calc-body');
+  b.innerHTML = h; linkTickets(b);
+  document.getElementById('dlg-calc').showModal();
+}
+
+// ── Convierte todo LEAS-xxxx en enlace a Jira ──
+function linkTickets(root){
+  const RE = /\bLEAS-(\d{3,5})\b/g;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(n){
+      if(!RE.test(n.nodeValue)) return NodeFilter.FILTER_REJECT;
+      RE.lastIndex = 0;
+      let p = n.parentElement;
+      while(p && p !== root){ if(p.tagName === 'A' || p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT; p = p.parentElement; }
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = []; let n;
+  while(n = walker.nextNode()) nodes.push(n);
+  nodes.forEach(node=>{
+    const frag = document.createDocumentFragment();
+    let last = 0, m; RE.lastIndex = 0;
+    const txt = node.nodeValue;
+    while((m = RE.exec(txt)) !== null){
+      if(m.index > last) frag.appendChild(document.createTextNode(txt.slice(last, m.index)));
+      const a = document.createElement('a');
+      a.className = 'jira'; a.href = 'https://leaseir.atlassian.net/browse/' + m[0];
+      a.target = '_blank'; a.rel = 'noopener'; a.textContent = m[0];
+      a.title = 'Abrir ' + m[0] + ' en Jira';
+      frag.appendChild(a);
+      last = m.index + m[0].length;
+    }
+    if(last < txt.length) frag.appendChild(document.createTextNode(txt.slice(last)));
+    node.parentNode.replaceChild(frag, node);
+  });
+}
+
+// ── Números sueltos de tablas: pulsables por data-c ──
+document.addEventListener('DOMContentLoaded', ()=>{
+  linkTickets(document.body);
+  document.querySelectorAll('[data-c]').forEach(el=>{
+    el.classList.add('calc');
+    el.setAttribute('tabindex','0');
+    el.setAttribute('role','button');
+    el.addEventListener('click', ()=>calc(el.dataset.c));
+    el.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); calc(el.dataset.c);} });
+  });
+});
+
 function dlg(id){const d=document.getElementById(id); if(d&&d.showModal) d.showModal();}
 document.querySelectorAll('dialog').forEach(d=>{
   d.addEventListener('click',e=>{
