@@ -578,14 +578,18 @@ async function initDB(){
         : null;
   YO = leerYo();
   pintarYo();
-  if(!DB) return;
+  if(!DB){ renderInterno(); return; }
+  renderInterno();                       // botones ya, sin esperar a la red
+  const vuelca = snap => {
+    RESP = {};
+    const docs = (snap && snap.docs) ? snap.docs : [];
+    docs.forEach(d => { if(d && d.exists !== false) RESP[d.id] = d.data() || {}; });
+    renderInterno();
+  };
   try{
-    DB.collection("respuestas").onSnapshot(snap => {
-      RESP = {};
-      snap.forEach(d => { RESP[d.id] = d.data(); });
-      renderInterno();
-    });
+    DB.collection("respuestas").onSnapshot(vuelca, e => console.error("snapshot", e));
   }catch(e){ console.error(e); }
+  try{ vuelca(await DB.collection("respuestas").get()); }catch(e){ console.error("get", e); }
 }
 async function responder(k, t, estado, texto, paraQuien){
   if(!DB || !YO) return;
