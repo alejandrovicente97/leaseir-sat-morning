@@ -1806,11 +1806,14 @@ const ACT_NOM = {"Jesús Fernández Porrúa":"Chus","Isaac Sanchez":"Isaac","Gon
   "Alejandro Vicente":"Alejandro","Iván Lozano Fernández":"Iván","Francisco Fernandez Porrúa":"Fran",
   "Jonathan Zarauza Álvarez":"Jonathan","Borja Canteli Trabanco":"Borja","Cristina Ramirez":"Cristina"};
 let MCP = null;
-(async () => {
+// El botón se enseña en cuanto sabemos que estamos dentro de Claude (existe window.claude).
+// Que el conector esté o no disponible se resuelve al pulsarlo, con su mensaje.
+(function(){
   try{
-    MCP = await claude.use("mcp");
+    if(typeof claude === "undefined" || !claude || typeof claude.use !== "function") return;
     const b = document.getElementById("actbtn");
-    if(MCP && b) b.hidden = false;
+    if(b) b.hidden = false;
+    claude.use("mcp").then(m => { MCP = m; }).catch(()=>{});
   }catch(e){}
 })();
 
@@ -1848,7 +1851,10 @@ function actParsear(nodes){
 
 async function refrescarAct(){
   const b = document.getElementById("actbtn");
-  if(!MCP){ actMsg("El botón solo funciona con el panel abierto dentro de Claude.", "mal"); return; }
+  if(!MCP){
+    try{ MCP = await claude.use("mcp"); }catch(e){ MCP = null; }
+  }
+  if(!MCP){ actMsg("Este panel todavía no tiene permiso para usar tu Atlassian. Cierra y vuelve a abrirlo; si sigue igual, avísame.", "mal"); return; }
   if(b) b.disabled = true;
   actMsg("Leyendo Jira…");
   try{
