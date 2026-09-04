@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-09-04T19:25+02:00",
+  "actualizado": "2026-09-04T19:40+02:00",
   "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
   "como_se_usa": [
     "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -13,121 +13,212 @@
     {
       "id": "vomero-epilpoint",
       "que": "Reclamación de una máquina a Andrea en el centro Vomero",
-      "ambito": { "leas": null, "centro": "Vomero", "cliente": "Epil Point", "tipo": "sin-ticket" },
+      "ambito": {
+        "leas": null,
+        "centro": "Vomero",
+        "cliente": "Epil Point",
+        "tipo": "sin-ticket"
+      },
       "porque": "Es un ticket interno de Epil Point. No tiene nada que ver con Leaseir y no hay nada que hacer por nuestra parte.",
-      "quien": "Chus", "cuando": "2026-09-04",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
       "revive_si": "Epil Point nos escribe pidiendo algo a Leaseir sobre ese equipo."
     },
     {
       "id": "manacor-cable",
       "que": "Manacor dice que no ha recibido el cable",
-      "ambito": { "leas": null, "centro": "Manacor", "tipo": "sin-ticket" },
+      "ambito": {
+        "leas": null,
+        "centro": "Manacor",
+        "tipo": "sin-ticket"
+      },
       "porque": "Ya contestado: se les compartió la foto del registro de salida enseñando que el cable va dentro del maletín de la pistola.",
-      "quien": "Chus", "cuando": "2026-09-04",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
       "revive_si": "El centro vuelve a reclamarlo después de haber visto la foto."
     },
     {
       "id": "presupuesto-E261729",
       "que": "Duda del cliente sobre el importe del presupuesto E261729",
-      "ambito": { "leas": null, "presupuesto": "E261729", "tipo": "sin-ticket" },
+      "ambito": {
+        "leas": null,
+        "presupuesto": "E261729",
+        "tipo": "sin-ticket"
+      },
       "porque": "Se le aclaró en el mismo momento, dentro de la propia conversación.",
-      "quien": "Chus", "cuando": "2026-09-04",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
       "revive_si": "Vuelve a preguntar por el importe o rechaza el presupuesto."
     },
     {
       "id": "jerez-recogida",
       "que": "Recogida pedida por WhatsApp en Jerez que parece no tener ticket",
-      "ambito": { "leas": "LEAS-7330", "centro": "Jerez", "tipo": "recogida-sustitucion" },
-      "porque": "Sí tiene ticket: LEAS-7330, en 'Gestionada recogida'. Es la recogida de una máquina de SUSTITUCIÓN, no de una avería, por eso no hay ticket nuevo. Isaac ya la programó para el lunes. En el chat solo aparece el nombre del centro a medias, sin LEAS ni serie: ese es el motivo de que no supiera atarlo.",
-      "quien": "Chus", "cuando": "2026-09-04",
+      "ambito": {
+        "leas": "LEAS-7330",
+        "centro": "Jerez",
+        "tipo": "recogida-sustitucion",
+        "vinculado_a": "LEAS-7324"
+      },
+      "porque": "Sí tiene ticket: LEAS-7330, en 'Gestionada recogida'. Es la recogida de una máquina de SUSTITUCIÓN, no de una avería, por eso no hay ticket nuevo. Isaac ya la programó para el lunes. En el chat solo aparece el nombre del centro a medias, sin LEAS ni serie: ese es el motivo de que no supiera atarlo. Chus dejó comentario en el ticket el 04/09 a las 19:37 informando de que se recoge el lunes, y lo vinculó al caso LEAS-7324.",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
       "revive_si": "La recogida no se hace el lunes 07/09 o el estado del ticket retrocede."
     },
     {
       "id": "elpalo-recogida",
       "que": "Recogida pedida por WhatsApp en El Palo que parece no tener ticket",
-      "ambito": { "leas": "LEAS-7372", "centro": "El Palo", "tipo": "recogida-sustitucion" },
-      "porque": "Sí tiene ticket: LEAS-7372, en 'Gestionada recogida'. Recogida de sustitución, mismo caso que Jerez.",
-      "quien": "Chus", "cuando": "2026-09-04",
+      "ambito": {
+        "leas": "LEAS-7372",
+        "centro": "El Palo",
+        "tipo": "recogida-sustitucion",
+        "vinculado_a": "LEAS-7371"
+      },
+      "porque": "Sí tiene ticket: LEAS-7372, en 'Gestionada recogida'. Recogida de sustitución, mismo caso que Jerez. Chus dejó comentario en el ticket el 04/09 a las 19:37 informando de que se recoge por CTT, y lo vinculó al caso LEAS-7371.",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
       "revive_si": "Pasa una semana sin que la recogida se materialice."
     },
     {
       "id": "miraflores-prestamo",
       "que": "Miraflores sin ticket aparente",
-      "ambito": { "leas": "LEAS-7258", "centro": "Miraflores", "cliente": "SinVello", "tipo": "recogida-sustitucion" },
-      "porque": "Sí tiene ticket: LEAS-7258, en 'En préstamo'. Aquí el aviso era CORRECTO —SinVello no ha contestado todavía en el chat—; lo único falso era decir que no estaba en Jira. El punto se puede volver a sacar, pero por el silencio del cliente, nunca por 'no está en Jira'.",
-      "quien": "Chus", "cuando": "2026-09-04",
+      "ambito": {
+        "leas": "LEAS-7258",
+        "centro": "Miraflores",
+        "cliente": "SinVello",
+        "tipo": "recogida-sustitucion"
+      },
+      "porque": "Sí tiene ticket: LEAS-7258, en 'En préstamo'. Aquí el aviso era CORRECTO —SinVello no ha contestado todavía en el chat—; lo único falso era decir que no estaba en Jira. El punto se puede volver a sacar, pero por el silencio del cliente, nunca por 'no está en Jira'. Chus dejó comentario en el ticket el 04/09 a las 19:37 informando de que se está a la espera de respuesta para efectuar la recogida.",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
       "revive_si": "Sigue sin respuesta de SinVello pasados varios días: entonces se saca como 'préstamo sin confirmar', citando la fecha del último mensaje."
     },
     {
       "id": "7478-7477-hermanas",
       "que": "LEAS-7478 y LEAS-7477 colgadas del ticket que no es",
-      "ambito": { "leas": ["LEAS-7478", "LEAS-7477", "LEAS-7456"], "tipo": "jerarquia" },
+      "ambito": {
+        "leas": [
+          "LEAS-7478",
+          "LEAS-7477",
+          "LEAS-7456"
+        ],
+        "tipo": "jerarquia"
+      },
       "porque": "Están bien: las dos son subtareas hermanas del caso raíz LEAS-7456 y así aparece en el árbol de dependencias. Yo miré mal.",
-      "quien": "Chus", "cuando": "2026-09-04",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
       "revive_si": "Nunca por esto. Solo si el árbol de dependencias cambia de verdad."
     },
     {
       "id": "7456-recogida-antes-de-susti",
       "que": "LEAS-7456 lleva días sin que se recoja la máquina averiada",
-      "ambito": { "leas": "LEAS-7456", "tipo": "recogida-pendiente" },
+      "ambito": {
+        "leas": "LEAS-7456",
+        "tipo": "recogida-pendiente"
+      },
       "porque": "No se puede recoger la averiada hasta que el cliente reciba la de sustitución. Hay un hueco de tiempo entre entrega de la susti y recogida de la averiada, y es lo normal, no un retraso.",
-      "quien": "Chus", "cuando": "2026-09-04",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
       "revive_si": "La sustitución ya está entregada y confirmada y aun así pasan más de 5 días sin gestionar la recogida."
     },
     {
       "id": "7177-7357-devoluciones",
       "que": "Duplicación de inventario en LEAS-7177 y LEAS-7357",
-      "ambito": { "leas": ["LEAS-7177", "LEAS-7357"], "tipo": "duplicacion-inventario" },
+      "ambito": {
+        "leas": [
+          "LEAS-7177",
+          "LEAS-7357"
+        ],
+        "tipo": "duplicacion-inventario"
+      },
       "porque": "NO hay duplicación. Las máquinas fueron devueltas, recibidas en taller y revisadas, y desde ahí se volvieron a prestar. Que el cliente anterior no haya pagado todavía no impide volver a prestarlas: es un activo paralizado hasta que se confirme el pago de la sustitución, y eso es un tema de facturación, no de inventario.",
-      "quien": "Chus", "cuando": "2026-09-04",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
       "revive_si": "Nunca como conflicto de inventario. El seguimiento del cobro va por el bloque de cobros, no por aquí."
     },
     {
       "id": "sustahrd005",
       "que": "SUSTAHRD005 no existe / no consta",
-      "ambito": { "leas": "LEAS-7401", "serie": "SUSTAHRD005", "tipo": "serie-desconocida" },
+      "ambito": {
+        "leas": "LEAS-7401",
+        "serie": "SUSTAHRD005",
+        "tipo": "serie-desconocida"
+      },
       "porque": "La máquina existe. Gonzalo lo confirmó con fotos: salió el 27 de agosto y están subidas al grupo de fotos de equipos. Lo que falta es la ficha en el Inmovilizado, y eso es tarea de Alejandro, no del equipo.",
-      "quien": "Gonzalo", "cuando": "2026-09-04",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
       "revive_si": "Nunca contra el equipo. Vive solo en el bloque de Airtable del panel de Alejandro."
     },
     {
       "id": "sustmhr025",
       "que": "SUSTMHR025 no existe / no consta",
-      "ambito": { "leas": "LEAS-7366", "serie": "SUSTMHR025", "tipo": "serie-desconocida" },
+      "ambito": {
+        "leas": "LEAS-7366",
+        "serie": "SUSTMHR025",
+        "tipo": "serie-desconocida"
+      },
       "porque": "Existe y está en el grupo de fotos de equipos. Confirmado por Gonzalo. Falta la ficha, no la máquina.",
-      "quien": "Gonzalo", "cuando": "2026-09-04",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
       "revive_si": "Nunca contra el equipo. Solo en el bloque de Airtable de Alejandro."
     },
     {
       "id": "c03143",
       "que": "C03143 / H03143 no constan en el Inmovilizado",
-      "ambito": { "leas": "LEAS-5697", "serie": ["C03143", "H03143"], "tipo": "serie-desconocida" },
+      "ambito": {
+        "leas": "LEAS-5697",
+        "serie": [
+          "C03143",
+          "H03143"
+        ],
+        "tipo": "serie-desconocida"
+      },
       "porque": "Gonzalo ya lo corrigió el 04/09. Queda comprobar en Airtable que cuadra, y eso es de Alejandro.",
-      "quien": "Gonzalo", "cuando": "2026-09-04",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
       "revive_si": "Nunca contra el equipo."
     },
     {
       "id": "c003258",
       "que": "C003258 / H003258 con un cero de más",
-      "ambito": { "leas": "LEAS-7140", "serie": ["C003258", "H003258", "H03258"], "tipo": "serie-desconocida" },
+      "ambito": {
+        "leas": "LEAS-7140",
+        "serie": [
+          "C003258",
+          "H003258",
+          "H03258"
+        ],
+        "tipo": "serie-desconocida"
+      },
       "porque": "Gonzalo lo corrigió a H03258 el 04/09.",
-      "quien": "Gonzalo", "cuando": "2026-09-04",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
       "revive_si": "Nunca contra el equipo."
     },
     {
       "id": "7268-nota-nueva",
       "que": "LEAS-7268 sin nota nueva",
-      "ambito": { "leas": "LEAS-7268", "tipo": "sin-movimiento" },
+      "ambito": {
+        "leas": "LEAS-7268",
+        "tipo": "sin-movimiento"
+      },
       "porque": "Falso: Chus escribió a las 16:24 del 04/09. La pasada copió el texto de la pasada anterior en vez de releer el ticket.",
-      "quien": "Chus", "cuando": "2026-09-04",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
       "revive_si": "Pasan 3 días laborables sin comentario nuevo de verdad, comprobado releyendo el ticket en esa misma pasada."
     },
     {
       "id": "7316-7476-tornillo",
       "que": "LEAS-7476 tratado como caso nuevo sin relación con nada",
-      "ambito": { "leas": ["LEAS-7476", "LEAS-7316"], "tipo": "caso-repetido" },
+      "ambito": {
+        "leas": [
+          "LEAS-7476",
+          "LEAS-7316"
+        ],
+        "tipo": "caso-repetido"
+      },
       "porque": "Ya está explicado y acordado: es el mismo centro y la misma pistola. Se reparó el tornillo (LEAS-7316, finalizado el 01/09), se volvió a caer a los dos días y se abrió LEAS-7476 sin citar el anterior. Se acordó dejarlo escrito en comentario.",
-      "quien": "Chus", "cuando": "2026-09-04",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
       "revive_si": "Se vuelve a caer una tercera vez: entonces deja de ser un caso repetido y es una reparación que no funciona."
     }
   ]
