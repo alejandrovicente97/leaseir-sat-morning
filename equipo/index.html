@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAT · Report interno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F3F5F7; --surface:#FFFFFF; --surface-2:#F8FAFB; --surface-3:#EBEEF2;
+  --ink:#0F1620; --ink-soft:#2C3644; --muted:#5D6775; --muted-2:#8B94A2;
+  --divider:#E2E6EB; --divider-soft:#EDF0F3;
+  --accent:#B0431F;
+  --crit:#B22026; --crit-bg:#FCEBEB; --crit-line:#E8A9AC;
+  --warn:#A96C00; --warn-bg:#FBF2DF; --warn-line:#E0C182;
+  --good:#2A7048; --good-bg:#E6F2EA; --good-line:#9CCBAF;
+  --cool:#3D6491; --cool-bg:#E9EFF6; --cool-line:#A9C1DC;
+  --shadow:0 1px 2px rgba(15,22,32,.05), 0 3px 14px rgba(15,22,32,.05);
+  --shadow-lift:0 2px 6px rgba(15,22,32,.07), 0 10px 32px rgba(15,22,32,.08);
+  --r:14px;
+  --sans:'IBM Plex Sans', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --mono:'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --bg:#0C1016; --surface:#151A22; --surface-2:#1A2029; --surface-3:#222933;
+    --ink:#EFF2F6; --ink-soft:#D2D8E0; --muted:#96A0AE; --muted-2:#6A7382;
+    --divider:#232A34; --divider-soft:#1D242D;
+    --accent:#E06B3E;
+    --crit:#EE6A70; --crit-bg:#37191C; --crit-line:#6E2E33;
+    --warn:#D6A147; --warn-bg:#352A11; --warn-line:#6A5426;
+    --good:#5BBA85; --good-bg:#15301F; --good-line:#2C5F41;
+    --cool:#7BA3D4; --cool-bg:#1A2532; --cool-line:#33506F;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.35);
+    --shadow-lift:0 2px 8px rgba(0,0,0,.45), 0 14px 40px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C1016; --surface:#151A22; --surface-2:#1A2029; --surface-3:#222933;
+  --ink:#EFF2F6; --ink-soft:#D2D8E0; --muted:#96A0AE; --muted-2:#6A7382;
+  --divider:#232A34; --divider-soft:#1D242D;
+  --accent:#E06B3E;
+  --crit:#EE6A70; --crit-bg:#37191C; --crit-line:#6E2E33;
+  --warn:#D6A147; --warn-bg:#352A11; --warn-line:#6A5426;
+  --good:#5BBA85; --good-bg:#15301F; --good-line:#2C5F41;
+  --cool:#7BA3D4; --cool-bg:#1A2532; --cool-line:#33506F;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.35);
+  --shadow-lift:0 2px 8px rgba(0,0,0,.45), 0 14px 40px rgba(0,0,0,.45);
+}
+
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:15px; line-height:1.45; -webkit-font-smoothing:antialiased}
+.page{max-width:1280px; margin:0 auto; padding:22px 24px 64px}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums}
+
+.head{display:flex; align-items:baseline; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:14px}
+.head .eyebrow{font-size:11px; text-transform:uppercase; letter-spacing:.16em; color:var(--muted); font-weight:600}
+.head h1{margin:3px 0 0; font-size:19px; font-weight:600; letter-spacing:-0.01em}
+.head .when{font-size:13px; color:var(--muted); text-align:right; font-variant-numeric:tabular-nums}
+.head .when b{color:var(--ink-soft); font-weight:500; display:block}
+
+.tabbar{display:flex; gap:2px; border-bottom:1px solid var(--divider); margin-bottom:20px; align-items:center}
+.tabbar button{background:transparent; border:0; border-bottom:2px solid transparent; font:inherit; font-size:14px; font-weight:500; color:var(--muted); padding:9px 16px; cursor:pointer; margin-bottom:-1px}
+.tabbar button:hover{color:var(--ink-soft)}
+.tabbar button.on{color:var(--ink); border-bottom-color:var(--accent); font-weight:600}
+.tabbar button small{display:block; font-size:11px; font-weight:400; color:var(--muted-2); margin-top:1px}
+.tabbar button.on small{color:var(--muted)}
+.tabbar .spacer{flex:1}
+.tabbar .msgbtn{border:1px solid var(--divider); border-radius:9px; margin-bottom:6px; font-size:12.5px; padding:7px 13px; color:var(--ink-soft); background:var(--surface)}
+.tabbar .msgbtn:hover{background:var(--surface-2); border-bottom-color:var(--divider)}
+.pane{display:none}
+.pane.on{display:block}
+
+/* ═══ Barra de estado ═══ */
+.statebar{display:grid; grid-template-columns:auto 1fr auto; gap:22px; align-items:center; background:var(--surface); border:1px solid var(--divider); border-left:5px solid var(--crit); border-radius:var(--r); box-shadow:var(--shadow-lift); padding:15px 22px; margin-bottom:14px}
+@media (max-width:820px){.statebar{grid-template-columns:1fr; gap:12px}}
+.statebar .lead{display:flex; align-items:center; gap:12px}
+.statebar .lead i{width:12px; height:12px; border-radius:50%; background:var(--crit); box-shadow:0 0 0 4px rgba(178,32,38,.15); flex:none}
+.statebar .lead b{font-size:19px; font-weight:600; letter-spacing:-0.015em; white-space:nowrap}
+.statebar svg{display:block; width:100%; height:44px; overflow:visible}
+.statebar .aside{text-align:right; font-size:12px; color:var(--muted); white-space:nowrap; font-variant-numeric:tabular-nums}
+.statebar .aside b{display:block; font-family:var(--mono); font-size:16px; color:var(--ink-soft); font-weight:600}
+
+/* ═══ Números ═══ */
+.nums{display:grid; grid-template-columns:repeat(5,1fr); gap:11px; margin-bottom:14px}
+@media (max-width:1020px){.nums{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:600px){.nums{grid-template-columns:repeat(2,1fr)}}
+.nm{background:var(--surface); border:0; border-top:3px solid var(--divider); border-radius:var(--r); box-shadow:var(--shadow); padding:14px 16px 15px; text-align:left; font-family:inherit; color:inherit; cursor:pointer; display:flex; flex-direction:column; gap:1px}
+.nm:hover{box-shadow:var(--shadow-lift)}
+.nm:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.nm.c{border-top-color:var(--crit)} .nm.w{border-top-color:var(--warn)} .nm.g{border-top-color:var(--good)}
+.nm .v{font-family:var(--mono); font-size:33px; font-weight:600; letter-spacing:-0.03em; line-height:1.05}
+.nm.c .v{color:var(--crit)} .nm.w .v{color:var(--warn)} .nm.g .v{color:var(--good)}
+.nm .t{font-size:12px; color:var(--ink-soft); font-weight:500; margin-top:4px}
+.nm .s{font-size:11.5px; color:var(--muted-2)}
+
+/* ═══ Acciones de hoy ═══ */
+.todo{background:var(--surface); border-radius:var(--r); box-shadow:var(--shadow); overflow:hidden; margin-bottom:14px}
+.todo > header{padding:13px 20px 12px; border-bottom:1px solid var(--divider); display:flex; align-items:baseline; justify-content:space-between; gap:12px}
+.todo > header h2{margin:0; font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:.1em; color:var(--muted)}
+.todo > header .n{font-family:var(--mono); font-size:12.5px; color:var(--muted-2)}
+.act{display:grid; grid-template-columns:22px 1fr auto auto; gap:13px; align-items:center; padding:12px 20px; border-bottom:1px solid var(--divider-soft)}
+.act:last-child{border-bottom:0}
+.act:hover{background:var(--surface-2)}
+.act input{appearance:none; -webkit-appearance:none; width:19px; height:19px; border:1.5px solid var(--divider); border-radius:6px; background:var(--surface); cursor:pointer; position:relative; flex:none}
+.act input:checked{background:var(--good); border-color:var(--good)}
+.act input:checked::after{content:"✓"; position:absolute; top:-3px; left:3px; color:#fff; font-size:15px; font-weight:700}
+.act .txt{font-size:15px; letter-spacing:-0.005em}
+.act input:checked ~ .txt{text-decoration:line-through; color:var(--muted-2)}
+.act .tag{font-family:var(--mono); font-size:12px; font-weight:600; padding:3px 9px; border-radius:7px; white-space:nowrap}
+.act .tag.c{background:var(--crit-bg); color:var(--crit)}
+.act .tag.w{background:var(--warn-bg); color:var(--warn)}
+.act .tag.n{background:var(--surface-3); color:var(--ink-soft)}
+.act .go{font-size:12px; color:var(--muted); background:transparent; border:1px solid var(--divider); border-radius:7px; padding:4px 10px; cursor:pointer; font-family:inherit; white-space:nowrap}
+.act .go:hover{color:var(--accent); border-color:var(--accent)}
+
+/* ═══ Tablero ═══ */
+.board{display:grid; grid-template-columns:repeat(4,1fr); gap:11px; align-items:start}
+@media (max-width:980px){.board{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.board{grid-template-columns:1fr}}
+.col{background:var(--surface); border-radius:var(--r); box-shadow:var(--shadow); overflow:hidden}
+.col > header{padding:11px 13px 10px; border-bottom:1px solid var(--divider); display:flex; align-items:center; justify-content:space-between; gap:8px}
+.col > header .who{font-size:13px; font-weight:600}
+.col > header .cnt{font-family:var(--mono); font-size:16px; font-weight:600}
+.col.orphan > header{background:var(--crit-bg)}
+.col.orphan > header .who,.col.orphan > header .cnt{color:var(--crit)}
+.col .cards{padding:8px 9px 10px; display:flex; flex-direction:column; gap:5px}
+.tik{display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; padding:6px 9px; border-radius:7px; background:var(--surface-2); border:1px solid var(--divider-soft); text-decoration:none; color:inherit; border-left:3px solid var(--divider)}
+.tik:hover{background:var(--surface-3)}
+.tik.a{border-left-color:var(--crit)} .tik.b{border-left-color:var(--warn)} .tik.c{border-left-color:var(--good)}
+.tik .k{font-family:var(--mono); font-size:11.5px; font-weight:600}
+.tik .st{font-size:10.5px; color:var(--muted); display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.tik .age{font-family:var(--mono); font-size:11.5px; font-weight:600}
+.tik.a .age{color:var(--crit)} .tik.b .age{color:var(--warn)} .tik.c .age{color:var(--muted-2)}
+.col .more{padding:7px 12px 10px; font-size:11.5px; color:var(--muted-2)}
+
+.sec{margin-bottom:14px}
+.sec > h2{margin:0 0 9px; font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:.1em; color:var(--muted)}
+
+/* ═══ Report (se lee) ═══ */
+.rep-head{background:var(--surface); border-radius:var(--r); box-shadow:var(--shadow-lift); padding:24px 28px; margin-bottom:18px; border-left:4px solid var(--accent)}
+.rep-head .k{font-size:11px; text-transform:uppercase; letter-spacing:.15em; color:var(--accent); font-weight:600; margin-bottom:9px}
+.rep-head h2{margin:0 0 10px; font-size:22px; font-weight:600; letter-spacing:-0.02em; text-wrap:balance}
+.rep-head p{margin:0 0 9px; font-size:14px; color:var(--ink-soft); max-width:80ch; line-height:1.6}
+.rep-head p:last-child{margin-bottom:0}
+.hi{background:var(--warn-bg); padding:1px 5px; border-radius:4px; font-weight:600; color:var(--warn)}
+.hi.c{background:var(--crit-bg); color:var(--crit)}
+#p-report .sec > h2{font-size:15px; font-weight:600; text-transform:none; letter-spacing:-0.005em; color:var(--ink); margin-bottom:3px}
+#p-report .sec > .sub{margin:0 0 13px; font-size:12.5px; color:var(--muted); max-width:86ch}
+.card{background:var(--surface); border-radius:var(--r); box-shadow:var(--shadow); padding:19px 22px}
+.two{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+@media (max-width:900px){.two{grid-template-columns:1fr}}
+.tbl{width:100%; border-collapse:separate; border-spacing:0}
+.tbl th,.tbl td{padding:9px 10px; text-align:left; font-size:13px; border-bottom:1px solid var(--divider-soft)}
+.tbl th{color:var(--muted); font-weight:500; font-size:11px; text-transform:uppercase; letter-spacing:.08em; border-bottom-color:var(--divider)}
+.tbl td.n,.tbl th.n{text-align:right; font-family:var(--mono); font-variant-numeric:tabular-nums}
+.tbl td:first-child,.tbl th:first-child{padding-left:2px}
+.tbl td:last-child,.tbl th:last-child{padding-right:2px}
+.tbl tbody tr:last-child td{border-bottom:0}
+.tbl tr.tot td{border-top:1.5px solid var(--divider); border-bottom:0; font-weight:600; padding-top:11px}
+.tbl tr.sep td{background:var(--surface-2); font-weight:600; font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted)}
+.pill{display:inline-block; padding:2px 8px; border-radius:999px; font-size:11.5px; font-weight:500}
+.pill.c{background:var(--crit-bg); color:var(--crit)}
+.pill.w{background:var(--warn-bg); color:var(--warn)}
+.pill.g{background:var(--good-bg); color:var(--good)}
+.pill.n{background:var(--surface-3); color:var(--ink-soft)}
+.pending{background:var(--cool-bg); border:1px dashed var(--cool-line); border-radius:11px; padding:14px 16px; font-size:13px; color:var(--ink-soft); line-height:1.6}
+.pending b{color:var(--cool)}
+.neck{margin-top:14px; padding:11px 14px; background:var(--crit-bg); border-radius:9px; font-size:13px; color:var(--ink-soft); border:1px solid var(--crit-line)}
+.neck b{color:var(--crit)}
+
+.foot{margin-top:26px; padding-top:16px; border-top:1px solid var(--divider); color:var(--muted); font-size:12px; display:flex; flex-wrap:wrap; gap:5px 16px; align-items:baseline}
+.foot a{color:var(--ink-soft); text-decoration:underline; text-decoration-color:var(--divider); text-underline-offset:3px}
+.foot .d{color:var(--muted-2)}
+
+
+/* ═══ Todo pulsable ═══ */
+.calc{cursor:pointer; border-bottom:1px dashed var(--muted-2); transition:color .1s}
+.calc:hover{color:var(--accent); border-bottom-color:var(--accent)}
+td.calc, th.calc{border-bottom:1px solid var(--divider-soft)}
+td.calc:hover{color:var(--accent); background:var(--surface-2)}
+.tbl td.n.calc{text-decoration:underline; text-decoration-style:dotted; text-decoration-color:var(--muted-2); text-underline-offset:3px}
+.tbl td.n.calc:hover{text-decoration-color:var(--accent)}
+.nm, .act .go, .statebar .lead, .statebar .aside{cursor:pointer}
+.statebar .lead:hover b, .statebar .aside:hover b{color:var(--accent)}
+a.jira{font-family:var(--mono); font-size:.94em; font-weight:600; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--divider); white-space:nowrap}
+a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
+.dlg .big{font-family:var(--mono); font-size:38px; font-weight:600; letter-spacing:-0.03em; line-height:1; color:var(--crit); margin-bottom:2px}
+.dlg .bigu{font-size:12px; text-transform:uppercase; letter-spacing:.11em; color:var(--muted); font-weight:600; margin-bottom:15px}
+.dlg .sec2{font-size:11px; text-transform:uppercase; letter-spacing:.11em; color:var(--muted); font-weight:600; margin:16px 0 7px}
+.dlg .fsrc{margin-top:11px; font-family:var(--mono); font-size:11px; color:var(--muted-2)}
+.lnk{display:block; padding:12px 14px; background:var(--surface-2); border:1px solid var(--divider); border-radius:11px; text-decoration:none; color:var(--ink); font-size:13.5px; font-weight:500}
+.lnk:hover{border-color:var(--accent); color:var(--accent)}
+.lnk span{display:block; font-size:11.5px; color:var(--muted); font-weight:400; margin-top:2px}
+.lnk:hover span{color:var(--muted)}
+@media (max-width:820px){.lnk{font-size:12.5px}}
+.hint{font-size:11.5px; color:var(--muted-2); margin-left:6px; font-weight:400}
+
+
+/* ═══ Fichas de cliente ═══ */
+.cli-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:11px}
+@media (max-width:1100px){.cli-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.cli-grid{grid-template-columns:1fr}}
+.cli{background:var(--surface); border-radius:var(--r); box-shadow:var(--shadow); overflow:hidden; border-top:3px solid var(--divider); display:flex; flex-direction:column}
+.cli.ok{border-top-color:var(--good)} .cli.mid{border-top-color:var(--warn)} .cli.bad{border-top-color:var(--crit)}
+.cli > header{padding:13px 15px 11px; border-bottom:1px solid var(--divider-soft)}
+.cli .nm{font-size:14.5px; font-weight:600; letter-spacing:-0.01em}
+.cli .pk{font-size:11.5px; color:var(--muted-2); margin-top:2px; font-variant-numeric:tabular-nums}
+.cli .body{padding:11px 15px 13px; display:flex; flex-direction:column; gap:8px; flex:1}
+.cli .kv{display:flex; justify-content:space-between; align-items:baseline; gap:10px; font-size:12.5px}
+.cli .kv .k{color:var(--muted)}
+.cli .kv .v{font-family:var(--mono); font-variant-numeric:tabular-nums; font-weight:600; color:var(--ink)}
+.cli .kv .v.c{color:var(--crit)} .cli .kv .v.w{color:var(--warn)} .cli .kv .v.g{color:var(--good)}
+.cli .meter{height:7px; background:var(--surface-3); border-radius:4px; overflow:hidden; margin:2px 0 4px}
+.cli .meter i{display:block; height:100%; border-radius:4px}
+.cli .worst{margin-top:auto; padding:9px 15px 11px; border-top:1px solid var(--divider-soft); background:var(--surface-2); font-size:11.5px; color:var(--muted); line-height:1.45}
+.cli .worst b{color:var(--ink-soft); font-weight:600}
+
+
+/* ═══ Report interno ═══ */
+.rep-tools{display:flex; gap:9px; align-items:center; flex-wrap:wrap; margin-bottom:14px}
+.rep-tools button{background:var(--surface); border:1px solid var(--divider); border-radius:10px; font:inherit; font-size:13px; font-weight:500; color:var(--ink); padding:9px 15px; cursor:pointer; box-shadow:var(--shadow)}
+.rep-tools button:hover{border-color:var(--accent); color:var(--accent)}
+.rep-tools button.main{background:var(--accent); color:#fff; border-color:var(--accent)}
+.rep-tools button.main:hover{opacity:.9; color:#fff}
+.rep-tools button.ok{background:var(--good); border-color:var(--good); color:#fff}
+.rep-tools .note{font-size:12px; color:var(--muted-2)}
+.blk{background:var(--surface); border-radius:var(--r); box-shadow:var(--shadow); margin-bottom:11px; overflow:hidden; border-left:4px solid var(--divider)}
+.blk.a{border-left-color:var(--crit)} .blk.b{border-left-color:var(--warn)}
+.blk.c{border-left-color:var(--cool)} .blk.d{border-left-color:var(--good)}
+.blk > header{padding:13px 18px 11px; display:flex; align-items:center; gap:11px; border-bottom:1px solid var(--divider-soft)}
+.blk .ico{font-size:17px; line-height:1}
+.blk .t{font-size:14.5px; font-weight:600; letter-spacing:-0.01em; flex:1}
+.blk .cnt{font-family:var(--mono); font-size:15px; font-weight:600; color:var(--muted)}
+.blk .cp{background:transparent; border:1px solid var(--divider); color:var(--muted); font:inherit; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; font-weight:600; padding:4px 10px; border-radius:7px; cursor:pointer; white-space:nowrap}
+.blk .cp:hover{background:var(--surface-2); color:var(--ink)}
+.blk .cp.ok{color:var(--good); border-color:var(--good-line)}
+.blk .por{padding:10px 18px 0; font-size:12.5px; color:var(--muted); line-height:1.5}
+.blk ul{margin:9px 0 0; padding:0 18px 15px 34px; display:flex; flex-direction:column; gap:6px}
+.blk li{font-size:13.5px; color:var(--ink-soft); line-height:1.5}
+.blk li::marker{color:var(--muted-2)}
+
+/* ═══ Modales ═══ */
+dialog{border:0; border-radius:16px; background:var(--surface); color:var(--ink); box-shadow:0 26px 80px rgba(15,22,32,.3); padding:0; max-width:600px; width:calc(100vw - 36px); max-height:86vh}
+dialog::backdrop{background:rgba(15,22,32,.4)}
+.dlg{padding:21px 25px 23px; overflow-y:auto; max-height:86vh}
+.dlg .k{font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-weight:600; margin-bottom:8px}
+.dlg h3{margin:0 0 12px; font-size:17px; font-weight:600}
+.dlg .r{display:flex; justify-content:space-between; gap:16px; padding:7px 0; border-bottom:1px solid var(--divider-soft); font-size:13px}
+.dlg .r:last-of-type{border-bottom:0}
+.dlg .r .l{color:var(--muted)}
+.dlg .r .v{font-family:var(--mono); font-variant-numeric:tabular-nums}
+.dlg .src{margin-top:13px; padding:11px 13px; background:var(--surface-2); border:1px solid var(--divider); border-radius:9px; font-size:12px; color:var(--muted); line-height:1.55}
+.dlg .src code{font-family:var(--mono); font-size:11.5px; color:var(--ink-soft)}
+.dlg .x{margin-top:15px; float:right; background:transparent; border:1px solid var(--divider); color:var(--ink-soft); font:inherit; font-size:13px; padding:6px 15px; border-radius:8px; cursor:pointer}
+.dlg .x:hover{background:var(--surface-2)}
+.dlg .tk{display:grid; grid-template-columns:78px 1fr auto; gap:11px; align-items:baseline; padding:7px 0; border-bottom:1px solid var(--divider-soft); font-size:12.5px}
+.dlg .tk:last-of-type{border-bottom:0}
+.dlg .tk a{font-family:var(--mono); font-size:11.5px; font-weight:600; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--divider)}
+.dlg .tk a:hover{color:var(--accent)}
+.dlg .tk .q{color:var(--muted); font-style:italic}
+.dlg .tk .d{font-family:var(--mono); font-weight:600; color:var(--crit); white-space:nowrap}
+.dlg .tk .d.w{color:var(--warn)}
+.msg{background:var(--surface-2); border:1px solid var(--divider); border-radius:10px; padding:12px 14px; margin-bottom:11px}
+.msg .to{font-size:11.5px; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:.07em; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; gap:10px}
+.msg .to button{background:transparent; border:1px solid var(--divider); color:var(--muted); font:inherit; font-size:10px; text-transform:uppercase; letter-spacing:.06em; font-weight:600; padding:3px 8px; border-radius:6px; cursor:pointer}
+.msg .to button:hover{background:var(--surface); color:var(--ink)}
+.msg .to button.ok{color:var(--good); border-color:var(--good-line)}
+.msg p{margin:0; font-size:13px; color:var(--ink-soft); line-height:1.55}
+
+.stq{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 12px}
+.stq .q{display:flex;flex-direction:column;gap:2px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--card);cursor:pointer;text-align:left;font:inherit}
+.stq .q:hover{border-color:var(--muted)}
+.stq .q b{font-size:22px;line-height:1;font-variant-numeric:tabular-nums}
+.stq .q span{font-size:11px;color:var(--muted);line-height:1.25}
+.stq .q.c b{color:var(--crit)} .stq .q.w b{color:var(--warn)}
+details.acc{margin:0 0 8px}
+details.acc>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;padding:9px 13px;border:1px solid var(--line);border-radius:9px;background:var(--card);font-size:13px}
+details.acc>summary::-webkit-details-marker{display:none}
+details.acc>summary::before{content:"▸";color:var(--muted);font-size:11px;transition:transform .12s}
+details.acc[open]>summary::before{transform:rotate(90deg)}
+details.acc>summary:hover{border-color:var(--muted)}
+details.acc .badge{font-size:11px;font-weight:700;padding:1px 7px;border-radius:20px;background:var(--line)}
+details.acc .badge.c{color:var(--crit)} details.acc .badge.w{color:var(--warn)}
+details.acc .sm{font-size:11.5px;color:var(--muted);margin-left:auto}
+@media(max-width:760px){.stq{grid-template-columns:repeat(2,1fr)}details.acc .sm{display:none}}
+
+dialog.wide{max-width:860px}
+.fh{display:flex;align-items:flex-start;gap:18px;margin:0 0 16px}
+.fh h3{margin:2px 0 3px;font-size:23px;letter-spacing:-.02em}
+.fh .pk{font-size:12px;color:var(--muted)}
+.fbig{margin-left:auto;text-align:right;flex-shrink:0}
+.fbig b{display:block;font-size:38px;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.fbig span{font-size:11px;color:var(--muted)}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 18px}
+.fk{padding:10px 12px;border:1px solid var(--divider);border-radius:9px}
+.fk b{display:block;font-size:20px;line-height:1.1;font-variant-numeric:tabular-nums}
+.fk span{font-size:11px;color:var(--muted)}
+.flee{font-size:13.5px;line-height:1.62;color:var(--ink-soft);margin:0 0 16px}
+.facc{margin:0 0 16px;padding-left:20px;display:flex;flex-direction:column;gap:7px}
+.facc li{font-size:13.5px;line-height:1.55;color:var(--ink-soft)}
+.facc li::marker{color:var(--muted-2);font-weight:600}
+.fbtns{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 4px}
+.fb{font:inherit;font-size:12px;font-weight:600;padding:8px 14px;border-radius:8px;border:1px solid var(--divider);background:var(--surface-2);color:var(--ink);cursor:pointer;text-decoration:none;display:inline-block}
+.fb:hover{border-color:var(--muted);background:var(--surface)}
+@media(max-width:700px){.fgrid{grid-template-columns:repeat(2,1fr)}.fbig b{font-size:30px}}
+
+.av{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:20px;vertical-align:1px;margin-right:3px;white-space:nowrap}
+.av2{background:rgba(191,120,32,.14);color:var(--warn)}
+.av3{background:rgba(178,44,38,.14);color:var(--crit)}
+.avn{font-size:10.5px;font-weight:700;color:var(--crit);background:rgba(178,44,38,.12);padding:2px 8px;border-radius:20px}
+.avbar{display:flex;align-items:center;gap:12px;padding:10px 14px;margin:0 0 11px;border:1px solid var(--divider);border-radius:9px;font-size:12.5px;color:var(--muted);line-height:1.45}
+.avreset{margin-left:auto;flex-shrink:0;font:inherit;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;color:var(--muted);background:transparent;border:1px solid var(--divider);border-radius:6px;padding:4px 10px;cursor:pointer}
+.avreset:hover{color:var(--ink);border-color:var(--muted)}
+
+.pres{border:1px solid var(--divider);border-left:4px solid var(--accent);border-radius:var(--r);background:var(--surface);margin:0 0 11px;overflow:hidden}
+.pres>header{display:flex;align-items:center;gap:11px;padding:12px 18px 10px;border-bottom:1px solid var(--divider-soft)}
+.pres .ico{font-size:17px;line-height:1}
+.pres .t{font-size:14.5px;font-weight:600;flex:1}
+.pres .t small{display:block;font-weight:400;font-size:11.5px;color:var(--muted);margin-top:1px}
+.pres .cp{background:transparent;border:1px solid var(--divider);color:var(--muted);font:inherit;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;padding:4px 12px;border-radius:6px;cursor:pointer}
+.pres .cp:hover{background:var(--surface-2);color:var(--ink)}
+.pres .cp.ok{color:var(--good);border-color:var(--good-line)}
+.pres pre{margin:0;padding:14px 18px 17px;font:inherit;font-size:12.5px;line-height:1.6;color:var(--ink-soft);white-space:pre-wrap}
+
+.qui{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:20px;background:var(--surface-2);color:var(--muted);white-space:nowrap;margin-left:4px;border:1px solid var(--divider)}
+.qui.qui0{color:var(--crit);border-color:rgba(178,44,38,.3)}
+
+.blk .accion{margin:2px 18px 15px; border:1px solid var(--divider); border-radius:9px; background:var(--surface-2)}
+.blk .accion .txt{font-weight:600}
+
+.ops{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.op{display:flex;flex-direction:column;gap:5px;align-items:stretch;text-align:left;font:inherit;cursor:pointer;
+    padding:13px 15px 12px;border:1px solid var(--divider);border-left:4px solid var(--divider);border-radius:11px;background:var(--surface);box-shadow:var(--shadow)}
+.op:hover{border-color:var(--muted);transform:translateY(-1px)}
+.op.c{border-left-color:var(--crit)} .op.w{border-left-color:var(--warn)} .op.g{border-left-color:var(--good)}
+.op .oh{display:flex;align-items:center;gap:7px}
+.op .oi{font-size:15px;line-height:1}
+.op .ot{font-size:12px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.op .ov{font-size:33px;font-weight:600;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums;margin:1px 0 0}
+.op .ov small{font-size:12px;font-weight:500;color:var(--muted);margin-left:5px;letter-spacing:0}
+.op.c .ov{color:var(--crit)} .op.w .ov{color:var(--warn)}
+.op .os{font-size:11px;color:var(--muted);line-height:1.35;min-height:29px}
+.op .ob{display:block;height:4px;border-radius:3px;background:var(--divider);overflow:hidden}
+.op .ob i{display:block;height:100%;border-radius:3px;background:var(--muted-2)}
+.op.c .ob i{background:var(--crit)} .op.w .ob i{background:var(--warn)}
+.opl{margin:0 0 16px;padding-left:19px;display:flex;flex-direction:column;gap:6px}
+.opl li{font-size:13.5px;line-height:1.5;color:var(--ink-soft)}
+.opa{font-size:13.5px;line-height:1.55;color:var(--ink);font-weight:500;margin:0}
+@media(max-width:980px){.ops{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.ops{grid-template-columns:1fr}}
+.rep-tools .main.alt{background:var(--surface-2);color:var(--ink);border:1px solid var(--divider)}
+
+.qbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:9px 14px;margin:0 0 10px;border:1px solid var(--divider);border-radius:9px;font-size:12.5px}
+.qnota{color:var(--muted);line-height:1.4}
+.qbtn{font:inherit;font-size:12px;font-weight:600;padding:3px 11px;border-radius:20px;border:1px solid var(--divider);background:var(--surface-2);color:var(--ink);cursor:pointer}
+.qbtn:hover{border-color:var(--muted)}
+.qcam{font:inherit;font-size:11.5px;background:none;border:0;color:var(--accent);cursor:pointer;text-decoration:underline;padding:0}
+.resp{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin:6px 0 2px}
+.rb{font:inherit;font-size:10.5px;font-weight:600;padding:2px 9px;border-radius:20px;border:1px solid var(--divider);background:transparent;color:var(--muted);cursor:pointer}
+.rb:hover{border-color:var(--muted);color:var(--ink)}
+.rb.on{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.ri{flex:1;min-width:200px;font:inherit;font-size:12px;padding:3px 9px;border-radius:7px;border:1px solid var(--divider);background:var(--surface-2);color:var(--ink)}
+.rr{width:100%;font-size:12px;color:var(--ink-soft);background:var(--surface-2);border-left:3px solid var(--accent);padding:5px 10px;border-radius:0 7px 7px 0;margin-top:3px;line-height:1.45}
+.re{font-weight:600;color:var(--warn)} .re.ok{color:var(--good)}
+.rf{color:var(--muted-2);font-size:11px;margin-left:4px}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="head">
+    <div>
+      <div class="eyebrow">SAT Leaseir</div>
+      <h1>Report interno del SAT</h1>
+    </div>
+    <div class="when">
+      <b>Jueves, 3 de septiembre 2026</b>
+      Corte 09:30 · Europe/Madrid
+    </div>
+  </header>
+
+  <nav class="tabbar" role="tablist">
+    <button class="on" role="tab" onclick="tab(this,'p-interno')">Report interno<small>los 15 puntos de hoy</small></button>
+    <span class="spacer"></span>
+  </nav>
+
+<div id="p-interno" class="pane on">
+
+  <section class="statebar" style="border-left-color:var(--accent)">
+    <div class="lead"><i style="background:var(--accent);box-shadow:0 0 0 4px rgba(176,67,31,.15)"></i><b>Revisión de las 97 incidencias abiertas</b></div>
+    <div style="font-size:13px;color:var(--ink-soft);line-height:1.5">Solo se auditan los LEAS principales: las subtareas heredan ubicación y datos del padre. Hay 89 subtareas más que no cuentan como fallo.</div>
+    <div class="aside"><b>97 + 89</b>principales y subtareas</div>
+  </section>
+
+  <div class="rep-tools">
+    <button class="main" onclick="cpRes(this)">Copiar resumen · 1 mensaje</button>
+    <button class="main alt" onclick="cpAll(this)">Copiar todo · se parte solo</button>
+    <span class="note">para el grupo <b>SAT Leaseir (Interno)</b>. El resumen cabe en un mensaje; el completo son unos 10 y va numerado. También puedes copiar bloque a bloque.</span>
+  </div>
+
+
+  <div id="quiensoy" class="qbar"></div>
+  <div class="avbar"><span id="avresumen">Primera vez que se dicen todos estos puntos. A partir de mañana, lo que siga igual se marca solo.</span><button class="avreset" onclick="reiniciarAvisos()">Reiniciar contador</button></div>
+  <div id="blks"></div>
+</div>
+
+
+
+<script>
+function tab(btn,id){
+  document.querySelectorAll('.tabbar button[role="tab"]').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById(id).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function tabGo(id){
+  const btns=[...document.querySelectorAll('.tabbar button[role="tab"]')];
+  const b = btns.find(x => (x.getAttribute('onclick')||'').indexOf("'"+id+"'") !== -1);
+  if(b) tab(b,id);
+}
+
+
+// ── Report interno: copiar bloques ──
+const MSG = {"transporte": {"t": "📦 EL TRANSPORTE ES EL CUELLO DE BOTELLA Y NO LO ESTAMOS MIDIENDO", "p": "Trabajamos con seis transportistas a la vez (Palibex, MRW, DHL, DHL Parcel, SEUR, Correos Express, CTT y uno propio) y con ninguno tenemos un seguimiento fiable de punta a punta. No es una queja: es que el 65% del tiempo de ciclo de una incidencia está fuera del taller, y la mayor parte se va aquí. Mientras no se mida por transportista, no hay a quién reclamar.", "l": ["Palibex no tiene seguimiento consultable para el cliente. El enlace que le pasamos pide credenciales y hay que ir dándole el localizador a mano cada vez", "En envíos a Canarias la expedición cambia de transportista a mitad de camino y el número de seguimiento se pierde: hay que pedir uno nuevo al segundo", "Recogidas que se dan por hechas y no lo están: Tomares figuraba recogido por MRW y el equipo seguía en la clínica días después. Cáceres estuvo cinco días sin poder trabajar entre recogidas fallidas", "Incidencia literal del transportista en Cáceres: «pasamos a retirar la mercancía y no nos ayudó nadie, una persona sola no puede bajar la máquina». El centro dice que no fueron. Alguien miente y no tenemos forma de saber quién", "Manacor · el centro avisó de que cerraba por vacaciones hasta el 31/08 y aun así se programó envío y recogida. Un equipo enviado el 14 de agosto seguía sin entregar el 1 de septiembre", "13 de los 20 equipos que van de camino ahora mismo no tienen el enlace de seguimiento puesto en Jira", "PROPUESTA · Medir por transportista: días de recogida, días de entrega, recogidas fallidas y envíos sin tracking. Con tres meses de datos se negocia o se cambia. Hoy no tenemos ni un número que enseñarles"]}, "externo": {"t": "🛠 TÉCNICO EXTERNO: SE GESTIONA Y AHÍ SE QUEDA (20)", "p": "Hay 20 incidencias en «Enviado a técnico externo» y las 20 están sin técnico asignado en Jira. Se avisa al externo, se manda el material… y el ticket se queda ahí. Ni pasa a «Finalizado técnico externo» cuando el técnico acaba, ni queda escrito qué hizo. Resultado: no sabemos si está resuelto, no podemos facturar la intervención y el cliente pregunta antes que nosotros.", "l": ["LEAS-7213 · Epil Point Pavia · 32 d en técnico externo y 14 SIN UNA SOLA NOTA. La última dice que se le recordó a Sincronis. ¿Fueron o no fueron?", "LEAS-7364 · Epil Point Martina Franca · 10 d y una sola nota, del día que se abrió. Por WhatsApp sabemos que el técnico fue: en Jira no consta", "LEAS-7268 · Clínica Dileima (Elha 90450) · 25 d, 10 sin nota", "LEAS-7272 · Clínica No Filters · 25 d · el técnico reparó y la máquina empezó a fugar por la pistola. Retrabajo del externo sin cerrar ni reclamar", "LEAS-7311 · Elha Pisa · 18 d, última nota «se reclama a Sincronis que agilice». Ocho días después, nada", "LEAS-7393 · SinVello Colmenar Viejo · 7 d y una nota. Por WhatsApp el centro dice que el técnico se presentó en festivo sin llamar antes: eso no está en el ticket", "LEAS-7407 · Elha C/Barcelona y LEAS-7378 · SinVello Badalona · 7 d sin nota desde que se avisó al técnico", "LEAS-6891 · Mercedes Gamaza · 65 d en «enviado a técnico externo». Es el récord", "LEAS-7448 · Epil Point Taranto y LEAS-7469 · Elha Cerdanyola · abiertos y enviados a externo con CERO comentarios", "LEAS-7427 · Dermasana Orense · el único comentario del ticket es «_texto enfatizado_». Eso es la plantilla vacía, no una gestión", "REGLA · Cuando el técnico externo termina, el ticket pasa a «Finalizado técnico externo» ese mismo día y se escribe qué hizo y con qué material. Si no, ni se factura ni se sabe si el equipo está bien", "REGLA · Mientras esté con el externo, una nota por semana como mínimo: aunque sea «reclamado, sin fecha todavía». El silencio no es que no pase nada, es que no lo sabemos"]}, "medias": {"t": "📝 A MEDIO GESTIONAR Y SIN UNA SOLA OBSERVACIÓN EN JIRA", "p": "Tickets que alguien ha tocado y ha dejado en un estado intermedio sin escribir en qué punto están. Para el resto del equipo no existen: el que coge el turno siguiente empieza de cero y el cliente pregunta a quien pilla. No hace falta cerrarlos, hace falta un renglón diciendo qué falta y quién lo tiene.", "l": ["LEAS-5904 · Noemi Valero · presupuesto ACEPTADO el 14 de abril, cero comentarios desde entonces, 142 d", "LEAS-7048 · Dermoscan · presupuesto ACEPTADO el 16 de julio, cero comentarios, 49 d", "Elha · cuatro incidencias abiertas a medio gestionar sin ninguna observación. Que las cierre o las escriba quien las tocó", "LEAS-6889 y LEAS-6888 · L Medical G Point · 60 y 62 d en «pendiente de confirmar presupuesto» sin nota de si se ha reclamado al cliente", "LEAS-7190 · Harmonie Salamanca · diodo por debajo del 80% y falta la decisión escrita en el ticket", "LEAS-6198 · Luxlaser André Bélgica · «Andre tenía que hablar con Arturo»: no consta si esa conversación ocurrió", "REGLA · Si dejas una incidencia a medias, escribe en el LEAS en qué punto está y qué falta. Un renglón. Si no está escrito, no existe"]}, "privado": {"t": "🔒 CLIENTES GRANDES ATENDIDOS POR PRIVADO", "p": "Está dicho y se sigue haciendo: los grandes clientes escriben por privado y se les contesta por privado. Ahí no queda registro, no lo ve el resto del equipo y no llega nunca al ticket. Es la raíz de la mitad de las contradicciones entre lo que dice el chat y lo que dice Jira.", "l": ["Norma: si un cliente grande escribe por privado, se le contesta UNA vez remitiéndole al grupo, y la respuesta de verdad se da en el grupo", "Epil Point es el ejemplo extremo de a dónde lleva esto: 144 tickets abiertos por su bot en 3,5 meses y solo 5 menciones de LEAS en 6.436 mensajes", "Sin Vello es el ejemplo contrario: un interlocutor único que abre la incidencia en el portal y cita el LEAS, 45 claves distintas en su chat. Y es la cadena con menos atasco del grupo (7%)", "Lo que se acuerde por chat, se escribe en el LEAS el mismo día. Si no, mañana aparece en este mensaje como contradicción"]}, "epil": {"t": "🇮🇹 EPIL POINT · EL CLIENTE QUE NO PASA POR JIRA (144 vs 9)", "p": "En tres meses y medio su bot ha abierto 144 tickets por WhatsApp desde 64 centros. En Jira tienen 9 abiertas. Cinco menciones de LEAS en 6.436 mensajes. Respondemos en seis minutos de mediana, así que el problema no es la atención: es que nada de esto queda registrado y luego no podemos ni medir ni facturar. Dos cosas para hoy y una regla nueva.", "l": ["HOY · Partes de trabajo de Epil Point: se prometieron el 2 de septiembre. Sin ellos el cliente no acepta las facturas y el cobro se queda parado. Confirmar que se enviaron", "HOY · Mensaje del 3 de septiembre a las 18:05 sobre la formación de Maria Martire en el centro nuevo: sigue sin contestar", "Livorno · ticket del 28 de agosto, intervención el sábado 5 por la mañana. Ocho días con el cliente reclamando a diario. El cuello de botella es Sincronis, no nosotros: hay que ponerles plazo por escrito", "Sesto Fiorentino · manípulo intermitente, el técnico va detrás de Livorno. Taranto · SSD, Giuseppe fue ayer. Avellino · cita el viernes", "Manípulo 40413 de Lecce · parado en fábrica esperando aceptación de presupuesto, con disputa de garantía abierta y Fabio metido por email. Cerrarlo esta semana en un sentido o en otro", "Consola 90943 de Aprilia · pendiente de recogida; el cliente exige entrega y recogida simultáneas. Coordinar con Ernesto", "CALIDAD · Los umbilicales de manípulo son un defecto recurrente, no incidencias sueltas: el de Martina Franca iba por la tercera reparación y ya existe una conexión rediseñada que estamos regalando. Cinco centros en diez días. Esto sube al report de Nacho como coste de garantía", "REGLA NUEVA · Todo ticket que entre por el grupo de WhatsApp de Epil Point se abre en Jira el mismo día y se le responde con el LEAS. Si no, ni medimos su siniestralidad real ni podemos defender una factura"]}, "nadie": {"t": "🚩 SIN TÉCNICO Y PARADAS, FUERA DE CADENA (28)", "p": "De los 43 tickets sin asignar y sin mover más de 15 días, 28 son de clientes que no pertenecen a Elha, Sin Vello, Epil Point, Smart Duck ni Unico Italia. No hay un interlocutor que pregunte por ellos, así que se pudren solos. Cada uno necesita un nombre hoy.", "l": ["LEAS-6048 · Centros Perfect Lase (D. Jaramillo) · inspección de salida · 111 d · está terminado, falta cerrarlo", "LEAS-5904 · Noemi Valero · 2 pedales con PRESUPUESTO YA ACEPTADO · 142 d · es venta parada, servirlo", "LEAS-7048 · Dermoscan · 4 umbilicales con PRESUPUESTO YA ACEPTADO · 49 d · es venta parada, servirlo", "LEAS-7104 y LEAS-7103 · NR Clinics · abiertos 43 d · se prometió por escrito hacerlo en septiembre: es ahora", "LEAS-7214 · Laser Clinic Hospitalet (Sara Bullón) · revisión anual pedida · 31 d · dar fecha", "LEAS-7118 · Corpoderm · en reparación · 21 d · se dijo finales de agosto, ya está vencido", "LEAS-7191 · Harmonie Salamanca · máquina de sustitución en préstamo · 29 d", "LEAS-7148 · Laser Factory Hospitalet · préstamo con el padre ya resuelto · 38 d", "LEAS-7326 · Deseja Lituania · queja de calidad sin investigar · 14 d", "LEAS-7310 · Laser Factory Mollet · queja de calidad sin investigar · 15 d", "El resto (18) son comprobaciones de cobro heredadas de tickets ya cerrados: van en el bloque de subtareas huérfanas"]}, "huerf": {"t": "🧟 SUBTAREAS CON EL TICKET PADRE YA CERRADO (21)", "p": "El principal se cerró y la subtarea se quedó abierta, sin técnico y sin nadie detrás. Ninguna avanza sola. Las cuatro de máquina de sustitución hay que validarlas con Ernesto contra los grupos de logística: si consta recogida o albarán, se cierra; si no consta movimiento, se llama al centro hoy.", "l": ["LEAS-5697 · Smart Duck Paris · consola prestada C03143/H03143 (la averiada es la C00996) · 162 días fuera · sin un comentario en Jira y sin rastro en el grupo de logística · localizarla hoy", "LEAS-7054 · Centro Unico Boccea · en préstamo · padre LEAS-7052 resuelto · 38 d · VALIDAR CON ERNESTO", "LEAS-7148 · Laser Factory Hospitalet · en préstamo · padre LEAS-7146 resuelto · 38 d · VALIDAR CON ERNESTO", "LEAS-7285 · SinVello Cádiz · C00801 · SÍ consta expedición en ENVIOS SAT LEASEIR el viernes: se movió, actualizar Jira y cerrar la subtarea", "LEAS-756 · comprobación de cobro · padre LEAS-578 cancelado · 657 d · cerrar", "LEAS-4265 · comprobación de cobro · padre LEAS-4264 finalizado · 283 d · cerrar", "LEAS-5198 · comprobación de cobro · padre LEAS-5117 cancelado · 197 d · cerrar", "LEAS-5219 · Elha Sant Boi · padre LEAS-5209 cancelado · 196 d · cerrar", "LEAS-5211 · padre LEAS-4749 resuelto · 196 d · cerrar", "LEAS-5830 · padre LEAS-5249 finalizado · 147 d · cerrar", "LEAS-5908 · padre LEAS-5368 cancelado · 142 d · cerrar", "LEAS-6754 · padre LEAS-6753 resuelto · 77 d · cerrar", "LEAS-6835 · Elha Uruguai · padre LEAS-6826 resuelto · 69 d · cerrar", "LEAS-6890 · padre LEAS-6764 resuelto · 64 d · cerrar", "LEAS-7045 · padre LEAS-6805 resuelto · 49 d · cerrar", "LEAS-7102 · padre LEAS-6853 resuelto · 43 d · cerrar", "LEAS-7095 · queja · padre LEAS-7094 resuelto · 41 d · cerrar", "LEAS-7265 · padre LEAS-6903 resuelto · 24 d · cerrar", "LEAS-7289 · padre LEAS-7136 resuelto · 21 d · cerrar", "LEAS-7323 · padre LEAS-7091 resuelto · 15 d · cerrar", "LEAS-7310 · queja · padre LEAS-7309 finalizado · 15 d · cerrar", "Petición a quien lleve la automatización de Jira: que al cerrar un principal se cierren o se reasignen sus subtareas. Si no, esto vuelve a acumularse solo."]}, "ruta": {"t": "🔴 SALIÓ DEL CLIENTE Y NO LLEGA A TALLER (14)", "p": "El SLA de llegada a taller son 8 horas y estos catorce lo han reventado. Mientras el equipo está en tránsito no factura, no se repara y el cliente pregunta. Hay que llamar al transportista hoy, uno por uno.", "l": ["LEAS-6768 · CVL Distribuidor Aparatología  · 66 d fuera de plazo (1596 h) · Gestionado transporte", "LEAS-7320 · Belleza Begoña Tapia  (AHR0019 · 16 d fuera de plazo (393 h) · Gestionado transporte", "LEAS-7325 · Deseja (Lituania) · 16 d fuera de plazo (376 h) · Gestionado transporte", "LEAS-7334 · BEAUTY Centre d'estètica  9015 · 14 d fuera de plazo (345 h) · Gestionado transporte", "LEAS-7360 · SinVello Ibiza · 9 d fuera de plazo (206 h) · Gestionado transporte", "LEAS-7374 · Cleanbody CC La Villa ( 30267  · 8 d fuera de plazo (203 h) · Gestionado transporte", "LEAS-7386 · Belenus · 7 d fuera de plazo (177 h) · Gestionado transporte", "LEAS-7416 · Centro Unico Palermo · 4 d fuera de plazo (86 h) · Pendiente recogida", "LEAS-7343 · Elha Sta teresa · 3 d fuera de plazo (80 h) · Gestionado transporte", "LEAS-7358 · Centri Unico Olbia · 3 d fuera de plazo (80 h) · Gestionado transporte", "LEAS-7441 · Sinvello Goya · 2 d fuera de plazo (57 h) · Gestionado transporte", "LEAS-7361 · Elha Martín el Humano · 1 d fuera de plazo (35 h) · Gestionado transporte", "LEAS-7450 · No filters cliente de Dinamica · 1 d fuera de plazo (34 h) · Gestionado transporte", "LEAS-7412 · Sinvello Provenza · 1 d fuera de plazo (18 h) · Gestionado transporte", "El de CVL lleva 66 días en «Gestionado transporte»: eso ya no es un retraso de transporte, es un equipo que nadie ha buscado"]}, "maps": {"t": "📍 FALTA EL LINK DE UBICACIÓN (6)", "p": "Solo cuenta en los principales: las subtareas heredan la ubicación del padre y no hace falta ponérsela. De 101 principales, seis no la tienen.", "l": ["LEAS-5904 · Noemi Valero · 142 d parado · con el presupuesto ya aceptado", "LEAS-6048 · Daniel Jaramillo (Grupo Dos) · 112 d · en inspección de salida · 2.898 €", "LEAS-6198 · Luxlaser Andre Bélgica · 21 d · pendiente de confirmar presupuesto", "LEAS-7455 · BiNatural consola 20046 · recién abierto, ponedla ya", "LEAS-7444 · Miguel Parra (ex-Brull) · recién abierto", "LEAS-7453 · JD Aesthetics · recién abierto"]}, "track": {"t": "🚚 FALTA EL TRACKING DEL TRANSPORTE (13 de 20 en ruta)", "p": "Dos de cada tres equipos que van de camino no tienen el enlace de seguimiento. Sin él no sabemos dónde está la máquina ni podemos contestar al cliente.", "l": ["LEAS-7230 · SinVello Albacete · 27 d en pendiente de recogida", "LEAS-7332 · Epil Point Specialisti · 14 d en pendiente de recogida", "LEAS-7334 · Beauty Centre d'Estètica 90159 · 14 d · ya en transporte y sin tracking", "LEAS-7430 · Elha Isaac Albéniz · 3 d", "LEAS-7443 · Elha Vilanova · 2 d", "LEAS-7445 · Elha Caracol · 2 d", "LEAS-7343 · Elha Sta Teresa · en transporte, y con el SLA reventado", "LEAS-7320 · Belleza Begoña Tapia · en transporte", "LEAS-7325 · Deseja (Lituania) · en transporte", "LEAS-7374 · Cleanbody CC La Villa · en transporte, 202 h fuera de plazo", "LEAS-7416 · Centro Unico Palermo · pendiente de recogida", "LEAS-7450 · No Filters (Dinámica Impulsos) · en transporte", "LEAS-7466 · Sinvello Teatinos · pendiente de recogida"]}, "parado": {"t": "⏸ INCIDENCIAS PARADAS MÁS DE 15 DÍAS (18)", "p": "Solo incidencias reales, sin contar subtareas. Las 34 subtareas paradas van aparte: 20 son de administración (cobros) y 11 de sustituciones.", "l": ["LEAS-5904 · Noemi Valero · 142 d · presupuesto aceptado y sin ejecutar", "LEAS-6048 · Daniel Jaramillo · 112 d · en inspección de salida · 2.898 €", "LEAS-4443 · Dermoscan · 101 d · la aseguradora rechazó y el cliente canjea: cerrar", "LEAS-4908 · Elha Pintor Felo Monzón · 100 d · abierto sin triar", "LEAS-6889 · L Medical G Point · 62 d · pendiente de confirmar presupuesto", "LEAS-6888 · L Medical G Point · 60 d · pendiente de confirmar presupuesto", "LEAS-7048 · Dermoscan · 49 d · presupuesto aceptado y sin ejecutar", "LEAS-7103 · NR Clinics · 43 d · prometido para septiembre, ya estamos", "LEAS-7104 · NR Clinics · 43 d · prometido para septiembre, ya estamos", "LEAS-6779 · Centri Unico Campania · 38 d · en reparación", "LEAS-7214 · Laser Clinic Hospitalet · 31 d · abierto sin triar", "LEAS-7230 · SinVello Albacete · 27 d · pendiente de recogida y sin tracking", "LEAS-7118 · Corpoderm · 22 d · dijimos finales de agosto para el cambio de Bahía", "LEAS-7190 · Harmonie Salamanca · 22 d · diodo por debajo del 80%, falta decisión", "LEAS-6198 · Luxlaser Andre Bélgica · 21 d · Andre tenía que hablar con Arturo", "LEAS-7188 · Centro Unico Boccea · 21 d · preparando presupuesto", "…y 2 más"]}, "repara": {"t": "🔧 REPARACIÓN FUERA DE PLAZO (70)", "p": "El compromiso de reparación con el cliente son 80 horas. Setenta incidencias lo han pasado. Los catorce peores, y ojo a los primeros: no son retrasos de taller, son presupuestos sin confirmar y tickets que se quedaron parados meses.", "l": ["LEAS-4443 · Dermoscan · 258 d fuera de plazo (6204 h) · Pendiente confirmación presupuesto", "LEAS-6048 · Daniel Jaramillo (Grupo Dos) · 127 d fuera de plazo (3041 h) · Inspección de salida", "LEAS-6198 · Luxlaser andre belgica · 112 d fuera de plazo (2700 h) · Pendiente confirmación presupuesto", "LEAS-6765 · Bella Forme · 74 d fuera de plazo (1768 h) · En cola taller", "LEAS-6768 · CVL Distribuidor Aparatología  · 74 d fuera de plazo (1767 h) · Gestionado transporte", "LEAS-6779 · Centri Unico Campania BS00019 · 71 d fuera de plazo (1697 h) · En reparación", "LEAS-6879 · Brull · 63 d fuera de plazo (1502 h) · En reparación", "LEAS-6891 · Mercedes Gamaza Laser y Spa (  · 62 d fuera de plazo (1479 h) · Enviado a técnico externo", "LEAS-6888 · L Medical G point · 62 d fuera de plazo (1478 h) · Pendiente confirmación presupuesto", "LEAS-6889 · L Medical G point · 62 d fuera de plazo (1478 h) · Pendiente confirmación presupuesto", "LEAS-6906 · Daniel JAramillo Holea · 61 d fuera de plazo (1455 h) · En reparación", "LEAS-6907 · Apain Estetika ( AHR0071) · 61 d fuera de plazo (1454 h) · Presupuesto preparado pendiente de enviar", "LEAS-7121 · Smart duck paris 15 Convention · 39 d fuera de plazo (925 h) · En reparación", "LEAS-7188 · Centro Unico Boccea SRF00014 · 33 d fuera de plazo (781 h) · En preparación presupuesto", "…y 56 más, todos con el SLA de Jira reventado", "Los cuatro primeros suman más de 500 días de retraso entre ellos. Ninguno está en el banco de trabajo: están esperando una decisión que nadie ha pedido"]}, "prestamo": {"t": "🔁 PRÉSTAMOS FUERA DE PLAZO (30)", "p": "Máquina nuestra en casa del cliente pasado el plazo. Cada una es flota que no factura y que no podemos prestar a otro. Treinta de las 34 sustituciones activas están fuera de plazo.", "l": ["LEAS-5697 · Smart Duck Paris · 159 d fuera de plazo (3805 h) · En préstamo", "LEAS-6716 · Elha Santa Coloma · 77 d fuera de plazo (1837 h) · Gestionada recogida", "LEAS-7028 · SinVello! Tomares | Depilación · 48 d fuera de plazo (1163 h) · Equipo devuelto", "LEAS-7054 · Centro Unico Boccea · 46 d fuera de plazo (1111 h) · En préstamo", "LEAS-7112 · sin centro informado · 40 d fuera de plazo (970 h) · Gestionada recogida", "LEAS-7140 · Smart duck paris 15 Convention · 39 d fuera de plazo (925 h) · En préstamo", "LEAS-7148 · Laser Factory Hospitalet · 38 d fuera de plazo (920 h) · En préstamo", "LEAS-6780 · Centri Unico Campania BS00019 · 36 d fuera de plazo (857 h) · Equipo devuelto", "LEAS-7158 · sin centro informado · 35 d fuera de plazo (849 h) · Gestionada recogida", "LEAS-7162 · sin centro informado · 35 d fuera de plazo (832 h) · En préstamo", "LEAS-7177 · Sinvello Ventas · 33 d fuera de plazo (784 h) · Equipo devuelto", "LEAS-7191 · Harmonie Salamanca · 32 d fuera de plazo (778 h) · En préstamo", "LEAS-7237 · Smart Duck Labege C003342/H033 · 26 d fuera de plazo (635 h) · En préstamo", "LEAS-7227 · Elha Limoneros · 25 d fuera de plazo (594 h) · En préstamo", "…y 16 más, todos con el SLA de Jira reventado", "Nueve de estas figuran ya como devueltas o con recogida gestionada y siguen abiertas: ésas se cierran hoy sin tocar nada"]}, "cerrar": {"t": "✅ TERMINADOS Y SIN FINALIZAR (5)", "p": "El equipo ya está con el cliente. Solo falta mover el ticket a Finalizada. Ojo: «Resuelto» no es el final del circuito — el ticket sigue vivo hasta que se pone en Finalizada, y mientras tanto ni cierra el ciclo ni deja de contar. Esto es lo que nos infla los tiempos medios.", "l": ["LEAS-7315 · Belenus · devuelto a cliente, solo falta finalizarlo", "LEAS-7321 · Dermoscan · devuelto a cliente, solo falta finalizarlo", "LEAS-7324 · SinVello Jerez · devuelto a cliente, solo falta finalizarlo", "LEAS-6048 · Centros Perfect Lase · 111 d en inspección de salida · 2.898 € · está hecho desde hace meses", "LEAS-7436 · Radiante Estética Avanzada · en inspección de salida", "RECORDATORIO · Dejar un ticket en «Resuelto» no lo termina: hay que pasarlo a «Finalizada». Hoy arrastramos 1.082 tickets parados en Resuelto, casi todos subtareas, con una mediana de 654 días ahí quietos"]}, "telegram": {"t": "💬 TELEGRAM DICE UNA COSA Y JIRA OTRA (2)", "p": "Lo que se habla por chat no llega al ticket. En cuanto el bot esté en los grupos esto sale solo cada mañana.", "l": ["LEAS-3827 · Clínica Cibeles CC Holea · Jira dice en fábrica desde hace 227 d, y en Telegram el cliente pidió el código mensual de la máquina el 7 de agosto: está funcionando. Cerrar y facturar los 7.333 €", "Mel Clinics Castellón · consola lista para recoger desde el 8 de agosto y sin incidencia abierta. Además el centro escribe también por WhatsApp"]}, "equipo": {"t": "👏 CÓMO VA EL EQUIPO", "p": "Lo que sí funciona, para que se diga también.", "l": ["Iván Lozano: 274 presupuestos y 111 equipos a salida desde mayo. El que más produce con diferencia", "Jonathan Zarauza: 219 presupuestos y 76 salidas. Mueve sus tickets todos los días", "Fran Fernández: 148 presupuestos y 68 salidas, y el que mejor documenta los informes", "El taller repara en 4 días de mediana. El cuello no está en el banco de trabajo", "Pendiente: 74 tickets sin responsable asignado. El que coge un trabajo, que se ponga en el ticket"]}};
+
+const ORDEN = ["ruta", "maps", "track", "nadie", "huerf", "epil", "parado", "repara", "prestamo", "cerrar", "externo", "transporte", "medias", "privado", "telegram"];
+
+const ULT = {"LEAS-4443": "Borja|17/04", "LEAS-5833": "Borja|asig", "LEAS-6048": "Jesús|27/04", "LEAS-6198": "Borja|13/08", "LEAS-6716": "Isaac|01/09", "LEAS-6765": "Borja|28/07", "LEAS-6768": "Jesús|27/08", "LEAS-6779": "Francisco|24/07", "LEAS-6879": "Isaac|25/08", "LEAS-6888": "Francisco|asig", "LEAS-6889": "Francisco|asig", "LEAS-6891": "Isaac|03/09", "LEAS-6906": "Borja|13/08", "LEAS-6907": "Isaac|21/08", "LEAS-7028": "Isaac|28/08", "LEAS-7103": "Isaac|22/07", "LEAS-7104": "Isaac|22/07", "LEAS-7118": "Borja|13/08", "LEAS-7121": "Jonathan|03/09", "LEAS-7158": "Isaac|03/09", "LEAS-7188": "Ernesto|30/07", "LEAS-7190": "Jonathan|12/08", "LEAS-7213": "Gonzalo|04/09", "LEAS-7247": "Isaac|20/08", "LEAS-7249": "Borja|11/08", "LEAS-7256": "Jonathan|02/09", "LEAS-7268": "Isaac|25/08", "LEAS-7270": "Iván|21/08", "LEAS-7272": "Jesús|26/08", "LEAS-7282": "Isaac|02/09", "LEAS-7299": "Isaac|24/08", "LEAS-7311": "Isaac|27/08", "LEAS-7312": "Isaac|03/09", "LEAS-7315": "Isaac|17/08", "LEAS-7320": "Isaac|03/09", "LEAS-7321": "Jesús|19/08", "LEAS-7324": "Jesús|19/08", "LEAS-7325": "Isaac|03/09", "LEAS-7332": "Isaac|20/08", "LEAS-7333": "Isaac|20/08", "LEAS-7334": "Isaac|20/08", "LEAS-7335": "Iván|04/09", "LEAS-7343": "Gonzalo|04/09", "LEAS-7349": "Isaac|03/09", "LEAS-7355": "Isaac|24/08", "LEAS-7358": "Jesús|31/08", "LEAS-7360": "Jesús|25/08", "LEAS-7361": "Isaac|02/09", "LEAS-7364": "Jesús|25/08", "LEAS-7374": "Isaac|03/09", "LEAS-7378": "Gonzalo|28/08", "LEAS-7379": "Isaac|03/09", "LEAS-7393": "Jesús|28/08", "LEAS-7397": "Jesús|31/08", "LEAS-7403": "Jonathan|02/09", "LEAS-7405": "Iván|asig", "LEAS-7406": "Gonzalo|04/09", "LEAS-7407": "Isaac|28/08", "LEAS-7413": "Isaac|02/09", "LEAS-7419": "Jesús|31/08", "LEAS-7420": "Isaac|03/09", "LEAS-7421": "Jesús|31/08", "LEAS-7423": "Francisco|asig", "LEAS-7424": "Francisco|01/09", "LEAS-7425": "Francisco|01/09", "LEAS-7426": "Isaac|02/09", "LEAS-7427": "Gonzalo|04/09", "LEAS-7430": "Isaac|01/09", "LEAS-7434": "Gonzalo|01/09", "LEAS-7438": "Jesús|01/09", "LEAS-7441": "Isaac|03/09", "LEAS-7442": "Jesús|02/09", "LEAS-7443": "Isaac|02/09", "LEAS-7444": "Jesús|03/09", "LEAS-7447": "Jesús|02/09", "LEAS-7450": "Isaac|03/09", "LEAS-7453": "Isaac|03/09", "LEAS-7455": "Jesús|02/09", "LEAS-7457": "Isaac|03/09", "LEAS-7458": "Jesús|02/09", "LEAS-7461": "Jesús|02/09", "LEAS-7467": "Gonzalo|03/09", "LEAS-7470": "Jesús|03/09"};
+
+function quien(t){
+  const m = t.match(/\bLEAS-\d{3,5}\b/); if(!m) return null;
+  const u = ULT[m[0]]; if(!u) return {txt:"sin gestionar aún", nadie:true};
+  const [n,f] = u.split("|");
+  return {txt: f==="asig" ? ("asignado a "+n) : ("último: "+n+(f?", "+f:"")), nadie:false};
+}
+function urlsDe(t){
+  const k = [...new Set((t.match(/\bLEAS-\d{3,5}\b/g)||[]))];
+  return k.map(x => "leaseir.atlassian.net/browse/"+x).join("  ");
+}
+
+const CAD = {"ruta": ["Gonzalo", "Borja", "Isaac"], "track": ["Gonzalo", "Borja", "Isaac"], "prestamo": ["Gonzalo", "Borja", "Isaac"], "transporte": ["Gonzalo", "Borja", "Isaac"], "externo": ["Gonzalo", "Chus", "Isaac"], "repara": ["Chus", "Gonzalo", "Isaac"], "epil": ["Chus", "Gonzalo", "Isaac"], "maps": ["Gonzalo", "Borja", "Isaac"], "nadie": ["Isaac", "Gonzalo", "Borja"], "parado": ["Isaac", "Gonzalo", "Borja"], "cerrar": ["Borja", "Gonzalo", "Isaac"], "huerf": ["Isaac", "Borja", "Gonzalo"], "medias": ["Isaac", "Gonzalo", "Borja"], "privado": ["Isaac", "Chus", "Gonzalo"], "telegram": ["Isaac", "Gonzalo", "Chus"]};
+
+// Cadena de responsabilidad. Siempre tres nombres: quien lo tiene, a quién se lo pide
+// si no llega, y a quién se lo pide ese segundo. Siempre por el grupo, para que quede constancia.
+const FUERA = {"Cristina":"de vacaciones hasta el 21 de septiembre","Borja":"de vacaciones hasta el miércoles"};
+const NOTA_HOY = {"Chus":"hoy entra a las 12:00"};
+function disp(n){ return !FUERA[n]; }
+function cadena(k, t){
+  const base = (CAD[k] || ["Isaac","Gonzalo","Borja"]).filter(disp);
+  const GRUPO = ["Isaac","Chus","Gonzalo","Borja","Cristina"].filter(disp);
+  const q = quien(t), n = nivel(k,t);
+  const huerfano = !q || q.nadie;
+  let titular = huerfano ? base[0] : ((q.txt.match(/(?:último|asignado a):?\s*([A-Za-zÁÉÍÓÚÑáéíóúñ]+)/)||[])[1] || base[0]);
+  const fuera = !huerfano && GRUPO.indexOf(titular) === -1;
+  let cab = huerfano ? ("sin dueño · lo coge " + titular) : q.txt;
+  if(fuera){ titular = base[0]; cab += " · en el grupo lo lleva " + titular; }
+  const libres = base.filter(x => x !== titular);
+  const b = libres[0], c = libres[1] || GRUPO.find(x => x !== titular && x !== b);
+  if(n>=3) return cab + " · TERCER AVISO: hoy queda hecho. Si " + titular + " no puede, se lo pide a " + b +
+    " por este grupo, y si " + b + " tampoco llega, " + b + " se lo pide a " + c + ". Que quede escrito aquí";
+  if(n===2) return cab + " · si hoy no llegas, pídeselo a " + b + " por este grupo, que quede constancia";
+  const nt = NOTA_HOY[titular] ? " (" + NOTA_HOY[titular] + ")" : "";
+  return cab + nt + " · después de " + titular + ": " + b + ", y luego " + c;
+}
+
+const BMETA = {"ruta": ["a", "🔴", "14"], "maps": ["b", "📍", "6"], "track": ["b", "🚚", "13"], "nadie": ["a", "🚩", "28"], "huerf": ["a", "🧟", "21"], "epil": ["a", "🇮🇹", "144"], "parado": ["a", "⏸", "18"], "repara": ["b", "🔧", "70"], "prestamo": ["b", "🔁", "30"], "cerrar": ["c", "✅", "5"], "externo": ["a", "🛠", "20"], "transporte": ["b", "📦", "6"], "medias": ["a", "📝", "6"], "privado": ["a", "🔒", "—"], "telegram": ["c", "💬", "2"], "equipo": ["d", "👏", "—"]};
+const BTIT  = {"ruta": "Salió del cliente y no llega a taller", "maps": "Falta el link de ubicación", "track": "Falta el tracking del transporte", "nadie": "Sin técnico y paradas, fuera de cadena", "huerf": "Subtareas con el ticket padre ya cerrado", "epil": "Epil Point · el cliente que no pasa por Jira", "parado": "Incidencias paradas más de 15 días", "repara": "Reparación fuera de plazo", "prestamo": "Préstamos fuera de plazo", "cerrar": "Terminados y sin cerrar", "externo": "Técnico externo: se gestiona y ahí se queda", "transporte": "El transporte, el cuello de botella sin medir", "medias": "A medio gestionar y sin observación en Jira", "privado": "Clientes grandes atendidos por privado", "telegram": "Telegram dice una cosa y Jira otra", "equipo": "Cómo va el equipo"};
+
+// ── Acumulación de avisos: 2ª vez campana, 3ª en rojo ──
+const HOYISO = new Date().toISOString().slice(0,10);
+function idLinea(k, t){
+  const m = t.match(/\bLEAS-\d{3,5}\b/);
+  return m ? m[0] : k + '|' + t.replace(/\s+/g,' ').slice(0,44);
+}
+function leerAvisos(){ try{ return JSON.parse(localStorage.getItem('sat.avisos')||'{}'); }catch(e){ return {}; } }
+function registrarAvisos(){
+  const d = leerAvisos(), vivos = {};
+  ORDEN.forEach(k => { if(k!=='equipo') MSG[k].l.forEach(t => { vivos[idLinea(k,t)] = 1; }); });
+  Object.keys(d).forEach(id => { if(!vivos[id]) delete d[id]; });
+  Object.keys(vivos).forEach(id => {
+    if(!d[id]) d[id] = {n:1, ini:HOYISO, ult:HOYISO};
+    else if(d[id].ult !== HOYISO){ d[id].n++; d[id].ult = HOYISO; }
+  });
+  try{ localStorage.setItem('sat.avisos', JSON.stringify(d)); }catch(e){}
+  return d;
+}
+let AV = registrarAvisos();
+function nivel(k, t){ const a = AV[idLinea(k,t)]; return (k==='equipo'||!a) ? 1 : a.n; }
+function marcaTxt(k, t){ const n = nivel(k,t); return n>=3 ? '[!! '+n+'º AVISO] ' : (n===2 ? '[! 2º aviso] ' : ''); }
+function marcaHtml(k, t){
+  const n = nivel(k,t);
+  if(n>=3) return '<span class="av av3" title="Dicho '+n+' veces y sigue igual">🔴 '+n+'º aviso</span> ';
+  if(n===2) return '<span class="av av2" title="Segunda vez que se dice">🔔 2º aviso</span> ';
+  return '';
+}
+function contarAvisos(){
+  let dos=0, tres=0;
+  ORDEN.forEach(k => { if(k!=='equipo') MSG[k].l.forEach(t => { const n=nivel(k,t); if(n>=3) tres++; else if(n===2) dos++; }); });
+  return {dos:dos, tres:tres};
+}
+
+// ── Respuestas del equipo (capacidad db) ──
+let DB = null, YO = null, RESP = {};
+const NOMBRES = ["Isaac","Chus","Gonzalo","Borja","Cristina","Ernesto","Jonathan","Bea","Ivan","Alejandro"];
+function idPunto(k, t){ return (k + "__" + idLinea(k, t)).replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 180); }
+function leerYo(){ try{ return localStorage.getItem("sat.yo"); }catch(e){ return null; } }
+function fijarYo(n){ YO = n; try{ localStorage.setItem("sat.yo", n); }catch(e){} pintarYo(); renderInterno(); }
+function pintarYo(){
+  const c = document.getElementById("quiensoy"); if(!c) return;
+  if(!DB){ c.innerHTML = '<span class="qnota">Las respuestas del equipo solo funcionan en el panel compartido de Claude. Aquí puedes leer, pero no escribir.</span>'; return; }
+  c.innerHTML = YO
+    ? '<span class="qnota">Estás respondiendo como <b>'+YO+'</b>. <button class="qcam" onclick="fijarYo(null)">cambiar</button></span>'
+    : '<span class="qnota">¿Quién eres? </span>' + NOMBRES.map(n => '<button class="qbtn" onclick="fijarYo(\''+n+'\')">'+n+'</button>').join('');
+}
+async function initDB(){
+  DB = (typeof claude !== "undefined" && claude && claude.use)
+        ? await claude.use("db").catch(()=>null)
+        : null;
+  YO = leerYo();
+  pintarYo();
+  if(!DB) return;
+  try{
+    DB.collection("respuestas").onSnapshot(snap => {
+      RESP = {};
+      snap.forEach(d => { RESP[d.id] = d.data(); });
+      renderInterno();
+    });
+  }catch(e){ console.error(e); }
+}
+async function responder(k, t, estado, texto){
+  if(!DB || !YO) return;
+  const id = idPunto(k, t);
+  try{
+    await DB.doc("respuestas/" + id).set({
+      estado: estado || "", texto: texto || "", quien: YO,
+      cuando: new Date().toISOString(), bloque: k,
+      ticket: (t.match(/\bLEAS-\d{3,5}\b/)||[])[0] || ""
+    });
+  }catch(e){ console.error(e); }
+}
+function marcar(k, t, estado, btn){
+  const id = idPunto(k, t), prev = RESP[id] || {};
+  responder(k, t, prev.estado === estado ? "" : estado, prev.texto || "");
+}
+function comentar(k, t, inp){
+  const id = idPunto(k, t), prev = RESP[id] || {};
+  responder(k, t, prev.estado || "", inp.value.trim());
+  inp.blur();
+}
+function respHtml(k, t){
+  const id = idPunto(k, t), r = RESP[id];
+  let h = '<div class="resp">';
+  if(DB && YO){
+    ["Hecho","En ello","No es así"].forEach(e => {
+      h += '<button class="rb'+(r && r.estado===e ? ' on' : '')+'" onclick="marcar(\''+k+'\',this.closest(\'li\').dataset.t,\''+e+'\',this)">'+e+'</button>';
+    });
+    h += '<input class="ri" placeholder="añadir un comentario y pulsar Enter" value="'+((r&&r.texto)||'').replace(/"/g,'&quot;')+'" onkeydown="if(event.key===\'Enter\')comentar(\''+k+'\',this.closest(\'li\').dataset.t,this)">';
+  }
+  if(r && (r.estado || r.texto)){
+    h += '<div class="rr"><b>'+(r.quien||'')+'</b>'+(r.estado ? ' · <span class="re'+(r.estado==='Hecho'?' ok':'')+'">'+r.estado+'</span>' : '')+
+         (r.texto ? ' · '+r.texto : '')+' <span class="rf">'+(r.cuando||'').slice(11,16)+'</span></div>';
+  }
+  return h + '</div>';
+}
+
+function renderInterno(){
+  const c = document.getElementById('blks'); if(!c) return;
+  let h = '';
+  ORDEN.forEach(k => {
+    const b = MSG[k], m = BMETA[k];
+    const alto = b.l.filter(t => nivel(k,t)>=3).length;
+    h += '<div class="blk '+(alto ? 'a' : m[0])+'">'
+      +  '<header><span class="ico">'+m[1]+'</span><span class="t">'+BTIT[k]+'</span>'
+      +  (alto ? '<span class="avn">'+alto+' en rojo</span>' : '')
+      +  '<span class="cnt">'+m[2]+'</span>'
+      +  '<button class="cp" onclick="cpBlk(\''+k+'\',this)">Copiar</button></header>'
+      +  '<div class="por">'+b.p+'</div><ul>';
+    b.l.forEach(t => { const q = quien(t), c = cadena(k,t);
+      h += '<li data-t="'+t.replace(/"/g,'&quot;')+'">'+marcaHtml(k,t)+t+(c ? ' <span class="qui'+((!q||q.nadie)?' qui0':'')+'">'+c+'</span>' : '')+respHtml(k,t)+'</li>'; });
+    h += '</ul></div>';
+  });
+  c.innerHTML = h;
+  linkTickets(c);
+  const r = document.getElementById('avresumen');
+  if(r){
+    const a = contarAvisos();
+    r.innerHTML = a.tres
+      ? '<b style="color:var(--crit)">'+a.tres+' puntos van por el tercer aviso o más</b> y '+a.dos+' por el segundo. Los rojos ya no son un recordatorio: son un problema de seguimiento y toca pedir fecha de cierre.'
+      : (a.dos ? '<b style="color:var(--warn)">'+a.dos+' puntos se repiten por segunda vez.</b> Si mañana siguen igual pasan a rojo.'
+               : 'Primera vez que se dicen todos estos puntos. A partir de mañana, lo que siga igual se marca solo.');
+  }
+}
+function reiniciarAvisos(){
+  if(!confirm('Esto borra el histórico de avisos y todo vuelve a contar desde hoy. ¿Seguro?')) return;
+  try{ localStorage.removeItem('sat.avisos'); }catch(e){}
+  AV = registrarAvisos(); renderInterno();
+}
+
+function txtBlk(id){
+  const b = MSG[id];
+  return b.t + "\n" + b.p + "\n" + b.l.map(x => {
+    const c = cadena(id,x), u = urlsDe(x);
+    return "• " + marcaTxt(id,x) + x + (c ? "  [" + c + "]" : "") + (u ? "\n  " + u : "");
+  }).join("\n");
+}
+function cabecera(){
+  const f = new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
+  const a = contarAvisos();
+  let av = "";
+  if(a.tres) av = "\n[!!] " + a.tres + " puntos van ya por el tercer aviso o más. En esos no quiero explicación, quiero fecha de cierre.";
+  else if(a.dos) av = "\n[!] " + a.dos + " puntos se repiten por segunda vez. Si mañana siguen igual pasan a rojo.";
+  return "REVISIÓN SAT · " + f.charAt(0).toUpperCase() + f.slice(1) +
+    "\nRepaso de las 97 incidencias principales abiertas (hay 89 subtareas más que no cuentan como fallo). Cada LEAS lleva su enlace en Jira." +
+    "\n[!] = segunda vez que se dice · [!!] = tercera o más"
+    + "\nEntre corchetes va quién lo tiene. Si nadie lo ha tocado, ahí está el nombre de quien lo coge por defecto: no es de otro, es suyo."
+    + "\nSi a la segunda vez sigue igual, el que lo tiene se lo pide al siguiente POR ESTE GRUPO, para que quede constancia. Y a la tercera, ese segundo lo coge y, si tampoco llega, se lo pide al tercero por aquí. Pero ese día queda hecho."
+    + "\nEl orden no es por jerarquía, es por carga: primero quien tiene margen. Hoy Isaac lleva 35 tickets encima y Chus 20; Gonzalo lleva 7 y va al día, y Borja 6. Por eso Gonzalo y Borja abren la mayoría de cadenas y no al revés."
+    + "\nCristina está de vacaciones hasta el 21 y Borja hasta el miércoles: a ninguno de los dos se le asigna nada. Chus hoy entra a las 12." + av + "\n";
+}
+function cpBlk(id, btn){
+  navigator.clipboard.writeText(txtBlk(id)).then(()=>{
+    const o=btn.textContent; btn.textContent='Copiado'; btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent=o; btn.classList.remove('ok');},1600);
+  }).catch(()=>{btn.textContent='Selecciona';});
+}
+
+// ── Resumen de un solo mensaje de Telegram ──
+const RES_TOP = {ruta:2, maps:1, track:1, nadie:2, huerf:2, epil:2, parado:2, repara:2, prestamo:2, cerrar:1, externo:2, transporte:1, medias:1, privado:1, telegram:1};
+function txtResumen(){
+  const f = new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
+  const a = contarAvisos();
+  let t = "REVISIÓN SAT · " + f.charAt(0).toUpperCase() + f.slice(1) + "\n";
+  t += "97 incidencias principales abiertas. Lo que sigue igual mañana se marca con [!], y a la tercera con [!!].\n";
+  if(a.tres) t += "[!!] " + a.tres + " puntos van por el tercer aviso: ahí quiero fecha, no explicación.\n";
+  else if(a.dos) t += "[!] " + a.dos + " puntos se repiten por segunda vez.\n";
+  t += "Entre corchetes, quién lo tiene. El detalle completo, con todos los tickets y sus enlaces, está en el panel.\n";
+  ORDEN.forEach(k => {
+    const b = MSG[k], n = RES_TOP[k] || 2;
+    t += "\n" + b.t + "\n";
+    b.l.slice(0, n).forEach(x => {
+      const c = cadena(k, x);
+      const corto = x.length > 96 ? x.slice(0,93) + "…" : x;
+      const duenyo = (c.match(/(?:lo coge|lo lleva|último:)\s*([A-Za-zÁÉÍÓÚÑáéíóúñ]+)/)||[])[1] || "";
+      t += "• " + marcaTxt(k,x) + corto + (duenyo ? "  [" + duenyo + "]" : "") + "\n";
+    });
+    if(b.l.length > n) t += "  …y " + (b.l.length - n) + " más\n";
+  });
+  t += "\nPanel completo: alejandrovicente97.github.io/leaseir-sat-morning/";
+  return t;
+}
+function cpRes(btn){
+  navigator.clipboard.writeText(txtResumen()).then(()=>{
+    const o=btn.textContent; btn.textContent='Copiado'; btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent=o; btn.classList.remove('ok');},1700);
+  }).catch(()=>{btn.textContent='Selecciona';});
+}
+
+function cpAll(btn){
+  const partes = [];
+  let acc = cabecera();
+  ORDEN.forEach(k => { const b = txtBlk(k);
+    if((acc + "\n\n" + b).length > 3800){ partes.push(acc); acc = b; } else { acc += "\n\n" + b; } });
+  partes.push(acc);
+  const t = partes.map((x,i) => "— " + (i+1) + " de " + partes.length + " —\n" + x).join("\n\n\n");
+  navigator.clipboard.writeText(t).then(()=>{
+    const o=btn.textContent; btn.textContent='Copiado entero'; btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent=o; btn.classList.remove('ok');},1900);
+  }).catch(()=>{btn.textContent='No se pudo copiar';});
+}
+
+
+function linkTickets(root){
+  const RE = /\bLEAS-(\d{3,5})\b/g;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(n){
+      if(!RE.test(n.nodeValue)) return NodeFilter.FILTER_REJECT;
+      RE.lastIndex = 0;
+      let p = n.parentElement;
+      while(p && p !== root){ if(p.tagName === 'A' || p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT; p = p.parentElement; }
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = []; let n;
+  while(n = walker.nextNode()) nodes.push(n);
+  nodes.forEach(node=>{
+    const frag = document.createDocumentFragment();
+    let last = 0, m; RE.lastIndex = 0;
+    const txt = node.nodeValue;
+    while((m = RE.exec(txt)) !== null){
+      if(m.index > last) frag.appendChild(document.createTextNode(txt.slice(last, m.index)));
+      const a = document.createElement('a');
+      a.className = 'jira'; a.href = 'https://leaseir.atlassian.net/browse/' + m[0];
+      a.target = '_blank'; a.rel = 'noopener'; a.textContent = m[0];
+      a.title = 'Abrir ' + m[0] + ' en Jira';
+      frag.appendChild(a);
+      last = m.index + m[0].length;
+    }
+    if(last < txt.length) frag.appendChild(document.createTextNode(txt.slice(last)));
+    node.parentNode.replaceChild(frag, node);
+  });
+}
+
+// ── Números sueltos de tablas: pulsables por data-c ──
+document.addEventListener('DOMContentLoaded', ()=>{
+  linkTickets(document.body);
+try{ renderInterno(); }catch(e){ console.error(e); }
+try{ initDB(); }catch(e){ console.error(e); }
+});
+
+function dlg(id){const d=document.getElementById(id); if(d&&d.showModal) d.showModal();}
+document.querySelectorAll('dialog').forEach(d=>{
+  d.addEventListener('click',e=>{
+    const r=d.getBoundingClientRect();
+    if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom) d.close();
+  });
+});
+function cp(btn,text){
+  navigator.clipboard.writeText(text).then(()=>{
+    const o=btn.textContent; btn.textContent='Copiado'; btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent=o; btn.classList.remove('ok');},1600);
+  }).catch(()=>{btn.textContent='Selecciona';});
+}
+</script>
+
+</body>
+</html>
