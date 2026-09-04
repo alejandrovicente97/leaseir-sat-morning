@@ -213,6 +213,30 @@ a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
 .cli .worst{margin-top:auto; padding:9px 15px 11px; border-top:1px solid var(--divider-soft); background:var(--surface-2); font-size:11.5px; color:var(--muted); line-height:1.45}
 .cli .worst b{color:var(--ink-soft); font-weight:600}
 
+
+/* ═══ Report interno ═══ */
+.rep-tools{display:flex; gap:9px; align-items:center; flex-wrap:wrap; margin-bottom:14px}
+.rep-tools button{background:var(--surface); border:1px solid var(--divider); border-radius:10px; font:inherit; font-size:13px; font-weight:500; color:var(--ink); padding:9px 15px; cursor:pointer; box-shadow:var(--shadow)}
+.rep-tools button:hover{border-color:var(--accent); color:var(--accent)}
+.rep-tools button.main{background:var(--accent); color:#fff; border-color:var(--accent)}
+.rep-tools button.main:hover{opacity:.9; color:#fff}
+.rep-tools button.ok{background:var(--good); border-color:var(--good); color:#fff}
+.rep-tools .note{font-size:12px; color:var(--muted-2)}
+.blk{background:var(--surface); border-radius:var(--r); box-shadow:var(--shadow); margin-bottom:11px; overflow:hidden; border-left:4px solid var(--divider)}
+.blk.a{border-left-color:var(--crit)} .blk.b{border-left-color:var(--warn)}
+.blk.c{border-left-color:var(--cool)} .blk.d{border-left-color:var(--good)}
+.blk > header{padding:13px 18px 11px; display:flex; align-items:center; gap:11px; border-bottom:1px solid var(--divider-soft)}
+.blk .ico{font-size:17px; line-height:1}
+.blk .t{font-size:14.5px; font-weight:600; letter-spacing:-0.01em; flex:1}
+.blk .cnt{font-family:var(--mono); font-size:15px; font-weight:600; color:var(--muted)}
+.blk .cp{background:transparent; border:1px solid var(--divider); color:var(--muted); font:inherit; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; font-weight:600; padding:4px 10px; border-radius:7px; cursor:pointer; white-space:nowrap}
+.blk .cp:hover{background:var(--surface-2); color:var(--ink)}
+.blk .cp.ok{color:var(--good); border-color:var(--good-line)}
+.blk .por{padding:10px 18px 0; font-size:12.5px; color:var(--muted); line-height:1.5}
+.blk ul{margin:9px 0 0; padding:0 18px 15px 34px; display:flex; flex-direction:column; gap:6px}
+.blk li{font-size:13.5px; color:var(--ink-soft); line-height:1.5}
+.blk li::marker{color:var(--muted-2)}
+
 /* ═══ Modales ═══ */
 dialog{border:0; border-radius:16px; background:var(--surface); color:var(--ink); box-shadow:0 26px 80px rgba(15,22,32,.3); padding:0; max-width:600px; width:calc(100vw - 36px); max-height:86vh}
 dialog::backdrop{background:rgba(15,22,32,.4)}
@@ -257,6 +281,7 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
 
   <nav class="tabbar" role="tablist">
     <button class="on" role="tab" onclick="tab(this,'p-hoy')">Hoy<small>Operación</small></button>
+    <button role="tab" onclick="tab(this,'p-interno')">Report interno<small>para copiar</small></button>
     <button role="tab" onclick="tab(this,'p-clientes')">Clientes<small>por cadena</small></button>
     <button role="tab" onclick="tab(this,'p-cobros')">Cobros<small>110 k€ vencido</small></button>
     <button role="tab" onclick="tab(this,'p-report')">Report<small>Cierre mensual</small></button>
@@ -443,6 +468,174 @@ dialog::backdrop{background:rgba(15,22,32,.4)}
 
 </div>
 
+
+
+<!-- ═════════ REPORT INTERNO ═════════ -->
+<div id="p-interno" class="pane">
+
+  <section class="statebar" style="border-left-color:var(--accent)">
+    <div class="lead"><i style="background:var(--accent);box-shadow:0 0 0 4px rgba(176,67,31,.15)"></i><b>Revisión de las 112 incidencias abiertas</b></div>
+    <div style="font-size:13px;color:var(--ink-soft);line-height:1.5">Todo lo que falta, lo que se ha pasado de plazo y lo que no cuadra entre canales. Listo para pegar en el grupo del equipo.</div>
+    <div class="aside"><b>121</b>avisos</div>
+  </section>
+
+  <div class="rep-tools">
+    <button class="main" onclick="cpAll(this)">Copiar el mensaje entero</button>
+    <span class="note">o copia bloque a bloque con el botón de cada uno</span>
+  </div>
+
+      <div class="blk a">
+        <header>
+          <span class="ico">🔴</span>
+          <span class="t">Salió del cliente y no ha llegado a taller</span>
+          <span class="cnt">7</span>
+          <button class="cp" onclick="cpBlk('ruta',this)">Copiar</button>
+        </header>
+        <div class="por">El SLA de llegada a taller son 8 h. Estos llevan días en tránsito. Hay que llamar al transportista hoy.</div>
+        <ul>
+          <li>LEAS-7360 · SinVello Ibiza · 205 h fuera de plazo · sigue en Gestionado transporte</li>
+          <li>LEAS-7374 · Cleanbody CC La Villa · 202 h fuera de plazo · sigue en Gestionado transporte</li>
+          <li>LEAS-7386 · Belenus · 176 h fuera de plazo · sigue en Gestionado transporte</li>
+          <li>LEAS-7416 · Centro Unico Palermo · 85 h fuera de plazo · sigue en Pendiente recogida</li>
+          <li>LEAS-7343 · Elha Sta Teresa · 78 h fuera de plazo · sigue en Gestionado transporte</li>
+          <li>LEAS-7358 · Centri Unico Olbia · 78 h fuera de plazo · sigue en Gestionado transporte</li>
+          <li>LEAS-7441 · Sinvello Goya · 56 h fuera de plazo · sigue en Gestionado transporte</li>
+        </ul>
+      </div>
+      <div class="blk b">
+        <header>
+          <span class="ico">📍</span>
+          <span class="t">Falta el link de ubicación</span>
+          <span class="cnt">47</span>
+          <button class="cp" onclick="cpBlk('maps',this)">Copiar</button>
+        </header>
+        <div class="por">Sin el enlace de Google Maps el transportista no sabe dónde recoger. Son 47 de 100: hay que ponerlo al crear la incidencia, no después.</div>
+        <ul>
+          <li>LEAS-7337 · sin centro informado tampoco · 14 d parado</li>
+          <li>LEAS-7336 · Laser Factory Terrassa · 10 d</li>
+          <li>LEAS-7359 · Centri Unico Olbia · 9 d · ya está el equipo enviado</li>
+          <li>LEAS-7356 · Zurimed Parque Principado · 9 d · ya está el equipo enviado</li>
+          <li>LEAS-7353 · Elha Ramón y Cajal Mallorca · 9 d</li>
+          <li>LEAS-7376 · sin centro informado tampoco · 8 d</li>
+          <li>LEAS-7375 · Cleanbody CC La Villa · 8 d · en préstamo</li>
+          <li>LEAS-7373 · SinVello El Palo · 8 d · con queja abierta</li>
+          <li>LEAS-7372 · SinVello El Palo · 8 d · equipo enviado</li>
+          <li>LEAS-7366 · SinVello Ibiza · 8 d · equipo enviado</li>
+          <li>…y 37 más</li>
+        </ul>
+      </div>
+      <div class="blk b">
+        <header>
+          <span class="ico">🚚</span>
+          <span class="t">Falta el tracking del transporte</span>
+          <span class="cnt">8</span>
+          <button class="cp" onclick="cpBlk('track',this)">Copiar</button>
+        </header>
+        <div class="por">Ocho de los catorce que están en ruta no tienen el enlace de seguimiento. Sin él no sabemos dónde va el equipo ni podemos responder al cliente.</div>
+        <ul>
+          <li>LEAS-7430 · Elha Isaac Albéniz · Pendiente recogida · 3 d</li>
+          <li>LEAS-7445 · Elha Caracol · Pendiente recogida · 2 d</li>
+          <li>LEAS-7443 · Elha Vilanova · Pendiente recogida · 2 d</li>
+          <li>LEAS-7343 · Elha Sta Teresa · Gestionado transporte · y encima con el SLA reventado</li>
+          <li>LEAS-7466 · Sinvello Teatinos · Pendiente recogida</li>
+          <li>LEAS-7450 · No Filters (Dinámica Impulsos) · Gestionado transporte</li>
+          <li>LEAS-7416 · Centro Unico Palermo · Pendiente recogida</li>
+          <li>LEAS-7374 · Cleanbody CC La Villa · Gestionado transporte</li>
+        </ul>
+      </div>
+      <div class="blk a">
+        <header>
+          <span class="ico">🔧</span>
+          <span class="t">Reparación fuera de plazo</span>
+          <span class="cnt">39</span>
+          <button class="cp" onclick="cpBlk('repara',this)">Copiar</button>
+        </header>
+        <div class="por">El compromiso con el cliente son 80 h. Estos van muy por encima. Los diez peores:</div>
+        <ul>
+          <li>LEAS-7364 · Epil Point Martina Franca · 204 h de más · con técnico externo</li>
+          <li>LEAS-7349 · Cris Peña Beauty Center · 179 h de más · en reparación</li>
+          <li>LEAS-7355 · Zurimed Parque Principado · 175 h de más · preparando presupuesto</li>
+          <li>LEAS-7379 · Elha Badalona · 175 h de más · esperando inicio de reparación</li>
+          <li>LEAS-7378 · SinVello Badalona · 160 h de más · con técnico externo</li>
+          <li>LEAS-7358 · Centri Unico Olbia · 158 h de más · aún en transporte</li>
+          <li>LEAS-7360 · SinVello Ibiza · 154 h de más · aún en transporte</li>
+          <li>LEAS-7393 · SinVello Colmenar Viejo · 138 h de más · con técnico externo</li>
+          <li>LEAS-7397 · Elha Ferraz · 137 h de más · con técnico externo</li>
+          <li>LEAS-7406 · Epil Point Livorno · 133 h de más · con técnico externo</li>
+          <li>…y 29 más</li>
+        </ul>
+      </div>
+      <div class="blk b">
+        <header>
+          <span class="ico">🔁</span>
+          <span class="t">Préstamos fuera de plazo</span>
+          <span class="cnt">10</span>
+          <button class="cp" onclick="cpBlk('prestamo',this)">Copiar</button>
+        </header>
+        <div class="por">Máquina nuestra en casa del cliente pasado el plazo. Cada una es flota que no factura y que no podemos prestar a otro.</div>
+        <ul>
+          <li>LEAS-7357 · SinVello Granada Constitución · 159 h de más · figura como equipo devuelto: ¿está o no está?</li>
+          <li>LEAS-7356 · Zurimed Parque Principado · 159 h de más</li>
+          <li>LEAS-7359 · Centri Unico Olbia · 158 h de más</li>
+          <li>LEAS-7372 · SinVello El Palo · 131 h de más</li>
+          <li>LEAS-7375 · Cleanbody CC La Villa · 130 h de más</li>
+          <li>LEAS-7366 · SinVello Ibiza · 128 h de más</li>
+          <li>LEAS-7401 · sin centro informado · 87 h de más</li>
+          <li>LEAS-7385 · sin centro informado · 87 h de más</li>
+          <li>LEAS-7388 · CVL Distribuidor (Samuel) · 86 h de más</li>
+          <li>LEAS-7408 · Elha Sta Teresa · 79 h de más</li>
+        </ul>
+      </div>
+      <div class="blk d">
+        <header>
+          <span class="ico">✅</span>
+          <span class="t">Terminados y sin cerrar</span>
+          <span class="cnt">8</span>
+          <button class="cp" onclick="cpBlk('cerrar',this)">Copiar</button>
+        </header>
+        <div class="por">El equipo ya está con el cliente. Solo falta cerrar el ticket. Esto es lo que nos infla los tiempos medios.</div>
+        <ul>
+          <li>LEAS-6048 · Daniel Jaramillo (Grupo Dos) · 112 d en inspección de salida · 2.898 €</li>
+          <li>LEAS-7236 · Smart Duck Labege · devuelto al cliente hace 29 d</li>
+          <li>LEAS-7255 · Elha St Feliu de Llobregat · devuelto hace 27 d</li>
+          <li>LEAS-7124 · Elha Cristòfor Colom · devuelto hace 42 d</li>
+          <li>LEAS-7224 · Elha Limoneros · devuelto hace 30 d</li>
+          <li>LEAS-7315 · Belenus · devuelto hace 17 d</li>
+          <li>LEAS-7321 · Dermoscan · devuelto hace 16 d</li>
+          <li>LEAS-7324 · SinVello Jerez · devuelto hace 15 d</li>
+        </ul>
+      </div>
+      <div class="blk c">
+        <header>
+          <span class="ico">💬</span>
+          <span class="t">Telegram dice una cosa y Jira otra</span>
+          <span class="cnt">2</span>
+          <button class="cp" onclick="cpBlk('telegram',this)">Copiar</button>
+        </header>
+        <div class="por">Lo que se habla por chat no llega al ticket. En cuanto el bot esté en los grupos esto sale solo cada mañana.</div>
+        <ul>
+          <li>LEAS-3827 · Clínica Cibeles CC Holea · Jira dice en fábrica desde hace 227 d, y en Telegram el cliente pidió el código mensual de la máquina el 7 de agosto: está funcionando. Cerrar y facturar los 7.333 €</li>
+          <li>Mel Clinics Castellón · la consola está lista para recoger desde el 8 de agosto y no hay incidencia abierta. Además el centro escribe también por WhatsApp</li>
+        </ul>
+      </div>
+      <div class="blk d">
+        <header>
+          <span class="ico">👏</span>
+          <span class="t">Cómo va el equipo</span>
+          
+          <button class="cp" onclick="cpBlk('equipo',this)">Copiar</button>
+        </header>
+        <div class="por">Lo que sí funciona, para que se diga también.</div>
+        <ul>
+          <li>Iván Lozano: 274 presupuestos y 111 equipos a salida desde mayo. El que más produce con diferencia</li>
+          <li>Jonathan Zarauza: 219 presupuestos y 76 salidas. Mueve sus tickets todos los días</li>
+          <li>Fran Fernández: 148 presupuestos y 68 salidas, y el que mejor documenta los informes</li>
+          <li>El taller repara en 4 días de mediana. El cuello no está en el banco de trabajo</li>
+          <li>Pendiente: 74 tickets sin responsable asignado. El que coge un trabajo, que se ponga en el ticket</li>
+        </ul>
+      </div>
+
+</div>
 
 <!-- ═════════ CLIENTES ═════════ -->
 <div id="p-clientes" class="pane">
@@ -1074,8 +1267,35 @@ function tab(btn,id){
 }
 function tabGo(id){
   const btns=[...document.querySelectorAll('.tabbar button[role="tab"]')];
-  const idx={'p-hoy':0,'p-clientes':1,'p-cobros':2,'p-report':3}[id];
+  const idx={'p-hoy':0,'p-interno':1,'p-clientes':2,'p-cobros':3,'p-report':4}[id];
   if(idx!==undefined) tab(btns[idx],id);
+}
+
+
+// ── Report interno: copiar bloques ──
+const MSG = {"ruta": {"t": "🔴 SALIÓ DEL CLIENTE Y NO HA LLEGADO A TALLER (7)", "p": "El SLA de llegada a taller son 8 h. Estos llevan días en tránsito. Hay que llamar al transportista hoy.", "l": ["LEAS-7360 · SinVello Ibiza · 205 h fuera de plazo · sigue en Gestionado transporte", "LEAS-7374 · Cleanbody CC La Villa · 202 h fuera de plazo · sigue en Gestionado transporte", "LEAS-7386 · Belenus · 176 h fuera de plazo · sigue en Gestionado transporte", "LEAS-7416 · Centro Unico Palermo · 85 h fuera de plazo · sigue en Pendiente recogida", "LEAS-7343 · Elha Sta Teresa · 78 h fuera de plazo · sigue en Gestionado transporte", "LEAS-7358 · Centri Unico Olbia · 78 h fuera de plazo · sigue en Gestionado transporte", "LEAS-7441 · Sinvello Goya · 56 h fuera de plazo · sigue en Gestionado transporte"]}, "maps": {"t": "📍 FALTA EL LINK DE UBICACIÓN (47)", "p": "Sin el enlace de Google Maps el transportista no sabe dónde recoger. Son 47 de 100: hay que ponerlo al crear la incidencia, no después.", "l": ["LEAS-7337 · sin centro informado tampoco · 14 d parado", "LEAS-7336 · Laser Factory Terrassa · 10 d", "LEAS-7359 · Centri Unico Olbia · 9 d · ya está el equipo enviado", "LEAS-7356 · Zurimed Parque Principado · 9 d · ya está el equipo enviado", "LEAS-7353 · Elha Ramón y Cajal Mallorca · 9 d", "LEAS-7376 · sin centro informado tampoco · 8 d", "LEAS-7375 · Cleanbody CC La Villa · 8 d · en préstamo", "LEAS-7373 · SinVello El Palo · 8 d · con queja abierta", "LEAS-7372 · SinVello El Palo · 8 d · equipo enviado", "LEAS-7366 · SinVello Ibiza · 8 d · equipo enviado", "…y 37 más"]}, "track": {"t": "🚚 FALTA EL TRACKING DEL TRANSPORTE (8)", "p": "Ocho de los catorce que están en ruta no tienen el enlace de seguimiento. Sin él no sabemos dónde va el equipo ni podemos responder al cliente.", "l": ["LEAS-7430 · Elha Isaac Albéniz · Pendiente recogida · 3 d", "LEAS-7445 · Elha Caracol · Pendiente recogida · 2 d", "LEAS-7443 · Elha Vilanova · Pendiente recogida · 2 d", "LEAS-7343 · Elha Sta Teresa · Gestionado transporte · y encima con el SLA reventado", "LEAS-7466 · Sinvello Teatinos · Pendiente recogida", "LEAS-7450 · No Filters (Dinámica Impulsos) · Gestionado transporte", "LEAS-7416 · Centro Unico Palermo · Pendiente recogida", "LEAS-7374 · Cleanbody CC La Villa · Gestionado transporte"]}, "repara": {"t": "🔧 REPARACIÓN FUERA DE PLAZO (39)", "p": "El compromiso con el cliente son 80 h. Estos van muy por encima. Los diez peores:", "l": ["LEAS-7364 · Epil Point Martina Franca · 204 h de más · con técnico externo", "LEAS-7349 · Cris Peña Beauty Center · 179 h de más · en reparación", "LEAS-7355 · Zurimed Parque Principado · 175 h de más · preparando presupuesto", "LEAS-7379 · Elha Badalona · 175 h de más · esperando inicio de reparación", "LEAS-7378 · SinVello Badalona · 160 h de más · con técnico externo", "LEAS-7358 · Centri Unico Olbia · 158 h de más · aún en transporte", "LEAS-7360 · SinVello Ibiza · 154 h de más · aún en transporte", "LEAS-7393 · SinVello Colmenar Viejo · 138 h de más · con técnico externo", "LEAS-7397 · Elha Ferraz · 137 h de más · con técnico externo", "LEAS-7406 · Epil Point Livorno · 133 h de más · con técnico externo", "…y 29 más"]}, "prestamo": {"t": "🔁 PRÉSTAMOS FUERA DE PLAZO (10)", "p": "Máquina nuestra en casa del cliente pasado el plazo. Cada una es flota que no factura y que no podemos prestar a otro.", "l": ["LEAS-7357 · SinVello Granada Constitución · 159 h de más · figura como equipo devuelto: ¿está o no está?", "LEAS-7356 · Zurimed Parque Principado · 159 h de más", "LEAS-7359 · Centri Unico Olbia · 158 h de más", "LEAS-7372 · SinVello El Palo · 131 h de más", "LEAS-7375 · Cleanbody CC La Villa · 130 h de más", "LEAS-7366 · SinVello Ibiza · 128 h de más", "LEAS-7401 · sin centro informado · 87 h de más", "LEAS-7385 · sin centro informado · 87 h de más", "LEAS-7388 · CVL Distribuidor (Samuel) · 86 h de más", "LEAS-7408 · Elha Sta Teresa · 79 h de más"]}, "cerrar": {"t": "✅ TERMINADOS Y SIN CERRAR (8)", "p": "El equipo ya está con el cliente. Solo falta cerrar el ticket. Esto es lo que nos infla los tiempos medios.", "l": ["LEAS-6048 · Daniel Jaramillo (Grupo Dos) · 112 d en inspección de salida · 2.898 €", "LEAS-7236 · Smart Duck Labege · devuelto al cliente hace 29 d", "LEAS-7255 · Elha St Feliu de Llobregat · devuelto hace 27 d", "LEAS-7124 · Elha Cristòfor Colom · devuelto hace 42 d", "LEAS-7224 · Elha Limoneros · devuelto hace 30 d", "LEAS-7315 · Belenus · devuelto hace 17 d", "LEAS-7321 · Dermoscan · devuelto hace 16 d", "LEAS-7324 · SinVello Jerez · devuelto hace 15 d"]}, "telegram": {"t": "💬 TELEGRAM DICE UNA COSA Y JIRA OTRA (2)", "p": "Lo que se habla por chat no llega al ticket. En cuanto el bot esté en los grupos esto sale solo cada mañana.", "l": ["LEAS-3827 · Clínica Cibeles CC Holea · Jira dice en fábrica desde hace 227 d, y en Telegram el cliente pidió el código mensual de la máquina el 7 de agosto: está funcionando. Cerrar y facturar los 7.333 €", "Mel Clinics Castellón · la consola está lista para recoger desde el 8 de agosto y no hay incidencia abierta. Además el centro escribe también por WhatsApp"]}, "equipo": {"t": "👏 CÓMO VA EL EQUIPO", "p": "Lo que sí funciona, para que se diga también.", "l": ["Iván Lozano: 274 presupuestos y 111 equipos a salida desde mayo. El que más produce con diferencia", "Jonathan Zarauza: 219 presupuestos y 76 salidas. Mueve sus tickets todos los días", "Fran Fernández: 148 presupuestos y 68 salidas, y el que mejor documenta los informes", "El taller repara en 4 días de mediana. El cuello no está en el banco de trabajo", "Pendiente: 74 tickets sin responsable asignado. El que coge un trabajo, que se ponga en el ticket"]}};
+const ORDEN = ["ruta", "maps", "track", "repara", "prestamo", "cerrar", "telegram", "equipo"];
+function txtBlk(id){
+  const b = MSG[id];
+  return b.t + "\n" + b.p + "\n" + b.l.map(x => "• " + x).join("\n");
+}
+function cabecera(){
+  const f = new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
+  return "REVISIÓN SAT · " + f.charAt(0).toUpperCase() + f.slice(1) +
+    "\nRepaso de las 112 incidencias abiertas. Cada LEAS lleva su enlace en Jira.\n";
+}
+function cpBlk(id, btn){
+  navigator.clipboard.writeText(txtBlk(id)).then(()=>{
+    const o=btn.textContent; btn.textContent='Copiado'; btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent=o; btn.classList.remove('ok');},1600);
+  }).catch(()=>{btn.textContent='Selecciona';});
+}
+function cpAll(btn){
+  const t = cabecera() + "\n" + ORDEN.map(txtBlk).join("\n\n");
+  navigator.clipboard.writeText(t).then(()=>{
+    const o=btn.textContent; btn.textContent='Copiado entero'; btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent=o; btn.classList.remove('ok');},1900);
+  }).catch(()=>{btn.textContent='No se pudo copiar';});
 }
 
 // ── Modal de cálculo ──
