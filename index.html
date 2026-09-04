@@ -243,6 +243,20 @@ a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
 .blk li::before{content:""; position:absolute; left:21px; top:19px; width:5px; height:5px;
         border-radius:50%; background:var(--muted-2)}
 
+/* ═══ Airtable: para revisar Alejandro ═══ */
+.atl{display:flex;flex-direction:column;gap:0}
+.ati{display:grid;grid-template-columns:150px 1fr;gap:14px;padding:12px 0;
+  border-top:1px solid var(--divider-soft);align-items:baseline}
+.ati:first-child{border-top:0}
+.ati .as{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.35}
+.ati .as em{display:block;font-style:normal;font-size:10.5px;font-weight:500;color:var(--muted-2);
+  margin-top:3px;font-family:var(--sans)}
+.ati .ad{font-size:13px;color:var(--ink-soft);line-height:1.55}
+.ati .aa{display:block;margin-top:4px;font-size:12.5px;color:var(--muted)}
+.ati .aa b{color:var(--ink-soft);font-weight:600}
+.ati.c .as{color:var(--crit)} .ati.w .as{color:var(--warn)} .ati.g .as{color:var(--good)}
+@media(max-width:700px){.ati{grid-template-columns:1fr;gap:4px}}
+
 /* ═══ Actividad del equipo ═══ */
 .actbar{display:flex;align-items:center;gap:13px;margin:0 0 13px;min-height:40px;flex-wrap:wrap}
 .actbig{font:inherit;font-size:14px;font-weight:600;color:#fff;background:var(--accent);
@@ -499,6 +513,14 @@ dialog.wide{max-width:860px}
       </button>
     </div>
   </section>
+  <section class="sec" style="margin-top:14px">
+    <h2>Airtable · para revisar tú <span class="hint">— el Inmovilizado no cuadra con lo que hay en la calle. Esto no va al panel del equipo: es tuyo.</span></h2>
+    <div class="card" style="padding:6px 22px 14px">
+      <div class="atl"><div class="ati c"><span class="as">C00410<em>LEAS-7148 · Laser Factory Hospitalet</em></span><span class="ad">En Airtable figura como «Renting S&L», vendida a Sabadell: es del propio cliente, no una máquina de sustitución. Y h00410 no está. Alguien la metió como consola prestada, así que ese préstamo no existe.<span class="aa"><b>Qué hacer:</b> Quitar las series del ticket, o poner la SUST que salió de verdad.</span></span></div><div class="ati w"><span class="as">SUSTAHRD005<em>LEAS-7401</em></span><span class="ad">No consta en el Inmovilizado, pero Gonzalo confirmó hoy con fotos que salió el 27 de agosto y están subidas al grupo de fotos de equipos.<span class="aa"><b>Qué hacer:</b> La máquina existe: lo que falta es la ficha. Darla de alta en Airtable.</span></span></div><div class="ati w"><span class="as">SUSTMHR025<em>LEAS-7366 · SinVello Ibiza</em></span><span class="ad">No consta en el Inmovilizado. Gonzalo confirmó hoy que existe y que está en el grupo de fotos de equipos.<span class="aa"><b>Qué hacer:</b> Igual que la anterior: alta o corrección de la ficha.</span></span></div><div class="ati w"><span class="as">SUSTMHR033<em>LEAS-7388 · CVL Distribuidor</em></span><span class="ad">En Airtable la familia MHR llega hasta la 031.<span class="aa"><b>Qué hacer:</b> Preguntar cuál salió y corregir la serie del ticket o el Inmovilizado.</span></span></div><div class="ati w"><span class="as">SUSTQUAD025<em>LEAS-7191 · Harmonie Salamanca</em></span><span class="ad">En Airtable existen la 024 y la 028, no la 025.<span class="aa"><b>Qué hacer:</b> Confirmar la serie real con quien hizo el envío.</span></span></div><div class="ati w"><span class="as">BS SUST008<em>LEAS-6780 · Centri Unico Campania</em></span><span class="ad">La familia BS solo tiene 002, 003, 004 y 005. El ticket lo abrió Jesús el 22 de junio sin un comentario.<span class="aa"><b>Qué hacer:</b> Averiguar de cuál procede antes de darla por buena.</span></span></div><div class="ati g"><span class="as">C03143 / H03143<em>LEAS-5697 · Smart Duck Paris</em></span><span class="ad">No constaban en el Inmovilizado; la que sí figura como backup de Smart Duck es la C03164/H03164. Gonzalo escribió hoy «Corregido».<span class="aa"><b>Qué hacer:</b> Comprobar con qué serie quedó el ticket y que en Airtable cuadre.</span></span></div><div class="ati g"><span class="as">C003258 / H003258<em>LEAS-7140 · Smart Duck Paris 15</em></span><span class="ad">Llevaban un cero de más. Gonzalo lo corrigió hoy a H03258.<span class="aa"><b>Qué hacer:</b> Comprobar que la consola quedó también como C03258 y que el par cuadra.</span></span></div><div class="ati g"><span class="as">SUSTMHR030 · 41003<em>LEAS-7415 · LEAS-7158</em></span><span class="ad">Erratas de tecleo: «SUSTMHR30» sin el cero y «H41003» con una H de más.<span class="aa"><b>Qué hacer:</b> Corregir el campo en el ticket. En Airtable están bien.</span></span></div><div class="ati c"><span class="as">Duplicados y espacios<em>Inmovilizado, tabla entera</em></span><span class="ad">«SustMhr011» conviviendo con «SUSTMHR011», IDs con un espacio delante (« SUSTQUAD032»), «FC - SUST 005» junto a «FC - SUST005», y «FC - SUST003» duplicada en dos registros.<span class="aa"><b>Qué hacer:</b> Limpiarlo de una vez: mientras esté así, cualquier cruce automático da falsos positivos.</span></span></div></div>
+    </div>
+    <div class="pending" style="margin-top:11px"><b>10 cosas</b> — mientras el Inmovilizado esté así, el cruce automático de series seguirá dando falsos positivos y el equipo seguirá viendo puntos que no son suyos. Las tres primeras son de dato equivocado; las marcadas en verde ya las tocó el equipo hoy y solo hay que comprobarlas.</div>
+  </section>
+
   <details class="acc" style="margin-top:14px">
     <summary><b>Detalle en tablas</b><span class="badge w">4</span><span class="sm">estancadas por cadena, equipo, sustituciones fuera de rango y Telegram vs Jira</span></summary>
     <div style="margin-top:10px">
