@@ -161,6 +161,16 @@ Hay 21 incidencias en «Enviado a técnico externo» y las 21 están sin técnic
 • REGLA · Cuando el técnico externo termina, el ticket pasa a «Finalizado técnico externo» ese mismo día y se escribe qué hizo y con qué material. Si no, ni se factura ni se sabe si el equipo está bien
 • REGLA · Mientras esté con el externo, una nota por semana como mínimo: aunque sea «reclamado, sin fecha todavía». El silencio no es que no pase nada, es que no lo sabemos
 
+📦 EL TRANSPORTE ES EL CUELLO DE BOTELLA Y NO LO ESTAMOS MIDIENDO
+Trabajamos con seis transportistas a la vez (Palibex, MRW, DHL, DHL Parcel, SEUR, Correos Express, CTT y uno propio) y con ninguno tenemos un seguimiento fiable de punta a punta. No es una queja: es que el 65% del tiempo de ciclo de una incidencia está fuera del taller, y la mayor parte se va aquí. Mientras no se mida por transportista, no hay a quién reclamar.
+• Palibex no tiene seguimiento consultable para el cliente. El enlace que le pasamos pide credenciales y hay que ir dándole el localizador a mano cada vez
+• En envíos a Canarias la expedición cambia de transportista a mitad de camino y el número de seguimiento se pierde: hay que pedir uno nuevo al segundo
+• Recogidas que se dan por hechas y no lo están: Tomares figuraba recogido por MRW y el equipo seguía en la clínica días después. Cáceres estuvo cinco días sin poder trabajar entre recogidas fallidas
+• Incidencia literal del transportista en Cáceres: «pasamos a retirar la mercancía y no nos ayudó nadie, una persona sola no puede bajar la máquina». El centro dice que no fueron. Alguien miente y no tenemos forma de saber quién
+• Manacor · el centro avisó de que cerraba por vacaciones hasta el 31/08 y aun así se programó envío y recogida. Un equipo enviado el 14 de agosto seguía sin entregar el 1 de septiembre
+• 13 de los 20 equipos que van de camino ahora mismo no tienen el enlace de seguimiento puesto en Jira
+• PROPUESTA · Medir por transportista: días de recogida, días de entrega, recogidas fallidas y envíos sin tracking. Con tres meses de datos se negocia o se cambia. Hoy no tenemos ni un número que enseñarles
+
 📝 A MEDIO GESTIONAR Y SIN UNA SOLA OBSERVACIÓN EN JIRA
 Tickets que alguien ha tocado y ha dejado en un estado intermedio sin escribir en qué punto están. Para el resto del equipo no existen: el que coge el turno siguiente empieza de cero y el cliente pregunta a quien pilla. No hace falta cerrarlos, hace falta un renglón diciendo qué falta y quién lo tiene.
 • LEAS-5904 · Noemi Valero · presupuesto ACEPTADO el 14 de abril, cero comentarios desde entonces, 142 d
