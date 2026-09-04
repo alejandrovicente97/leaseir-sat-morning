@@ -346,6 +346,7 @@ dialog.wide{max-width:860px}
 .opa{font-size:13.5px;line-height:1.55;color:var(--ink);font-weight:500;margin:0}
 @media(max-width:980px){.ops{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.ops{grid-template-columns:1fr}}
+.rep-tools .main.alt{background:var(--surface-2);color:var(--ink);border:1px solid var(--divider)}
 </style>
 
 <div class="page">
@@ -620,8 +621,9 @@ dialog.wide{max-width:860px}
   </section>
 
   <div class="rep-tools">
-    <button class="main" onclick="cpAll(this)">Copiar el mensaje entero</button>
-    <span class="note">para el grupo <b>SAT Leaseir Borja, Isaac, Cristina, Gonzalo y Chus (Interno)</b> · o copia bloque a bloque</span>
+    <button class="main" onclick="cpRes(this)">Copiar resumen · 1 mensaje</button>
+    <button class="main alt" onclick="cpAll(this)">Copiar todo · se parte solo</button>
+    <span class="note">para el grupo <b>SAT Leaseir (Interno)</b>. El resumen cabe en un mensaje; el completo son unos 10 y va numerado. También puedes copiar bloque a bloque.</span>
   </div>
 
 
@@ -1466,8 +1468,45 @@ function cpBlk(id, btn){
     setTimeout(()=>{btn.textContent=o; btn.classList.remove('ok');},1600);
   }).catch(()=>{btn.textContent='Selecciona';});
 }
+
+// ── Resumen de un solo mensaje de Telegram ──
+const RES_TOP = {ruta:2, maps:1, track:1, nadie:2, huerf:2, epil:2, parado:2, repara:2, prestamo:2, cerrar:1, externo:2, transporte:1, medias:1, privado:1, telegram:1};
+function txtResumen(){
+  const f = new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
+  const a = contarAvisos();
+  let t = "REVISIÓN SAT · " + f.charAt(0).toUpperCase() + f.slice(1) + "\n";
+  t += "97 incidencias principales abiertas. Lo que sigue igual mañana se marca con [!], y a la tercera con [!!].\n";
+  if(a.tres) t += "[!!] " + a.tres + " puntos van por el tercer aviso: ahí quiero fecha, no explicación.\n";
+  else if(a.dos) t += "[!] " + a.dos + " puntos se repiten por segunda vez.\n";
+  t += "Entre corchetes, quién lo tiene. El detalle completo, con todos los tickets y sus enlaces, está en el panel.\n";
+  ORDEN.forEach(k => {
+    const b = MSG[k], n = RES_TOP[k] || 2;
+    t += "\n" + b.t + "\n";
+    b.l.slice(0, n).forEach(x => {
+      const c = cadena(k, x);
+      const corto = x.length > 96 ? x.slice(0,93) + "…" : x;
+      const duenyo = (c.match(/(?:lo coge|lo lleva|último:)\s*([A-Za-zÁÉÍÓÚÑáéíóúñ]+)/)||[])[1] || "";
+      t += "• " + marcaTxt(k,x) + corto + (duenyo ? "  [" + duenyo + "]" : "") + "\n";
+    });
+    if(b.l.length > n) t += "  …y " + (b.l.length - n) + " más\n";
+  });
+  t += "\nPanel completo: alejandrovicente97.github.io/leaseir-sat-morning/";
+  return t;
+}
+function cpRes(btn){
+  navigator.clipboard.writeText(txtResumen()).then(()=>{
+    const o=btn.textContent; btn.textContent='Copiado'; btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent=o; btn.classList.remove('ok');},1700);
+  }).catch(()=>{btn.textContent='Selecciona';});
+}
+
 function cpAll(btn){
-  const t = cabecera() + "\n" + ORDEN.map(txtBlk).join("\n\n");
+  const partes = [];
+  let acc = cabecera();
+  ORDEN.forEach(k => { const b = txtBlk(k);
+    if((acc + "\n\n" + b).length > 3800){ partes.push(acc); acc = b; } else { acc += "\n\n" + b; } });
+  partes.push(acc);
+  const t = partes.map((x,i) => "— " + (i+1) + " de " + partes.length + " —\n" + x).join("\n\n\n");
   navigator.clipboard.writeText(t).then(()=>{
     const o=btn.textContent; btn.textContent='Copiado entero'; btn.classList.add('ok');
     setTimeout(()=>{btn.textContent=o; btn.classList.remove('ok');},1900);
