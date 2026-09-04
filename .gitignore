@@ -1,3 +1,9 @@
 # No subir nunca credenciales
 ../.gh-token-sat-morning
 .gh-token*
+
+# Ficheros de trabajo local de Alejandro: no forman parte de la web
+.cache/
+equipo.html
+mensaje-equipo-sat.txt
+mensaje-presentacion.txt
