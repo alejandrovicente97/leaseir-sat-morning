@@ -234,9 +234,15 @@ a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
 .blk .cp:hover{background:var(--surface-2); color:var(--ink)}
 .blk .cp.ok{color:var(--good); border-color:var(--good-line)}
 .blk .por{padding:10px 18px 0; font-size:12.5px; color:var(--muted); line-height:1.5}
-.blk ul{margin:9px 0 0; padding:0 18px 15px 34px; display:flex; flex-direction:column; gap:6px}
-.blk li{font-size:13.5px; color:var(--ink-soft); line-height:1.5}
-.blk li::marker{color:var(--muted-2)}
+/* Lista de puntos: bandas alternas para ver donde empieza y acaba cada incidencia */
+.blk ul{margin:9px 0 0; padding:0 0 6px; display:block; list-style:none}
+.blk li{font-size:13.5px; color:var(--ink-soft); line-height:1.5;
+        padding:11px 18px 12px 34px; position:relative;
+        border-top:1px solid var(--divider-soft)}
+.blk li:first-child{border-top:0}
+.blk li:nth-child(even){background:var(--surface-3)}
+.blk li::before{content:""; position:absolute; left:21px; top:19px; width:5px; height:5px;
+        border-radius:50%; background:var(--muted-2)}
 
 /* ═══ Modales ═══ */
 dialog{border:0; border-radius:16px; background:var(--surface); color:var(--ink); box-shadow:0 26px 80px rgba(15,22,32,.3); padding:0; max-width:600px; width:calc(100vw - 36px); max-height:86vh}
