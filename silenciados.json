@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-09-04T19:40+02:00",
+  "actualizado": "2026-09-04T19:55+02:00",
   "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
   "como_se_usa": [
     "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -220,6 +220,94 @@
       "quien": "Chus",
       "cuando": "2026-09-04",
       "revive_si": "Se vuelve a caer una tercera vez: entonces deja de ser un caso repetido y es una reparación que no funciona."
+    },
+    {
+      "id": "7415-sustmhr030",
+      "que": "LEAS-7415 · la serie prestada SUSTMHR30 no cuadra con el Inmovilizado",
+      "ambito": {
+        "leas": "LEAS-7415",
+        "serie": [
+          "SUSTMHR30",
+          "SUSTMHR030"
+        ],
+        "tipo": "serie-desconocida"
+      },
+      "porque": "Gonzalo lo corrigió en el ticket el 04/09 a las 18:17: «Numero corregido de SUSTMHR30 a SUSTMHR030». Comprobado en esta pasada: el campo 10199 pone ya SUSTMHR030.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
+      "revive_si": "El campo vuelve a quedarse con una serie que no consta."
+    },
+    {
+      "id": "7388-sustmhr033",
+      "que": "LEAS-7388 · SUSTMHR033 no consta en el Inmovilizado",
+      "ambito": {
+        "leas": "LEAS-7388",
+        "serie": "SUSTMHR033",
+        "tipo": "serie-desconocida"
+      },
+      "porque": "Gonzalo el 04/09 a las 18:18: «La consola SUSTMHR033 existe y está en el telegram de fotos de equipo como prueba». Falta la ficha en Airtable, no la máquina: eso es de Alejandro.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
+      "revive_si": "Nunca contra el equipo. Vive solo en el bloque de Airtable del panel de Alejandro."
+    },
+    {
+      "id": "7191-sustquad025",
+      "que": "LEAS-7191 · SUSTQUAD025 no consta en el Inmovilizado",
+      "ambito": {
+        "leas": "LEAS-7191",
+        "serie": "SUSTQUAD025",
+        "tipo": "serie-desconocida"
+      },
+      "porque": "Gonzalo el 04/09 a las 18:18: «La pieza de sustitución SUSTQUAD025 existe y está en el grupo de telegram de fotos de equipo como prueba». Falta la ficha, no la máquina.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
+      "revive_si": "Nunca contra el equipo. Solo en el bloque de Airtable de Alejandro."
+    },
+    {
+      "id": "7416-manipulo-oscar",
+      "que": "LEAS-7416 · la sustitución LEAS-7418 lleva parada en «Solicitado» y bloquea la recogida",
+      "ambito": {
+        "leas": [
+          "LEAS-7416",
+          "LEAS-7418"
+        ],
+        "centro": "Centro Unico Palermo",
+        "tipo": "recogida-pendiente"
+      },
+      "porque": "Gonzalo el 04/09 a las 18:20: están esperando el manípulo H00476 que envió Óscar y que estaba en Euroma2 express; se equivocaron en el envío. No es que nadie le dé salida: falta la pieza.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
+      "revive_si": "El manípulo llega y la sustitución sigue en «Solicitado» pasados 3 días."
+    },
+    {
+      "id": "7386-belenus-buffer",
+      "que": "LEAS-7386 · Belenus, salió del cliente y no llega a taller",
+      "ambito": {
+        "leas": "LEAS-7386",
+        "centro": "Belenus",
+        "tipo": "sin-llegar-a-taller"
+      },
+      "porque": "Gonzalo el 04/09 a las 18:23: se ha preguntado a Belenus porque el equipo está en Chile y se enviaron buffers para reparaciones; el error puede estar contenido en el buffer. Hay gestión escrita y en marcha.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
+      "revive_si": "Pasan 5 días sin respuesta de Belenus."
+    },
+    {
+      "id": "7284-cadiz-manipulo",
+      "que": "LEAS-7284 · SinVello Cádiz cerrado en «Resuelto» pero el manípulo h00801 sigue sin calibrar",
+      "ambito": {
+        "leas": [
+          "LEAS-7284",
+          "LEAS-7490"
+        ],
+        "centro": "Cadiz",
+        "cliente": "SinVello",
+        "tipo": "caso-repetido"
+      },
+      "porque": "Atendido el 04/09: Chus vinculó el caso a las 18:52 y a las 18:54 quedó escrito en LEAS-7490 («Hay que decidir si recogemos sólo la pistola H00801 o si también traemos la consola C00801 para ajustarlas juntas»). Ya no es un punto de «WhatsApp dice una cosa y Jira otra»: hay ticket nuevo.",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
+      "revive_si": "LEAS-7490 se queda sin decisión escrita pasados 3 días."
     }
   ]
 }
