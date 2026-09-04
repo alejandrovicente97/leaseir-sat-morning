@@ -1,7 +1,8 @@
 REVISIÓN SAT · Viernes, 4 de septiembre
 Repaso de las 101 incidencias principales abiertas. Cada LEAS lleva su enlace en Jira.
 [!] = segunda vez que se dice · [!!] = tercera o más
-Entre corchetes, quien tocó el ticket por última vez: es quien lo cierra o quien pide que se lo cierren.
+Entre corchetes va quién lo tiene. Si nadie lo ha tocado, ahí está el nombre de quien lo coge por defecto: no es de otro, es suyo.
+Si a la segunda vez sigue igual, el que lo tiene se lo pide al siguiente POR ESTE GRUPO, para que quede constancia. Y a la tercera, ese segundo lo coge y, si tampoco llega, se lo pide al tercero por aquí. Pero ese día queda hecho.
 
 🔴 SALIÓ DEL CLIENTE Y NO LLEGA A TALLER (7)
 El SLA de llegada a taller son 8 h. Estos llevan días en tránsito. Hay que llamar al transportista hoy.
@@ -9,9 +10,9 @@ El SLA de llegada a taller son 8 h. Estos llevan días en tránsito. Hay que lla
   leaseir.atlassian.net/browse/LEAS-7360
 • LEAS-7374 · Cleanbody CC La Villa · 202 h fuera de plazo · y además sin tracking puesto  [último: Isaac, 03/09]
   leaseir.atlassian.net/browse/LEAS-7374
-• LEAS-7386 · Belenus · 176 h fuera de plazo · sigue en Gestionado transporte  [sin gestionar aún]
+• LEAS-7386 · Belenus · 176 h fuera de plazo · sigue en Gestionado transporte  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7386
-• LEAS-7416 · Centro Unico Palermo · 85 h fuera de plazo · y sin tracking puesto  [sin gestionar aún]
+• LEAS-7416 · Centro Unico Palermo · 85 h fuera de plazo · y sin tracking puesto  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7416
 • LEAS-7343 · Elha Sta Teresa · 78 h fuera de plazo · y sin tracking puesto  [último: Gonzalo, 04/09]
   leaseir.atlassian.net/browse/LEAS-7343
@@ -22,7 +23,7 @@ El SLA de llegada a taller son 8 h. Estos llevan días en tránsito. Hay que lla
 
 📍 FALTA EL LINK DE UBICACIÓN (6)
 Solo cuenta en los principales: las subtareas heredan la ubicación del padre y no hace falta ponérsela. De 101 principales, seis no la tienen.
-• LEAS-5904 · Noemi Valero · 142 d parado · con el presupuesto ya aceptado  [sin gestionar aún]
+• LEAS-5904 · Noemi Valero · 142 d parado · con el presupuesto ya aceptado  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-5904
 • LEAS-6048 · Daniel Jaramillo (Grupo Dos) · 112 d · en inspección de salida · 2.898 €  [último: Jesús, 27/04]
   leaseir.atlassian.net/browse/LEAS-6048
@@ -37,7 +38,7 @@ Solo cuenta en los principales: las subtareas heredan la ubicación del padre y 
 
 🚚 FALTA EL TRACKING DEL TRANSPORTE (13 de 20 en ruta)
 Dos de cada tres equipos que van de camino no tienen el enlace de seguimiento. Sin él no sabemos dónde está la máquina ni podemos contestar al cliente.
-• LEAS-7230 · SinVello Albacete · 27 d en pendiente de recogida  [sin gestionar aún]
+• LEAS-7230 · SinVello Albacete · 27 d en pendiente de recogida  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7230
 • LEAS-7332 · Epil Point Specialisti · 14 d en pendiente de recogida  [último: Isaac, 20/08]
   leaseir.atlassian.net/browse/LEAS-7332
@@ -47,7 +48,7 @@ Dos de cada tres equipos que van de camino no tienen el enlace de seguimiento. S
   leaseir.atlassian.net/browse/LEAS-7430
 • LEAS-7443 · Elha Vilanova · 2 d  [último: Isaac, 02/09]
   leaseir.atlassian.net/browse/LEAS-7443
-• LEAS-7445 · Elha Caracol · 2 d  [sin gestionar aún]
+• LEAS-7445 · Elha Caracol · 2 d  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7445
 • LEAS-7343 · Elha Sta Teresa · en transporte, y con el SLA reventado  [último: Gonzalo, 04/09]
   leaseir.atlassian.net/browse/LEAS-7343
@@ -57,109 +58,109 @@ Dos de cada tres equipos que van de camino no tienen el enlace de seguimiento. S
   leaseir.atlassian.net/browse/LEAS-7325
 • LEAS-7374 · Cleanbody CC La Villa · en transporte, 202 h fuera de plazo  [último: Isaac, 03/09]
   leaseir.atlassian.net/browse/LEAS-7374
-• LEAS-7416 · Centro Unico Palermo · pendiente de recogida  [sin gestionar aún]
+• LEAS-7416 · Centro Unico Palermo · pendiente de recogida  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7416
 • LEAS-7450 · No Filters (Dinámica Impulsos) · en transporte  [último: Isaac, 03/09]
   leaseir.atlassian.net/browse/LEAS-7450
-• LEAS-7466 · Sinvello Teatinos · pendiente de recogida  [sin gestionar aún]
+• LEAS-7466 · Sinvello Teatinos · pendiente de recogida  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7466
 
 🚩 SIN TÉCNICO Y PARADAS, FUERA DE CADENA (28)
 De los 43 tickets sin asignar y sin mover más de 15 días, 28 son de clientes que no pertenecen a Elha, Sin Vello, Epil Point, Smart Duck ni Unico Italia. No hay un interlocutor que pregunte por ellos, así que se pudren solos. Cada uno necesita un nombre hoy.
 • LEAS-6048 · Centros Perfect Lase (D. Jaramillo) · inspección de salida · 111 d · está terminado, falta cerrarlo  [último: Jesús, 27/04]
   leaseir.atlassian.net/browse/LEAS-6048
-• LEAS-5904 · Noemi Valero · 2 pedales con PRESUPUESTO YA ACEPTADO · 142 d · es venta parada, servirlo  [sin gestionar aún]
+• LEAS-5904 · Noemi Valero · 2 pedales con PRESUPUESTO YA ACEPTADO · 142 d · es venta parada, servirlo  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-5904
-• LEAS-7048 · Dermoscan · 4 umbilicales con PRESUPUESTO YA ACEPTADO · 49 d · es venta parada, servirlo  [sin gestionar aún]
+• LEAS-7048 · Dermoscan · 4 umbilicales con PRESUPUESTO YA ACEPTADO · 49 d · es venta parada, servirlo  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7048
 • LEAS-7104 y LEAS-7103 · NR Clinics · abiertos 43 d · se prometió por escrito hacerlo en septiembre: es ahora  [último: Isaac, 22/07]
   leaseir.atlassian.net/browse/LEAS-7104  leaseir.atlassian.net/browse/LEAS-7103
-• LEAS-7214 · Laser Clinic Hospitalet (Sara Bullón) · revisión anual pedida · 31 d · dar fecha  [sin gestionar aún]
+• LEAS-7214 · Laser Clinic Hospitalet (Sara Bullón) · revisión anual pedida · 31 d · dar fecha  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7214
 • LEAS-7118 · Corpoderm · en reparación · 21 d · se dijo finales de agosto, ya está vencido  [último: Borja, 13/08]
   leaseir.atlassian.net/browse/LEAS-7118
-• LEAS-7191 · Harmonie Salamanca · máquina de sustitución en préstamo · 29 d  [sin gestionar aún]
+• LEAS-7191 · Harmonie Salamanca · máquina de sustitución en préstamo · 29 d  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7191
-• LEAS-7148 · Laser Factory Hospitalet · préstamo con el padre ya resuelto · 38 d  [sin gestionar aún]
+• LEAS-7148 · Laser Factory Hospitalet · préstamo con el padre ya resuelto · 38 d  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7148
-• LEAS-7326 · Deseja Lituania · queja de calidad sin investigar · 14 d  [sin gestionar aún]
+• LEAS-7326 · Deseja Lituania · queja de calidad sin investigar · 14 d  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7326
-• LEAS-7310 · Laser Factory Mollet · queja de calidad sin investigar · 15 d  [sin gestionar aún]
+• LEAS-7310 · Laser Factory Mollet · queja de calidad sin investigar · 15 d  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7310
-• El resto (18) son comprobaciones de cobro heredadas de tickets ya cerrados: van en el bloque de subtareas huérfanas
+• El resto (18) son comprobaciones de cobro heredadas de tickets ya cerrados: van en el bloque de subtareas huérfanas  [sin dueño · lo coge Isaac]
 
 🧟 SUBTAREAS CON EL TICKET PADRE YA CERRADO (21)
 El principal se cerró y la subtarea se quedó abierta, sin técnico y sin nadie detrás. Ninguna avanza sola. Las cuatro de máquina de sustitución hay que validarlas con Ernesto contra los grupos de logística: si consta recogida o albarán, se cierra; si no consta movimiento, se llama al centro hoy.
-• LEAS-5697 · Smart Duck Paris · consola C03143 · NO aparece en logística ni en ningún grupo de Telegram en todo el histórico · 105 d sin rastro · localizarla hoy  [sin gestionar aún]
+• LEAS-5697 · Smart Duck Paris · consola C03143 · NO aparece en logística ni en ningún grupo de Telegram en todo el histórico · 105 d sin rastro · localizarla hoy  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-5697
-• LEAS-7054 · Centro Unico Boccea · en préstamo · padre LEAS-7052 resuelto · 38 d · VALIDAR CON ERNESTO  [sin gestionar aún]
+• LEAS-7054 · Centro Unico Boccea · en préstamo · padre LEAS-7052 resuelto · 38 d · VALIDAR CON ERNESTO  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7054  leaseir.atlassian.net/browse/LEAS-7052
-• LEAS-7148 · Laser Factory Hospitalet · en préstamo · padre LEAS-7146 resuelto · 38 d · VALIDAR CON ERNESTO  [sin gestionar aún]
+• LEAS-7148 · Laser Factory Hospitalet · en préstamo · padre LEAS-7146 resuelto · 38 d · VALIDAR CON ERNESTO  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7148  leaseir.atlassian.net/browse/LEAS-7146
-• LEAS-7285 · SinVello Cádiz · C00801 · SÍ consta expedición en ENVIOS SAT LEASEIR el viernes: se movió, actualizar Jira y cerrar la subtarea  [sin gestionar aún]
+• LEAS-7285 · SinVello Cádiz · C00801 · SÍ consta expedición en ENVIOS SAT LEASEIR el viernes: se movió, actualizar Jira y cerrar la subtarea  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7285
-• LEAS-756 · comprobación de cobro · padre LEAS-578 cancelado · 657 d · cerrar  [sin gestionar aún]
+• LEAS-756 · comprobación de cobro · padre LEAS-578 cancelado · 657 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-756  leaseir.atlassian.net/browse/LEAS-578
-• LEAS-4265 · comprobación de cobro · padre LEAS-4264 finalizado · 283 d · cerrar  [sin gestionar aún]
+• LEAS-4265 · comprobación de cobro · padre LEAS-4264 finalizado · 283 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-4265  leaseir.atlassian.net/browse/LEAS-4264
-• LEAS-5198 · comprobación de cobro · padre LEAS-5117 cancelado · 197 d · cerrar  [sin gestionar aún]
+• LEAS-5198 · comprobación de cobro · padre LEAS-5117 cancelado · 197 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-5198  leaseir.atlassian.net/browse/LEAS-5117
-• LEAS-5219 · Elha Sant Boi · padre LEAS-5209 cancelado · 196 d · cerrar  [sin gestionar aún]
+• LEAS-5219 · Elha Sant Boi · padre LEAS-5209 cancelado · 196 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-5219  leaseir.atlassian.net/browse/LEAS-5209
-• LEAS-5211 · padre LEAS-4749 resuelto · 196 d · cerrar  [sin gestionar aún]
+• LEAS-5211 · padre LEAS-4749 resuelto · 196 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-5211  leaseir.atlassian.net/browse/LEAS-4749
-• LEAS-5830 · padre LEAS-5249 finalizado · 147 d · cerrar  [sin gestionar aún]
+• LEAS-5830 · padre LEAS-5249 finalizado · 147 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-5830  leaseir.atlassian.net/browse/LEAS-5249
-• LEAS-5908 · padre LEAS-5368 cancelado · 142 d · cerrar  [sin gestionar aún]
+• LEAS-5908 · padre LEAS-5368 cancelado · 142 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-5908  leaseir.atlassian.net/browse/LEAS-5368
-• LEAS-6754 · padre LEAS-6753 resuelto · 77 d · cerrar  [sin gestionar aún]
+• LEAS-6754 · padre LEAS-6753 resuelto · 77 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-6754  leaseir.atlassian.net/browse/LEAS-6753
-• LEAS-6835 · Elha Uruguai · padre LEAS-6826 resuelto · 69 d · cerrar  [sin gestionar aún]
+• LEAS-6835 · Elha Uruguai · padre LEAS-6826 resuelto · 69 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-6835  leaseir.atlassian.net/browse/LEAS-6826
-• LEAS-6890 · padre LEAS-6764 resuelto · 64 d · cerrar  [sin gestionar aún]
+• LEAS-6890 · padre LEAS-6764 resuelto · 64 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-6890  leaseir.atlassian.net/browse/LEAS-6764
-• LEAS-7045 · padre LEAS-6805 resuelto · 49 d · cerrar  [sin gestionar aún]
+• LEAS-7045 · padre LEAS-6805 resuelto · 49 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7045  leaseir.atlassian.net/browse/LEAS-6805
-• LEAS-7102 · padre LEAS-6853 resuelto · 43 d · cerrar  [sin gestionar aún]
+• LEAS-7102 · padre LEAS-6853 resuelto · 43 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7102  leaseir.atlassian.net/browse/LEAS-6853
-• LEAS-7095 · queja · padre LEAS-7094 resuelto · 41 d · cerrar  [sin gestionar aún]
+• LEAS-7095 · queja · padre LEAS-7094 resuelto · 41 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7095  leaseir.atlassian.net/browse/LEAS-7094
-• LEAS-7265 · padre LEAS-6903 resuelto · 24 d · cerrar  [sin gestionar aún]
+• LEAS-7265 · padre LEAS-6903 resuelto · 24 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7265  leaseir.atlassian.net/browse/LEAS-6903
-• LEAS-7289 · padre LEAS-7136 resuelto · 21 d · cerrar  [sin gestionar aún]
+• LEAS-7289 · padre LEAS-7136 resuelto · 21 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7289  leaseir.atlassian.net/browse/LEAS-7136
-• LEAS-7323 · padre LEAS-7091 resuelto · 15 d · cerrar  [sin gestionar aún]
+• LEAS-7323 · padre LEAS-7091 resuelto · 15 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7323  leaseir.atlassian.net/browse/LEAS-7091
-• LEAS-7310 · queja · padre LEAS-7309 finalizado · 15 d · cerrar  [sin gestionar aún]
+• LEAS-7310 · queja · padre LEAS-7309 finalizado · 15 d · cerrar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7310  leaseir.atlassian.net/browse/LEAS-7309
-• Petición a quien lleve la automatización de Jira: que al cerrar un principal se cierren o se reasignen sus subtareas. Si no, esto vuelve a acumularse solo.
+• Petición a quien lleve la automatización de Jira: que al cerrar un principal se cierren o se reasignen sus subtareas. Si no, esto vuelve a acumularse solo.  [sin dueño · lo coge Isaac]
 
 🇮🇹 EPIL POINT · EL CLIENTE QUE NO PASA POR JIRA (144 vs 9)
 En tres meses y medio su bot ha abierto 144 tickets por WhatsApp desde 64 centros. En Jira tienen 9 abiertas. Cinco menciones de LEAS en 6.436 mensajes. Respondemos en seis minutos de mediana, así que el problema no es la atención: es que nada de esto queda registrado y luego no podemos ni medir ni facturar. Dos cosas para hoy y una regla nueva.
-• HOY · Partes de trabajo de Epil Point: se prometieron el 2 de septiembre. Sin ellos el cliente no acepta las facturas y el cobro se queda parado. Confirmar que se enviaron
-• HOY · Mensaje del 3 de septiembre a las 18:05 sobre la formación de Maria Martire en el centro nuevo: sigue sin contestar
-• Livorno · ticket del 28 de agosto, intervención el sábado 5 por la mañana. Ocho días con el cliente reclamando a diario. El cuello de botella es Sincronis, no nosotros: hay que ponerles plazo por escrito
-• Sesto Fiorentino · manípulo intermitente, el técnico va detrás de Livorno. Taranto · SSD, Giuseppe fue ayer. Avellino · cita el viernes
-• Manípulo 40413 de Lecce · parado en fábrica esperando aceptación de presupuesto, con disputa de garantía abierta y Fabio metido por email. Cerrarlo esta semana en un sentido o en otro
-• Consola 90943 de Aprilia · pendiente de recogida; el cliente exige entrega y recogida simultáneas. Coordinar con Ernesto
-• CALIDAD · Los umbilicales de manípulo son un defecto recurrente, no incidencias sueltas: el de Martina Franca iba por la tercera reparación y ya existe una conexión rediseñada que estamos regalando. Cinco centros en diez días. Esto sube al report de Nacho como coste de garantía
-• REGLA NUEVA · Todo ticket que entre por el grupo de WhatsApp de Epil Point se abre en Jira el mismo día y se le responde con el LEAS. Si no, ni medimos su siniestralidad real ni podemos defender una factura
+• HOY · Partes de trabajo de Epil Point: se prometieron el 2 de septiembre. Sin ellos el cliente no acepta las facturas y el cobro se queda parado. Confirmar que se enviaron  [sin dueño · lo coge Chus]
+• HOY · Mensaje del 3 de septiembre a las 18:05 sobre la formación de Maria Martire en el centro nuevo: sigue sin contestar  [sin dueño · lo coge Chus]
+• Livorno · ticket del 28 de agosto, intervención el sábado 5 por la mañana. Ocho días con el cliente reclamando a diario. El cuello de botella es Sincronis, no nosotros: hay que ponerles plazo por escrito  [sin dueño · lo coge Chus]
+• Sesto Fiorentino · manípulo intermitente, el técnico va detrás de Livorno. Taranto · SSD, Giuseppe fue ayer. Avellino · cita el viernes  [sin dueño · lo coge Chus]
+• Manípulo 40413 de Lecce · parado en fábrica esperando aceptación de presupuesto, con disputa de garantía abierta y Fabio metido por email. Cerrarlo esta semana en un sentido o en otro  [sin dueño · lo coge Chus]
+• Consola 90943 de Aprilia · pendiente de recogida; el cliente exige entrega y recogida simultáneas. Coordinar con Ernesto  [sin dueño · lo coge Chus]
+• CALIDAD · Los umbilicales de manípulo son un defecto recurrente, no incidencias sueltas: el de Martina Franca iba por la tercera reparación y ya existe una conexión rediseñada que estamos regalando. Cinco centros en diez días. Esto sube al report de Nacho como coste de garantía  [sin dueño · lo coge Chus]
+• REGLA NUEVA · Todo ticket que entre por el grupo de WhatsApp de Epil Point se abre en Jira el mismo día y se le responde con el LEAS. Si no, ni medimos su siniestralidad real ni podemos defender una factura  [sin dueño · lo coge Chus]
 
 ⏸ INCIDENCIAS PARADAS MÁS DE 15 DÍAS (18)
 Solo incidencias reales, sin contar subtareas. Las 34 subtareas paradas van aparte: 20 son de administración (cobros) y 11 de sustituciones.
-• LEAS-5904 · Noemi Valero · 142 d · presupuesto aceptado y sin ejecutar  [sin gestionar aún]
+• LEAS-5904 · Noemi Valero · 142 d · presupuesto aceptado y sin ejecutar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-5904
 • LEAS-6048 · Daniel Jaramillo · 112 d · en inspección de salida · 2.898 €  [último: Jesús, 27/04]
   leaseir.atlassian.net/browse/LEAS-6048
 • LEAS-4443 · Dermoscan · 101 d · la aseguradora rechazó y el cliente canjea: cerrar  [último: Borja, 17/04]
   leaseir.atlassian.net/browse/LEAS-4443
-• LEAS-4908 · Elha Pintor Felo Monzón · 100 d · abierto sin triar  [sin gestionar aún]
+• LEAS-4908 · Elha Pintor Felo Monzón · 100 d · abierto sin triar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-4908
 • LEAS-6889 · L Medical G Point · 62 d · pendiente de confirmar presupuesto  [asignado a Francisco]
   leaseir.atlassian.net/browse/LEAS-6889
 • LEAS-6888 · L Medical G Point · 60 d · pendiente de confirmar presupuesto  [asignado a Francisco]
   leaseir.atlassian.net/browse/LEAS-6888
-• LEAS-7048 · Dermoscan · 49 d · presupuesto aceptado y sin ejecutar  [sin gestionar aún]
+• LEAS-7048 · Dermoscan · 49 d · presupuesto aceptado y sin ejecutar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7048
 • LEAS-7103 · NR Clinics · 43 d · prometido para septiembre, ya estamos  [último: Isaac, 22/07]
   leaseir.atlassian.net/browse/LEAS-7103
@@ -167,9 +168,9 @@ Solo incidencias reales, sin contar subtareas. Las 34 subtareas paradas van apar
   leaseir.atlassian.net/browse/LEAS-7104
 • LEAS-6779 · Centri Unico Campania · 38 d · en reparación  [último: Francisco, 24/07]
   leaseir.atlassian.net/browse/LEAS-6779
-• LEAS-7214 · Laser Clinic Hospitalet · 31 d · abierto sin triar  [sin gestionar aún]
+• LEAS-7214 · Laser Clinic Hospitalet · 31 d · abierto sin triar  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7214
-• LEAS-7230 · SinVello Albacete · 27 d · pendiente de recogida y sin tracking  [sin gestionar aún]
+• LEAS-7230 · SinVello Albacete · 27 d · pendiente de recogida y sin tracking  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7230
 • LEAS-7118 · Corpoderm · 22 d · dijimos finales de agosto para el cambio de Bahía  [último: Borja, 13/08]
   leaseir.atlassian.net/browse/LEAS-7118
@@ -179,7 +180,7 @@ Solo incidencias reales, sin contar subtareas. Las 34 subtareas paradas van apar
   leaseir.atlassian.net/browse/LEAS-6198
 • LEAS-7188 · Centro Unico Boccea · 21 d · preparando presupuesto  [último: Ernesto, 30/07]
   leaseir.atlassian.net/browse/LEAS-7188
-• …y 2 más
+• …y 2 más  [sin dueño · lo coge Isaac]
 
 🔧 REPARACIÓN FUERA DE PLAZO (39)
 El compromiso con el cliente son 80 h. Los diez peores:
@@ -203,43 +204,43 @@ El compromiso con el cliente son 80 h. Los diez peores:
   leaseir.atlassian.net/browse/LEAS-7397
 • LEAS-7406 · Epil Point Livorno · 133 h de más · con técnico externo  [último: Gonzalo, 04/09]
   leaseir.atlassian.net/browse/LEAS-7406
-• …y 29 más
+• …y 29 más  [sin dueño · lo coge Jesús]
 
 🔁 PRÉSTAMOS FUERA DE PLAZO (10)
 Máquina nuestra en casa del cliente pasado el plazo. Cada una es flota que no factura y que no podemos prestar a otro.
-• LEAS-7357 · SinVello Granada Constitución · 159 h de más · figura como devuelto: ¿está o no está?  [sin gestionar aún]
+• LEAS-7357 · SinVello Granada Constitución · 159 h de más · figura como devuelto: ¿está o no está?  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7357
-• LEAS-7356 · Zurimed Parque Principado · 159 h de más  [sin gestionar aún]
+• LEAS-7356 · Zurimed Parque Principado · 159 h de más  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7356
-• LEAS-7359 · Centri Unico Olbia · 158 h de más  [sin gestionar aún]
+• LEAS-7359 · Centri Unico Olbia · 158 h de más  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7359
-• LEAS-7372 · SinVello El Palo · 131 h de más  [sin gestionar aún]
+• LEAS-7372 · SinVello El Palo · 131 h de más  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7372
-• LEAS-7375 · Cleanbody CC La Villa · 130 h de más  [sin gestionar aún]
+• LEAS-7375 · Cleanbody CC La Villa · 130 h de más  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7375
-• LEAS-7366 · SinVello Ibiza · 128 h de más  [sin gestionar aún]
+• LEAS-7366 · SinVello Ibiza · 128 h de más  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7366
-• LEAS-7401 · sin centro informado · 87 h de más  [sin gestionar aún]
+• LEAS-7401 · sin centro informado · 87 h de más  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7401
-• LEAS-7385 · sin centro informado · 87 h de más  [sin gestionar aún]
+• LEAS-7385 · sin centro informado · 87 h de más  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7385
-• LEAS-7388 · CVL Distribuidor (Samuel) · 86 h de más  [sin gestionar aún]
+• LEAS-7388 · CVL Distribuidor (Samuel) · 86 h de más  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7388
-• LEAS-7408 · Elha Sta Teresa · 79 h de más  [sin gestionar aún]
+• LEAS-7408 · Elha Sta Teresa · 79 h de más  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7408
-• Aparte: la consola C03143 lleva 169 d en Smart Duck Paris sin una sola nota. Localizarla hoy
+• Aparte: la consola C03143 lleva 169 d en Smart Duck Paris sin una sola nota. Localizarla hoy  [sin dueño · lo coge Ernesto]
 
 ✅ TERMINADOS Y SIN FINALIZAR (8)
 El equipo ya está con el cliente. Solo falta mover el ticket a Finalizada. Ojo: «Resuelto» no es el final del circuito — el ticket sigue vivo hasta que se pone en Finalizada, y mientras tanto ni cierra el ciclo ni deja de contar. Esto es lo que nos infla los tiempos medios.
 • LEAS-6048 · Daniel Jaramillo (Grupo Dos) · 112 d en inspección de salida · 2.898 €  [último: Jesús, 27/04]
   leaseir.atlassian.net/browse/LEAS-6048
-• LEAS-7236 · Smart Duck Labege · devuelto al cliente hace 29 d  [sin gestionar aún]
+• LEAS-7236 · Smart Duck Labege · devuelto al cliente hace 29 d  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7236
-• LEAS-7255 · Elha St Feliu de Llobregat · devuelto hace 27 d  [sin gestionar aún]
+• LEAS-7255 · Elha St Feliu de Llobregat · devuelto hace 27 d  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7255
-• LEAS-7124 · Elha Cristòfor Colom · devuelto hace 42 d  [sin gestionar aún]
+• LEAS-7124 · Elha Cristòfor Colom · devuelto hace 42 d  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7124
-• LEAS-7224 · Elha Limoneros · devuelto hace 30 d  [sin gestionar aún]
+• LEAS-7224 · Elha Limoneros · devuelto hace 30 d  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7224
 • LEAS-7315 · Belenus · devuelto hace 17 d  [último: Isaac, 17/08]
   leaseir.atlassian.net/browse/LEAS-7315
@@ -247,7 +248,7 @@ El equipo ya está con el cliente. Solo falta mover el ticket a Finalizada. Ojo:
   leaseir.atlassian.net/browse/LEAS-7321
 • LEAS-7324 · SinVello Jerez · devuelto hace 15 d  [último: Jesús, 19/08]
   leaseir.atlassian.net/browse/LEAS-7324
-• RECORDATORIO · Dejar un ticket en «Resuelto» no lo termina: hay que pasarlo a «Finalizada». Hoy arrastramos 1.082 tickets parados en Resuelto, casi todos subtareas, con una mediana de 654 días ahí quietos
+• RECORDATORIO · Dejar un ticket en «Resuelto» no lo termina: hay que pasarlo a «Finalizada». Hoy arrastramos 1.082 tickets parados en Resuelto, casi todos subtareas, con una mediana de 654 días ahí quietos  [sin dueño · lo coge Isaac]
 
 🛠 TÉCNICO EXTERNO: SE GESTIONA Y AHÍ SE QUEDA (21)
 Hay 21 incidencias en «Enviado a técnico externo» y las 21 están sin técnico asignado en Jira. Se avisa al externo, se manda el material… y el ticket se queda ahí. Ni pasa a «Finalizado técnico externo» cuando el técnico acaba, ni queda escrito qué hizo. Resultado: no sabemos si está resuelto, no podemos facturar la intervención y el cliente pregunta antes que nosotros.
@@ -267,47 +268,47 @@ Hay 21 incidencias en «Enviado a técnico externo» y las 21 están sin técnic
   leaseir.atlassian.net/browse/LEAS-7407  leaseir.atlassian.net/browse/LEAS-7378
 • LEAS-6891 · Mercedes Gamaza · 65 d en «enviado a técnico externo». Es el récord  [último: Isaac, 03/09]
   leaseir.atlassian.net/browse/LEAS-6891
-• LEAS-7448 · Epil Point Taranto y LEAS-7469 · Elha Cerdanyola · abiertos y enviados a externo con CERO comentarios  [sin gestionar aún]
+• LEAS-7448 · Epil Point Taranto y LEAS-7469 · Elha Cerdanyola · abiertos y enviados a externo con CERO comentarios  [sin dueño · lo coge Gonzalo]
   leaseir.atlassian.net/browse/LEAS-7448  leaseir.atlassian.net/browse/LEAS-7469
 • LEAS-7427 · Dermasana Orense · el único comentario del ticket es «_texto enfatizado_». Eso es la plantilla vacía, no una gestión  [último: Gonzalo, 04/09]
   leaseir.atlassian.net/browse/LEAS-7427
-• REGLA · Cuando el técnico externo termina, el ticket pasa a «Finalizado técnico externo» ese mismo día y se escribe qué hizo y con qué material. Si no, ni se factura ni se sabe si el equipo está bien
-• REGLA · Mientras esté con el externo, una nota por semana como mínimo: aunque sea «reclamado, sin fecha todavía». El silencio no es que no pase nada, es que no lo sabemos
+• REGLA · Cuando el técnico externo termina, el ticket pasa a «Finalizado técnico externo» ese mismo día y se escribe qué hizo y con qué material. Si no, ni se factura ni se sabe si el equipo está bien  [sin dueño · lo coge Gonzalo]
+• REGLA · Mientras esté con el externo, una nota por semana como mínimo: aunque sea «reclamado, sin fecha todavía». El silencio no es que no pase nada, es que no lo sabemos  [sin dueño · lo coge Gonzalo]
 
 📦 EL TRANSPORTE ES EL CUELLO DE BOTELLA Y NO LO ESTAMOS MIDIENDO
 Trabajamos con seis transportistas a la vez (Palibex, MRW, DHL, DHL Parcel, SEUR, Correos Express, CTT y uno propio) y con ninguno tenemos un seguimiento fiable de punta a punta. No es una queja: es que el 65% del tiempo de ciclo de una incidencia está fuera del taller, y la mayor parte se va aquí. Mientras no se mida por transportista, no hay a quién reclamar.
-• Palibex no tiene seguimiento consultable para el cliente. El enlace que le pasamos pide credenciales y hay que ir dándole el localizador a mano cada vez
-• En envíos a Canarias la expedición cambia de transportista a mitad de camino y el número de seguimiento se pierde: hay que pedir uno nuevo al segundo
-• Recogidas que se dan por hechas y no lo están: Tomares figuraba recogido por MRW y el equipo seguía en la clínica días después. Cáceres estuvo cinco días sin poder trabajar entre recogidas fallidas
-• Incidencia literal del transportista en Cáceres: «pasamos a retirar la mercancía y no nos ayudó nadie, una persona sola no puede bajar la máquina». El centro dice que no fueron. Alguien miente y no tenemos forma de saber quién
-• Manacor · el centro avisó de que cerraba por vacaciones hasta el 31/08 y aun así se programó envío y recogida. Un equipo enviado el 14 de agosto seguía sin entregar el 1 de septiembre
-• 13 de los 20 equipos que van de camino ahora mismo no tienen el enlace de seguimiento puesto en Jira
-• PROPUESTA · Medir por transportista: días de recogida, días de entrega, recogidas fallidas y envíos sin tracking. Con tres meses de datos se negocia o se cambia. Hoy no tenemos ni un número que enseñarles
+• Palibex no tiene seguimiento consultable para el cliente. El enlace que le pasamos pide credenciales y hay que ir dándole el localizador a mano cada vez  [sin dueño · lo coge Ernesto]
+• En envíos a Canarias la expedición cambia de transportista a mitad de camino y el número de seguimiento se pierde: hay que pedir uno nuevo al segundo  [sin dueño · lo coge Ernesto]
+• Recogidas que se dan por hechas y no lo están: Tomares figuraba recogido por MRW y el equipo seguía en la clínica días después. Cáceres estuvo cinco días sin poder trabajar entre recogidas fallidas  [sin dueño · lo coge Ernesto]
+• Incidencia literal del transportista en Cáceres: «pasamos a retirar la mercancía y no nos ayudó nadie, una persona sola no puede bajar la máquina». El centro dice que no fueron. Alguien miente y no tenemos forma de saber quién  [sin dueño · lo coge Ernesto]
+• Manacor · el centro avisó de que cerraba por vacaciones hasta el 31/08 y aun así se programó envío y recogida. Un equipo enviado el 14 de agosto seguía sin entregar el 1 de septiembre  [sin dueño · lo coge Ernesto]
+• 13 de los 20 equipos que van de camino ahora mismo no tienen el enlace de seguimiento puesto en Jira  [sin dueño · lo coge Ernesto]
+• PROPUESTA · Medir por transportista: días de recogida, días de entrega, recogidas fallidas y envíos sin tracking. Con tres meses de datos se negocia o se cambia. Hoy no tenemos ni un número que enseñarles  [sin dueño · lo coge Ernesto]
 
 📝 A MEDIO GESTIONAR Y SIN UNA SOLA OBSERVACIÓN EN JIRA
 Tickets que alguien ha tocado y ha dejado en un estado intermedio sin escribir en qué punto están. Para el resto del equipo no existen: el que coge el turno siguiente empieza de cero y el cliente pregunta a quien pilla. No hace falta cerrarlos, hace falta un renglón diciendo qué falta y quién lo tiene.
-• LEAS-5904 · Noemi Valero · presupuesto ACEPTADO el 14 de abril, cero comentarios desde entonces, 142 d  [sin gestionar aún]
+• LEAS-5904 · Noemi Valero · presupuesto ACEPTADO el 14 de abril, cero comentarios desde entonces, 142 d  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-5904
-• LEAS-7048 · Dermoscan · presupuesto ACEPTADO el 16 de julio, cero comentarios, 49 d  [sin gestionar aún]
+• LEAS-7048 · Dermoscan · presupuesto ACEPTADO el 16 de julio, cero comentarios, 49 d  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-7048
-• Elha · cuatro incidencias abiertas a medio gestionar sin ninguna observación. Que las cierre o las escriba quien las tocó
+• Elha · cuatro incidencias abiertas a medio gestionar sin ninguna observación. Que las cierre o las escriba quien las tocó  [sin dueño · lo coge Isaac]
 • LEAS-6889 y LEAS-6888 · L Medical G Point · 60 y 62 d en «pendiente de confirmar presupuesto» sin nota de si se ha reclamado al cliente  [asignado a Francisco]
   leaseir.atlassian.net/browse/LEAS-6889  leaseir.atlassian.net/browse/LEAS-6888
 • LEAS-7190 · Harmonie Salamanca · diodo por debajo del 80% y falta la decisión escrita en el ticket  [último: Jonathan, 12/08]
   leaseir.atlassian.net/browse/LEAS-7190
 • LEAS-6198 · Luxlaser André Bélgica · «Andre tenía que hablar con Arturo»: no consta si esa conversación ocurrió  [último: Borja, 13/08]
   leaseir.atlassian.net/browse/LEAS-6198
-• REGLA · Si dejas una incidencia a medias, escribe en el LEAS en qué punto está y qué falta. Un renglón. Si no está escrito, no existe
+• REGLA · Si dejas una incidencia a medias, escribe en el LEAS en qué punto está y qué falta. Un renglón. Si no está escrito, no existe  [sin dueño · lo coge Isaac]
 
 🔒 CLIENTES GRANDES ATENDIDOS POR PRIVADO
 Está dicho y se sigue haciendo: los grandes clientes escriben por privado y se les contesta por privado. Ahí no queda registro, no lo ve el resto del equipo y no llega nunca al ticket. Es la raíz de la mitad de las contradicciones entre lo que dice el chat y lo que dice Jira.
-• Norma: si un cliente grande escribe por privado, se le contesta UNA vez remitiéndole al grupo, y la respuesta de verdad se da en el grupo
-• Epil Point es el ejemplo extremo de a dónde lleva esto: 144 tickets abiertos por su bot en 3,5 meses y solo 5 menciones de LEAS en 6.436 mensajes
-• Sin Vello es el ejemplo contrario: un interlocutor único que abre la incidencia en el portal y cita el LEAS, 45 claves distintas en su chat. Y es la cadena con menos atasco del grupo (7%)
-• Lo que se acuerde por chat, se escribe en el LEAS el mismo día. Si no, mañana aparece en este mensaje como contradicción
+• Norma: si un cliente grande escribe por privado, se le contesta UNA vez remitiéndole al grupo, y la respuesta de verdad se da en el grupo  [sin dueño · lo coge Isaac]
+• Epil Point es el ejemplo extremo de a dónde lleva esto: 144 tickets abiertos por su bot en 3,5 meses y solo 5 menciones de LEAS en 6.436 mensajes  [sin dueño · lo coge Isaac]
+• Sin Vello es el ejemplo contrario: un interlocutor único que abre la incidencia en el portal y cita el LEAS, 45 claves distintas en su chat. Y es la cadena con menos atasco del grupo (7%)  [sin dueño · lo coge Isaac]
+• Lo que se acuerde por chat, se escribe en el LEAS el mismo día. Si no, mañana aparece en este mensaje como contradicción  [sin dueño · lo coge Isaac]
 
 💬 TELEGRAM DICE UNA COSA Y JIRA OTRA (2)
 Lo que se habla por chat no llega al ticket. En cuanto el bot esté en los grupos esto sale solo cada mañana.
-• LEAS-3827 · Clínica Cibeles CC Holea · Jira dice en fábrica desde hace 227 d, y en Telegram el cliente pidió el código mensual de la máquina el 7 de agosto: está funcionando. Cerrar y facturar los 7.333 €  [sin gestionar aún]
+• LEAS-3827 · Clínica Cibeles CC Holea · Jira dice en fábrica desde hace 227 d, y en Telegram el cliente pidió el código mensual de la máquina el 7 de agosto: está funcionando. Cerrar y facturar los 7.333 €  [sin dueño · lo coge Isaac]
   leaseir.atlassian.net/browse/LEAS-3827
-• Mel Clinics Castellón · consola lista para recoger desde el 8 de agosto y sin incidencia abierta. Además el centro escribe también por WhatsApp
+• Mel Clinics Castellón · consola lista para recoger desde el 8 de agosto y sin incidencia abierta. Además el centro escribe también por WhatsApp  [sin dueño · lo coge Isaac]
