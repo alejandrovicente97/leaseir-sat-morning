@@ -244,12 +244,11 @@ a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
         border-radius:50%; background:var(--muted-2)}
 
 /* ═══ Actividad del equipo ═══ */
-.actbar{display:flex;align-items:center;gap:11px;margin:0 0 11px;min-height:26px}
-.recarga{font:inherit;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;
-  color:var(--muted);background:var(--surface);border:1px solid var(--divider);border-radius:7px;
-  padding:5px 13px;cursor:pointer}
-.recarga:hover{color:var(--accent);border-color:var(--accent)}
-.recarga:disabled{opacity:.5;cursor:default}
+.actbar{display:flex;align-items:center;gap:13px;margin:0 0 13px;min-height:40px;flex-wrap:wrap}
+.actbig{font:inherit;font-size:14px;font-weight:600;color:#fff;background:var(--accent);
+  border:0;border-radius:10px;padding:10px 20px;cursor:pointer;box-shadow:var(--shadow);white-space:nowrap}
+.actbig:hover{opacity:.9}
+.actbig:disabled{opacity:.5;cursor:default}
 .actmsg{font-size:12px;color:var(--muted)}
 .actmsg.mal{color:var(--crit)}
 .actmsg.ok{color:var(--good)}
@@ -935,8 +934,8 @@ dialog.wide{max-width:860px}
   <section class="sec">
     <h2>Quién ha escrito hoy en Jira <span class="hint">— pincha una tarjeta para ver comentario a comentario</span></h2>
     <div class="actbar">
-      <button class="recarga" id="actbtn" onclick="refrescarAct()" hidden>Actualizar</button>
-      <span class="actmsg" id="actmsg"></span>
+      <button class="actbig" id="actbtn" onclick="refrescarAct()" hidden>↻&nbsp; Actualizar ahora</button>
+      <span class="actmsg" id="actmsg">Datos de la última pasada. Pulsa «Actualizar ahora» para releer Jira en vivo.</span>
     </div>
     <div id="actg" class="actg"></div>
     <div class="pending" id="actpie"></div>
