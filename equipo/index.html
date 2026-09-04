@@ -365,6 +365,8 @@ dialog.wide{max-width:860px}
 .ri{flex:1;min-width:200px;font:inherit;font-size:12px;padding:3px 9px;border-radius:7px;border:1px solid var(--divider);background:var(--surface-2);color:var(--ink)}
 .rr{width:100%;font-size:12px;color:var(--ink-soft);background:var(--surface-2);border-left:3px solid var(--accent);padding:5px 10px;border-radius:0 7px 7px 0;margin-top:3px;line-height:1.45}
 .re{font-weight:600;color:var(--warn)} .re.ok{color:var(--good)}
+.rr.ok{border-left-color:var(--good);background:rgba(31,122,74,.07)}
+.rr.mal{border-left-color:var(--crit);background:var(--crit-bg);color:var(--crit)}
 .rf{color:var(--muted-2);font-size:11px;margin-left:4px}
 
 /* ── Carga por persona ── */
@@ -505,6 +507,8 @@ dialog.wide{max-width:860px}
 
   <div id="cargas" class="cargas"></div>
 
+  <div id="quiensoy" class="qbar"></div>
+
 
   <div id="blks"></div>
 </div>
@@ -584,7 +588,10 @@ function titularBase(k, t){
 }
 function HOY(){ return new Date().toISOString().slice(0,10); }
 function tramitado(k, t){
-  const r = RESP[idPunto(k, t)];
+  const id = idPunto(k, t);
+  const l = LOCAL[id];
+  if(l && (l.cuando||'').slice(0,10) === HOY()) return true;
+  const r = RESP[id];
   return !!(r && (r.texto || r.estado) && (r.cuando||'').slice(0,10) === HOY());
 }
 function titularEf(k, t){
@@ -630,13 +637,31 @@ function contarAvisos(){
 
 // ── Respuestas del equipo (capacidad db) ──
 let DB = null, YO = null, RESP = {};
+
+// ── Escribir en Jira desde esta página ──
+// El worker (Cloudflare) recibe {leas, quien, texto, clave} y crea una NOTA INTERNA
+// en el ticket con servicedeskapi public:false. Verificado el 04/09/2026 en LEAS-7455.
+const JIRA_URL   = "https://leaseir-sat-not.alejandrovicentesanchez4.workers.dev";
+const JIRA_CLAVE = "clave-sat-2026";
+// Lo escrito desde ESTE navegador, para que el punto desaparezca sin esperar a la pasada.
+let LOCAL = {};
+function leerLocal(){ try{ return JSON.parse(localStorage.getItem("sat.escrito") || "{}"); }catch(e){ return {}; } }
+function guardaLocal(){ try{ localStorage.setItem("sat.escrito", JSON.stringify(LOCAL)); }catch(e){} }
+
 const NOMBRES = ["Isaac","Chus","Gonzalo","Borja","Cristina","Ernesto","Jonathan","Bea","Ivan","Alejandro"];
 function idPunto(k, t){ return (k + "__" + idLinea(k, t)).replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 180); }
 function leerYo(){ try{ return localStorage.getItem("sat.yo"); }catch(e){ return null; } }
 function fijarYo(n){ YO = n; try{ localStorage.setItem("sat.yo", n); }catch(e){} pintarYo(); renderInterno(); }
 function pintarYo(){
   const c = document.getElementById("quiensoy"); if(!c) return;
-  if(!DB){ c.innerHTML = '<span class="qnota">Esta pantalla es para leer: aquí ves lo que tienes tú y lo que tiene cada uno. <b>Lo que hayas hecho se escribe en Jira</b>, en el ticket — pincha el LEAS y lo abres. Si hoy no llegas a algo, cambia el responsable del ticket en Jira y avisa por el grupo.</span>'; return; }
+  const G = ["Isaac","Chus","Gonzalo","Borja","Cristina","Alejandro"];
+  if(!DB){
+    c.innerHTML = YO
+      ? '<span class="qnota">Escribes como <b>'+YO+'</b>. Lo que pongas en cada punto entra en el ticket de Jira como nota interna, al momento. <button class="qcam" onclick="fijarYo(null)">no soy yo</button></span>'
+      : '<span class="qnota"><b>¿Quién eres?</b> Dilo una vez y ya puedes escribir en los tickets desde aquí. </span>'
+        + G.map(n => '<button class="qbtn" onclick="fijarYo(\''+n+'\')">'+n+'</button>').join('');
+    return;
+  }
   c.innerHTML = YO
     ? '<span class="qnota">Estás respondiendo como <b>'+YO+'</b>. <button class="qcam" onclick="fijarYo(null)">cambiar</button></span>'
     : '<span class="qnota">¿Quién eres? </span>' + NOMBRES.map(n => '<button class="qbtn" onclick="fijarYo(\''+n+'\')">'+n+'</button>').join('');
@@ -646,6 +671,7 @@ async function initDB(){
         ? await claude.use("db").catch(()=>null)
         : null;
   YO = leerYo();
+  LOCAL = leerLocal();
   pintarYo();
   if(!DB){ renderInterno(); return; }
   renderInterno();                       // botones ya, sin esperar a la red
@@ -673,6 +699,38 @@ async function responder(k, t, estado, texto, paraQuien){
     });
   }catch(e){ console.error(e); }
 }
+// Escribe la nota en Jira a través del worker. Solo en la web estática (sin DB).
+async function anotar(k, t, inp){
+  const texto = (inp.value || "").trim(); if(!texto) return;
+  const leas = (t.match(/\bLEAS-\d{3,5}\b/) || [])[0];
+  const caja = inp.closest(".resp");
+  const eco  = caja ? caja.querySelector(".rr") : null;
+  if(!leas){ if(eco){ eco.hidden = false; eco.className="rr mal"; eco.textContent = "Este punto no tiene un LEAS, así que no hay ticket donde escribirlo. Dilo por el grupo."; } return; }
+  if(!YO){ pintarYo(); return; }
+  inp.disabled = true;
+  if(eco){ eco.hidden = false; eco.className = "rr"; eco.textContent = "Escribiendo en " + leas + "…"; }
+  try{
+    const r = await fetch(JIRA_URL, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ leas: leas, quien: YO, texto: texto, clave: JIRA_CLAVE })
+    });
+    const j = await r.json().catch(()=>({}));
+    if(!r.ok || !j.ok){
+      inp.disabled = false;
+      if(eco){ eco.hidden = false; eco.className="rr mal"; eco.textContent = "No se ha podido escribir en " + leas + " (" + (j.error||r.status) + "). Vuelve a intentarlo o dilo por el grupo."; }
+      return;
+    }
+    LOCAL[idPunto(k,t)] = { texto: texto, quien: YO, cuando: new Date().toISOString(), leas: leas };
+    guardaLocal();
+    renderInterno();
+  }catch(e){
+    inp.disabled = false;
+    if(eco){ eco.hidden = false; eco.className="rr mal"; eco.textContent = "Sin conexión con Jira. Inténtalo otra vez."; }
+  }
+}
+function deshacerLocal(k, t){
+  delete LOCAL[idPunto(k,t)]; guardaLocal(); renderInterno();
+}
 function marcar(k, t, estado, btn){
   const id = idPunto(k, t), prev = RESP[id] || {};
   responder(k, t, prev.estado === estado ? "" : estado, prev.texto || "");
@@ -691,6 +749,22 @@ function respHtml(k, t){
   const duenyo = titularEf(k, t);
   const GRUPO = ["Isaac","Chus","Gonzalo","Borja","Cristina"].filter(disp);
   let h = '<div class="resp">';
+  const loc = LOCAL[id];
+  if(!DB && JIRA_URL){
+    const leas = (t.match(/\bLEAS-\d{3,5}\b/) || [])[0];
+    if(loc){
+      h += '<div class="rr ok"><b>'+(loc.quien||'')+'</b> · escrito en <b>'+(loc.leas||'')+'</b> · '+loc.texto
+        +  ' <span class="rf">'+(loc.cuando||'').slice(11,16)+'</span>'
+        +  ' <button class="und" title="Solo lo quita de esta pantalla. El comentario ya está en Jira y no se borra." onclick="deshacerLocal(\''+k+'\',this.closest(\'li\').dataset.t)">quitar de la lista</button></div>';
+    } else if(YO && leas){
+      h += '<input class="ri" placeholder="qué has hecho · Enter y entra en '+leas+'" '
+        +  'onkeydown="if(event.key===\'Enter\')anotar(\''+k+'\',this.closest(\'li\').dataset.t,this)">'
+        +  '<div class="rr" hidden></div>';
+    } else if(YO && !leas){
+      h += '<span class="rf">sin LEAS: esto se dice por el grupo</span>';
+    }
+    return h + '</div>';
+  }
   if(DB && YO){
     ["Hecho","En ello","No es así"].forEach(e => {
       h += '<button class="rb'+(r && r.estado===e ? ' on' : '')+'" onclick="marcar(\''+k+'\',this.closest(\'li\').dataset.t,\''+e+'\',this)">'+e+'</button>';
