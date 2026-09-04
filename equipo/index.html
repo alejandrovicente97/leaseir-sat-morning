@@ -386,6 +386,17 @@ dialog.wide{max-width:860px}
 .cargas .todos{grid-column:1/-1;font-size:12px;color:var(--muted);padding:2px 0 0}
 .cargas .todos button{background:none;border:0;font:inherit;color:var(--accent);cursor:pointer;
        text-decoration:underline;text-underline-offset:2px;padding:0}
+.hechos{background:rgba(31,122,74,.09);border:1px solid rgba(31,122,74,.28);border-radius:10px;
+        padding:8px 13px;margin:0 0 12px;font-size:12.5px;color:var(--ink-soft)}
+.hechos b{color:var(--good);font-size:14px}
+.hechos button{background:none;border:0;font:inherit;color:var(--good);cursor:pointer;
+        text-decoration:underline;text-underline-offset:2px;padding:0;font-weight:600}
+#blks li.ok{opacity:.55}
+#blks li.ok > .resp .ri{opacity:.7}
+.tg{margin:5px 0 0;padding:5px 9px;background:var(--surface-2);border-left:2px solid var(--muted-2);
+     border-radius:0 7px 7px 0;font-size:11.5px;color:var(--muted);line-height:1.4}
+.tg .tgg{font-weight:600;color:var(--ink-soft)}
+.tg .tgh{color:var(--muted-2);font-size:10.5px;margin-left:3px}
 /* ── Pasar a un compañero ── */
 .selp{font:inherit;font-size:11.5px;border:1px solid var(--line);background:var(--surface-2);
       color:var(--ink-soft);border-radius:7px;padding:3px 6px;cursor:pointer}
@@ -417,7 +428,7 @@ dialog.wide{max-width:860px}
 
   <section class="statebar" style="border-left-color:var(--accent)">
     <div class="lead"><i style="background:var(--accent);box-shadow:0 0 0 4px rgba(176,67,31,.15)"></i><b>Lo que tiene cada uno en su tejado hoy</b></div>
-    <div style="font-size:13px;color:var(--ink-soft);line-height:1.5">Cada punto lleva su dueño y, debajo, un sitio para decir qué has hecho o pasárselo a un compañero. Pincha tu nombre arriba para ver solo lo tuyo. Lo que escribas aquí queda con tu nombre y la hora.</div>
+    <div style="font-size:13px;color:var(--ink-soft);line-height:1.5">Pincha tu nombre arriba para ver solo lo tuyo. En cada punto: dices qué has hecho y desaparece de la lista, o se lo pasas a un compañero con el desplegable. Todo queda con tu nombre y la hora. El panel se va vaciando durante el día.</div>
     <div class="aside"><b>97 + 89</b>principales y subtareas</div>
   </section>
 
@@ -469,7 +480,7 @@ const CAD = {"ruta": ["Gonzalo", "Borja", "Isaac"], "track": ["Gonzalo", "Borja"
 // Cadena de responsabilidad. Siempre tres nombres: quien lo tiene, a quién se lo pide
 // si no llega, y a quién se lo pide ese segundo. Siempre por el grupo, para que quede constancia.
 const FUERA = {"Cristina":"de vacaciones hasta el 21 de septiembre","Borja":"de vacaciones hasta el miércoles"};
-const NOTA_HOY = {"Chus":"hoy entra a las 12:00"};
+const NOTA_HOY = {"Chus":"hoy de 12:00 a 20:00"};
 function disp(n){ return !FUERA[n]; }
 function cadena(k, t){
   const base = (CAD[k] || ["Isaac","Gonzalo","Borja"]).filter(disp);
@@ -489,6 +500,11 @@ function cadena(k, t){
   return cab + nt + " · después de " + titular + ": " + b + ", y luego " + c;
 }
 
+const TG = {"LEAS-7476": {"g": "Incidencias Portal SAT online", "q": "Portal", "t": "Alta nueva · Sin Vello Alcala de Henares · Umbilical · no bloqueante", "h": "hoy 11:38"}, "LEAS-7472": {"g": "Incidencias Portal SAT online", "q": "Portal", "t": "Alta nueva · Elha Sta Teresa · bloqueante", "h": "ayer 21:00"}, "LEAS-7469": {"g": "Incidencias Portal SAT online", "q": "Portal", "t": "Alta nueva · Elha Cerdanyola · gatillo", "h": "ayer 16:00"}};
+function tgDe(t){
+  const m = t.match(/\bLEAS-\d{3,5}\b/);
+  return m && TG[m[0]] ? TG[m[0]] : null;
+}
 function titularBase(k, t){
   const base = (CAD[k] || ["Isaac","Gonzalo","Borja"]).filter(disp);
   const GRUPO = ["Isaac","Chus","Gonzalo","Borja","Cristina"].filter(disp);
@@ -496,6 +512,11 @@ function titularBase(k, t){
   if(!q || q.nadie) return base[0];
   const n = (q.txt.match(/(?:último|asignado a):?\s*([A-Za-zÁÉÍÓÚÑáéíóúñ]+)/)||[])[1] || base[0];
   return GRUPO.indexOf(n) === -1 ? base[0] : n;
+}
+function HOY(){ return new Date().toISOString().slice(0,10); }
+function tramitado(k, t){
+  const r = RESP[idPunto(k, t)];
+  return !!(r && (r.texto || r.estado) && (r.cuando||'').slice(0,10) === HOY());
 }
 function titularEf(k, t){
   const r = RESP[idPunto(k, t)];
@@ -617,7 +638,8 @@ function respHtml(k, t){
   return h + '</div>';
 }
 
-let FILTRO = null;
+let FILTRO = null, VERHECHOS = false;
+function verHechos(){ VERHECHOS = !VERHECHOS; renderInterno(); }
 function filtrar(n){ FILTRO = (FILTRO === n) ? null : n; renderInterno(); }
 function renderCargas(){
   const c = document.getElementById('cargas'); if(!c) return;
@@ -629,26 +651,28 @@ function renderCargas(){
     total++; acc[d].n++;
     if(nivel(k,t) >= 3) acc[d].rojo++;
     const r = RESP[idPunto(k,t)];
-    if(r && (r.estado || r.texto)) acc[d].resp++;
+    if(tramitado(k,t)) acc[d].resp++;
     if(r && r.estado === 'Hecho') acc[d].hecho++;
   }));
-  const sem = a => a.n === 0 ? 'o' : (a.rojo >= 3 ? 'c' : (a.rojo > 0 || a.resp < a.n ? 'w' : 'g'));
+  const sem = a => a.n === 0 ? 'o' : (a.resp >= a.n ? 'g' : (a.rojo >= 3 ? 'c' : 'w'));
   let h = GRUPO.map(n => {
     const a = acc[n], s = sem(a);
     return '<button class="pcard'+(FILTRO===n?' sel':'')+'" onclick="filtrar(\''+n+'\')">'
       + '<div class="ph"><span class="sem '+s+'"></span><span class="pn">'+n+'</span>'
       + (FUERA[n] ? '<span class="pf">fuera</span>' : (NOTA_HOY[n] ? '<span class="pf">'+NOTA_HOY[n]+'</span>' : ''))
       + '</div>'
-      + '<div><span class="pb">'+a.n+'</span><span class="pu">puntos</span></div>'
+      + '<div><span class="pb">'+(a.n-a.resp)+'</span><span class="pu">'+((a.n-a.resp)===1?'pendiente':'pendientes')+'</span></div>'
       + '<div class="pd">'+(a.rojo ? '<b style="color:var(--crit)">'+a.rojo+' en rojo</b> · ' : '')
-      + a.resp+' de '+a.n+' contestados'+(a.hecho ? ' · '+a.hecho+' hechos' : '')+'</div></button>';
+      + (a.resp ? a.resp+' de '+a.n+' tramitados hoy' : 'ninguno tramitado aún de '+a.n)+'</div></button>';
   }).join('');
   const fueraDeGrupo = ["Cristina","Borja"].filter(n => FUERA[n]);
-  const enPie = GRUPO.filter(n => acc[n].n > 0).sort((a,b) => acc[b].n - acc[a].n);
+  const enPie = GRUPO.filter(n => acc[n].n - acc[n].resp > 0).sort((a,b) => (acc[b].n-acc[b].resp) - (acc[a].n-acc[a].resp));
   const top = enPie[0];
-  const cargado = top && total ? Math.round(acc[top].n * 100 / total) : 0;
-  h += '<div class="todos">'+total+' puntos repartidos'
-    + (cargado >= 45 ? ' · <b>'+top+' lleva el '+cargado+' %</b>, si no llega hay que repartir con el desplegable de cada punto' : '')
+  const pend = GRUPO.reduce((x,n)=>x+acc[n].n-acc[n].resp,0);
+  const cargado = top && pend ? Math.round((acc[top].n-acc[top].resp) * 100 / pend) : 0;
+  h += '<div class="todos">'+pend+' pendientes de '+total+''
+    + (cargado >= 45 ? ' · <b>'+top+' lleva el '+cargado+' % de lo que queda</b>' : '')
+    + (acc["Chus"] && NOTA_HOY["Chus"] && pend > 0 ? ' · <b>Chus entra a las 12:00 y sale a las 20:00</b>: lo que Isaac y Gonzalo vean que hoy no les da tiempo, pasádselo con el desplegable antes de las 12 y le sale ya en su lista' : '')
     + (fueraDeGrupo.length ? ' · fuera hoy: '+fueraDeGrupo.map(n=>n+' ('+FUERA[n]+')').join(', ') : '')
     + (FILTRO ? ' · viendo solo lo de <b>'+FILTRO+'</b> <button onclick="filtrar(null)">ver todo</button>' : '')
     + '</div>';
@@ -658,9 +682,12 @@ function renderCargas(){
 function renderInterno(){
   const c = document.getElementById('blks'); if(!c) return;
   let h = '';
+  let hechos = 0;
   ORDEN.forEach(k => {
     const b = MSG[k], m = BMETA[k];
-    const lineas = (b.l || []).filter(t => !FILTRO || titularEf(k,t) === FILTRO);
+    const todas = (b.l || []).filter(t => !FILTRO || titularEf(k,t) === FILTRO);
+    const lineas = VERHECHOS ? todas : todas.filter(t => !tramitado(k,t));
+    hechos += todas.filter(t => tramitado(k,t)).length;
     if(!lineas.length) return;
     const alto = lineas.filter(t => nivel(k,t)>=3).length;
     h += '<div class="blk '+(alto ? 'a' : m[0])+'">'
@@ -669,10 +696,20 @@ function renderInterno(){
       +  '<span class="cnt">'+lineas.length+'</span></header>'
       +  '<div class="por">'+b.p+'</div><ul>';
     lineas.forEach(t => { const q = quien(t), cd = cadena(k,t);
-      h += '<li data-t="'+t.replace(/"/g,'&quot;')+'">'+marcaHtml(k,t)+t+(cd ? ' <span class="qui'+((!q||q.nadie)?' qui0':'')+'">'+cd+'</span>' : '')+respHtml(k,t)+'</li>'; });
+      const tg = tgDe(t);
+      h += '<li class="'+(tramitado(k,t)?'ok':'')+'" data-t="'+t.replace(/"/g,'&quot;')+'">'+marcaHtml(k,t)+t+(cd ? ' <span class="qui'+((!q||q.nadie)?' qui0':'')+'">'+cd+'</span>' : '')
+        + (tg ? '<div class="tg"><span class="tgg">'+tg.g+'</span> '+tg.q+': '+tg.t+' <span class="tgh">'+tg.h+'</span></div>' : '')
+        + respHtml(k,t)+'</li>'; });
     h += '</ul></div>';
   });
-  c.innerHTML = h || '<div class="blk c"><header><span class="ico">✅</span><span class="t">Nada pendiente con este filtro</span></header></div>';
+  const cab = hechos
+    ? '<div class="hechos'+(VERHECHOS?' ab':'')+'"><b>'+hechos+'</b> '+(hechos===1?'punto tramitado':'puntos tramitados')+' hoy'
+      + (VERHECHOS ? ' · se están mostrando' : ' · ya no aparecen abajo')
+      + ' <button onclick="verHechos()">'+(VERHECHOS?'ocultarlos':'verlos')+'</button></div>'
+    : '';
+  c.innerHTML = cab + (h || '<div class="blk c"><header><span class="ico">🎉</span><span class="t">'
+    + (FILTRO ? FILTRO+' no tiene nada pendiente' : 'Nada pendiente. Todo lo de hoy está tramitado')
+    + '</span></header></div>');
   renderCargas();
   linkTickets(c);
   const r = document.getElementById('avresumen');
