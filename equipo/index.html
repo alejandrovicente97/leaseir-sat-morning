@@ -402,6 +402,32 @@ dialog.wide{max-width:860px}
       color:var(--ink-soft);border-radius:7px;padding:3px 6px;cursor:pointer}
 .paso{display:inline-block;font-size:11px;font-weight:600;color:var(--accent);
       background:rgba(176,67,31,.10);border-radius:6px;padding:1px 7px;margin-left:6px}
+
+.recarga{margin-top:5px;font:inherit;font-size:11px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--muted);background:var(--surface);border:1px solid var(--divider);
+  border-radius:7px;padding:4px 11px;cursor:pointer}
+.recarga:hover{color:var(--accent);border-color:var(--accent)}
+.when .prox{display:block;font-size:11px;color:var(--muted-2);margin-top:2px}
+
+/* ── Cómo funciona ── */
+.comova{background:var(--surface);border:1px solid var(--divider);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:15px 18px 16px;margin:0 0 14px}
+.cm-t{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);
+  font-weight:600;margin-bottom:11px}
+.cm-pasos{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.cm-p{display:flex;flex-direction:column;gap:2px;padding:11px 13px;border-radius:10px;
+  background:var(--surface-2);border:1px solid var(--divider-soft)}
+.cm-n{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;
+  background:var(--accent);color:#fff;font-size:11px;font-weight:700;margin-bottom:4px}
+.cm-p b{font-size:13px;font-weight:600;letter-spacing:-.01em}
+.cm-p span:not(.cm-n){font-size:11.5px;color:var(--muted);line-height:1.4}
+.cm-ej{margin-top:12px;padding-top:11px;border-top:1px solid var(--divider-soft);
+  font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.cm-ej code{font-family:var(--mono);font-size:11.5px;background:var(--surface-3);
+  color:var(--ink-soft);padding:3px 9px;border-radius:6px;white-space:nowrap}
+.cm-nota{flex-basis:100%;margin-top:5px;font-size:11.5px;color:var(--warn);font-weight:500}
+@media(max-width:900px){.cm-pasos{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.cm-pasos{grid-template-columns:1fr}.cm-ej code{white-space:normal}}
 </style>
 </head>
 <body>
@@ -415,7 +441,8 @@ dialog.wide{max-width:860px}
     </div>
     <div class="when">
       <b>Viernes, 4 de septiembre 2026</b>
-      Corte 09:30 · Europe/Madrid
+      <span id="corte">Corte 09:30 · Europe/Madrid</span>
+      <button class="recarga" onclick="location.reload()">Actualizar</button>
     </div>
   </header>
 
@@ -430,6 +457,38 @@ dialog.wide{max-width:860px}
     <div class="lead"><i style="background:var(--accent);box-shadow:0 0 0 4px rgba(176,67,31,.15)"></i><b>Lo que tiene cada uno en su tejado hoy</b></div>
     <div style="font-size:13px;color:var(--ink-soft);line-height:1.5">Pincha tu nombre arriba y te quedas solo con lo tuyo. Cada LEAS es un enlace: lo abres en Jira, pones ahí el comentario de lo que has hecho y, si no vas a llegar hoy, le cambias el responsable. Mañana esta lista se hace sola con lo que siga abierto: lo que hayas movido en Jira ya no sale, y lo que se repita empieza a marcarse con aviso.</div>
     <div class="aside"><b>98 + 92</b>principales y subtareas</div>
+  </section>
+
+  <section class="comova">
+    <div class="cm-t">Cómo funciona esto</div>
+    <div class="cm-pasos">
+      <div class="cm-p">
+        <span class="cm-n">1</span>
+        <b>Mira lo tuyo</b>
+        <span>Pincha tu nombre aquí abajo y te quedas solo con tus puntos.</span>
+      </div>
+      <div class="cm-p">
+        <span class="cm-n">2</span>
+        <b>Gestiónalo</b>
+        <span>Cada LEAS es un enlace: te abre el ticket en Jira.</span>
+      </div>
+      <div class="cm-p">
+        <span class="cm-n">3</span>
+        <b>Dilo por el grupo</b>
+        <span>Escribe en Telegram empezando por el LEAS. Se guarda solo en el ticket.</span>
+      </div>
+      <div class="cm-p">
+        <span class="cm-n">4</span>
+        <b>Desaparece</b>
+        <span>En la siguiente pasada ese punto ya no sale. Si sigue igual, se marca con aviso.</span>
+      </div>
+    </div>
+    <div class="cm-ej">
+      Así de simple:
+      <code>LEAS-7320 hablado con Correos Express, recogen el lunes</code>
+      <code>LEAS-7386 se lo paso a Chus, hoy no llego</code>
+      <span class="cm-nota">Si no empiezas por el LEAS no se puede guardar en ningún ticket. Es lo único que hay que recordar.</span>
+    </div>
   </section>
 
   <div id="cargas" class="cargas"></div>
@@ -794,6 +853,26 @@ document.addEventListener('DOMContentLoaded', ()=>{
 try{ renderInterno(); }catch(e){ console.error(e); }
 try{ initDB(); }catch(e){ console.error(e); }
 });
+
+
+// ── Cuándo se generó esto y cuándo toca la siguiente pasada ──
+(function(){
+  const el = document.getElementById('corte'); if(!el) return;
+  const PASADAS = [[9,30],[12,30],[15,30]];
+  const ahora = new Date();
+  const hoy = ahora.getDay() >= 1 && ahora.getDay() <= 5;
+  let sig = null;
+  for(const [h,m] of PASADAS){
+    const t = new Date(ahora); t.setHours(h,m,0,0);
+    if(t > ahora){ sig = t; break; }
+  }
+  const dos = n => String(n).padStart(2,'0');
+  let txt = el.textContent;
+  if(!hoy){ txt += ' · fin de semana, se retoma el lunes a las 9:30'; }
+  else if(sig){ txt += ' · siguiente actualización a las ' + dos(sig.getHours()) + ':' + dos(sig.getMinutes()); }
+  else { txt += ' · última del día hecha, siguiente mañana a las 9:30'; }
+  el.textContent = txt;
+})();
 
 function dlg(id){const d=document.getElementById(id); if(d&&d.showModal) d.showModal();}
 document.querySelectorAll('dialog').forEach(d=>{
