@@ -244,6 +244,15 @@ a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
         border-radius:50%; background:var(--muted-2)}
 
 /* ═══ Actividad del equipo ═══ */
+.actbar{display:flex;align-items:center;gap:11px;margin:0 0 11px;min-height:26px}
+.recarga{font:inherit;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);background:var(--surface);border:1px solid var(--divider);border-radius:7px;
+  padding:5px 13px;cursor:pointer}
+.recarga:hover{color:var(--accent);border-color:var(--accent)}
+.recarga:disabled{opacity:.5;cursor:default}
+.actmsg{font-size:12px;color:var(--muted)}
+.actmsg.mal{color:var(--crit)}
+.actmsg.ok{color:var(--good)}
 .actg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:11px;margin:0 0 16px}
 .acard{background:var(--surface);border:0;border-top:3px solid var(--divider);border-radius:var(--r);
   box-shadow:var(--shadow);padding:14px 16px 15px;text-align:left;font:inherit;color:inherit;cursor:pointer;
@@ -925,6 +934,10 @@ dialog.wide{max-width:860px}
 <div id="p-actividad" class="pane">
   <section class="sec">
     <h2>Quién ha escrito hoy en Jira <span class="hint">— pincha una tarjeta para ver comentario a comentario</span></h2>
+    <div class="actbar">
+      <button class="recarga" id="actbtn" onclick="refrescarAct()" hidden>Actualizar</button>
+      <span class="actmsg" id="actmsg"></span>
+    </div>
     <div id="actg" class="actg"></div>
     <div class="pending" id="actpie"></div>
   </section>
@@ -1785,6 +1798,96 @@ function renderAct(){
     + 'sin abrir Jira. El resto se escribió a mano en el ticket. Solo cuenta lo que queda por escrito: '
     + 'lo que se habla y no se anota aquí no aparece.';
 }
+// ── Actualizar en vivo: relee Jira por el conector de Atlassian del propio Alejandro.
+// Solo funciona con el panel abierto dentro de Claude; en la web de GitHub no hay conector
+// y el botón ni se enseña.
+const ACT_CLOUD = "8aafbde8-66aa-4307-94f8-da22cdce723f";
+const ACT_NOM = {"Jesús Fernández Porrúa":"Chus","Isaac Sanchez":"Isaac","Gonzalo":"Gonzalo",
+  "Alejandro Vicente":"Alejandro","Iván Lozano Fernández":"Iván","Francisco Fernandez Porrúa":"Fran",
+  "Jonathan Zarauza Álvarez":"Jonathan","Borja Canteli Trabanco":"Borja","Cristina Ramirez":"Cristina"};
+let MCP = null;
+(async () => {
+  try{
+    MCP = await claude.use("mcp");
+    const b = document.getElementById("actbtn");
+    if(MCP && b) b.hidden = false;
+  }catch(e){}
+})();
+
+function actMsg(t, cls){
+  const m = document.getElementById("actmsg"); if(!m) return;
+  m.textContent = t || ""; m.className = "actmsg" + (cls ? " " + cls : "");
+}
+
+function actParsear(nodes){
+  const hoy = new Date().toISOString().slice(0,10);
+  const pref = /^([A-Za-zÁÉÍÓÚÑáéíóúñ]+)\s*\(vía panel,[^)]*\):\s*/;
+  const out = {};
+  (nodes||[]).forEach(n => {
+    const k = n.key, cs = ((n.fields||{}).comment||{}).comments || [];
+    cs.forEach(c => {
+      const cr = c.created || "";
+      if(cr.slice(0,10) !== hoy) return;
+      let t = String(c.body || "").replace(/!\[\]\(blob:[^)]*\)/g, "[imagen]")
+              .replace(/<custom[^>]*>(.*?)<\/custom>/g, "$1").replace(/\s+/g, " ").trim();
+      let quien, via, m = t.match(pref);
+      if(m){ quien = m[1]; t = t.replace(pref, ""); via = "panel"; }
+      else { const a = ((c.author||{}).displayName) || "?"; quien = ACT_NOM[a] || a; via = "jira"; }
+      if(!t) t = "[solo imagen]";
+      (out[quien] = out[quien] || []).push({h: cr.slice(11,16), k: k, t: t.slice(0,320), v: via, e: ""});
+    });
+  });
+  const R = {};
+  Object.keys(out).forEach(q => {
+    const ev = out[q].sort((x,y) => x.h < y.h ? -1 : 1);
+    R[q] = {n: ev.length, tk: new Set(ev.map(e => e.k)).size,
+            panel: ev.filter(e => e.v === "panel").length, ult: ev[ev.length-1].h, ev: ev};
+  });
+  return R;
+}
+
+async function refrescarAct(){
+  const b = document.getElementById("actbtn");
+  if(!MCP){ actMsg("El botón solo funciona con el panel abierto dentro de Claude.", "mal"); return; }
+  if(b) b.disabled = true;
+  actMsg("Leyendo Jira…");
+  try{
+    const r = await MCP.callTool("Atlassian Rovo", "searchJiraIssuesUsingJql", {
+      cloudId: ACT_CLOUD,
+      jql: "project = LEAS AND updated >= startOfDay() ORDER BY updated DESC",
+      fields: ["key","status","comment"],
+      maxResults: 100
+    }, {cache: {refresh: true}});
+    const p = r && r.payload;
+    const nodes = p && p.issues && p.issues.nodes;
+    if(!nodes){ actMsg("Jira ha contestado pero sin datos que leer. Vuelve a intentarlo.", "mal");
+                if(b) b.disabled = false; return; }
+    const nuevo = actParsear(nodes);
+    if(!Object.keys(nuevo).length){ actMsg("Hoy todavía no hay comentarios en Jira.", "ok"); }
+    else {
+      Object.keys(ACT).forEach(q => { delete ACT[q]; });
+      Object.keys(nuevo).forEach(q => { ACT[q] = nuevo[q]; });
+      renderAct();
+      const ahora = new Date();
+      actMsg("Al día a las " + String(ahora.getHours()).padStart(2,"0") + ":" +
+             String(ahora.getMinutes()).padStart(2,"0") + ".", "ok");
+    }
+  }catch(e){
+    const c = (e && e.code) || "";
+    if(c === "needs_reauth")            actMsg("Hay que volver a conectar Atlassian en claude.ai → Ajustes → Conectores.", "mal");
+    else if(c === "server_not_connected") actMsg("No tienes el conector de Atlassian añadido en claude.ai.", "mal");
+    else if(c === "selection_required")   actMsg("Tienes más de un Atlassian conectado: elige cuál usar cuando te lo pregunte.", "mal");
+    else if(c === "server_unavailable")   actMsg("Jira no contesta ahora mismo. Prueba en un minuto.", "mal");
+    else if(c === "blocked_by_policy" || c === "approval_required")
+                                          actMsg("La política de la cuenta no deja hacer esta llamada.", "mal");
+    else if(c === "tool_error")           actMsg("Jira ha rechazado la consulta: " + ((e && e.message) || ""), "mal");
+    else if(c === "not_granted" || c === "capability_disabled" || c === "capability_removed")
+                                          actMsg("Abre el panel dentro de Claude para poder actualizar.", "mal");
+    else                                  actMsg("No se ha podido leer Jira" + (c ? " (" + c + ")" : "") + ".", "mal");
+  }
+  if(b) b.disabled = false;
+}
+
 function verAct(n){
   const a = ACT[n]; if(!a) return;
   const b = document.getElementById('act-body'); if(!b) return;
