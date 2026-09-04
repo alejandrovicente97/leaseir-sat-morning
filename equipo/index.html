@@ -567,7 +567,7 @@ function leerYo(){ try{ return localStorage.getItem("sat.yo"); }catch(e){ return
 function fijarYo(n){ YO = n; try{ localStorage.setItem("sat.yo", n); }catch(e){} pintarYo(); renderInterno(); }
 function pintarYo(){
   const c = document.getElementById("quiensoy"); if(!c) return;
-  if(!DB){ c.innerHTML = '<span class="qnota">Las respuestas del equipo solo funcionan en el panel compartido de Claude. Aquí puedes leer, pero no escribir.</span>'; return; }
+  if(!DB){ c.innerHTML = '<span class="qnota">Esta pantalla es para leer: aquí ves lo que tienes tú y lo que tiene cada uno. <b>Lo que hayas hecho se escribe en Jira</b>, en el ticket — pincha el LEAS y lo abres. Si hoy no llegas a algo, cambia el responsable del ticket en Jira y avisa por el grupo.</span>'; return; }
   c.innerHTML = YO
     ? '<span class="qnota">Estás respondiendo como <b>'+YO+'</b>. <button class="qcam" onclick="fijarYo(null)">cambiar</button></span>'
     : '<span class="qnota">¿Quién eres? </span>' + NOMBRES.map(n => '<button class="qbtn" onclick="fijarYo(\''+n+'\')">'+n+'</button>').join('');
