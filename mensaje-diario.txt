@@ -4,22 +4,37 @@ Repaso de las 97 incidencias principales abiertas (hay 89 subtareas más que no 
 Entre corchetes va quién lo tiene. Si nadie lo ha tocado, ahí está el nombre de quien lo coge por defecto: no es de otro, es suyo.
 Si a la segunda vez sigue igual, el que lo tiene se lo pide al siguiente POR ESTE GRUPO, para que quede constancia. Y a la tercera, ese segundo lo coge y, si tampoco llega, se lo pide al tercero por aquí. Pero ese día queda hecho.
 
-🔴 SALIÓ DEL CLIENTE Y NO LLEGA A TALLER (7)
-El SLA de llegada a taller son 8 h. Estos llevan días en tránsito. Hay que llamar al transportista hoy.
-• LEAS-7360 · SinVello Ibiza · 205 h fuera de plazo · sigue en Gestionado transporte  [último: Jesús, 25/08]
+🔴 SALIÓ DEL CLIENTE Y NO LLEGA A TALLER (14)
+El SLA de llegada a taller son 8 horas y estos catorce lo han reventado. Mientras el equipo está en tránsito no factura, no se repara y el cliente pregunta. Hay que llamar al transportista hoy, uno por uno.
+• LEAS-6768 · CVL Distribuidor Aparatología  · 66 d fuera de plazo (1596 h) · Gestionado transporte  [último: Jesús, 27/08]
+  leaseir.atlassian.net/browse/LEAS-6768
+• LEAS-7320 · Belleza Begoña Tapia  (AHR0019 · 16 d fuera de plazo (393 h) · Gestionado transporte  [último: Isaac, 03/09]
+  leaseir.atlassian.net/browse/LEAS-7320
+• LEAS-7325 · Deseja (Lituania) · 16 d fuera de plazo (376 h) · Gestionado transporte  [último: Isaac, 03/09]
+  leaseir.atlassian.net/browse/LEAS-7325
+• LEAS-7334 · BEAUTY Centre d'estètica  9015 · 14 d fuera de plazo (345 h) · Gestionado transporte  [último: Isaac, 20/08]
+  leaseir.atlassian.net/browse/LEAS-7334
+• LEAS-7360 · SinVello Ibiza · 9 d fuera de plazo (206 h) · Gestionado transporte  [último: Jesús, 25/08]
   leaseir.atlassian.net/browse/LEAS-7360
-• LEAS-7374 · Cleanbody CC La Villa · 202 h fuera de plazo · y además sin tracking puesto  [último: Isaac, 03/09]
+• LEAS-7374 · Cleanbody CC La Villa ( 30267  · 8 d fuera de plazo (203 h) · Gestionado transporte  [último: Isaac, 03/09]
   leaseir.atlassian.net/browse/LEAS-7374
-• LEAS-7386 · Belenus · 176 h fuera de plazo · sigue en Gestionado transporte  [sin dueño · lo coge Ernesto]
+• LEAS-7386 · Belenus · 7 d fuera de plazo (177 h) · Gestionado transporte  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7386
-• LEAS-7416 · Centro Unico Palermo · 85 h fuera de plazo · y sin tracking puesto  [sin dueño · lo coge Ernesto]
+• LEAS-7416 · Centro Unico Palermo · 4 d fuera de plazo (86 h) · Pendiente recogida  [sin dueño · lo coge Ernesto]
   leaseir.atlassian.net/browse/LEAS-7416
-• LEAS-7343 · Elha Sta Teresa · 78 h fuera de plazo · y sin tracking puesto  [último: Gonzalo, 04/09]
+• LEAS-7343 · Elha Sta teresa · 3 d fuera de plazo (80 h) · Gestionado transporte  [último: Gonzalo, 04/09]
   leaseir.atlassian.net/browse/LEAS-7343
-• LEAS-7358 · Centri Unico Olbia · 78 h fuera de plazo  [último: Jesús, 31/08]
+• LEAS-7358 · Centri Unico Olbia · 3 d fuera de plazo (80 h) · Gestionado transporte  [último: Jesús, 31/08]
   leaseir.atlassian.net/browse/LEAS-7358
-• LEAS-7441 · Sinvello Goya · 56 h fuera de plazo  [último: Isaac, 03/09]
+• LEAS-7441 · Sinvello Goya · 2 d fuera de plazo (57 h) · Gestionado transporte  [último: Isaac, 03/09]
   leaseir.atlassian.net/browse/LEAS-7441
+• LEAS-7361 · Elha Martín el Humano · 1 d fuera de plazo (35 h) · Gestionado transporte  [último: Isaac, 02/09]
+  leaseir.atlassian.net/browse/LEAS-7361
+• LEAS-7450 · No filters cliente de Dinamica · 1 d fuera de plazo (34 h) · Gestionado transporte  [último: Isaac, 03/09]
+  leaseir.atlassian.net/browse/LEAS-7450
+• LEAS-7412 · Sinvello Provenza · 1 d fuera de plazo (18 h) · Gestionado transporte  [sin dueño · lo coge Ernesto]
+  leaseir.atlassian.net/browse/LEAS-7412
+• El de CVL lleva 66 días en «Gestionado transporte»: eso ya no es un retraso de transporte, es un equipo que nadie ha buscado  [sin dueño · lo coge Ernesto]
 
 📍 FALTA EL LINK DE UBICACIÓN (6)
 Solo cuenta en los principales: las subtareas heredan la ubicación del padre y no hace falta ponérsela. De 101 principales, seis no la tienen.
@@ -182,53 +197,71 @@ Solo incidencias reales, sin contar subtareas. Las 34 subtareas paradas van apar
   leaseir.atlassian.net/browse/LEAS-7188
 • …y 2 más  [sin dueño · lo coge Isaac]
 
-🔧 REPARACIÓN FUERA DE PLAZO (39)
-El compromiso con el cliente son 80 h. Los diez peores:
-• LEAS-7364 · Epil Point Martina Franca · 204 h de más · con técnico externo  [último: Jesús, 25/08]
-  leaseir.atlassian.net/browse/LEAS-7364
-• LEAS-7349 · Cris Peña Beauty Center · 179 h de más · en reparación  [último: Isaac, 03/09]
-  leaseir.atlassian.net/browse/LEAS-7349
-• LEAS-7355 · Zurimed Parque Principado · 175 h de más · preparando presupuesto  [último: Isaac, 24/08]
-  leaseir.atlassian.net/browse/LEAS-7355
-• LEAS-7379 · Elha Badalona · 175 h de más · esperando inicio de reparación  [último: Isaac, 03/09]
-  leaseir.atlassian.net/browse/LEAS-7379
-• LEAS-7378 · SinVello Badalona · 160 h de más · con técnico externo  [último: Gonzalo, 28/08]
-  leaseir.atlassian.net/browse/LEAS-7378
-• LEAS-7358 · Centri Unico Olbia · 158 h de más · aún en transporte  [último: Jesús, 31/08]
-  leaseir.atlassian.net/browse/LEAS-7358
-• LEAS-7360 · SinVello Ibiza · 154 h de más · aún en transporte  [último: Jesús, 25/08]
-  leaseir.atlassian.net/browse/LEAS-7360
-• LEAS-7393 · SinVello Colmenar Viejo · 138 h de más · con técnico externo  [último: Jesús, 28/08]
-  leaseir.atlassian.net/browse/LEAS-7393
-• LEAS-7397 · Elha Ferraz · 137 h de más · con técnico externo  [último: Jesús, 31/08]
-  leaseir.atlassian.net/browse/LEAS-7397
-• LEAS-7406 · Epil Point Livorno · 133 h de más · con técnico externo  [último: Gonzalo, 04/09]
-  leaseir.atlassian.net/browse/LEAS-7406
-• …y 29 más  [sin dueño · lo coge Jesús]
+🔧 REPARACIÓN FUERA DE PLAZO (70)
+El compromiso de reparación con el cliente son 80 horas. Setenta incidencias lo han pasado. Los catorce peores, y ojo a los primeros: no son retrasos de taller, son presupuestos sin confirmar y tickets que se quedaron parados meses.
+• LEAS-4443 · Dermoscan · 258 d fuera de plazo (6204 h) · Pendiente confirmación presupuesto  [último: Borja, 17/04]
+  leaseir.atlassian.net/browse/LEAS-4443
+• LEAS-6048 · Daniel Jaramillo (Grupo Dos) · 127 d fuera de plazo (3041 h) · Inspección de salida  [último: Jesús, 27/04]
+  leaseir.atlassian.net/browse/LEAS-6048
+• LEAS-6198 · Luxlaser andre belgica · 112 d fuera de plazo (2700 h) · Pendiente confirmación presupuesto  [último: Borja, 13/08]
+  leaseir.atlassian.net/browse/LEAS-6198
+• LEAS-6765 · Bella Forme · 74 d fuera de plazo (1768 h) · En cola taller  [último: Borja, 28/07]
+  leaseir.atlassian.net/browse/LEAS-6765
+• LEAS-6768 · CVL Distribuidor Aparatología  · 74 d fuera de plazo (1767 h) · Gestionado transporte  [último: Jesús, 27/08]
+  leaseir.atlassian.net/browse/LEAS-6768
+• LEAS-6779 · Centri Unico Campania BS00019 · 71 d fuera de plazo (1697 h) · En reparación  [último: Francisco, 24/07]
+  leaseir.atlassian.net/browse/LEAS-6779
+• LEAS-6879 · Brull · 63 d fuera de plazo (1502 h) · En reparación  [último: Isaac, 25/08]
+  leaseir.atlassian.net/browse/LEAS-6879
+• LEAS-6891 · Mercedes Gamaza Laser y Spa (  · 62 d fuera de plazo (1479 h) · Enviado a técnico externo  [último: Isaac, 03/09]
+  leaseir.atlassian.net/browse/LEAS-6891
+• LEAS-6888 · L Medical G point · 62 d fuera de plazo (1478 h) · Pendiente confirmación presupuesto  [asignado a Francisco]
+  leaseir.atlassian.net/browse/LEAS-6888
+• LEAS-6889 · L Medical G point · 62 d fuera de plazo (1478 h) · Pendiente confirmación presupuesto  [asignado a Francisco]
+  leaseir.atlassian.net/browse/LEAS-6889
+• LEAS-6906 · Daniel JAramillo Holea · 61 d fuera de plazo (1455 h) · En reparación  [último: Borja, 13/08]
+  leaseir.atlassian.net/browse/LEAS-6906
+• LEAS-6907 · Apain Estetika ( AHR0071) · 61 d fuera de plazo (1454 h) · Presupuesto preparado pendiente de enviar  [último: Isaac, 21/08]
+  leaseir.atlassian.net/browse/LEAS-6907
+• LEAS-7121 · Smart duck paris 15 Convention · 39 d fuera de plazo (925 h) · En reparación  [último: Jonathan, 03/09]
+  leaseir.atlassian.net/browse/LEAS-7121
+• LEAS-7188 · Centro Unico Boccea SRF00014 · 33 d fuera de plazo (781 h) · En preparación presupuesto  [último: Ernesto, 30/07]
+  leaseir.atlassian.net/browse/LEAS-7188
+• …y 56 más, todos con el SLA de Jira reventado  [sin dueño · lo coge Jesús]
+• Los cuatro primeros suman más de 500 días de retraso entre ellos. Ninguno está en el banco de trabajo: están esperando una decisión que nadie ha pedido  [sin dueño · lo coge Jesús]
 
-🔁 PRÉSTAMOS FUERA DE PLAZO (10)
-Máquina nuestra en casa del cliente pasado el plazo. Cada una es flota que no factura y que no podemos prestar a otro.
-• LEAS-7357 · SinVello Granada Constitución · 159 h de más · figura como devuelto: ¿está o no está?  [sin dueño · lo coge Ernesto]
-  leaseir.atlassian.net/browse/LEAS-7357
-• LEAS-7356 · Zurimed Parque Principado · 159 h de más  [sin dueño · lo coge Ernesto]
-  leaseir.atlassian.net/browse/LEAS-7356
-• LEAS-7359 · Centri Unico Olbia · 158 h de más  [sin dueño · lo coge Ernesto]
-  leaseir.atlassian.net/browse/LEAS-7359
-• LEAS-7372 · SinVello El Palo · 131 h de más  [sin dueño · lo coge Ernesto]
-  leaseir.atlassian.net/browse/LEAS-7372
-• LEAS-7375 · Cleanbody CC La Villa · 130 h de más  [sin dueño · lo coge Ernesto]
-  leaseir.atlassian.net/browse/LEAS-7375
-• LEAS-7366 · SinVello Ibiza · 128 h de más  [sin dueño · lo coge Ernesto]
-  leaseir.atlassian.net/browse/LEAS-7366
-• LEAS-7401 · sin centro informado · 87 h de más  [sin dueño · lo coge Ernesto]
-  leaseir.atlassian.net/browse/LEAS-7401
-• LEAS-7385 · sin centro informado · 87 h de más  [sin dueño · lo coge Ernesto]
-  leaseir.atlassian.net/browse/LEAS-7385
-• LEAS-7388 · CVL Distribuidor (Samuel) · 86 h de más  [sin dueño · lo coge Ernesto]
-  leaseir.atlassian.net/browse/LEAS-7388
-• LEAS-7408 · Elha Sta Teresa · 79 h de más  [sin dueño · lo coge Ernesto]
-  leaseir.atlassian.net/browse/LEAS-7408
-• Aparte: la consola C03143 lleva 169 d en Smart Duck Paris sin una sola nota. Localizarla hoy  [sin dueño · lo coge Ernesto]
+🔁 PRÉSTAMOS FUERA DE PLAZO (30)
+Máquina nuestra en casa del cliente pasado el plazo. Cada una es flota que no factura y que no podemos prestar a otro. Treinta de las 34 sustituciones activas están fuera de plazo.
+• LEAS-5697 · Smart Duck Paris · 159 d fuera de plazo (3805 h) · En préstamo  [sin dueño · lo coge Ernesto]
+  leaseir.atlassian.net/browse/LEAS-5697
+• LEAS-6716 · Elha Santa Coloma · 77 d fuera de plazo (1837 h) · Gestionada recogida  [último: Isaac, 01/09]
+  leaseir.atlassian.net/browse/LEAS-6716
+• LEAS-7028 · SinVello! Tomares | Depilación · 48 d fuera de plazo (1163 h) · Equipo devuelto  [último: Isaac, 28/08]
+  leaseir.atlassian.net/browse/LEAS-7028
+• LEAS-7054 · Centro Unico Boccea · 46 d fuera de plazo (1111 h) · En préstamo  [sin dueño · lo coge Ernesto]
+  leaseir.atlassian.net/browse/LEAS-7054
+• LEAS-7112 · sin centro informado · 40 d fuera de plazo (970 h) · Gestionada recogida  [sin dueño · lo coge Ernesto]
+  leaseir.atlassian.net/browse/LEAS-7112
+• LEAS-7140 · Smart duck paris 15 Convention · 39 d fuera de plazo (925 h) · En préstamo  [sin dueño · lo coge Ernesto]
+  leaseir.atlassian.net/browse/LEAS-7140
+• LEAS-7148 · Laser Factory Hospitalet · 38 d fuera de plazo (920 h) · En préstamo  [sin dueño · lo coge Ernesto]
+  leaseir.atlassian.net/browse/LEAS-7148
+• LEAS-6780 · Centri Unico Campania BS00019 · 36 d fuera de plazo (857 h) · Equipo devuelto  [sin dueño · lo coge Ernesto]
+  leaseir.atlassian.net/browse/LEAS-6780
+• LEAS-7158 · sin centro informado · 35 d fuera de plazo (849 h) · Gestionada recogida  [último: Isaac, 03/09]
+  leaseir.atlassian.net/browse/LEAS-7158
+• LEAS-7162 · sin centro informado · 35 d fuera de plazo (832 h) · En préstamo  [sin dueño · lo coge Ernesto]
+  leaseir.atlassian.net/browse/LEAS-7162
+• LEAS-7177 · Sinvello Ventas · 33 d fuera de plazo (784 h) · Equipo devuelto  [sin dueño · lo coge Ernesto]
+  leaseir.atlassian.net/browse/LEAS-7177
+• LEAS-7191 · Harmonie Salamanca · 32 d fuera de plazo (778 h) · En préstamo  [sin dueño · lo coge Ernesto]
+  leaseir.atlassian.net/browse/LEAS-7191
+• LEAS-7237 · Smart Duck Labege C003342/H033 · 26 d fuera de plazo (635 h) · En préstamo  [sin dueño · lo coge Ernesto]
+  leaseir.atlassian.net/browse/LEAS-7237
+• LEAS-7227 · Elha Limoneros · 25 d fuera de plazo (594 h) · En préstamo  [sin dueño · lo coge Ernesto]
+  leaseir.atlassian.net/browse/LEAS-7227
+• …y 16 más, todos con el SLA de Jira reventado  [sin dueño · lo coge Ernesto]
+• Nueve de estas figuran ya como devueltas o con recogida gestionada y siguen abiertas: ésas se cierran hoy sin tocar nada  [sin dueño · lo coge Ernesto]
 
 ✅ TERMINADOS Y SIN FINALIZAR (5)
 El equipo ya está con el cliente. Solo falta mover el ticket a Finalizada. Ojo: «Resuelto» no es el final del circuito — el ticket sigue vivo hasta que se pone en Finalizada, y mientras tanto ni cierra el ciclo ni deja de contar. Esto es lo que nos infla los tiempos medios.
