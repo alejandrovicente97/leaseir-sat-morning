@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SAT · Report interno</title>
+<title>SAT · Lo de cada uno</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -366,6 +366,31 @@ dialog.wide{max-width:860px}
 .rr{width:100%;font-size:12px;color:var(--ink-soft);background:var(--surface-2);border-left:3px solid var(--accent);padding:5px 10px;border-radius:0 7px 7px 0;margin-top:3px;line-height:1.45}
 .re{font-weight:600;color:var(--warn)} .re.ok{color:var(--good)}
 .rf{color:var(--muted-2);font-size:11px;margin-left:4px}
+
+/* ── Carga por persona ── */
+.cargas{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:10px;margin:0 0 14px}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 13px 10px;
+       cursor:pointer;text-align:left;font:inherit;color:inherit;transition:border-color .15s,transform .15s}
+.pcard:hover{border-color:var(--muted-2);transform:translateY(-1px)}
+.pcard.sel{border-color:var(--accent);box-shadow:0 0 0 2px rgba(176,67,31,.14)}
+.pcard .ph{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.sem{width:9px;height:9px;border-radius:50%;flex:none}
+.sem.g{background:var(--good)} .sem.w{background:var(--warn)} .sem.c{background:var(--crit)}
+.sem.o{background:var(--muted-2)}
+.pcard .pn{font-weight:600;font-size:13px}
+.pcard .pf{font-size:10.5px;color:var(--muted-2);margin-left:auto;font-weight:500}
+.pcard .pb{font-size:22px;font-weight:600;line-height:1;letter-spacing:-.02em}
+.pcard .pu{font-size:11px;color:var(--muted);margin-left:5px;font-weight:400}
+.pcard .pd{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.35}
+.pcard .pd b{font-weight:600}
+.cargas .todos{grid-column:1/-1;font-size:12px;color:var(--muted);padding:2px 0 0}
+.cargas .todos button{background:none;border:0;font:inherit;color:var(--accent);cursor:pointer;
+       text-decoration:underline;text-underline-offset:2px;padding:0}
+/* ── Pasar a un compañero ── */
+.selp{font:inherit;font-size:11.5px;border:1px solid var(--line);background:var(--surface-2);
+      color:var(--ink-soft);border-radius:7px;padding:3px 6px;cursor:pointer}
+.paso{display:inline-block;font-size:11px;font-weight:600;color:var(--accent);
+      background:rgba(176,67,31,.10);border-radius:6px;padding:1px 7px;margin-left:6px}
 </style>
 </head>
 <body>
@@ -375,7 +400,7 @@ dialog.wide{max-width:860px}
   <header class="head">
     <div>
       <div class="eyebrow">SAT Leaseir</div>
-      <h1>Report interno del SAT</h1>
+      <h1>Lo que tiene cada uno</h1>
     </div>
     <div class="when">
       <b>Jueves, 3 de septiembre 2026</b>
@@ -384,23 +409,19 @@ dialog.wide{max-width:860px}
   </header>
 
   <nav class="tabbar" role="tablist">
-    <button class="on" role="tab" onclick="tab(this,'p-interno')">Report interno<small>los 15 puntos de hoy</small></button>
+    <button class="on" role="tab" onclick="tab(this,'p-interno')">Puntos abiertos<small>por persona</small></button>
     <span class="spacer"></span>
   </nav>
 
 <div id="p-interno" class="pane on">
 
   <section class="statebar" style="border-left-color:var(--accent)">
-    <div class="lead"><i style="background:var(--accent);box-shadow:0 0 0 4px rgba(176,67,31,.15)"></i><b>Revisión de las 97 incidencias abiertas</b></div>
-    <div style="font-size:13px;color:var(--ink-soft);line-height:1.5">Solo se auditan los LEAS principales: las subtareas heredan ubicación y datos del padre. Hay 89 subtareas más que no cuentan como fallo.</div>
+    <div class="lead"><i style="background:var(--accent);box-shadow:0 0 0 4px rgba(176,67,31,.15)"></i><b>Lo que tiene cada uno en su tejado hoy</b></div>
+    <div style="font-size:13px;color:var(--ink-soft);line-height:1.5">Cada punto lleva su dueño y, debajo, un sitio para decir qué has hecho o pasárselo a un compañero. Pincha tu nombre arriba para ver solo lo tuyo. Lo que escribas aquí queda con tu nombre y la hora.</div>
     <div class="aside"><b>97 + 89</b>principales y subtareas</div>
   </section>
 
-  <div class="rep-tools">
-    <button class="main" onclick="cpRes(this)">Copiar resumen · 1 mensaje</button>
-    <button class="main alt" onclick="cpAll(this)">Copiar todo · se parte solo</button>
-    <span class="note">para el grupo <b>SAT Leaseir (Interno)</b>. El resumen cabe en un mensaje; el completo son unos 10 y va numerado. También puedes copiar bloque a bloque.</span>
-  </div>
+  <div id="cargas" class="cargas"></div>
 
 
   <div id="quiensoy" class="qbar"></div>
@@ -468,6 +489,19 @@ function cadena(k, t){
   return cab + nt + " · después de " + titular + ": " + b + ", y luego " + c;
 }
 
+function titularBase(k, t){
+  const base = (CAD[k] || ["Isaac","Gonzalo","Borja"]).filter(disp);
+  const GRUPO = ["Isaac","Chus","Gonzalo","Borja","Cristina"].filter(disp);
+  const q = quien(t);
+  if(!q || q.nadie) return base[0];
+  const n = (q.txt.match(/(?:último|asignado a):?\s*([A-Za-zÁÉÍÓÚÑáéíóúñ]+)/)||[])[1] || base[0];
+  return GRUPO.indexOf(n) === -1 ? base[0] : n;
+}
+function titularEf(k, t){
+  const r = RESP[idPunto(k, t)];
+  return (r && r.paraQuien) ? r.paraQuien : titularBase(k, t);
+}
+
 const BMETA = {"ruta": ["a", "🔴", "14"], "maps": ["b", "📍", "6"], "track": ["b", "🚚", "13"], "nadie": ["a", "🚩", "28"], "huerf": ["a", "🧟", "21"], "epil": ["a", "🇮🇹", "144"], "parado": ["a", "⏸", "18"], "repara": ["b", "🔧", "70"], "prestamo": ["b", "🔁", "30"], "cerrar": ["c", "✅", "5"], "externo": ["a", "🛠", "20"], "transporte": ["b", "📦", "6"], "medias": ["a", "📝", "6"], "privado": ["a", "🔒", "—"], "telegram": ["c", "💬", "2"], "equipo": ["d", "👏", "—"]};
 const BTIT  = {"ruta": "Salió del cliente y no llega a taller", "maps": "Falta el link de ubicación", "track": "Falta el tracking del transporte", "nadie": "Sin técnico y paradas, fuera de cadena", "huerf": "Subtareas con el ticket padre ya cerrado", "epil": "Epil Point · el cliente que no pasa por Jira", "parado": "Incidencias paradas más de 15 días", "repara": "Reparación fuera de plazo", "prestamo": "Préstamos fuera de plazo", "cerrar": "Terminados y sin cerrar", "externo": "Técnico externo: se gestiona y ahí se queda", "transporte": "El transporte, el cuello de botella sin medir", "medias": "A medio gestionar y sin observación en Jira", "privado": "Clientes grandes atendidos por privado", "telegram": "Telegram dice una cosa y Jira otra", "equipo": "Cómo va el equipo"};
 
@@ -532,12 +566,14 @@ async function initDB(){
     });
   }catch(e){ console.error(e); }
 }
-async function responder(k, t, estado, texto){
+async function responder(k, t, estado, texto, paraQuien){
   if(!DB || !YO) return;
-  const id = idPunto(k, t);
+  const id = idPunto(k, t), prev = RESP[id] || {};
   try{
     await DB.doc("respuestas/" + id).set({
       estado: estado || "", texto: texto || "", quien: YO,
+      paraQuien: paraQuien !== undefined ? (paraQuien || "") : (prev.paraQuien || ""),
+      pasoDe: paraQuien ? (prev.paraQuien || titularBase(k, t)) : (prev.pasoDe || ""),
       cuando: new Date().toISOString(), bloque: k,
       ticket: (t.match(/\bLEAS-\d{3,5}\b/)||[])[0] || ""
     });
@@ -547,25 +583,76 @@ function marcar(k, t, estado, btn){
   const id = idPunto(k, t), prev = RESP[id] || {};
   responder(k, t, prev.estado === estado ? "" : estado, prev.texto || "");
 }
+function pasar(k, t, sel){
+  const prev = RESP[idPunto(k, t)] || {};
+  responder(k, t, prev.estado || "", prev.texto || "", sel.value);
+}
 function comentar(k, t, inp){
   const id = idPunto(k, t), prev = RESP[id] || {};
   responder(k, t, prev.estado || "", inp.value.trim());
   inp.blur();
 }
 function respHtml(k, t){
-  const id = idPunto(k, t), r = RESP[id];
+  const id = idPunto(k, t), r = RESP[id] || null;
+  const duenyo = titularEf(k, t);
+  const GRUPO = ["Isaac","Chus","Gonzalo","Borja","Cristina"].filter(disp);
   let h = '<div class="resp">';
   if(DB && YO){
     ["Hecho","En ello","No es así"].forEach(e => {
       h += '<button class="rb'+(r && r.estado===e ? ' on' : '')+'" onclick="marcar(\''+k+'\',this.closest(\'li\').dataset.t,\''+e+'\',this)">'+e+'</button>';
     });
-    h += '<input class="ri" placeholder="añadir un comentario y pulsar Enter" value="'+((r&&r.texto)||'').replace(/"/g,'&quot;')+'" onkeydown="if(event.key===\'Enter\')comentar(\''+k+'\',this.closest(\'li\').dataset.t,this)">';
+    h += '<select class="selp" onchange="pasar(\''+k+'\',this.closest(\'li\').dataset.t,this)">'
+      +  '<option value="">pasárselo a…</option>'
+      +  GRUPO.filter(n => n !== duenyo).map(n => '<option value="'+n+'"'+((r&&r.paraQuien===n)?' selected':'')+'>'+n+'</option>').join('')
+      +  '</select>';
+    h += '<input class="ri" placeholder="qué has hecho o por qué no · Enter para guardar" value="'+((r&&r.texto)||'').replace(/"/g,'&quot;')+'" onkeydown="if(event.key===\'Enter\')comentar(\''+k+'\',this.closest(\'li\').dataset.t,this)">';
   }
-  if(r && (r.estado || r.texto)){
-    h += '<div class="rr"><b>'+(r.quien||'')+'</b>'+(r.estado ? ' · <span class="re'+(r.estado==='Hecho'?' ok':'')+'">'+r.estado+'</span>' : '')+
-         (r.texto ? ' · '+r.texto : '')+' <span class="rf">'+(r.cuando||'').slice(11,16)+'</span></div>';
+  if(r && (r.estado || r.texto || r.paraQuien)){
+    h += '<div class="rr"><b>'+(r.quien||'')+'</b>'
+      +  (r.estado ? ' · <span class="re'+(r.estado==='Hecho'?' ok':'')+'">'+r.estado+'</span>' : '')
+      +  (r.paraQuien ? ' · <span class="paso">pasado a '+r.paraQuien+(r.pasoDe?' (era de '+r.pasoDe+')':'')+'</span>' : '')
+      +  (r.texto ? ' · '+r.texto : '')
+      +  ' <span class="rf">'+(r.cuando||'').slice(11,16)+'</span></div>';
   }
   return h + '</div>';
+}
+
+let FILTRO = null;
+function filtrar(n){ FILTRO = (FILTRO === n) ? null : n; renderInterno(); }
+function renderCargas(){
+  const c = document.getElementById('cargas'); if(!c) return;
+  const GRUPO = ["Isaac","Chus","Gonzalo","Borja","Cristina"].filter(disp);
+  const acc = {}; GRUPO.forEach(n => acc[n] = {n:0, rojo:0, resp:0, hecho:0});
+  let total = 0;
+  ORDEN.forEach(k => (MSG[k].l || []).forEach(t => {
+    const d = titularEf(k, t); if(!acc[d]) return;
+    total++; acc[d].n++;
+    if(nivel(k,t) >= 3) acc[d].rojo++;
+    const r = RESP[idPunto(k,t)];
+    if(r && (r.estado || r.texto)) acc[d].resp++;
+    if(r && r.estado === 'Hecho') acc[d].hecho++;
+  }));
+  const sem = a => a.n === 0 ? 'o' : (a.rojo >= 3 ? 'c' : (a.rojo > 0 || a.resp < a.n ? 'w' : 'g'));
+  let h = GRUPO.map(n => {
+    const a = acc[n], s = sem(a);
+    return '<button class="pcard'+(FILTRO===n?' sel':'')+'" onclick="filtrar(\''+n+'\')">'
+      + '<div class="ph"><span class="sem '+s+'"></span><span class="pn">'+n+'</span>'
+      + (FUERA[n] ? '<span class="pf">fuera</span>' : (NOTA_HOY[n] ? '<span class="pf">'+NOTA_HOY[n]+'</span>' : ''))
+      + '</div>'
+      + '<div><span class="pb">'+a.n+'</span><span class="pu">puntos</span></div>'
+      + '<div class="pd">'+(a.rojo ? '<b style="color:var(--crit)">'+a.rojo+' en rojo</b> · ' : '')
+      + a.resp+' de '+a.n+' contestados'+(a.hecho ? ' · '+a.hecho+' hechos' : '')+'</div></button>';
+  }).join('');
+  const fueraDeGrupo = ["Cristina","Borja"].filter(n => FUERA[n]);
+  const enPie = GRUPO.filter(n => acc[n].n > 0).sort((a,b) => acc[b].n - acc[a].n);
+  const top = enPie[0];
+  const cargado = top && total ? Math.round(acc[top].n * 100 / total) : 0;
+  h += '<div class="todos">'+total+' puntos repartidos'
+    + (cargado >= 45 ? ' · <b>'+top+' lleva el '+cargado+' %</b>, si no llega hay que repartir con el desplegable de cada punto' : '')
+    + (fueraDeGrupo.length ? ' · fuera hoy: '+fueraDeGrupo.map(n=>n+' ('+FUERA[n]+')').join(', ') : '')
+    + (FILTRO ? ' · viendo solo lo de <b>'+FILTRO+'</b> <button onclick="filtrar(null)">ver todo</button>' : '')
+    + '</div>';
+  c.innerHTML = h;
 }
 
 function renderInterno(){
@@ -573,18 +660,20 @@ function renderInterno(){
   let h = '';
   ORDEN.forEach(k => {
     const b = MSG[k], m = BMETA[k];
-    const alto = b.l.filter(t => nivel(k,t)>=3).length;
+    const lineas = (b.l || []).filter(t => !FILTRO || titularEf(k,t) === FILTRO);
+    if(!lineas.length) return;
+    const alto = lineas.filter(t => nivel(k,t)>=3).length;
     h += '<div class="blk '+(alto ? 'a' : m[0])+'">'
       +  '<header><span class="ico">'+m[1]+'</span><span class="t">'+BTIT[k]+'</span>'
       +  (alto ? '<span class="avn">'+alto+' en rojo</span>' : '')
-      +  '<span class="cnt">'+m[2]+'</span>'
-      +  '<button class="cp" onclick="cpBlk(\''+k+'\',this)">Copiar</button></header>'
+      +  '<span class="cnt">'+lineas.length+'</span></header>'
       +  '<div class="por">'+b.p+'</div><ul>';
-    b.l.forEach(t => { const q = quien(t), c = cadena(k,t);
-      h += '<li data-t="'+t.replace(/"/g,'&quot;')+'">'+marcaHtml(k,t)+t+(c ? ' <span class="qui'+((!q||q.nadie)?' qui0':'')+'">'+c+'</span>' : '')+respHtml(k,t)+'</li>'; });
+    lineas.forEach(t => { const q = quien(t), cd = cadena(k,t);
+      h += '<li data-t="'+t.replace(/"/g,'&quot;')+'">'+marcaHtml(k,t)+t+(cd ? ' <span class="qui'+((!q||q.nadie)?' qui0':'')+'">'+cd+'</span>' : '')+respHtml(k,t)+'</li>'; });
     h += '</ul></div>';
   });
-  c.innerHTML = h;
+  c.innerHTML = h || '<div class="blk c"><header><span class="ico">✅</span><span class="t">Nada pendiente con este filtro</span></header></div>';
+  renderCargas();
   linkTickets(c);
   const r = document.getElementById('avresumen');
   if(r){
@@ -622,56 +711,9 @@ function cabecera(){
     + "\nEl orden no es por jerarquía, es por carga: primero quien tiene margen. Hoy Isaac lleva 35 tickets encima y Chus 20; Gonzalo lleva 7 y va al día, y Borja 6. Por eso Gonzalo y Borja abren la mayoría de cadenas y no al revés."
     + "\nCristina está de vacaciones hasta el 21 y Borja hasta el miércoles: a ninguno de los dos se le asigna nada. Chus hoy entra a las 12." + av + "\n";
 }
-function cpBlk(id, btn){
-  navigator.clipboard.writeText(txtBlk(id)).then(()=>{
-    const o=btn.textContent; btn.textContent='Copiado'; btn.classList.add('ok');
-    setTimeout(()=>{btn.textContent=o; btn.classList.remove('ok');},1600);
-  }).catch(()=>{btn.textContent='Selecciona';});
-}
 
 // ── Resumen de un solo mensaje de Telegram ──
-const RES_TOP = {ruta:2, maps:1, track:1, nadie:2, huerf:2, epil:2, parado:2, repara:2, prestamo:2, cerrar:1, externo:2, transporte:1, medias:1, privado:1, telegram:1};
-function txtResumen(){
-  const f = new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
-  const a = contarAvisos();
-  let t = "REVISIÓN SAT · " + f.charAt(0).toUpperCase() + f.slice(1) + "\n";
-  t += "97 incidencias principales abiertas. Lo que sigue igual mañana se marca con [!], y a la tercera con [!!].\n";
-  if(a.tres) t += "[!!] " + a.tres + " puntos van por el tercer aviso: ahí quiero fecha, no explicación.\n";
-  else if(a.dos) t += "[!] " + a.dos + " puntos se repiten por segunda vez.\n";
-  t += "Entre corchetes, quién lo tiene. El detalle completo, con todos los tickets y sus enlaces, está en el panel.\n";
-  ORDEN.forEach(k => {
-    const b = MSG[k], n = RES_TOP[k] || 2;
-    t += "\n" + b.t + "\n";
-    b.l.slice(0, n).forEach(x => {
-      const c = cadena(k, x);
-      const corto = x.length > 96 ? x.slice(0,93) + "…" : x;
-      const duenyo = (c.match(/(?:lo coge|lo lleva|último:)\s*([A-Za-zÁÉÍÓÚÑáéíóúñ]+)/)||[])[1] || "";
-      t += "• " + marcaTxt(k,x) + corto + (duenyo ? "  [" + duenyo + "]" : "") + "\n";
-    });
-    if(b.l.length > n) t += "  …y " + (b.l.length - n) + " más\n";
-  });
-  t += "\nPanel completo: alejandrovicente97.github.io/leaseir-sat-morning/";
-  return t;
-}
-function cpRes(btn){
-  navigator.clipboard.writeText(txtResumen()).then(()=>{
-    const o=btn.textContent; btn.textContent='Copiado'; btn.classList.add('ok');
-    setTimeout(()=>{btn.textContent=o; btn.classList.remove('ok');},1700);
-  }).catch(()=>{btn.textContent='Selecciona';});
-}
 
-function cpAll(btn){
-  const partes = [];
-  let acc = cabecera();
-  ORDEN.forEach(k => { const b = txtBlk(k);
-    if((acc + "\n\n" + b).length > 3800){ partes.push(acc); acc = b; } else { acc += "\n\n" + b; } });
-  partes.push(acc);
-  const t = partes.map((x,i) => "— " + (i+1) + " de " + partes.length + " —\n" + x).join("\n\n\n");
-  navigator.clipboard.writeText(t).then(()=>{
-    const o=btn.textContent; btn.textContent='Copiado entero'; btn.classList.add('ok');
-    setTimeout(()=>{btn.textContent=o; btn.classList.remove('ok');},1900);
-  }).catch(()=>{btn.textContent='No se pudo copiar';});
-}
 
 
 function linkTickets(root){
@@ -726,6 +768,5 @@ function cp(btn,text){
   }).catch(()=>{btn.textContent='Selecciona';});
 }
 </script>
-
 </body>
 </html>
