@@ -1,0 +1,184 @@
+REVISIÓN SAT · Viernes, 4 de septiembre
+Repaso de las 101 incidencias principales abiertas. Cada LEAS lleva su enlace en Jira.
+[!] = segunda vez que se dice · [!!] = tercera o más
+
+🔴 SALIÓ DEL CLIENTE Y NO LLEGA A TALLER (7)
+El SLA de llegada a taller son 8 h. Estos llevan días en tránsito. Hay que llamar al transportista hoy.
+• LEAS-7360 · SinVello Ibiza · 205 h fuera de plazo · sigue en Gestionado transporte
+• LEAS-7374 · Cleanbody CC La Villa · 202 h fuera de plazo · y además sin tracking puesto
+• LEAS-7386 · Belenus · 176 h fuera de plazo · sigue en Gestionado transporte
+• LEAS-7416 · Centro Unico Palermo · 85 h fuera de plazo · y sin tracking puesto
+• LEAS-7343 · Elha Sta Teresa · 78 h fuera de plazo · y sin tracking puesto
+• LEAS-7358 · Centri Unico Olbia · 78 h fuera de plazo
+• LEAS-7441 · Sinvello Goya · 56 h fuera de plazo
+
+📍 FALTA EL LINK DE UBICACIÓN (6)
+Solo cuenta en los principales: las subtareas heredan la ubicación del padre y no hace falta ponérsela. De 101 principales, seis no la tienen.
+• LEAS-5904 · Noemi Valero · 142 d parado · con el presupuesto ya aceptado
+• LEAS-6048 · Daniel Jaramillo (Grupo Dos) · 112 d · en inspección de salida · 2.898 €
+• LEAS-6198 · Luxlaser Andre Bélgica · 21 d · pendiente de confirmar presupuesto
+• LEAS-7455 · BiNatural consola 20046 · recién abierto, ponedla ya
+• LEAS-7444 · Miguel Parra (ex-Brull) · recién abierto
+• LEAS-7453 · JD Aesthetics · recién abierto
+
+🚚 FALTA EL TRACKING DEL TRANSPORTE (13 de 20 en ruta)
+Dos de cada tres equipos que van de camino no tienen el enlace de seguimiento. Sin él no sabemos dónde está la máquina ni podemos contestar al cliente.
+• LEAS-7230 · SinVello Albacete · 27 d en pendiente de recogida
+• LEAS-7332 · Epil Point Specialisti · 14 d en pendiente de recogida
+• LEAS-7334 · Beauty Centre d'Estètica 90159 · 14 d · ya en transporte y sin tracking
+• LEAS-7430 · Elha Isaac Albéniz · 3 d
+• LEAS-7443 · Elha Vilanova · 2 d
+• LEAS-7445 · Elha Caracol · 2 d
+• LEAS-7343 · Elha Sta Teresa · en transporte, y con el SLA reventado
+• LEAS-7320 · Belleza Begoña Tapia · en transporte
+• LEAS-7325 · Deseja (Lituania) · en transporte
+• LEAS-7374 · Cleanbody CC La Villa · en transporte, 202 h fuera de plazo
+• LEAS-7416 · Centro Unico Palermo · pendiente de recogida
+• LEAS-7450 · No Filters (Dinámica Impulsos) · en transporte
+• LEAS-7466 · Sinvello Teatinos · pendiente de recogida
+
+🚩 SIN TÉCNICO Y PARADAS, FUERA DE CADENA (28)
+De los 43 tickets sin asignar y sin mover más de 15 días, 28 son de clientes que no pertenecen a Elha, Sin Vello, Epil Point, Smart Duck ni Unico Italia. No hay un interlocutor que pregunte por ellos, así que se pudren solos. Cada uno necesita un nombre hoy.
+• LEAS-6048 · Centros Perfect Lase (D. Jaramillo) · inspección de salida · 111 d · está terminado, falta cerrarlo
+• LEAS-5904 · Noemi Valero · 2 pedales con PRESUPUESTO YA ACEPTADO · 142 d · es venta parada, servirlo
+• LEAS-7048 · Dermoscan · 4 umbilicales con PRESUPUESTO YA ACEPTADO · 49 d · es venta parada, servirlo
+• LEAS-7104 y LEAS-7103 · NR Clinics · abiertos 43 d · se prometió por escrito hacerlo en septiembre: es ahora
+• LEAS-7214 · Laser Clinic Hospitalet (Sara Bullón) · revisión anual pedida · 31 d · dar fecha
+• LEAS-7118 · Corpoderm · en reparación · 21 d · se dijo finales de agosto, ya está vencido
+• LEAS-7191 · Harmonie Salamanca · máquina de sustitución en préstamo · 29 d
+• LEAS-7148 · Laser Factory Hospitalet · préstamo con el padre ya resuelto · 38 d
+• LEAS-7326 · Deseja Lituania · queja de calidad sin investigar · 14 d
+• LEAS-7310 · Laser Factory Mollet · queja de calidad sin investigar · 15 d
+• El resto (18) son comprobaciones de cobro heredadas de tickets ya cerrados: van en el bloque de subtareas huérfanas
+
+🧟 SUBTAREAS CON EL TICKET PADRE YA CERRADO (21)
+El principal se cerró y la subtarea se quedó abierta, sin técnico y sin nadie detrás. Ninguna avanza sola. Las cuatro de máquina de sustitución hay que validarlas con Ernesto contra los grupos de logística: si consta recogida o albarán, se cierra; si no consta movimiento, se llama al centro hoy.
+• LEAS-5697 · Smart Duck Paris · consola C03143 · NO aparece en logística ni en ningún grupo de Telegram en todo el histórico · 105 d sin rastro · localizarla hoy
+• LEAS-7054 · Centro Unico Boccea · en préstamo · padre LEAS-7052 resuelto · 38 d · VALIDAR CON ERNESTO
+• LEAS-7148 · Laser Factory Hospitalet · en préstamo · padre LEAS-7146 resuelto · 38 d · VALIDAR CON ERNESTO
+• LEAS-7285 · SinVello Cádiz · C00801 · SÍ consta expedición en ENVIOS SAT LEASEIR el viernes: se movió, actualizar Jira y cerrar la subtarea
+• LEAS-756 · comprobación de cobro · padre LEAS-578 cancelado · 657 d · cerrar
+• LEAS-4265 · comprobación de cobro · padre LEAS-4264 finalizado · 283 d · cerrar
+• LEAS-5198 · comprobación de cobro · padre LEAS-5117 cancelado · 197 d · cerrar
+• LEAS-5219 · Elha Sant Boi · padre LEAS-5209 cancelado · 196 d · cerrar
+• LEAS-5211 · padre LEAS-4749 resuelto · 196 d · cerrar
+• LEAS-5830 · padre LEAS-5249 finalizado · 147 d · cerrar
+• LEAS-5908 · padre LEAS-5368 cancelado · 142 d · cerrar
+• LEAS-6754 · padre LEAS-6753 resuelto · 77 d · cerrar
+• LEAS-6835 · Elha Uruguai · padre LEAS-6826 resuelto · 69 d · cerrar
+• LEAS-6890 · padre LEAS-6764 resuelto · 64 d · cerrar
+• LEAS-7045 · padre LEAS-6805 resuelto · 49 d · cerrar
+• LEAS-7102 · padre LEAS-6853 resuelto · 43 d · cerrar
+• LEAS-7095 · queja · padre LEAS-7094 resuelto · 41 d · cerrar
+• LEAS-7265 · padre LEAS-6903 resuelto · 24 d · cerrar
+• LEAS-7289 · padre LEAS-7136 resuelto · 21 d · cerrar
+• LEAS-7323 · padre LEAS-7091 resuelto · 15 d · cerrar
+• LEAS-7310 · queja · padre LEAS-7309 finalizado · 15 d · cerrar
+• Petición a quien lleve la automatización de Jira: que al cerrar un principal se cierren o se reasignen sus subtareas. Si no, esto vuelve a acumularse solo.
+
+🇮🇹 EPIL POINT · EL CLIENTE QUE NO PASA POR JIRA (144 vs 9)
+En tres meses y medio su bot ha abierto 144 tickets por WhatsApp desde 64 centros. En Jira tienen 9 abiertas. Cinco menciones de LEAS en 6.436 mensajes. Respondemos en seis minutos de mediana, así que el problema no es la atención: es que nada de esto queda registrado y luego no podemos ni medir ni facturar. Dos cosas para hoy y una regla nueva.
+• HOY · Partes de trabajo de Epil Point: se prometieron el 2 de septiembre. Sin ellos el cliente no acepta las facturas y el cobro se queda parado. Confirmar que se enviaron
+• HOY · Mensaje del 3 de septiembre a las 18:05 sobre la formación de Maria Martire en el centro nuevo: sigue sin contestar
+• Livorno · ticket del 28 de agosto, intervención el sábado 5 por la mañana. Ocho días con el cliente reclamando a diario. El cuello de botella es Sincronis, no nosotros: hay que ponerles plazo por escrito
+• Sesto Fiorentino · manípulo intermitente, el técnico va detrás de Livorno. Taranto · SSD, Giuseppe fue ayer. Avellino · cita el viernes
+• Manípulo 40413 de Lecce · parado en fábrica esperando aceptación de presupuesto, con disputa de garantía abierta y Fabio metido por email. Cerrarlo esta semana en un sentido o en otro
+• Consola 90943 de Aprilia · pendiente de recogida; el cliente exige entrega y recogida simultáneas. Coordinar con Ernesto
+• CALIDAD · Los umbilicales de manípulo son un defecto recurrente, no incidencias sueltas: el de Martina Franca iba por la tercera reparación y ya existe una conexión rediseñada que estamos regalando. Cinco centros en diez días. Esto sube al report de Nacho como coste de garantía
+• REGLA NUEVA · Todo ticket que entre por el grupo de WhatsApp de Epil Point se abre en Jira el mismo día y se le responde con el LEAS. Si no, ni medimos su siniestralidad real ni podemos defender una factura
+
+⏸ INCIDENCIAS PARADAS MÁS DE 15 DÍAS (18)
+Solo incidencias reales, sin contar subtareas. Las 34 subtareas paradas van aparte: 20 son de administración (cobros) y 11 de sustituciones.
+• LEAS-5904 · Noemi Valero · 142 d · presupuesto aceptado y sin ejecutar
+• LEAS-6048 · Daniel Jaramillo · 112 d · en inspección de salida · 2.898 €
+• LEAS-4443 · Dermoscan · 101 d · la aseguradora rechazó y el cliente canjea: cerrar
+• LEAS-4908 · Elha Pintor Felo Monzón · 100 d · abierto sin triar
+• LEAS-6889 · L Medical G Point · 62 d · pendiente de confirmar presupuesto
+• LEAS-6888 · L Medical G Point · 60 d · pendiente de confirmar presupuesto
+• LEAS-7048 · Dermoscan · 49 d · presupuesto aceptado y sin ejecutar
+• LEAS-7103 · NR Clinics · 43 d · prometido para septiembre, ya estamos
+• LEAS-7104 · NR Clinics · 43 d · prometido para septiembre, ya estamos
+• LEAS-6779 · Centri Unico Campania · 38 d · en reparación
+• LEAS-7214 · Laser Clinic Hospitalet · 31 d · abierto sin triar
+• LEAS-7230 · SinVello Albacete · 27 d · pendiente de recogida y sin tracking
+• LEAS-7118 · Corpoderm · 22 d · dijimos finales de agosto para el cambio de Bahía
+• LEAS-7190 · Harmonie Salamanca · 22 d · diodo por debajo del 80%, falta decisión
+• LEAS-6198 · Luxlaser Andre Bélgica · 21 d · Andre tenía que hablar con Arturo
+• LEAS-7188 · Centro Unico Boccea · 21 d · preparando presupuesto
+• …y 2 más
+
+🔧 REPARACIÓN FUERA DE PLAZO (39)
+El compromiso con el cliente son 80 h. Los diez peores:
+• LEAS-7364 · Epil Point Martina Franca · 204 h de más · con técnico externo
+• LEAS-7349 · Cris Peña Beauty Center · 179 h de más · en reparación
+• LEAS-7355 · Zurimed Parque Principado · 175 h de más · preparando presupuesto
+• LEAS-7379 · Elha Badalona · 175 h de más · esperando inicio de reparación
+• LEAS-7378 · SinVello Badalona · 160 h de más · con técnico externo
+• LEAS-7358 · Centri Unico Olbia · 158 h de más · aún en transporte
+• LEAS-7360 · SinVello Ibiza · 154 h de más · aún en transporte
+• LEAS-7393 · SinVello Colmenar Viejo · 138 h de más · con técnico externo
+• LEAS-7397 · Elha Ferraz · 137 h de más · con técnico externo
+• LEAS-7406 · Epil Point Livorno · 133 h de más · con técnico externo
+• …y 29 más
+
+🔁 PRÉSTAMOS FUERA DE PLAZO (10)
+Máquina nuestra en casa del cliente pasado el plazo. Cada una es flota que no factura y que no podemos prestar a otro.
+• LEAS-7357 · SinVello Granada Constitución · 159 h de más · figura como devuelto: ¿está o no está?
+• LEAS-7356 · Zurimed Parque Principado · 159 h de más
+• LEAS-7359 · Centri Unico Olbia · 158 h de más
+• LEAS-7372 · SinVello El Palo · 131 h de más
+• LEAS-7375 · Cleanbody CC La Villa · 130 h de más
+• LEAS-7366 · SinVello Ibiza · 128 h de más
+• LEAS-7401 · sin centro informado · 87 h de más
+• LEAS-7385 · sin centro informado · 87 h de más
+• LEAS-7388 · CVL Distribuidor (Samuel) · 86 h de más
+• LEAS-7408 · Elha Sta Teresa · 79 h de más
+• Aparte: la consola C03143 lleva 169 d en Smart Duck Paris sin una sola nota. Localizarla hoy
+
+✅ TERMINADOS Y SIN CERRAR (8)
+El equipo ya está con el cliente. Solo falta cerrar el ticket. Esto es lo que nos infla los tiempos medios.
+• LEAS-6048 · Daniel Jaramillo (Grupo Dos) · 112 d en inspección de salida · 2.898 €
+• LEAS-7236 · Smart Duck Labege · devuelto al cliente hace 29 d
+• LEAS-7255 · Elha St Feliu de Llobregat · devuelto hace 27 d
+• LEAS-7124 · Elha Cristòfor Colom · devuelto hace 42 d
+• LEAS-7224 · Elha Limoneros · devuelto hace 30 d
+• LEAS-7315 · Belenus · devuelto hace 17 d
+• LEAS-7321 · Dermoscan · devuelto hace 16 d
+• LEAS-7324 · SinVello Jerez · devuelto hace 15 d
+
+🛠 TÉCNICO EXTERNO: SE GESTIONA Y AHÍ SE QUEDA (21)
+Hay 21 incidencias en «Enviado a técnico externo» y las 21 están sin técnico asignado en Jira. Se avisa al externo, se manda el material… y el ticket se queda ahí. Ni pasa a «Finalizado técnico externo» cuando el técnico acaba, ni queda escrito qué hizo. Resultado: no sabemos si está resuelto, no podemos facturar la intervención y el cliente pregunta antes que nosotros.
+• LEAS-7213 · Epil Point Pavia · 32 d en técnico externo y 14 SIN UNA SOLA NOTA. La última dice que se le recordó a Sincronis. ¿Fueron o no fueron?
+• LEAS-7364 · Epil Point Martina Franca · 10 d y una sola nota, del día que se abrió. Por WhatsApp sabemos que el técnico fue: en Jira no consta
+• LEAS-7268 · Clínica Dileima (Elha 90450) · 25 d, 10 sin nota
+• LEAS-7272 · Clínica No Filters · 25 d · el técnico reparó y la máquina empezó a fugar por la pistola. Retrabajo del externo sin cerrar ni reclamar
+• LEAS-7311 · Elha Pisa · 18 d, última nota «se reclama a Sincronis que agilice». Ocho días después, nada
+• LEAS-7393 · SinVello Colmenar Viejo · 7 d y una nota. Por WhatsApp el centro dice que el técnico se presentó en festivo sin llamar antes: eso no está en el ticket
+• LEAS-7407 · Elha C/Barcelona y LEAS-7378 · SinVello Badalona · 7 d sin nota desde que se avisó al técnico
+• LEAS-6891 · Mercedes Gamaza · 65 d en «enviado a técnico externo». Es el récord
+• LEAS-7448 · Epil Point Taranto y LEAS-7469 · Elha Cerdanyola · abiertos y enviados a externo con CERO comentarios
+• LEAS-7427 · Dermasana Orense · el único comentario del ticket es «_texto enfatizado_». Eso es la plantilla vacía, no una gestión
+• REGLA · Cuando el técnico externo termina, el ticket pasa a «Finalizado técnico externo» ese mismo día y se escribe qué hizo y con qué material. Si no, ni se factura ni se sabe si el equipo está bien
+• REGLA · Mientras esté con el externo, una nota por semana como mínimo: aunque sea «reclamado, sin fecha todavía». El silencio no es que no pase nada, es que no lo sabemos
+
+📝 A MEDIO GESTIONAR Y SIN UNA SOLA OBSERVACIÓN EN JIRA
+Tickets que alguien ha tocado y ha dejado en un estado intermedio sin escribir en qué punto están. Para el resto del equipo no existen: el que coge el turno siguiente empieza de cero y el cliente pregunta a quien pilla. No hace falta cerrarlos, hace falta un renglón diciendo qué falta y quién lo tiene.
+• LEAS-5904 · Noemi Valero · presupuesto ACEPTADO el 14 de abril, cero comentarios desde entonces, 142 d
+• LEAS-7048 · Dermoscan · presupuesto ACEPTADO el 16 de julio, cero comentarios, 49 d
+• Elha · cuatro incidencias abiertas a medio gestionar sin ninguna observación. Que las cierre o las escriba quien las tocó
+• LEAS-6889 y LEAS-6888 · L Medical G Point · 60 y 62 d en «pendiente de confirmar presupuesto» sin nota de si se ha reclamado al cliente
+• LEAS-7190 · Harmonie Salamanca · diodo por debajo del 80% y falta la decisión escrita en el ticket
+• LEAS-6198 · Luxlaser André Bélgica · «Andre tenía que hablar con Arturo»: no consta si esa conversación ocurrió
+• REGLA · Si dejas una incidencia a medias, escribe en el LEAS en qué punto está y qué falta. Un renglón. Si no está escrito, no existe
+
+🔒 CLIENTES GRANDES ATENDIDOS POR PRIVADO
+Está dicho y se sigue haciendo: los grandes clientes escriben por privado y se les contesta por privado. Ahí no queda registro, no lo ve el resto del equipo y no llega nunca al ticket. Es la raíz de la mitad de las contradicciones entre lo que dice el chat y lo que dice Jira.
+• Norma: si un cliente grande escribe por privado, se le contesta UNA vez remitiéndole al grupo, y la respuesta de verdad se da en el grupo
+• Epil Point es el ejemplo extremo de a dónde lleva esto: 144 tickets abiertos por su bot en 3,5 meses y solo 5 menciones de LEAS en 6.436 mensajes
+• Sin Vello es el ejemplo contrario: un interlocutor único que abre la incidencia en el portal y cita el LEAS, 45 claves distintas en su chat. Y es la cadena con menos atasco del grupo (7%)
+• Lo que se acuerde por chat, se escribe en el LEAS el mismo día. Si no, mañana aparece en este mensaje como contradicción
+
+💬 TELEGRAM DICE UNA COSA Y JIRA OTRA (2)
+Lo que se habla por chat no llega al ticket. En cuanto el bot esté en los grupos esto sale solo cada mañana.
+• LEAS-3827 · Clínica Cibeles CC Holea · Jira dice en fábrica desde hace 227 d, y en Telegram el cliente pidió el código mensual de la máquina el 7 de agosto: está funcionando. Cerrar y facturar los 7.333 €
+• Mel Clinics Castellón · consola lista para recoger desde el 8 de agosto y sin incidencia abierta. Además el centro escribe también por WhatsApp
