@@ -659,8 +659,12 @@ function leerLocal(){ try{ return JSON.parse(localStorage.getItem("sat.escrito")
 function guardaLocal(){ try{ localStorage.setItem("sat.escrito", JSON.stringify(LOCAL)); }catch(e){} }
 const NOMBRES = ["Isaac","Chus","Gonzalo","Borja","Cristina","Ernesto","Jonathan","Bea","Ivan","Alejandro"];
 function idPunto(k, t){ return (k + "__" + idLinea(k, t)).replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 180); }
-function leerYo(){ try{ return localStorage.getItem("sat.yo"); }catch(e){ return null; } }
-function fijarYo(n){ YO = n; try{ localStorage.setItem("sat.yo", n); }catch(e){} pintarYo(); renderInterno(); }
+const GENTE = ["Isaac","Chus","Gonzalo","Borja","Cristina","Alejandro"];
+// Ojo: guardar null en localStorage deja la cadena "null", que es truthy. Validar siempre contra GENTE.
+function leerYo(){ try{ const v = localStorage.getItem("sat.yo"); return GENTE.indexOf(v) !== -1 ? v : null; }catch(e){ return null; } }
+function fijarYo(n){ YO = (GENTE.indexOf(n) !== -1) ? n : null;
+  try{ if(YO) localStorage.setItem("sat.yo", YO); else localStorage.removeItem("sat.yo"); }catch(e){}
+  pintarYo(); renderInterno(); }
 function pintarYo(){
   const c = document.getElementById("quiensoy"); if(!c) return;
   const G = ["Isaac","Chus","Gonzalo","Borja","Cristina","Alejandro"];
