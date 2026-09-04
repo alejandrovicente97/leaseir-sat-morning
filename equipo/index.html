@@ -432,6 +432,19 @@ dialog.wide{max-width:860px}
 .viejo{background:var(--crit-bg);border:1px solid var(--crit-line);border-left:5px solid var(--crit);
   border-radius:10px;padding:12px 16px;margin:0 0 14px;font-size:13px;color:var(--ink-soft);line-height:1.5}
 .viejo b{color:var(--crit)}
+
+.pdes{margin-top:9px;padding-top:8px;border-top:1px solid var(--divider-soft);
+  display:flex;flex-direction:column;gap:5px}
+.pfila{display:flex;flex-wrap:wrap;gap:3px;align-items:center}
+.pfk{font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted-2);
+  font-weight:600;width:100%;margin-bottom:1px}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;padding:2px 6px;
+  border-radius:6px;background:var(--surface-3);color:var(--ink-soft);line-height:1.3}
+.chip i{font-style:normal;font-weight:700;font-size:10px;color:var(--muted)}
+.chip.t{background:rgba(176,67,31,.10);color:var(--accent)}
+.chip.t i{color:var(--accent)}
+.chip.mas{color:var(--muted-2);background:transparent;border:1px dashed var(--divider)}
+.cargas{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
 </style>
 </head>
 <body>
@@ -457,11 +470,6 @@ dialog.wide{max-width:860px}
 
 <div id="p-interno" class="pane on">
 
-  <section class="statebar" style="border-left-color:var(--accent)">
-    <div class="lead"><i style="background:var(--accent);box-shadow:0 0 0 4px rgba(176,67,31,.15)"></i><b>Lo que tiene cada uno en su tejado hoy</b></div>
-    <div style="font-size:13px;color:var(--ink-soft);line-height:1.5">Pincha tu nombre arriba y te quedas solo con lo tuyo. Cada LEAS es un enlace: lo abres en Jira, pones ahí el comentario de lo que has hecho y, si no vas a llegar hoy, le cambias el responsable. Mañana esta lista se hace sola con lo que siga abierto: lo que hayas movido en Jira ya no sale, y lo que se repita empieza a marcarse con aviso.</div>
-    <div class="aside"><b>98 + 92</b>principales y subtareas</div>
-  </section>
 
   <section class="comova">
     <div class="cm-t">Cómo funciona esto</div>
@@ -498,8 +506,6 @@ dialog.wide{max-width:860px}
   <div id="cargas" class="cargas"></div>
 
 
-  <div id="quiensoy" class="qbar"></div>
-  <div class="avbar"><span id="avresumen">Primera vez que se dicen todos estos puntos. A partir de mañana, lo que siga igual se marca solo.</span><button class="avreset" onclick="reiniciarAvisos()">Reiniciar contador</button></div>
   <div id="blks"></div>
 </div>
 
@@ -543,7 +549,7 @@ const CAD = {"ruta": ["Gonzalo", "Borja", "Isaac"], "track": ["Gonzalo", "Borja"
 // Cadena de responsabilidad. Siempre tres nombres: quien lo tiene, a quién se lo pide
 // si no llega, y a quién se lo pide ese segundo. Siempre por el grupo, para que quede constancia.
 const FUERA = {"Cristina":"de vacaciones hasta el 21 de septiembre","Borja":"de vacaciones hasta el miércoles"};
-const NOTA_HOY = {"Chus":"hoy de 12:00 a 20:00"};
+const NOTA_HOY = {};
 function disp(n){ return !FUERA[n]; }
 function cadena(k, t){
   const base = (CAD[k] || ["Isaac","Gonzalo","Borja"]).filter(disp);
@@ -708,6 +714,41 @@ function respHtml(k, t){
 let FILTRO = null, VERHECHOS = false;
 function verHechos(){ VERHECHOS = !VERHECHOS; renderInterno(); }
 function filtrar(n){ FILTRO = (FILTRO === n) ? null : n; renderInterno(); }
+const TIPO = {ruta:"Sin llegar a taller", maps:"Falta ubicación", track:"Falta tracking",
+  nadie:"Sin técnico", huerf:"Subtarea huérfana", epil:"Epil Point", parado:"Parada >15 d",
+  repara:"Reparación", prestamo:"Préstamo", cerrar:"Sin finalizar", externo:"Técnico externo",
+  transporte:"Transporte", medias:"Sin observación", privado:"Por privado", telegram:"Telegram vs Jira"};
+const CADENAS = ["Elha","Sin Vello","SinVello","Sinvello","Epil Point","Centri Unico","Centro Unico",
+  "Smart Duck","Dermasana","Laser Factory","Dermoscan","Zurimed","Corpoderm","L Medical","Belenus","Brull"];
+function clienteDe(t){
+  for(const c of CADENAS){ if(t.indexOf(c) !== -1) return c === "SinVello" || c === "Sinvello" ? "Sin Vello" : (c === "Centro Unico" ? "Centri Unico" : c); }
+  const m = t.match(/\bLEAS-\d{3,5}\b\s*·\s*([^·]{2,40}?)\s*(?:·|$)/);
+  if(m) return m[1].trim().replace(/\s*\(.*$/, '').slice(0, 22);
+  return null;
+}
+function desglose(persona){
+  const cli = {}, tip = {};
+  ORDEN.forEach(k => (MSG[k].l || []).forEach(t => {
+    if(titularEf(k,t) !== persona || tramitado(k,t)) return;
+    const c = clienteDe(t); if(c) cli[c] = (cli[c]||0)+1;
+    const et = TIPO[k]; if(et) tip[et] = (tip[et]||0)+1;
+  }));
+  const orden = o => Object.entries(o).sort((a,b)=>b[1]-a[1]);
+  return { cli: orden(cli), tip: orden(tip) };
+}
+function resumenChips(n){
+  const d = desglose(n);
+  if(!d.tip.length) return '';
+  const fila = (titulo, pares, cls) => {
+    if(!pares.length) return '';
+    const vis = pares.slice(0, 3);
+    const resto = pares.slice(3).reduce((x, p) => x + p[1], 0);
+    return '<div class="pfila"><span class="pfk">' + titulo + '</span>'
+      + vis.map(p => '<span class="chip ' + cls + '">' + p[0] + '<i>' + p[1] + '</i></span>').join('')
+      + (resto ? '<span class="chip mas">+' + resto + '</span>' : '') + '</div>';
+  };
+  return '<div class="pdes">' + fila('Clientes', d.cli, 'c') + fila('Motivo', d.tip, 't') + '</div>';
+}
 function renderCargas(){
   const c = document.getElementById('cargas'); if(!c) return;
   const GRUPO = ["Isaac","Chus","Gonzalo","Borja","Cristina"].filter(disp);
@@ -730,19 +771,9 @@ function renderCargas(){
       + '</div>'
       + '<div><span class="pb">'+(a.n-a.resp)+'</span><span class="pu">'+((a.n-a.resp)===1?'pendiente':'pendientes')+'</span></div>'
       + '<div class="pd">'+(a.rojo ? '<b style="color:var(--crit)">'+a.rojo+' en rojo</b> · ' : '')
-      + (a.resp ? a.resp+' de '+a.n+' tramitados hoy' : 'ninguno tramitado aún de '+a.n)+'</div></button>';
+      + (a.resp ? a.resp+' de '+a.n+' tramitados hoy' : 'ninguno tramitado aún de '+a.n)+'</div>'
+      + resumenChips(n) + '</button>';
   }).join('');
-  const fueraDeGrupo = ["Cristina","Borja"].filter(n => FUERA[n]);
-  const enPie = GRUPO.filter(n => acc[n].n - acc[n].resp > 0).sort((a,b) => (acc[b].n-acc[b].resp) - (acc[a].n-acc[a].resp));
-  const top = enPie[0];
-  const pend = GRUPO.reduce((x,n)=>x+acc[n].n-acc[n].resp,0);
-  const cargado = top && pend ? Math.round((acc[top].n-acc[top].resp) * 100 / pend) : 0;
-  h += '<div class="todos">'+pend+' pendientes de '+total+''
-    + (cargado >= 45 ? ' · <b>'+top+' lleva el '+cargado+' % de lo que queda</b>' : '')
-    + (acc["Chus"] && NOTA_HOY["Chus"] && pend > 0 ? ' · <b>Chus entra a las 12:00 y sale a las 20:00</b>: lo que Isaac y Gonzalo vean que hoy no les da tiempo, decidlo por el grupo con el LEAS antes de las 12 y pasa a su lista' : '')
-    + (fueraDeGrupo.length ? ' · fuera hoy: '+fueraDeGrupo.map(n=>n+' ('+FUERA[n]+')').join(', ') : '')
-    + (FILTRO ? ' · viendo solo lo de <b>'+FILTRO+'</b> <button onclick="filtrar(null)">ver todo</button>' : '')
-    + '</div>';
   c.innerHTML = h;
 }
 
