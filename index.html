@@ -1845,7 +1845,7 @@ const ACT = {"Gonzalo": {"n": 33, "tk": 24, "panel": 15, "ult": "18:36", "ev": [
 // Finalizado técnico externo). Se lee del historial de estados, no de los comentarios.
 const RES = {"Gonzalo": ["LEAS-7448", "LEAS-7364", "LEAS-7272", "LEAS-6048", "LEAS-5904"], "Chus": ["LEAS-7480", "LEAS-7397"], "Isaac": ["LEAS-7457", "LEAS-7324"], "Alejandro": ["LEAS-756"]};
 // Taller: presupuestos preparados y equipos a salida, por técnico.
-const TAL = {"Iván": {"pre": ["LEAS-7335", "LEAS-7312"], "sal": ["LEAS-7436", "LEAS-7335"], "ab": [{"k": "LEAS-7312", "e": "En preparación presupuesto", "d": 0}, {"k": "LEAS-7360", "e": "En cola taller", "d": 0}, {"k": "LEAS-7299", "e": "En cola taller", "d": 0}, {"k": "LEAS-7421", "e": "En cola taller", "d": 1}, {"k": "LEAS-7405", "e": "En cola taller", "d": 1}, {"k": "LEAS-7270", "e": "Pendiente confirmación presupuesto", "d": 14}, {"k": "LEAS-6906", "e": "En reparación", "d": 18}]}, "Jonathan": {"pre": [], "sal": ["LEAS-7121"], "ab": [{"k": "LEAS-7403", "e": "Pendiente confirmación presupuesto", "d": 0}, {"k": "LEAS-7420", "e": "Esperando inicio reparación", "d": 0}, {"k": "LEAS-7349", "e": "En reparación", "d": 0}, {"k": "LEAS-7256", "e": "Pendiente confirmación presupuesto", "d": 1}, {"k": "LEAS-7434", "e": "En cola taller", "d": 2}, {"k": "LEAS-6879", "e": "En reparación", "d": 2}, {"k": "LEAS-6907", "e": "Presupuesto preparado pendiente de enviar", "d": 14}, {"k": "LEAS-7190", "e": "Pendiente confirmación presupuesto", "d": 23}]}, "Fran": {"pre": [], "sal": [], "ab": [{"k": "LEAS-7355", "e": "En preparación presupuesto", "d": 0}, {"k": "LEAS-7425", "e": "Esperando inicio reparación", "d": 1}, {"k": "LEAS-7424", "e": "En reparación", "d": 1}, {"k": "LEAS-7423", "e": "En preparación presupuesto", "d": 3}, {"k": "LEAS-7188", "e": "En preparación presupuesto", "d": 22}, {"k": "LEAS-6779", "e": "En reparación", "d": 39}, {"k": "LEAS-6888", "e": "Pendiente confirmación presupuesto", "d": 60}, {"k": "LEAS-6889", "e": "Pendiente confirmación presupuesto", "d": 63}]}};
+const TAL = {"Iván": {"pre": ["LEAS-7335", "LEAS-7312"], "sal": ["LEAS-7436", "LEAS-7335"], "ab": [{"k": "LEAS-7312", "e": "En preparación presupuesto", "d": 0}, {"k": "LEAS-7360", "e": "En cola taller", "d": 0}, {"k": "LEAS-7299", "e": "En cola taller", "d": 0}, {"k": "LEAS-7421", "e": "En cola taller", "d": 1}, {"k": "LEAS-7405", "e": "En cola taller", "d": 1}, {"k": "LEAS-7270", "e": "Pendiente confirmación presupuesto", "d": 14}, {"k": "LEAS-6906", "e": "En reparación", "d": 18}], "com": 1, "mov": 3}, "Jonathan": {"pre": [], "sal": ["LEAS-7121"], "ab": [{"k": "LEAS-7403", "e": "Pendiente confirmación presupuesto", "d": 0}, {"k": "LEAS-7420", "e": "Esperando inicio reparación", "d": 0}, {"k": "LEAS-7349", "e": "En reparación", "d": 0}, {"k": "LEAS-7256", "e": "Pendiente confirmación presupuesto", "d": 1}, {"k": "LEAS-7434", "e": "En cola taller", "d": 2}, {"k": "LEAS-6879", "e": "En reparación", "d": 2}, {"k": "LEAS-6907", "e": "Presupuesto preparado pendiente de enviar", "d": 14}, {"k": "LEAS-7190", "e": "Pendiente confirmación presupuesto", "d": 23}], "com": 0, "mov": 1}, "Fran": {"pre": [], "sal": [], "ab": [{"k": "LEAS-7355", "e": "En preparación presupuesto", "d": 0}, {"k": "LEAS-7425", "e": "Esperando inicio reparación", "d": 1}, {"k": "LEAS-7424", "e": "En reparación", "d": 1}, {"k": "LEAS-7423", "e": "En preparación presupuesto", "d": 3}, {"k": "LEAS-7188", "e": "En preparación presupuesto", "d": 22}, {"k": "LEAS-6779", "e": "En reparación", "d": 39}, {"k": "LEAS-6888", "e": "Pendiente confirmación presupuesto", "d": 60}, {"k": "LEAS-6889", "e": "Pendiente confirmación presupuesto", "d": 63}], "com": 0, "mov": 0}};
 
 function renderAct(){
   const c = document.getElementById('actg'); if(!c) return;
@@ -1888,6 +1888,8 @@ function renderAct(){
     + 'pocos comentarios y varios cierres, un día de rematar. Léelo como tendencia de semanas, nunca como nota del día.';
 }
 
+// Jornada del taller: de 7:30 a 15:00, siete horas y media.
+const JORNADA = "7:30 a 15:00";
 function renderTal(){
   const c = document.getElementById('talg'); if(!c) return;
   const gente = Object.keys(TAL).sort((a,b) =>
@@ -1922,13 +1924,15 @@ function renderTal(){
                 + '<span class="wd">'+dias(x.d)+'</span></span>').join('')
             + '</span></span>';
         })()
-      + (ojo ? '<span class="toj"><b>Míralo.</b> Hoy no ha cerrado ningún presupuesto ni sacado ningún equipo'
-          + (tocados ? ', aunque sí ha tocado '+tocados+' ticket'+(tocados===1?'':'s') : '')
-          + ', y tiene <b>'+suyosParados.length+' equipo'+(suyosParados.length===1?'':'s')+'</b> suyo'
+      + (ojo ? '<span class="toj"><b>Míralo.</b> Jornada de '+JORNADA+' y en Jira no queda casi rastro: '
+          + '<b>'+(t.com||0)+' comentarios</b> escritos y <b>'+(t.mov||0)+' cambios de estado</b> en todo el día'
+          + (tocados ? ' (sí editó campos en '+tocados+' ticket'+(tocados===1?'':'s')+')' : '')
+          + '. Y tiene '+suyosParados.length+' equipo'+(suyosParados.length===1?'':'s')+' suyo'
           + (suyosParados.length===1?'':'s')+' parado'+(suyosParados.length===1?'':'s')+' más de 15 días: '
           + suyosParados.map(x => x.k+' ('+x.d+' d)').join(', ') + '.'
-          + '<em>No es una acusación: una reparación difícil son días de banco y un solo movimiento al final. '
-          + 'Y no he podido leer Sesame, así que no sé si hoy estaba. Pregúntale antes de concluir nada.</em></span>' : '')
+          + '<em>Lo que esto prueba es que no hay rastro, no que no haya trabajo: una reparación de banco no '
+          + 'toca Jira. Las dos salidas son distintas —o no se trabajó, o no se anotó— y solo se distinguen '
+          + 'preguntando. Ojo también: sin leer Sesame no sé si hoy estaba.</em></span>' : '')
       + '</div>';
   }).join('');
   const p = document.getElementById('talpie');
