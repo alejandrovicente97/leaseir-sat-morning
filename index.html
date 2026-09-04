@@ -301,6 +301,14 @@ dialog.wide{max-width:860px}
 .fb{font:inherit;font-size:12px;font-weight:600;padding:8px 14px;border-radius:8px;border:1px solid var(--divider);background:var(--surface-2);color:var(--ink);cursor:pointer;text-decoration:none;display:inline-block}
 .fb:hover{border-color:var(--muted);background:var(--surface)}
 @media(max-width:700px){.fgrid{grid-template-columns:repeat(2,1fr)}.fbig b{font-size:30px}}
+
+.av{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:20px;vertical-align:1px;margin-right:3px;white-space:nowrap}
+.av2{background:rgba(191,120,32,.14);color:var(--warn)}
+.av3{background:rgba(178,44,38,.14);color:var(--crit)}
+.avn{font-size:10.5px;font-weight:700;color:var(--crit);background:rgba(178,44,38,.12);padding:2px 8px;border-radius:20px}
+.avbar{display:flex;align-items:center;gap:12px;padding:10px 14px;margin:0 0 11px;border:1px solid var(--divider);border-radius:9px;font-size:12.5px;color:var(--muted);line-height:1.45}
+.avreset{margin-left:auto;flex-shrink:0;font:inherit;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;color:var(--muted);background:transparent;border:1px solid var(--divider);border-radius:6px;padding:4px 10px;cursor:pointer}
+.avreset:hover{color:var(--ink);border-color:var(--muted)}
 </style>
 
 <div class="page">
@@ -544,262 +552,11 @@ dialog.wide{max-width:860px}
 
   <div class="rep-tools">
     <button class="main" onclick="cpAll(this)">Copiar el mensaje entero</button>
-    <span class="note">o copia bloque a bloque con el botón de cada uno</span>
+    <span class="note">para el grupo <b>SAT Leaseir Borja, Isaac, Cristina, Gonzalo y Chus (Interno)</b> · o copia bloque a bloque</span>
   </div>
 
-      <div class="blk a">
-        <header>
-          <span class="ico">🔴</span>
-          <span class="t">Salió del cliente y no llega a taller</span>
-          <span class="cnt">7</span>
-          <button class="cp" onclick="cpBlk('ruta',this)">Copiar</button>
-        </header>
-        <div class="por">El SLA de llegada a taller son 8 h. Estos llevan días en tránsito. Hay que llamar al transportista hoy.</div>
-        <ul>
-          <li>LEAS-7360 · SinVello Ibiza · 205 h fuera de plazo · sigue en Gestionado transporte</li>
-          <li>LEAS-7374 · Cleanbody CC La Villa · 202 h fuera de plazo · y además sin tracking puesto</li>
-          <li>LEAS-7386 · Belenus · 176 h fuera de plazo · sigue en Gestionado transporte</li>
-          <li>LEAS-7416 · Centro Unico Palermo · 85 h fuera de plazo · y sin tracking puesto</li>
-          <li>LEAS-7343 · Elha Sta Teresa · 78 h fuera de plazo · y sin tracking puesto</li>
-          <li>LEAS-7358 · Centri Unico Olbia · 78 h fuera de plazo</li>
-          <li>LEAS-7441 · Sinvello Goya · 56 h fuera de plazo</li>
-        </ul>
-      </div>
-      <div class="blk b">
-        <header>
-          <span class="ico">📍</span>
-          <span class="t">Falta el link de ubicación</span>
-          <span class="cnt">6</span>
-          <button class="cp" onclick="cpBlk('maps',this)">Copiar</button>
-        </header>
-        <div class="por">Solo cuenta en los principales: las subtareas heredan la ubicación del padre y no hace falta ponérsela. De 101 principales, seis no la tienen.</div>
-        <ul>
-          <li>LEAS-5904 · Noemi Valero · 142 d parado · con el presupuesto ya aceptado</li>
-          <li>LEAS-6048 · Daniel Jaramillo (Grupo Dos) · 112 d · en inspección de salida · 2.898 €</li>
-          <li>LEAS-6198 · Luxlaser Andre Bélgica · 21 d · pendiente de confirmar presupuesto</li>
-          <li>LEAS-7455 · BiNatural consola 20046 · recién abierto, ponedla ya</li>
-          <li>LEAS-7444 · Miguel Parra (ex-Brull) · recién abierto</li>
-          <li>LEAS-7453 · JD Aesthetics · recién abierto</li>
-        </ul>
-      </div>
-      <div class="blk b">
-        <header>
-          <span class="ico">🚚</span>
-          <span class="t">Falta el tracking del transporte</span>
-          <span class="cnt">13 de 20 en ruta</span>
-          <button class="cp" onclick="cpBlk('track',this)">Copiar</button>
-        </header>
-        <div class="por">Dos de cada tres equipos que van de camino no tienen el enlace de seguimiento. Sin él no sabemos dónde está la máquina ni podemos contestar al cliente.</div>
-        <ul>
-          <li>LEAS-7230 · SinVello Albacete · 27 d en pendiente de recogida</li>
-          <li>LEAS-7332 · Epil Point Specialisti · 14 d en pendiente de recogida</li>
-          <li>LEAS-7334 · Beauty Centre d'Estètica 90159 · 14 d · ya en transporte y sin tracking</li>
-          <li>LEAS-7430 · Elha Isaac Albéniz · 3 d</li>
-          <li>LEAS-7443 · Elha Vilanova · 2 d</li>
-          <li>LEAS-7445 · Elha Caracol · 2 d</li>
-          <li>LEAS-7343 · Elha Sta Teresa · en transporte, y con el SLA reventado</li>
-          <li>LEAS-7320 · Belleza Begoña Tapia · en transporte</li>
-          <li>LEAS-7325 · Deseja (Lituania) · en transporte</li>
-          <li>LEAS-7374 · Cleanbody CC La Villa · en transporte, 202 h fuera de plazo</li>
-          <li>LEAS-7416 · Centro Unico Palermo · pendiente de recogida</li>
-          <li>LEAS-7450 · No Filters (Dinámica Impulsos) · en transporte</li>
-          <li>LEAS-7466 · Sinvello Teatinos · pendiente de recogida</li>
-        </ul>
-      </div>
-      <div class="blk a">
-        <header>
-          <span class="ico">🚩</span>
-          <span class="t">Sin técnico y paradas, fuera de cadena</span>
-          <span class="cnt">28</span>
-          <button class="cp" onclick="cpBlk('nadie',this)">Copiar</button>
-        </header>
-        <div class="por">De los 43 tickets sin asignar y sin mover más de 15 días, 28 son de clientes que no pertenecen a Elha, Sin Vello, Epil Point, Smart Duck ni Unico Italia. No hay un interlocutor que pregunte por ellos, así que se pudren solos. Cada uno necesita un nombre hoy.</div>
-        <ul>
-          <li>LEAS-6048 · Centros Perfect Lase (D. Jaramillo) · inspección de salida · 111 d · está terminado, falta cerrarlo</li>
-          <li>LEAS-5904 · Noemi Valero · 2 pedales con PRESUPUESTO YA ACEPTADO · 142 d · es venta parada, servirlo</li>
-          <li>LEAS-7048 · Dermoscan · 4 umbilicales con PRESUPUESTO YA ACEPTADO · 49 d · es venta parada, servirlo</li>
-          <li>LEAS-7104 y LEAS-7103 · NR Clinics · abiertos 43 d · se prometió por escrito hacerlo en septiembre: es ahora</li>
-          <li>LEAS-7214 · Laser Clinic Hospitalet (Sara Bullón) · revisión anual pedida · 31 d · dar fecha</li>
-          <li>LEAS-7118 · Corpoderm · en reparación · 21 d · se dijo finales de agosto, ya está vencido</li>
-          <li>LEAS-7191 · Harmonie Salamanca · máquina de sustitución en préstamo · 29 d</li>
-          <li>LEAS-7148 · Laser Factory Hospitalet · préstamo con el padre ya resuelto · 38 d</li>
-          <li>LEAS-7326 · Deseja Lituania · queja de calidad sin investigar · 14 d</li>
-          <li>LEAS-7310 · Laser Factory Mollet · queja de calidad sin investigar · 15 d</li>
-          <li>El resto (18) son comprobaciones de cobro heredadas de tickets ya cerrados: van en el bloque de subtareas huérfanas</li>
-        </ul>
-      </div>
-      <div class="blk a">
-        <header>
-          <span class="ico">🧟</span>
-          <span class="t">Subtareas con el ticket padre ya cerrado</span>
-          <span class="cnt">21</span>
-          <button class="cp" onclick="cpBlk('huerf',this)">Copiar</button>
-        </header>
-        <div class="por">El principal se cerró y la subtarea se quedó abierta, sin técnico y sin nadie detrás. Ninguna avanza sola. Las cuatro de máquina de sustitución hay que validarlas con Ernesto contra los grupos de logística: si consta recogida o albarán, se cierra; si no consta movimiento, se llama al centro hoy.</div>
-        <ul>
-          <li>LEAS-5697 · Smart Duck Paris · consola C03143 · NO aparece en logística ni en ningún grupo de Telegram en todo el histórico · 105 d sin rastro · localizarla hoy</li>
-          <li>LEAS-7054 · Centro Unico Boccea · en préstamo · padre LEAS-7052 resuelto · 38 d · VALIDAR CON ERNESTO</li>
-          <li>LEAS-7148 · Laser Factory Hospitalet · en préstamo · padre LEAS-7146 resuelto · 38 d · VALIDAR CON ERNESTO</li>
-          <li>LEAS-7285 · SinVello Cádiz · C00801 · SÍ consta expedición en ENVIOS SAT LEASEIR el viernes: se movió, actualizar Jira y cerrar la subtarea</li>
-          <li>LEAS-756 · comprobación de cobro · padre LEAS-578 cancelado · 657 d · cerrar</li>
-          <li>LEAS-4265 · comprobación de cobro · padre LEAS-4264 finalizado · 283 d · cerrar</li>
-          <li>LEAS-5198 · comprobación de cobro · padre LEAS-5117 cancelado · 197 d · cerrar</li>
-          <li>LEAS-5219 · Elha Sant Boi · padre LEAS-5209 cancelado · 196 d · cerrar</li>
-          <li>LEAS-5211 · padre LEAS-4749 resuelto · 196 d · cerrar</li>
-          <li>LEAS-5830 · padre LEAS-5249 finalizado · 147 d · cerrar</li>
-          <li>LEAS-5908 · padre LEAS-5368 cancelado · 142 d · cerrar</li>
-          <li>LEAS-6754 · padre LEAS-6753 resuelto · 77 d · cerrar</li>
-          <li>LEAS-6835 · Elha Uruguai · padre LEAS-6826 resuelto · 69 d · cerrar</li>
-          <li>LEAS-6890 · padre LEAS-6764 resuelto · 64 d · cerrar</li>
-          <li>LEAS-7045 · padre LEAS-6805 resuelto · 49 d · cerrar</li>
-          <li>LEAS-7102 · padre LEAS-6853 resuelto · 43 d · cerrar</li>
-          <li>LEAS-7095 · queja · padre LEAS-7094 resuelto · 41 d · cerrar</li>
-          <li>LEAS-7265 · padre LEAS-6903 resuelto · 24 d · cerrar</li>
-          <li>LEAS-7289 · padre LEAS-7136 resuelto · 21 d · cerrar</li>
-          <li>LEAS-7323 · padre LEAS-7091 resuelto · 15 d · cerrar</li>
-          <li>LEAS-7310 · queja · padre LEAS-7309 finalizado · 15 d · cerrar</li>
-          <li>Petición a quien lleve la automatización de Jira: que al cerrar un principal se cierren o se reasignen sus subtareas. Si no, esto vuelve a acumularse solo.</li>
-        </ul>
-      </div>
-      <div class="blk a">
-        <header>
-          <span class="ico">🇮🇹</span>
-          <span class="t">Epil Point · el cliente que no pasa por Jira</span>
-          <span class="cnt">144</span>
-          <button class="cp" onclick="cpBlk('epil',this)">Copiar</button>
-        </header>
-        <div class="por">En tres meses y medio su bot ha abierto 144 tickets por WhatsApp desde 64 centros. En Jira tienen 9 abiertas. Cinco menciones de LEAS en 6.436 mensajes. Respondemos en seis minutos de mediana, así que el problema no es la atención: es que nada de esto queda registrado y luego no podemos ni medir ni facturar. Dos cosas para hoy y una regla nueva.</div>
-        <ul>
-          <li>HOY · Partes de trabajo de Epil Point: Isaac los prometió el 2 de septiembre a primera hora. Sin ellos Andrea no acepta las facturas y el cobro se queda parado. Confirmar que se enviaron</li>
-          <li>HOY · Mensaje del 3 de septiembre a las 18:05 sobre la formación de Maria Martire en el centro nuevo: sigue sin contestar</li>
-          <li>Livorno · ticket del 28 de agosto, intervención el sábado 5 por la mañana. Ocho días con el cliente reclamando a diario. El cuello de botella es Sincronis, no nosotros: hay que ponerles plazo por escrito</li>
-          <li>Sesto Fiorentino · manípulo intermitente, el técnico va detrás de Livorno. Taranto · SSD, Giuseppe fue ayer. Avellino · cita el viernes</li>
-          <li>Manípulo 40413 de Lecce · parado en fábrica esperando aceptación de presupuesto, con disputa de garantía abierta y Fabio metido por email. Cerrarlo esta semana en un sentido o en otro</li>
-          <li>Consola 90943 de Aprilia · pendiente de recogida; el cliente exige entrega y recogida simultáneas. Coordinar con Ernesto</li>
-          <li>CALIDAD · Los umbilicales de manípulo son un defecto recurrente, no incidencias sueltas: el de Martina Franca iba por la tercera reparación y ya existe una conexión rediseñada que estamos regalando. Cinco centros en diez días. Esto sube al report de Nacho como coste de garantía</li>
-          <li>REGLA NUEVA · Todo ticket que entre por el grupo de WhatsApp de Epil Point se abre en Jira el mismo día y se le responde con el LEAS. Si no, ni medimos su siniestralidad real ni podemos defender una factura</li>
-        </ul>
-      </div>
-      <div class="blk a">
-        <header>
-          <span class="ico">⏸</span>
-          <span class="t">Incidencias paradas más de 15 días</span>
-          <span class="cnt">18</span>
-          <button class="cp" onclick="cpBlk('parado',this)">Copiar</button>
-        </header>
-        <div class="por">Solo incidencias reales, sin contar subtareas. Las 34 subtareas paradas van aparte: 20 son de administración (cobros) y 11 de sustituciones.</div>
-        <ul>
-          <li>LEAS-5904 · Noemi Valero · 142 d · presupuesto aceptado y sin ejecutar</li>
-          <li>LEAS-6048 · Daniel Jaramillo · 112 d · en inspección de salida · 2.898 €</li>
-          <li>LEAS-4443 · Dermoscan · 101 d · la aseguradora rechazó y el cliente canjea: cerrar</li>
-          <li>LEAS-4908 · Elha Pintor Felo Monzón · 100 d · abierto sin triar</li>
-          <li>LEAS-6889 · L Medical G Point · 62 d · pendiente de confirmar presupuesto</li>
-          <li>LEAS-6888 · L Medical G Point · 60 d · pendiente de confirmar presupuesto</li>
-          <li>LEAS-7048 · Dermoscan · 49 d · presupuesto aceptado y sin ejecutar</li>
-          <li>LEAS-7103 · NR Clinics · 43 d · prometido para septiembre, ya estamos</li>
-          <li>LEAS-7104 · NR Clinics · 43 d · prometido para septiembre, ya estamos</li>
-          <li>LEAS-6779 · Centri Unico Campania · 38 d · en reparación</li>
-          <li>LEAS-7214 · Laser Clinic Hospitalet · 31 d · abierto sin triar</li>
-          <li>LEAS-7230 · SinVello Albacete · 27 d · pendiente de recogida y sin tracking</li>
-          <li>LEAS-7118 · Corpoderm · 22 d · dijimos finales de agosto para el cambio de Bahía</li>
-          <li>LEAS-7190 · Harmonie Salamanca · 22 d · diodo por debajo del 80%, falta decisión</li>
-          <li>LEAS-6198 · Luxlaser Andre Bélgica · 21 d · Andre tenía que hablar con Arturo</li>
-          <li>LEAS-7188 · Centro Unico Boccea · 21 d · preparando presupuesto</li>
-          <li>…y 2 más</li>
-        </ul>
-      </div>
-      <div class="blk a">
-        <header>
-          <span class="ico">🔧</span>
-          <span class="t">Reparación fuera de plazo</span>
-          <span class="cnt">39</span>
-          <button class="cp" onclick="cpBlk('repara',this)">Copiar</button>
-        </header>
-        <div class="por">El compromiso con el cliente son 80 h. Los diez peores:</div>
-        <ul>
-          <li>LEAS-7364 · Epil Point Martina Franca · 204 h de más · con técnico externo</li>
-          <li>LEAS-7349 · Cris Peña Beauty Center · 179 h de más · en reparación</li>
-          <li>LEAS-7355 · Zurimed Parque Principado · 175 h de más · preparando presupuesto</li>
-          <li>LEAS-7379 · Elha Badalona · 175 h de más · esperando inicio de reparación</li>
-          <li>LEAS-7378 · SinVello Badalona · 160 h de más · con técnico externo</li>
-          <li>LEAS-7358 · Centri Unico Olbia · 158 h de más · aún en transporte</li>
-          <li>LEAS-7360 · SinVello Ibiza · 154 h de más · aún en transporte</li>
-          <li>LEAS-7393 · SinVello Colmenar Viejo · 138 h de más · con técnico externo</li>
-          <li>LEAS-7397 · Elha Ferraz · 137 h de más · con técnico externo</li>
-          <li>LEAS-7406 · Epil Point Livorno · 133 h de más · con técnico externo</li>
-          <li>…y 29 más</li>
-        </ul>
-      </div>
-      <div class="blk b">
-        <header>
-          <span class="ico">🔁</span>
-          <span class="t">Préstamos fuera de plazo</span>
-          <span class="cnt">10</span>
-          <button class="cp" onclick="cpBlk('prestamo',this)">Copiar</button>
-        </header>
-        <div class="por">Máquina nuestra en casa del cliente pasado el plazo. Cada una es flota que no factura y que no podemos prestar a otro.</div>
-        <ul>
-          <li>LEAS-7357 · SinVello Granada Constitución · 159 h de más · figura como devuelto: ¿está o no está?</li>
-          <li>LEAS-7356 · Zurimed Parque Principado · 159 h de más</li>
-          <li>LEAS-7359 · Centri Unico Olbia · 158 h de más</li>
-          <li>LEAS-7372 · SinVello El Palo · 131 h de más</li>
-          <li>LEAS-7375 · Cleanbody CC La Villa · 130 h de más</li>
-          <li>LEAS-7366 · SinVello Ibiza · 128 h de más</li>
-          <li>LEAS-7401 · sin centro informado · 87 h de más</li>
-          <li>LEAS-7385 · sin centro informado · 87 h de más</li>
-          <li>LEAS-7388 · CVL Distribuidor (Samuel) · 86 h de más</li>
-          <li>LEAS-7408 · Elha Sta Teresa · 79 h de más</li>
-          <li>Aparte: la consola C03143 lleva 169 d en Smart Duck Paris sin una sola nota. Localizarla hoy</li>
-        </ul>
-      </div>
-      <div class="blk d">
-        <header>
-          <span class="ico">✅</span>
-          <span class="t">Terminados y sin cerrar</span>
-          <span class="cnt">8</span>
-          <button class="cp" onclick="cpBlk('cerrar',this)">Copiar</button>
-        </header>
-        <div class="por">El equipo ya está con el cliente. Solo falta cerrar el ticket. Esto es lo que nos infla los tiempos medios.</div>
-        <ul>
-          <li>LEAS-6048 · Daniel Jaramillo (Grupo Dos) · 112 d en inspección de salida · 2.898 €</li>
-          <li>LEAS-7236 · Smart Duck Labege · devuelto al cliente hace 29 d</li>
-          <li>LEAS-7255 · Elha St Feliu de Llobregat · devuelto hace 27 d</li>
-          <li>LEAS-7124 · Elha Cristòfor Colom · devuelto hace 42 d</li>
-          <li>LEAS-7224 · Elha Limoneros · devuelto hace 30 d</li>
-          <li>LEAS-7315 · Belenus · devuelto hace 17 d</li>
-          <li>LEAS-7321 · Dermoscan · devuelto hace 16 d</li>
-          <li>LEAS-7324 · SinVello Jerez · devuelto hace 15 d</li>
-        </ul>
-      </div>
-      <div class="blk c">
-        <header>
-          <span class="ico">💬</span>
-          <span class="t">Telegram dice una cosa y jira otra</span>
-          <span class="cnt">2</span>
-          <button class="cp" onclick="cpBlk('telegram',this)">Copiar</button>
-        </header>
-        <div class="por">Lo que se habla por chat no llega al ticket. En cuanto el bot esté en los grupos esto sale solo cada mañana.</div>
-        <ul>
-          <li>LEAS-3827 · Clínica Cibeles CC Holea · Jira dice en fábrica desde hace 227 d, y en Telegram el cliente pidió el código mensual de la máquina el 7 de agosto: está funcionando. Cerrar y facturar los 7.333 €</li>
-          <li>Mel Clinics Castellón · consola lista para recoger desde el 8 de agosto y sin incidencia abierta. Además el centro escribe también por WhatsApp</li>
-        </ul>
-      </div>
-      <div class="blk d">
-        <header>
-          <span class="ico">👏</span>
-          <span class="t">Cómo va el equipo</span>
-          
-          <button class="cp" onclick="cpBlk('equipo',this)">Copiar</button>
-        </header>
-        <div class="por">Lo que sí funciona, para que se diga también.</div>
-        <ul>
-          <li>Iván Lozano: 274 presupuestos y 111 equipos a salida desde mayo. El que más produce con diferencia</li>
-          <li>Jonathan Zarauza: 219 presupuestos y 76 salidas. Mueve sus tickets todos los días</li>
-          <li>Fran Fernández: 148 presupuestos y 68 salidas, y el que mejor documenta los informes</li>
-          <li>El taller repara en 4 días de mediana. El cuello no está en el banco de trabajo</li>
-          <li>Pendiente: 74 tickets sin responsable asignado. El que coge un trabajo, que se ponga en el ticket</li>
-        </ul>
-      </div>
+  <div class="avbar"><span id="avresumen">Primera vez que se dicen todos estos puntos. A partir de mañana, lo que siga igual se marca solo.</span><button class="avreset" onclick="reiniciarAvisos()">Reiniciar contador</button></div>
+  <div id="blks"></div>
 </div>
 
 
@@ -1464,14 +1221,87 @@ function tabGo(id){
 // ── Report interno: copiar bloques ──
 const MSG = {"epil": {"t": "🇮🇹 EPIL POINT · EL CLIENTE QUE NO PASA POR JIRA (144 vs 9)", "p": "En tres meses y medio su bot ha abierto 144 tickets por WhatsApp desde 64 centros. En Jira tienen 9 abiertas. Cinco menciones de LEAS en 6.436 mensajes. Respondemos en seis minutos de mediana, así que el problema no es la atención: es que nada de esto queda registrado y luego no podemos ni medir ni facturar. Dos cosas para hoy y una regla nueva.", "l": ["HOY · Partes de trabajo de Epil Point: Isaac los prometió el 2 de septiembre a primera hora. Sin ellos Andrea no acepta las facturas y el cobro se queda parado. Confirmar que se enviaron", "HOY · Mensaje del 3 de septiembre a las 18:05 sobre la formación de Maria Martire en el centro nuevo: sigue sin contestar", "Livorno · ticket del 28 de agosto, intervención el sábado 5 por la mañana. Ocho días con el cliente reclamando a diario. El cuello de botella es Sincronis, no nosotros: hay que ponerles plazo por escrito", "Sesto Fiorentino · manípulo intermitente, el técnico va detrás de Livorno. Taranto · SSD, Giuseppe fue ayer. Avellino · cita el viernes", "Manípulo 40413 de Lecce · parado en fábrica esperando aceptación de presupuesto, con disputa de garantía abierta y Fabio metido por email. Cerrarlo esta semana en un sentido o en otro", "Consola 90943 de Aprilia · pendiente de recogida; el cliente exige entrega y recogida simultáneas. Coordinar con Ernesto", "CALIDAD · Los umbilicales de manípulo son un defecto recurrente, no incidencias sueltas: el de Martina Franca iba por la tercera reparación y ya existe una conexión rediseñada que estamos regalando. Cinco centros en diez días. Esto sube al report de Nacho como coste de garantía", "REGLA NUEVA · Todo ticket que entre por el grupo de WhatsApp de Epil Point se abre en Jira el mismo día y se le responde con el LEAS. Si no, ni medimos su siniestralidad real ni podemos defender una factura"]}, "nadie": {"t": "🚩 SIN TÉCNICO Y PARADAS, FUERA DE CADENA (28)", "p": "De los 43 tickets sin asignar y sin mover más de 15 días, 28 son de clientes que no pertenecen a Elha, Sin Vello, Epil Point, Smart Duck ni Unico Italia. No hay un interlocutor que pregunte por ellos, así que se pudren solos. Cada uno necesita un nombre hoy.", "l": ["LEAS-6048 · Centros Perfect Lase (D. Jaramillo) · inspección de salida · 111 d · está terminado, falta cerrarlo", "LEAS-5904 · Noemi Valero · 2 pedales con PRESUPUESTO YA ACEPTADO · 142 d · es venta parada, servirlo", "LEAS-7048 · Dermoscan · 4 umbilicales con PRESUPUESTO YA ACEPTADO · 49 d · es venta parada, servirlo", "LEAS-7104 y LEAS-7103 · NR Clinics · abiertos 43 d · se prometió por escrito hacerlo en septiembre: es ahora", "LEAS-7214 · Laser Clinic Hospitalet (Sara Bullón) · revisión anual pedida · 31 d · dar fecha", "LEAS-7118 · Corpoderm · en reparación · 21 d · se dijo finales de agosto, ya está vencido", "LEAS-7191 · Harmonie Salamanca · máquina de sustitución en préstamo · 29 d", "LEAS-7148 · Laser Factory Hospitalet · préstamo con el padre ya resuelto · 38 d", "LEAS-7326 · Deseja Lituania · queja de calidad sin investigar · 14 d", "LEAS-7310 · Laser Factory Mollet · queja de calidad sin investigar · 15 d", "El resto (18) son comprobaciones de cobro heredadas de tickets ya cerrados: van en el bloque de subtareas huérfanas"]}, "huerf": {"t": "🧟 SUBTAREAS CON EL TICKET PADRE YA CERRADO (21)", "p": "El principal se cerró y la subtarea se quedó abierta, sin técnico y sin nadie detrás. Ninguna avanza sola. Las cuatro de máquina de sustitución hay que validarlas con Ernesto contra los grupos de logística: si consta recogida o albarán, se cierra; si no consta movimiento, se llama al centro hoy.", "l": ["LEAS-5697 · Smart Duck Paris · consola C03143 · NO aparece en logística ni en ningún grupo de Telegram en todo el histórico · 105 d sin rastro · localizarla hoy", "LEAS-7054 · Centro Unico Boccea · en préstamo · padre LEAS-7052 resuelto · 38 d · VALIDAR CON ERNESTO", "LEAS-7148 · Laser Factory Hospitalet · en préstamo · padre LEAS-7146 resuelto · 38 d · VALIDAR CON ERNESTO", "LEAS-7285 · SinVello Cádiz · C00801 · SÍ consta expedición en ENVIOS SAT LEASEIR el viernes: se movió, actualizar Jira y cerrar la subtarea", "LEAS-756 · comprobación de cobro · padre LEAS-578 cancelado · 657 d · cerrar", "LEAS-4265 · comprobación de cobro · padre LEAS-4264 finalizado · 283 d · cerrar", "LEAS-5198 · comprobación de cobro · padre LEAS-5117 cancelado · 197 d · cerrar", "LEAS-5219 · Elha Sant Boi · padre LEAS-5209 cancelado · 196 d · cerrar", "LEAS-5211 · padre LEAS-4749 resuelto · 196 d · cerrar", "LEAS-5830 · padre LEAS-5249 finalizado · 147 d · cerrar", "LEAS-5908 · padre LEAS-5368 cancelado · 142 d · cerrar", "LEAS-6754 · padre LEAS-6753 resuelto · 77 d · cerrar", "LEAS-6835 · Elha Uruguai · padre LEAS-6826 resuelto · 69 d · cerrar", "LEAS-6890 · padre LEAS-6764 resuelto · 64 d · cerrar", "LEAS-7045 · padre LEAS-6805 resuelto · 49 d · cerrar", "LEAS-7102 · padre LEAS-6853 resuelto · 43 d · cerrar", "LEAS-7095 · queja · padre LEAS-7094 resuelto · 41 d · cerrar", "LEAS-7265 · padre LEAS-6903 resuelto · 24 d · cerrar", "LEAS-7289 · padre LEAS-7136 resuelto · 21 d · cerrar", "LEAS-7323 · padre LEAS-7091 resuelto · 15 d · cerrar", "LEAS-7310 · queja · padre LEAS-7309 finalizado · 15 d · cerrar", "Petición a quien lleve la automatización de Jira: que al cerrar un principal se cierren o se reasignen sus subtareas. Si no, esto vuelve a acumularse solo."]}, "ruta": {"t": "🔴 SALIÓ DEL CLIENTE Y NO LLEGA A TALLER (7)", "p": "El SLA de llegada a taller son 8 h. Estos llevan días en tránsito. Hay que llamar al transportista hoy.", "l": ["LEAS-7360 · SinVello Ibiza · 205 h fuera de plazo · sigue en Gestionado transporte", "LEAS-7374 · Cleanbody CC La Villa · 202 h fuera de plazo · y además sin tracking puesto", "LEAS-7386 · Belenus · 176 h fuera de plazo · sigue en Gestionado transporte", "LEAS-7416 · Centro Unico Palermo · 85 h fuera de plazo · y sin tracking puesto", "LEAS-7343 · Elha Sta Teresa · 78 h fuera de plazo · y sin tracking puesto", "LEAS-7358 · Centri Unico Olbia · 78 h fuera de plazo", "LEAS-7441 · Sinvello Goya · 56 h fuera de plazo"]}, "maps": {"t": "📍 FALTA EL LINK DE UBICACIÓN (6)", "p": "Solo cuenta en los principales: las subtareas heredan la ubicación del padre y no hace falta ponérsela. De 101 principales, seis no la tienen.", "l": ["LEAS-5904 · Noemi Valero · 142 d parado · con el presupuesto ya aceptado", "LEAS-6048 · Daniel Jaramillo (Grupo Dos) · 112 d · en inspección de salida · 2.898 €", "LEAS-6198 · Luxlaser Andre Bélgica · 21 d · pendiente de confirmar presupuesto", "LEAS-7455 · BiNatural consola 20046 · recién abierto, ponedla ya", "LEAS-7444 · Miguel Parra (ex-Brull) · recién abierto", "LEAS-7453 · JD Aesthetics · recién abierto"]}, "track": {"t": "🚚 FALTA EL TRACKING DEL TRANSPORTE (13 de 20 en ruta)", "p": "Dos de cada tres equipos que van de camino no tienen el enlace de seguimiento. Sin él no sabemos dónde está la máquina ni podemos contestar al cliente.", "l": ["LEAS-7230 · SinVello Albacete · 27 d en pendiente de recogida", "LEAS-7332 · Epil Point Specialisti · 14 d en pendiente de recogida", "LEAS-7334 · Beauty Centre d'Estètica 90159 · 14 d · ya en transporte y sin tracking", "LEAS-7430 · Elha Isaac Albéniz · 3 d", "LEAS-7443 · Elha Vilanova · 2 d", "LEAS-7445 · Elha Caracol · 2 d", "LEAS-7343 · Elha Sta Teresa · en transporte, y con el SLA reventado", "LEAS-7320 · Belleza Begoña Tapia · en transporte", "LEAS-7325 · Deseja (Lituania) · en transporte", "LEAS-7374 · Cleanbody CC La Villa · en transporte, 202 h fuera de plazo", "LEAS-7416 · Centro Unico Palermo · pendiente de recogida", "LEAS-7450 · No Filters (Dinámica Impulsos) · en transporte", "LEAS-7466 · Sinvello Teatinos · pendiente de recogida"]}, "parado": {"t": "⏸ INCIDENCIAS PARADAS MÁS DE 15 DÍAS (18)", "p": "Solo incidencias reales, sin contar subtareas. Las 34 subtareas paradas van aparte: 20 son de administración (cobros) y 11 de sustituciones.", "l": ["LEAS-5904 · Noemi Valero · 142 d · presupuesto aceptado y sin ejecutar", "LEAS-6048 · Daniel Jaramillo · 112 d · en inspección de salida · 2.898 €", "LEAS-4443 · Dermoscan · 101 d · la aseguradora rechazó y el cliente canjea: cerrar", "LEAS-4908 · Elha Pintor Felo Monzón · 100 d · abierto sin triar", "LEAS-6889 · L Medical G Point · 62 d · pendiente de confirmar presupuesto", "LEAS-6888 · L Medical G Point · 60 d · pendiente de confirmar presupuesto", "LEAS-7048 · Dermoscan · 49 d · presupuesto aceptado y sin ejecutar", "LEAS-7103 · NR Clinics · 43 d · prometido para septiembre, ya estamos", "LEAS-7104 · NR Clinics · 43 d · prometido para septiembre, ya estamos", "LEAS-6779 · Centri Unico Campania · 38 d · en reparación", "LEAS-7214 · Laser Clinic Hospitalet · 31 d · abierto sin triar", "LEAS-7230 · SinVello Albacete · 27 d · pendiente de recogida y sin tracking", "LEAS-7118 · Corpoderm · 22 d · dijimos finales de agosto para el cambio de Bahía", "LEAS-7190 · Harmonie Salamanca · 22 d · diodo por debajo del 80%, falta decisión", "LEAS-6198 · Luxlaser Andre Bélgica · 21 d · Andre tenía que hablar con Arturo", "LEAS-7188 · Centro Unico Boccea · 21 d · preparando presupuesto", "…y 2 más"]}, "repara": {"t": "🔧 REPARACIÓN FUERA DE PLAZO (39)", "p": "El compromiso con el cliente son 80 h. Los diez peores:", "l": ["LEAS-7364 · Epil Point Martina Franca · 204 h de más · con técnico externo", "LEAS-7349 · Cris Peña Beauty Center · 179 h de más · en reparación", "LEAS-7355 · Zurimed Parque Principado · 175 h de más · preparando presupuesto", "LEAS-7379 · Elha Badalona · 175 h de más · esperando inicio de reparación", "LEAS-7378 · SinVello Badalona · 160 h de más · con técnico externo", "LEAS-7358 · Centri Unico Olbia · 158 h de más · aún en transporte", "LEAS-7360 · SinVello Ibiza · 154 h de más · aún en transporte", "LEAS-7393 · SinVello Colmenar Viejo · 138 h de más · con técnico externo", "LEAS-7397 · Elha Ferraz · 137 h de más · con técnico externo", "LEAS-7406 · Epil Point Livorno · 133 h de más · con técnico externo", "…y 29 más"]}, "prestamo": {"t": "🔁 PRÉSTAMOS FUERA DE PLAZO (10)", "p": "Máquina nuestra en casa del cliente pasado el plazo. Cada una es flota que no factura y que no podemos prestar a otro.", "l": ["LEAS-7357 · SinVello Granada Constitución · 159 h de más · figura como devuelto: ¿está o no está?", "LEAS-7356 · Zurimed Parque Principado · 159 h de más", "LEAS-7359 · Centri Unico Olbia · 158 h de más", "LEAS-7372 · SinVello El Palo · 131 h de más", "LEAS-7375 · Cleanbody CC La Villa · 130 h de más", "LEAS-7366 · SinVello Ibiza · 128 h de más", "LEAS-7401 · sin centro informado · 87 h de más", "LEAS-7385 · sin centro informado · 87 h de más", "LEAS-7388 · CVL Distribuidor (Samuel) · 86 h de más", "LEAS-7408 · Elha Sta Teresa · 79 h de más", "Aparte: la consola C03143 lleva 169 d en Smart Duck Paris sin una sola nota. Localizarla hoy"]}, "cerrar": {"t": "✅ TERMINADOS Y SIN CERRAR (8)", "p": "El equipo ya está con el cliente. Solo falta cerrar el ticket. Esto es lo que nos infla los tiempos medios.", "l": ["LEAS-6048 · Daniel Jaramillo (Grupo Dos) · 112 d en inspección de salida · 2.898 €", "LEAS-7236 · Smart Duck Labege · devuelto al cliente hace 29 d", "LEAS-7255 · Elha St Feliu de Llobregat · devuelto hace 27 d", "LEAS-7124 · Elha Cristòfor Colom · devuelto hace 42 d", "LEAS-7224 · Elha Limoneros · devuelto hace 30 d", "LEAS-7315 · Belenus · devuelto hace 17 d", "LEAS-7321 · Dermoscan · devuelto hace 16 d", "LEAS-7324 · SinVello Jerez · devuelto hace 15 d"]}, "telegram": {"t": "💬 TELEGRAM DICE UNA COSA Y JIRA OTRA (2)", "p": "Lo que se habla por chat no llega al ticket. En cuanto el bot esté en los grupos esto sale solo cada mañana.", "l": ["LEAS-3827 · Clínica Cibeles CC Holea · Jira dice en fábrica desde hace 227 d, y en Telegram el cliente pidió el código mensual de la máquina el 7 de agosto: está funcionando. Cerrar y facturar los 7.333 €", "Mel Clinics Castellón · consola lista para recoger desde el 8 de agosto y sin incidencia abierta. Además el centro escribe también por WhatsApp"]}, "equipo": {"t": "👏 CÓMO VA EL EQUIPO", "p": "Lo que sí funciona, para que se diga también.", "l": ["Iván Lozano: 274 presupuestos y 111 equipos a salida desde mayo. El que más produce con diferencia", "Jonathan Zarauza: 219 presupuestos y 76 salidas. Mueve sus tickets todos los días", "Fran Fernández: 148 presupuestos y 68 salidas, y el que mejor documenta los informes", "El taller repara en 4 días de mediana. El cuello no está en el banco de trabajo", "Pendiente: 74 tickets sin responsable asignado. El que coge un trabajo, que se ponga en el ticket"]}};
 const ORDEN = ["ruta", "maps", "track", "nadie", "huerf", "epil", "parado", "repara", "prestamo", "cerrar", "telegram", "equipo"];
+
+const BMETA = {"ruta": ["a", "🔴", "7"], "maps": ["b", "📍", "6"], "track": ["b", "🚚", "13"], "nadie": ["a", "🚩", "28"], "huerf": ["a", "🧟", "21"], "epil": ["a", "🇮🇹", "144"], "parado": ["a", "⏸", "18"], "repara": ["b", "🔧", "39"], "prestamo": ["b", "🔁", "10"], "cerrar": ["c", "✅", "8"], "telegram": ["c", "💬", "2"], "equipo": ["d", "👏", "—"]};
+const BTIT  = {"ruta": "Salió del cliente y no llega a taller", "maps": "Falta el link de ubicación", "track": "Falta el tracking del transporte", "nadie": "Sin técnico y paradas, fuera de cadena", "huerf": "Subtareas con el ticket padre ya cerrado", "epil": "Epil Point · el cliente que no pasa por Jira", "parado": "Incidencias paradas más de 15 días", "repara": "Reparación fuera de plazo", "prestamo": "Préstamos fuera de plazo", "cerrar": "Terminados y sin cerrar", "telegram": "Telegram dice una cosa y Jira otra", "equipo": "Cómo va el equipo"};
+
+// ── Acumulación de avisos: 2ª vez campana, 3ª en rojo ──
+const HOYISO = new Date().toISOString().slice(0,10);
+function idLinea(k, t){
+  const m = t.match(/\bLEAS-\d{3,5}\b/);
+  return m ? m[0] : k + '|' + t.replace(/\s+/g,' ').slice(0,44);
+}
+function leerAvisos(){ try{ return JSON.parse(localStorage.getItem('sat.avisos')||'{}'); }catch(e){ return {}; } }
+function registrarAvisos(){
+  const d = leerAvisos(), vivos = {};
+  ORDEN.forEach(k => { if(k!=='equipo') MSG[k].l.forEach(t => { vivos[idLinea(k,t)] = 1; }); });
+  Object.keys(d).forEach(id => { if(!vivos[id]) delete d[id]; });
+  Object.keys(vivos).forEach(id => {
+    if(!d[id]) d[id] = {n:1, ini:HOYISO, ult:HOYISO};
+    else if(d[id].ult !== HOYISO){ d[id].n++; d[id].ult = HOYISO; }
+  });
+  try{ localStorage.setItem('sat.avisos', JSON.stringify(d)); }catch(e){}
+  return d;
+}
+let AV = registrarAvisos();
+function nivel(k, t){ const a = AV[idLinea(k,t)]; return (k==='equipo'||!a) ? 1 : a.n; }
+function marcaTxt(k, t){ const n = nivel(k,t); return n>=3 ? '[!! '+n+'º AVISO] ' : (n===2 ? '[! 2º aviso] ' : ''); }
+function marcaHtml(k, t){
+  const n = nivel(k,t);
+  if(n>=3) return '<span class="av av3" title="Dicho '+n+' veces y sigue igual">🔴 '+n+'º aviso</span> ';
+  if(n===2) return '<span class="av av2" title="Segunda vez que se dice">🔔 2º aviso</span> ';
+  return '';
+}
+function contarAvisos(){
+  let dos=0, tres=0;
+  ORDEN.forEach(k => { if(k!=='equipo') MSG[k].l.forEach(t => { const n=nivel(k,t); if(n>=3) tres++; else if(n===2) dos++; }); });
+  return {dos:dos, tres:tres};
+}
+function renderInterno(){
+  const c = document.getElementById('blks'); if(!c) return;
+  let h = '';
+  ORDEN.forEach(k => {
+    const b = MSG[k], m = BMETA[k];
+    const alto = b.l.filter(t => nivel(k,t)>=3).length;
+    h += '<div class="blk '+(alto ? 'a' : m[0])+'">'
+      +  '<header><span class="ico">'+m[1]+'</span><span class="t">'+BTIT[k]+'</span>'
+      +  (alto ? '<span class="avn">'+alto+' en rojo</span>' : '')
+      +  '<span class="cnt">'+m[2]+'</span>'
+      +  '<button class="cp" onclick="cpBlk(\''+k+'\',this)">Copiar</button></header>'
+      +  '<div class="por">'+b.p+'</div><ul>';
+    b.l.forEach(t => { h += '<li>'+marcaHtml(k,t)+t+'</li>'; });
+    h += '</ul></div>';
+  });
+  c.innerHTML = h;
+  linkTickets(c);
+  const r = document.getElementById('avresumen');
+  if(r){
+    const a = contarAvisos();
+    r.innerHTML = a.tres
+      ? '<b style="color:var(--crit)">'+a.tres+' puntos van por el tercer aviso o más</b> y '+a.dos+' por el segundo. Los rojos ya no son un recordatorio: son un problema de seguimiento y toca pedir fecha de cierre.'
+      : (a.dos ? '<b style="color:var(--warn)">'+a.dos+' puntos se repiten por segunda vez.</b> Si mañana siguen igual pasan a rojo.'
+               : 'Primera vez que se dicen todos estos puntos. A partir de mañana, lo que siga igual se marca solo.');
+  }
+}
+function reiniciarAvisos(){
+  if(!confirm('Esto borra el histórico de avisos y todo vuelve a contar desde hoy. ¿Seguro?')) return;
+  try{ localStorage.removeItem('sat.avisos'); }catch(e){}
+  AV = registrarAvisos(); renderInterno();
+}
+
 function txtBlk(id){
   const b = MSG[id];
-  return b.t + "\n" + b.p + "\n" + b.l.map(x => "• " + x).join("\n");
+  return b.t + "\n" + b.p + "\n" + b.l.map(x => "• " + marcaTxt(id,x) + x).join("\n");
 }
 function cabecera(){
   const f = new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
+  const a = contarAvisos();
+  let av = "";
+  if(a.tres) av = "\n[!!] " + a.tres + " puntos van ya por el tercer aviso o más. En esos no quiero explicación, quiero fecha de cierre.";
+  else if(a.dos) av = "\n[!] " + a.dos + " puntos se repiten por segunda vez. Si mañana siguen igual pasan a rojo.";
   return "REVISIÓN SAT · " + f.charAt(0).toUpperCase() + f.slice(1) +
-    "\nRepaso de las 101 incidencias principales abiertas. Cada LEAS lleva su enlace en Jira.\n";
+    "\nRepaso de las 101 incidencias principales abiertas. Cada LEAS lleva su enlace en Jira." +
+    "\n[!] = segunda vez que se dice · [!!] = tercera o más" + av + "\n";
 }
 function cpBlk(id, btn){
   navigator.clipboard.writeText(txtBlk(id)).then(()=>{
@@ -1571,6 +1401,7 @@ function linkTickets(root){
 // ── Números sueltos de tablas: pulsables por data-c ──
 document.addEventListener('DOMContentLoaded', ()=>{
   linkTickets(document.body);
+try{ renderInterno(); }catch(e){ console.error(e); }
   document.querySelectorAll('[data-c]').forEach(el=>{
     el.classList.add('calc');
     el.setAttribute('tabindex','0');
