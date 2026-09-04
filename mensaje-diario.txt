@@ -135,8 +135,8 @@ Máquina nuestra en casa del cliente pasado el plazo. Cada una es flota que no f
 • LEAS-7408 · Elha Sta Teresa · 79 h de más
 • Aparte: la consola C03143 lleva 169 d en Smart Duck Paris sin una sola nota. Localizarla hoy
 
-✅ TERMINADOS Y SIN CERRAR (8)
-El equipo ya está con el cliente. Solo falta cerrar el ticket. Esto es lo que nos infla los tiempos medios.
+✅ TERMINADOS Y SIN FINALIZAR (8)
+El equipo ya está con el cliente. Solo falta mover el ticket a Finalizada. Ojo: «Resuelto» no es el final del circuito — el ticket sigue vivo hasta que se pone en Finalizada, y mientras tanto ni cierra el ciclo ni deja de contar. Esto es lo que nos infla los tiempos medios.
 • LEAS-6048 · Daniel Jaramillo (Grupo Dos) · 112 d en inspección de salida · 2.898 €
 • LEAS-7236 · Smart Duck Labege · devuelto al cliente hace 29 d
 • LEAS-7255 · Elha St Feliu de Llobregat · devuelto hace 27 d
@@ -145,6 +145,7 @@ El equipo ya está con el cliente. Solo falta cerrar el ticket. Esto es lo que n
 • LEAS-7315 · Belenus · devuelto hace 17 d
 • LEAS-7321 · Dermoscan · devuelto hace 16 d
 • LEAS-7324 · SinVello Jerez · devuelto hace 15 d
+• RECORDATORIO · Dejar un ticket en «Resuelto» no lo termina: hay que pasarlo a «Finalizada». Hoy arrastramos 1.082 tickets parados en Resuelto, casi todos subtareas, con una mediana de 654 días ahí quietos
 
 🛠 TÉCNICO EXTERNO: SE GESTIONA Y AHÍ SE QUEDA (21)
 Hay 21 incidencias en «Enviado a técnico externo» y las 21 están sin técnico asignado en Jira. Se avisa al externo, se manda el material… y el ticket se queda ahí. Ni pasa a «Finalizado técnico externo» cuando el técnico acaba, ni queda escrito qué hizo. Resultado: no sabemos si está resuelto, no podemos facturar la intervención y el cliente pregunta antes que nosotros.
