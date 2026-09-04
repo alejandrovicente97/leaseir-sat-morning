@@ -1,5 +1,5 @@
 REVISIÓN SAT · Viernes, 4 de septiembre
-Repaso de las 101 incidencias principales abiertas. Cada LEAS lleva su enlace en Jira.
+Repaso de las 97 incidencias principales abiertas (hay 89 subtareas más que no cuentan como fallo). Cada LEAS lleva su enlace en Jira.
 [!] = segunda vez que se dice · [!!] = tercera o más
 Entre corchetes va quién lo tiene. Si nadie lo ha tocado, ahí está el nombre de quien lo coge por defecto: no es de otro, es suyo.
 Si a la segunda vez sigue igual, el que lo tiene se lo pide al siguiente POR ESTE GRUPO, para que quede constancia. Y a la tercera, ese segundo lo coge y, si tampoco llega, se lo pide al tercero por aquí. Pero ese día queda hecho.
@@ -230,28 +230,22 @@ Máquina nuestra en casa del cliente pasado el plazo. Cada una es flota que no f
   leaseir.atlassian.net/browse/LEAS-7408
 • Aparte: la consola C03143 lleva 169 d en Smart Duck Paris sin una sola nota. Localizarla hoy  [sin dueño · lo coge Ernesto]
 
-✅ TERMINADOS Y SIN FINALIZAR (8)
+✅ TERMINADOS Y SIN FINALIZAR (5)
 El equipo ya está con el cliente. Solo falta mover el ticket a Finalizada. Ojo: «Resuelto» no es el final del circuito — el ticket sigue vivo hasta que se pone en Finalizada, y mientras tanto ni cierra el ciclo ni deja de contar. Esto es lo que nos infla los tiempos medios.
-• LEAS-6048 · Daniel Jaramillo (Grupo Dos) · 112 d en inspección de salida · 2.898 €  [último: Jesús, 27/04]
-  leaseir.atlassian.net/browse/LEAS-6048
-• LEAS-7236 · Smart Duck Labege · devuelto al cliente hace 29 d  [sin dueño · lo coge Isaac]
-  leaseir.atlassian.net/browse/LEAS-7236
-• LEAS-7255 · Elha St Feliu de Llobregat · devuelto hace 27 d  [sin dueño · lo coge Isaac]
-  leaseir.atlassian.net/browse/LEAS-7255
-• LEAS-7124 · Elha Cristòfor Colom · devuelto hace 42 d  [sin dueño · lo coge Isaac]
-  leaseir.atlassian.net/browse/LEAS-7124
-• LEAS-7224 · Elha Limoneros · devuelto hace 30 d  [sin dueño · lo coge Isaac]
-  leaseir.atlassian.net/browse/LEAS-7224
-• LEAS-7315 · Belenus · devuelto hace 17 d  [último: Isaac, 17/08]
+• LEAS-7315 · Belenus · devuelto a cliente, solo falta finalizarlo  [último: Isaac, 17/08]
   leaseir.atlassian.net/browse/LEAS-7315
-• LEAS-7321 · Dermoscan · devuelto hace 16 d  [último: Jesús, 19/08]
+• LEAS-7321 · Dermoscan · devuelto a cliente, solo falta finalizarlo  [último: Jesús, 19/08]
   leaseir.atlassian.net/browse/LEAS-7321
-• LEAS-7324 · SinVello Jerez · devuelto hace 15 d  [último: Jesús, 19/08]
+• LEAS-7324 · SinVello Jerez · devuelto a cliente, solo falta finalizarlo  [último: Jesús, 19/08]
   leaseir.atlassian.net/browse/LEAS-7324
+• LEAS-6048 · Centros Perfect Lase · 111 d en inspección de salida · 2.898 € · está hecho desde hace meses  [último: Jesús, 27/04]
+  leaseir.atlassian.net/browse/LEAS-6048
+• LEAS-7436 · Radiante Estética Avanzada · en inspección de salida  [sin dueño · lo coge Isaac]
+  leaseir.atlassian.net/browse/LEAS-7436
 • RECORDATORIO · Dejar un ticket en «Resuelto» no lo termina: hay que pasarlo a «Finalizada». Hoy arrastramos 1.082 tickets parados en Resuelto, casi todos subtareas, con una mediana de 654 días ahí quietos  [sin dueño · lo coge Isaac]
 
-🛠 TÉCNICO EXTERNO: SE GESTIONA Y AHÍ SE QUEDA (21)
-Hay 21 incidencias en «Enviado a técnico externo» y las 21 están sin técnico asignado en Jira. Se avisa al externo, se manda el material… y el ticket se queda ahí. Ni pasa a «Finalizado técnico externo» cuando el técnico acaba, ni queda escrito qué hizo. Resultado: no sabemos si está resuelto, no podemos facturar la intervención y el cliente pregunta antes que nosotros.
+🛠 TÉCNICO EXTERNO: SE GESTIONA Y AHÍ SE QUEDA (20)
+Hay 20 incidencias en «Enviado a técnico externo» y las 20 están sin técnico asignado en Jira. Se avisa al externo, se manda el material… y el ticket se queda ahí. Ni pasa a «Finalizado técnico externo» cuando el técnico acaba, ni queda escrito qué hizo. Resultado: no sabemos si está resuelto, no podemos facturar la intervención y el cliente pregunta antes que nosotros.
 • LEAS-7213 · Epil Point Pavia · 32 d en técnico externo y 14 SIN UNA SOLA NOTA. La última dice que se le recordó a Sincronis. ¿Fueron o no fueron?  [último: Gonzalo, 04/09]
   leaseir.atlassian.net/browse/LEAS-7213
 • LEAS-7364 · Epil Point Martina Franca · 10 d y una sola nota, del día que se abrió. Por WhatsApp sabemos que el técnico fue: en Jira no consta  [último: Jesús, 25/08]
