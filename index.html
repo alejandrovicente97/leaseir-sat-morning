@@ -279,6 +279,11 @@ a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
 .tcard .tr a{color:var(--accent);text-decoration:none;font-family:var(--mono);font-size:11.5px}
 .tcard .tr a:hover{text-decoration:underline}
 .tcard .tnone{color:var(--muted-2)}
+.tcard.ojo{border-color:var(--crit-line);box-shadow:inset 4px 0 0 var(--crit)}
+.tcard .toj{display:block;margin-top:9px;padding:8px 11px;background:var(--crit-bg);
+  border-radius:8px;font-size:11.5px;color:var(--ink-soft);line-height:1.45}
+.tcard .toj b{color:var(--crit)}
+.tcard .toj em{font-style:normal;color:var(--muted);display:block;margin-top:3px;font-size:11px}
 .tcard .tw{display:block;margin-top:10px;padding-top:9px;border-top:1px solid var(--divider-soft)}
 .tcard .twh{display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--muted);
   text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin-bottom:6px}
@@ -1892,7 +1897,13 @@ function renderTal(){
     : '<span class="tnone">ninguno</span>';
   c.innerHTML = gente.map(n => {
     const t = TAL[n], tot = t.pre.length + t.sal.length;
-    return '<div class="tcard"><span class="tn">'+n+'</span>'
+    // Estados en los que la pelota la tiene el técnico. «Pendiente confirmación presupuesto»
+    // y «Presupuesto preparado pendiente de enviar» NO cuentan: ahí espera el cliente o comercial.
+    const SUYOS = ['En reparación','En cola taller','En preparación presupuesto','Esperando inicio reparación'];
+    const suyosParados = (t.ab||[]).filter(x => x.d >= 15 && SUYOS.indexOf(x.e) !== -1);
+    const tocados = (t.ab||[]).filter(x => x.d === 0).length;
+    const ojo = tot === 0 && suyosParados.length > 0;
+    return '<div class="tcard'+(ojo?' ojo':'')+'"><span class="tn">'+n+'</span>'
       + '<span class="tv">'+tot+'</span>'
       + '<span class="tu">'+t.pre.length+' presupuesto'+(t.pre.length===1?'':'s')+' · '
         + t.sal.length+' equipo'+(t.sal.length===1?'':'s')+' a salida</span>'
@@ -1911,6 +1922,13 @@ function renderTal(){
                 + '<span class="wd">'+dias(x.d)+'</span></span>').join('')
             + '</span></span>';
         })()
+      + (ojo ? '<span class="toj"><b>Míralo.</b> Hoy no ha cerrado ningún presupuesto ni sacado ningún equipo'
+          + (tocados ? ', aunque sí ha tocado '+tocados+' ticket'+(tocados===1?'':'s') : '')
+          + ', y tiene <b>'+suyosParados.length+' equipo'+(suyosParados.length===1?'':'s')+'</b> suyo'
+          + (suyosParados.length===1?'':'s')+' parado'+(suyosParados.length===1?'':'s')+' más de 15 días: '
+          + suyosParados.map(x => x.k+' ('+x.d+' d)').join(', ') + '.'
+          + '<em>No es una acusación: una reparación difícil son días de banco y un solo movimiento al final. '
+          + 'Y no he podido leer Sesame, así que no sé si hoy estaba. Pregúntale antes de concluir nada.</em></span>' : '')
       + '</div>';
   }).join('');
   const p = document.getElementById('talpie');
