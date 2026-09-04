@@ -267,6 +267,18 @@ a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
 .actmsg.mal{color:var(--crit)}
 .actmsg.ok{color:var(--good)}
 .actg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:11px;margin:0 0 16px}
+.ares{display:block;margin-top:7px;font-size:12px;font-weight:600;color:var(--good)}
+.ares.none{color:var(--muted-2);font-weight:500}
+.tcard{background:var(--surface);border:1px solid var(--divider);border-radius:11px;padding:13px 15px}
+.tcard .tn{display:block;font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:8px}
+.tcard .tv{display:block;font-size:27px;font-weight:600;line-height:1.05;color:var(--ink)}
+.tcard .tu{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+.tcard .tr{display:block;margin-top:9px;padding-top:8px;border-top:1px solid var(--divider-soft);
+  font-size:12px;color:var(--ink-soft);line-height:1.7}
+.tcard .tr b{font-weight:600;color:var(--muted)}
+.tcard .tr a{color:var(--accent);text-decoration:none;font-family:var(--mono);font-size:11.5px}
+.tcard .tr a:hover{text-decoration:underline}
+.tcard .tnone{color:var(--muted-2)}
 .acard{background:var(--surface);border:0;border-top:3px solid var(--divider);border-radius:var(--r);
   box-shadow:var(--shadow);padding:14px 16px 15px;text-align:left;font:inherit;color:inherit;cursor:pointer;
   display:flex;flex-direction:column;gap:3px}
@@ -966,6 +978,12 @@ dialog.wide{max-width:860px}
     </div>
     <div id="actg" class="actg"></div>
     <div class="pending" id="actpie"></div>
+  </section>
+
+  <section class="sec">
+    <h2>Taller <span class="hint">— aquí lo que cuenta no son comentarios: son presupuestos preparados y equipos que salen</span></h2>
+    <div id="talg" class="actg"></div>
+    <div class="pending" id="talpie"></div>
   </section>
 </div>
 
@@ -1802,17 +1820,30 @@ try{ initDB(); }catch(e){ console.error(e); }
 // Los que entran por la herramienta llegan firmados «<Nombre> (vía panel, HH:MM):» aunque
 // el autor en Jira sea la cuenta de Alejandro (es el token del worker): se atribuyen al que firma.
 const ACT = {"Gonzalo": {"n": 26, "tk": 18, "panel": 8, "ult": "18:16", "ev": [{"h": "09:51", "k": "LEAS-7406", "t": "Va light Solutions el sabado", "v": "jira", "e": "Enviado a técnico externo"}, {"h": "09:53", "k": "LEAS-7427", "t": "Avisado innet el 31 de agosto, esperando parte", "v": "jira", "e": "Enviado a técnico externo"}, {"h": "09:54", "k": "LEAS-7448", "t": "Esperando parte", "v": "jira", "e": "Finalizado técnico externo"}, {"h": "10:03", "k": "LEAS-7213", "t": "Este problema lo resuelve EP que lo han dicho ellos a la espera de su técnico", "v": "jira", "e": "Enviado a técnico externo"}, {"h": "10:07", "k": "LEAS-7343", "t": "Numero de recogida por enora: 1036143", "v": "jira", "e": "Gestionado transporte"}, {"h": "10:46", "k": "LEAS-7437", "t": "Se hizo videollamada para asegurarnos de que estaba seca la consola, se avisa a técnico", "v": "jira", "e": "Esperando respuesta cliente a presupuesto"}, {"h": "12:30", "k": "LEAS-7479", "t": "Encienden el equipo por la mañana a las 9:30 y tarda en dejar trabajar 30- 45 min Tienen el equipo separado de la pared, la cabina tiene 12 metros cuadrados , bastante grande la ultima vez a la hora y pico de usarlo se le para por temperatura, después le tarda mucho en bajar la temperatura . La temperatura real de la c", "v": "jira", "e": "Abierto"}, {"h": "12:30", "k": "LEAS-7479", "t": "Nos comenta que desde enero tiene estos problemas", "v": "jira", "e": "Abierto"}, {"h": "12:34", "k": "LEAS-7479", "t": "[imagen]", "v": "jira", "e": "Abierto"}, {"h": "14:01", "k": "LEAS-7479", "t": "Se le ha pasado el protocolo para que la puntera se enfrie bien después antes de empezar la sesión", "v": "jira", "e": "Abierto"}, {"h": "14:07", "k": "LEAS-7484", "t": "El equipo vino en abril a la espera por si se pide la recogida junto a otro manipulo", "v": "jira", "e": "Pendiente recogida"}, {"h": "14:07", "k": "LEAS-7484", "t": "Se pide la recogida", "v": "jira", "e": "Pendiente recogida"}, {"h": "14:09", "k": "LEAS-7484", "t": "No se factura la recogida", "v": "jira", "e": "Pendiente recogida"}, {"h": "15:39", "k": "LEAS-7465", "t": "Se envia caja para que la recojan", "v": "jira", "e": "Pendiente recogida"}, {"h": "17:12", "k": "LEAS-7272", "t": "La reparación no ha sido exitosa, se recoje el equipo", "v": "jira", "e": "Finalizado técnico externo"}, {"h": "17:17", "k": "LEAS-7364", "t": "Solucionado, se ha pedido el parte de trabajo, estamos esperando por el", "v": "jira", "e": "Finalizado técnico externo"}, {"h": "17:45", "k": "LEAS-7213", "t": "Epil Point comenta que lo va a resolver su técnico el umbilical que tienen roto, se le pregunta de nuevo para actualizar sobre el asunto", "v": "panel", "e": "Enviado a técnico externo"}, {"h": "17:46", "k": "LEAS-7272", "t": "Se ha reclamado el parte de trabajo a GEE", "v": "jira", "e": "Finalizado técnico externo"}, {"h": "18:01", "k": "LEAS-5904", "t": "Se enviaron y está cerrado", "v": "jira", "e": ""}, {"h": "18:01", "k": "LEAS-5904", "t": "Ha pagado y se ha enviado", "v": "panel", "e": ""}, {"h": "18:03", "k": "LEAS-7442", "t": "Se ha realizado hoy la intervención, esperando parte", "v": "panel", "e": ""}, {"h": "18:05", "k": "LEAS-6891", "t": "Se envia el material para realizar la actualización y se avisa a GEE", "v": "panel", "e": ""}, {"h": "18:09", "k": "LEAS-7401", "t": "La consola existe y salió el 27 de agosto, están las fotos subidas al grupo de fotos de equipo como prueba", "v": "panel", "e": ""}, {"h": "18:10", "k": "LEAS-5697", "t": "Corregido", "v": "panel", "e": ""}, {"h": "18:11", "k": "LEAS-7140", "t": "Está corregida la serie a H03258", "v": "panel", "e": ""}, {"h": "18:16", "k": "LEAS-7366", "t": "La consola prestada existe y está en fotos de equipos en el grupo de telegram como prueba", "v": "panel", "e": ""}]}, "Chus": {"n": 18, "tk": 13, "panel": 5, "ult": "18:14", "ev": [{"h": "13:09", "k": "LEAS-7480", "t": "Se prepara el presupuesto solicitado y se involucra a Óliver en la respuesta a la petición de precio de pistola Dual, dado que es el comercial asignado al distribuidor", "v": "jira", "e": "Resuelto"}, {"h": "13:09", "k": "LEAS-7480", "t": "[imagen]‌", "v": "jira", "e": "Resuelto"}, {"h": "13:10", "k": "LEAS-7480", "t": "Se comparte el presupuesto solicitado y quedamos a la espera de la respuesta", "v": "jira", "e": "Resuelto"}, {"h": "13:17", "k": "LEAS-7214", "t": "Solicita máquina de sustitución, pero cierra el sábado, 8 de agosto, durante dos semanas y tiene caja, por lo que podríamos aprovechar ese periodo y ahorrarnos la sustitución. No ha habido más conversaciones con la cliente desde la apertura del caso", "v": "jira", "e": "Abierto"}, {"h": "13:41", "k": "LEAS-7479", "t": "Ver comentarios del caso del 12 de agosto, https://leaseir.atlassian.net/browse/LEAS-7279", "v": "jira", "e": "Abierto"}, {"h": "14:02", "k": "LEAS-7482", "t": "En garantía tras reparación ([https://leaseir.atlassian.net/browse/LEAS-7094](https://leaseir.atlassian.net/browse/LEAS-7094)) Nos informa de que, ya cuando llevó Pichi la máquina, presentaba este comportamiento... Se le solicitan fotos de la pantalla con la información adicional, para intentar averiguar el origen; tam", "v": "jira", "e": "Pendiente agendar llamada"}, {"h": "14:22", "k": "LEAS-7486", "t": "No hay audios ni vídeos del comportamiento descrito; podría deberse a que el umbilical esté en mal estado cerca del harting o a que uno de los cables de la placa de carga esté fallando... Habrá que decidir si lo mejor es recoger todo a taller o avisar a Mora para que le eche un vistazo y obtener así más información (o ", "v": "jira", "e": "Pendiente definir servicio externo"}, {"h": "14:44", "k": "LEAS-7472", "t": "El problema está en la pistola, dado que tiene el mismo comportamiento al conectarla a otras consolas. Aprovechando que la consola 90245 se recoge a taller (LEAS-7343), se aprovecha el mismo porte, con número 1036143, de PBX", "v": "jira", "e": "Gestionado transporte"}, {"h": "15:32", "k": "LEAS-7488", "t": "Han compartido un vídeo, pero no se aprecia bien la respuesta de los diferentes elementos, por lo que hemos solicitado otro o comunicación directa, así que estamos a la espera de más información para confirmar que el problema está en la pantalla", "v": "jira", "e": "Pendiente definir servicio externo"}, {"h": "15:53", "k": "LEAS-7397", "t": "Los técnicos informan que fue reparado ayer, 03/09/2026, por la tarde, sin novedades ni nada fuera de lo esperado. Aún no han compartido la hoja de trabajo", "v": "jira", "e": "Finalizado técnico externo"}, {"h": "15:57", "k": "LEAS-7455", "t": "Prueba del panel: esta nota se ha escrito desde la web del equipo, no desde Jira.", "v": "panel", "e": "Pendiente agendar llamada"}, {"h": "16:02", "k": "LEAS-7455", "t": "Prueba final: escrito desde la web del equipo por Chus.", "v": "panel", "e": "Pendiente agendar llamada"}, {"h": "16:11", "k": "LEAS-7488", "t": "La pantalla está algo descalibrada y no recupera funcionalidad a pesar de haber limpiado las ranuras. Se enviará repuesto y se avisa a Mora para que la repare", "v": "jira", "e": "Pendiente definir servicio externo"}, {"h": "16:24", "k": "LEAS-7268", "t": "[imagen] Vídeo de Dileima, tras recibir hoy el soporte. Los técnicos informan de que siempre salta contes", "v": "jira", "e": "Enviado a técnico externo"}, {"h": "16:52", "k": "LEAS-7466", "t": "Ojo, la reparación sería en garantía (siempre que no haya habido mal uso) dado que la puntera fue reemplazada el 26 de marzo de este año, según https://leaseir.atlassian.net/browse/LEAS-5550. Creada subtarea para el envío de pistola de sustitución, en cuanto haya disponibilidad", "v": "jira", "e": "Pendiente recogida"}, {"h": "17:11", "k": "LEAS-7488", "t": "Todo gestionado, a la espera de que responda el técnico verificando el día de la cita y a que llegue el material enviado", "v": "panel", "e": "Pendiente definir servicio externo"}, {"h": "17:16", "k": "LEAS-7478", "t": "Revisado. El caso ya había cambiado de estado a las 17:00, con todos los datos rellenados adecuadamente. El caso raiz, del que beben LEAS-7478 y LEAS-7477, es el LEAS-7456, y así aparece en el árbol de dependencias de las subtareas creadas", "v": "panel", "e": "Queja creada"}, {"h": "18:14", "k": "LEAS-7456", "t": "Todo correcto. No es posible recoger la máquina a reparar hasta que el cliente reciba la máquina de sustitución", "v": "panel", "e": ""}]}, "Alejandro": {"n": 3, "tk": 3, "panel": 2, "ult": "15:17", "ev": [{"h": "13:52", "k": "LEAS-756", "t": "Subtarea de cobro huérfana: el ticket padre LEAS-578 (Petición de servicio técnico) está en estado Cancelado. Esta subtarea sigue en \"Solicitado\" desde el 15/11/2024, sin asignar y sin movimiento en 657 días. No hay trabajo pendiente real aquí. Procede cerrarla. Detectado en la revisión diaria del SAT.", "v": "jira", "e": "Resuelto"}, {"h": "15:13", "k": "LEAS-7466", "t": "el cliente rectifica por WhatsApp a las 10:28 — al final SÍ hace falta pieza de mano de sustitución. La observación del ticket dice lo contrario.", "v": "panel", "e": "Pendiente recogida"}, {"h": "15:17", "k": "LEAS-7455", "t": "sustitución preparada para mandar — dicho por Isaac en el grupo de WhatsApp a las 13:35. Pendiente también la limpieza, el equipo lleva mucho tiempo sin pasar por taller.", "v": "panel", "e": "Pendiente agendar llamada"}]}, "Iván": {"n": 1, "tk": 1, "panel": 0, "ult": "09:02", "ev": [{"h": "09:02", "k": "LEAS-7335", "t": "Actualización ser soft. Ampliación de márgenes OV/UC \"cambio de resistencias R65 y R60\". Incorporación de casquillo en el umbilical. Cambio de puntera y zafiro.", "v": "jira", "e": "Devuelto a cliente"}]}, "Isaac": {"n": 7, "tk": 7, "panel": 0, "ult": "13:41", "ev": [{"h": "10:29", "k": "LEAS-7474", "t": "se manda sustitución desde Gijon, fue Pichi hoy pero la técnica de la clínica dijo que ya no hacia falta, cliente molesto.", "v": "jira", "e": "Pendiente recogida"}, {"h": "11:43", "k": "LEAS-7476", "t": "se ha salido el tornillo de nylon, se avisa a innet, no nos cobran la incidencia ya que esta en garantía de reparación por parte de ellos, no hace falta mandar mail nos ha comentado Daniel de innet.", "v": "jira", "e": "Enviado a técnico externo"}, {"h": "11:49", "k": "LEAS-7403", "t": "se habla en el Sat y vamos a cobrar 9000 euros en vez de 12 000 euros ya que el diodo tiene 2 millones de disparos.", "v": "jira", "e": "Pendiente confirmación presupuesto"}, {"h": "12:56", "k": "LEAS-7412", "t": "se trae a taller para revisar.", "v": "jira", "e": "Gestionado transporte"}, {"h": "13:14", "k": "LEAS-7457", "t": "[imagen]faltaba el leas en el presupuesto", "v": "jira", "e": "Cancelado"}, {"h": "13:33", "k": "LEAS-7330", "t": "pedida recogida por ctt el lunes 7/09", "v": "jira", "e": "Gestionada recogida"}, {"h": "13:41", "k": "LEAS-7372", "t": "se pide recogida por CTT.", "v": "jira", "e": "Gestionada recogida"}]}};
+// Tickets que cada uno ha llevado a un estado de cierre hoy (Resuelto, Cancelado,
+// Finalizado técnico externo). Se lee del historial de estados, no de los comentarios.
+const RES = {"Gonzalo": ["LEAS-7448", "LEAS-7364", "LEAS-7272", "LEAS-6048", "LEAS-5904"], "Chus": ["LEAS-7480", "LEAS-7397"], "Isaac": ["LEAS-7457", "LEAS-7324"], "Alejandro": ["LEAS-756"]};
+// Taller: presupuestos preparados y equipos a salida, por técnico.
+const TAL = {"Iván": {"pre": ["LEAS-7335", "LEAS-7312"], "sal": ["LEAS-7436", "LEAS-7335"]}, "Jonathan": {"pre": [], "sal": ["LEAS-7121"]}, "Fran": {"pre": [], "sal": []}};
+
 function renderAct(){
   const c = document.getElementById('actg'); if(!c) return;
-  const gente = Object.keys(ACT).sort((a,b) => ACT[b].n - ACT[a].n);
-  const max = gente.length ? ACT[gente[0]].n : 1;
+  const vacio = {n:0, tk:0, panel:0, ult:'—', ev:[]};
+  const gente = Object.keys(ACT)
+    .concat(Object.keys(RES).filter(n => (RES[n]||[]).length && !ACT[n]))
+    .sort((a,b) => ((ACT[b]||vacio).n + (RES[b]||[]).length) - ((ACT[a]||vacio).n + (RES[a]||[]).length));
+  const max = gente.reduce((m,n) => Math.max(m, (ACT[n]||vacio).n), 1);
   c.innerHTML = gente.map(n => {
-    const a = ACT[n];
+    const a = ACT[n] || vacio;
+    const rs = RES[n] || [];
     const tono = a.panel ? 'a' : (a.n >= 5 ? 'b' : 'c');
     return '<button class="acard '+tono+'" onclick="verAct(\''+n.replace(/'/g,"\\'")+'\')">'
       + '<span class="an">'+n+'<span>último '+a.ult+'</span></span>'
       + '<span class="av">'+a.n+'</span>'
       + '<span class="au">comentarios en '+a.tk+' ticket'+(a.tk===1?'':'s')+'</span>'
+      + '<span class="ares'+(rs.length?'':' none')+'">'
+        + (rs.length ? '✔ '+rs.length+' ticket'+(rs.length===1?'':'s')+' cerrado'+(rs.length===1?'':'s')+' hoy'
+                     : 'ningún ticket cerrado hoy')+'</span>'
       + (function(){
           const h = HRS[n];
           if(!h) return '<span class="arat none">sin fichaje en Sesame · sin ratio</span>';
@@ -1823,15 +1854,42 @@ function renderAct(){
       + '<span class="ap'+(a.panel?'':' no')+'">'+(a.panel ? a.panel+' desde la herramienta' : 'nada por la herramienta')+'</span>'
       + '</button>';
   }).join('');
-  const tot = gente.reduce((s,n)=>s+ACT[n].n,0);
-  const pan = gente.reduce((s,n)=>s+ACT[n].panel,0);
+  const tot = gente.reduce((s,n)=>s+(ACT[n]||vacio).n,0);
+  const pan = gente.reduce((s,n)=>s+(ACT[n]||vacio).panel,0);
+  const cer = gente.reduce((s,n)=>s+(RES[n]||[]).length,0);
   const pie = document.getElementById('actpie');
   if(pie) pie.innerHTML = '<b>'+tot+' comentarios</b> hoy en Jira, '+pan+' de ellos escritos desde la herramienta '
-    + 'sin abrir Jira. El resto se escribió a mano en el ticket.'
+    + 'sin abrir Jira, y <b>'+cer+' tickets cerrados</b> (Resuelto, Cancelado o Finalizado técnico externo). '
+    + 'Lo cerrado se lee del historial de estados, así que cuenta quien mueve el ticket, escriba o no.'
     + '<br><br><b>El ratio mide lo que se documenta, no lo que se trabaja.</b> Premia a quien escribe mucho: '
     + 'quien va punto por punto del panel sube, y quien resuelve por teléfono y no lo anota baja. '
-    + 'Léelo como tendencia de semanas, nunca como nota del día. '
-    + 'Y para el taller el numerador no son comentarios: son presupuestos y equipos a salida — eso va aparte.';
+    + 'Mira las dos cifras juntas: muchos comentarios y ningún cierre es un día de seguimiento; '
+    + 'pocos comentarios y varios cierres, un día de rematar. Léelo como tendencia de semanas, nunca como nota del día.';
+}
+
+function renderTal(){
+  const c = document.getElementById('talg'); if(!c) return;
+  const gente = Object.keys(TAL).sort((a,b) =>
+    (TAL[b].pre.length + TAL[b].sal.length) - (TAL[a].pre.length + TAL[a].sal.length));
+  const enl = ks => ks.length
+    ? ks.map(k => '<a href="https://leaseir.atlassian.net/browse/'+k+'" target="_blank" rel="noopener">'+k+'</a>').join(' ')
+    : '<span class="tnone">ninguno</span>';
+  c.innerHTML = gente.map(n => {
+    const t = TAL[n], tot = t.pre.length + t.sal.length;
+    return '<div class="tcard"><span class="tn">'+n+'</span>'
+      + '<span class="tv">'+tot+'</span>'
+      + '<span class="tu">'+t.pre.length+' presupuesto'+(t.pre.length===1?'':'s')+' · '
+        + t.sal.length+' equipo'+(t.sal.length===1?'':'s')+' a salida</span>'
+      + '<span class="tr"><b>Presupuestos:</b> '+enl(t.pre)+'<br><b>Salidas:</b> '+enl(t.sal)+'</span>'
+      + '</div>';
+  }).join('');
+  const p = document.getElementById('talpie');
+  const tt = gente.reduce((s,n) => s + TAL[n].pre.length + TAL[n].sal.length, 0);
+  if(p) p.innerHTML = '<b>'+tt+' movimientos de taller hoy.</b> Presupuesto = el ticket ha pasado hoy a '
+    + '«En preparación presupuesto», «Presupuesto preparado pendiente de enviar» o «Pendiente confirmación presupuesto». '
+    + 'Salida = ha pasado a «Inspección de salida» o «Devuelto a cliente». Un mismo ticket puede contar en las dos '
+    + 'columnas si el técnico lo presupuestó y lo sacó el mismo día. '
+    + 'Aquí no hay ratio por hora: los técnicos no fichan lo mismo que el SAT y una reparación larga vale por diez cortas.';
 }
 // ── Actualizar en vivo: relee Jira por el conector de Atlassian del propio Alejandro.
 // Solo funciona con el panel abierto dentro de Claude; en la web de GitHub no hay conector
@@ -1842,6 +1900,41 @@ const HRS = {"Gonzalo":{h:9.07,txt:"9h 04min"},
              "Chus":{h:6.10,txt:"6h 06min",abierto:true},
              "Isaac":{h:6.52,txt:"6h 31min"}};
 const ACT_CLOUD = "8aafbde8-66aa-4307-94f8-da22cdce723f";
+// accountId de cada uno en Jira: hace falta para preguntar "¿qué ha cerrado hoy?",
+// porque eso sale del historial de estados y ahí no vale el nombre.
+const ACT_IDS = {"Chus":"712020:3b8aa9c9-4bff-42b0-af2b-c263f50179d8",
+                 "Gonzalo":"712020:f0ef86b9-17de-4e75-a24c-ff139cffa977",
+                 "Isaac":"712020:4729552e-e656-47d9-87c1-75da30a1aebc",
+                 "Alejandro":"712020:7b89ee48-14ce-4b1e-9f3e-218be8897551"};
+const TAL_IDS = {"Iván":"712020:2900b76e-b330-4a62-91ee-ef23e6d9f241",
+                 "Jonathan":"712020:10cb3119-a465-415b-9820-9cd8565b3909",
+                 "Fran":"712020:73a43072-a47d-4dd0-ac2a-2faa59f337e1"};
+const ST_FIN = '"Resuelto", "Cancelado", "Finalizado técnico externo"';
+const ST_SAL = '"Inspección de salida", "Devuelto a cliente"';
+const ST_PRE = '"En preparación presupuesto", "Presupuesto preparado pendiente de enviar", "Pendiente confirmación presupuesto"';
+
+async function actJql(q){
+  const r = await MCP.callTool("Atlassian Rovo", "searchJiraIssuesUsingJql",
+    {cloudId: ACT_CLOUD, jql: q, fields: ["key"], maxResults: 50}, {cache: {refresh: true}});
+  const n = r && r.payload && r.payload.issues && r.payload.issues.nodes;
+  return (n || []).map(x => x.key);
+}
+function actQ(sts, id){
+  return 'project = LEAS AND status CHANGED TO (' + sts + ') BY "' + id + '" DURING (startOfDay(), now())';
+}
+// Una consulta por persona: Jira no sabe decir "quién cerró qué" de una sola vez.
+async function refrescarEstados(){
+  const sat = Object.keys(ACT_IDS), tal = Object.keys(TAL_IDS);
+  const r1 = await Promise.all(sat.map(n => actJql(actQ(ST_FIN, ACT_IDS[n])).catch(() => null)));
+  sat.forEach((n,i) => { if(r1[i]) RES[n] = r1[i]; });
+  const r2 = await Promise.all(tal.map(n => Promise.all([
+    actJql(actQ(ST_PRE, TAL_IDS[n])).catch(() => null),
+    actJql(actQ(ST_SAL, TAL_IDS[n])).catch(() => null)])));
+  tal.forEach((n,i) => {
+    if(r2[i][0]) TAL[n].pre = r2[i][0];
+    if(r2[i][1]) TAL[n].sal = r2[i][1];
+  });
+}
 const ACT_NOM = {"Jesús Fernández Porrúa":"Chus","Isaac Sanchez":"Isaac","Gonzalo":"Gonzalo",
   "Alejandro Vicente":"Alejandro","Iván Lozano Fernández":"Iván","Francisco Fernandez Porrúa":"Fran",
   "Jonathan Zarauza Álvarez":"Jonathan","Borja Canteli Trabanco":"Borja","Cristina Ramirez":"Cristina"};
@@ -1909,15 +2002,14 @@ async function refrescarAct(){
     if(!nodes){ actMsg("Jira ha contestado pero sin datos que leer. Vuelve a intentarlo.", "mal");
                 if(b) b.disabled = false; return; }
     const nuevo = actParsear(nodes);
-    if(!Object.keys(nuevo).length){ actMsg("Hoy todavía no hay comentarios en Jira.", "ok"); }
-    else {
-      Object.keys(ACT).forEach(q => { delete ACT[q]; });
-      Object.keys(nuevo).forEach(q => { ACT[q] = nuevo[q]; });
-      renderAct();
-      const ahora = new Date();
-      actMsg("Al día a las " + String(ahora.getHours()).padStart(2,"0") + ":" +
-             String(ahora.getMinutes()).padStart(2,"0") + ".", "ok");
-    }
+    Object.keys(ACT).forEach(q => { delete ACT[q]; });
+    Object.keys(nuevo).forEach(q => { ACT[q] = nuevo[q]; });
+    actMsg("Leyendo quién ha cerrado qué…");
+    await refrescarEstados();
+    renderAct(); renderTal();
+    const ahora = new Date();
+    actMsg("Al día a las " + String(ahora.getHours()).padStart(2,"0") + ":" +
+           String(ahora.getMinutes()).padStart(2,"0") + ".", "ok");
   }catch(e){
     const c = (e && e.code) || "";
     if(c === "needs_reauth")            actMsg("Hay que volver a conectar Atlassian en claude.ai → Ajustes → Conectores.", "mal");
@@ -1937,9 +2029,15 @@ async function refrescarAct(){
 function verAct(n){
   const a = ACT[n]; if(!a) return;
   const b = document.getElementById('act-body'); if(!b) return;
+  const rs = RES[n] || [];
   b.innerHTML = '<div class="k">Actividad de hoy</div><h3>'+n+'</h3>'
     + '<div class="bigu" style="margin-bottom:14px">'+a.n+' comentarios · '+a.tk+' tickets · '
     + (a.panel ? a.panel+' desde la herramienta' : 'ninguno desde la herramienta')+' · último a las '+a.ult+'</div>'
+    + (rs.length ? '<div style="margin:0 0 14px;padding:10px 13px;background:var(--good-bg);border-radius:9px;'
+        + 'font-size:12.5px;color:var(--ink-soft);line-height:1.7"><b>Cerrados hoy ('+rs.length+'):</b> '
+        + rs.map(k => '<a href="https://leaseir.atlassian.net/browse/'+k+'" target="_blank" rel="noopener" '
+            + 'style="font-family:var(--mono);font-size:11.5px;color:var(--accent);text-decoration:none">'+k+'</a>').join(' ')
+        + '</div>' : '')
     + a.ev.map(e =>
         '<div class="actl"><span class="ah">'+e.h+'</span>'
         + '<a href="https://leaseir.atlassian.net/browse/'+e.k+'" target="_blank" rel="noopener">'+e.k+'</a>'
@@ -1947,7 +2045,7 @@ function verAct(n){
     + '<button class="x" onclick="this.closest(\'dialog\').close()">Cerrar</button>';
   dlg('dlg-act');
 }
-try{ renderAct(); }catch(e){ console.error(e); }
+try{ renderAct(); renderTal(); }catch(e){ console.error(e); }
 
 function dlg(id){const d=document.getElementById(id); if(d&&d.showModal) d.showModal();}
 document.querySelectorAll('dialog').forEach(d=>{
