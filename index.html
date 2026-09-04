@@ -325,6 +325,27 @@ dialog.wide{max-width:860px}
 
 .blk .accion{margin:2px 18px 15px; border:1px solid var(--divider); border-radius:9px; background:var(--surface-2)}
 .blk .accion .txt{font-weight:600}
+
+.ops{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.op{display:flex;flex-direction:column;gap:5px;align-items:stretch;text-align:left;font:inherit;cursor:pointer;
+    padding:13px 15px 12px;border:1px solid var(--divider);border-left:4px solid var(--divider);border-radius:11px;background:var(--surface);box-shadow:var(--shadow)}
+.op:hover{border-color:var(--muted);transform:translateY(-1px)}
+.op.c{border-left-color:var(--crit)} .op.w{border-left-color:var(--warn)} .op.g{border-left-color:var(--good)}
+.op .oh{display:flex;align-items:center;gap:7px}
+.op .oi{font-size:15px;line-height:1}
+.op .ot{font-size:12px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.op .ov{font-size:33px;font-weight:600;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums;margin:1px 0 0}
+.op .ov small{font-size:12px;font-weight:500;color:var(--muted);margin-left:5px;letter-spacing:0}
+.op.c .ov{color:var(--crit)} .op.w .ov{color:var(--warn)}
+.op .os{font-size:11px;color:var(--muted);line-height:1.35;min-height:29px}
+.op .ob{display:block;height:4px;border-radius:3px;background:var(--divider);overflow:hidden}
+.op .ob i{display:block;height:100%;border-radius:3px;background:var(--muted-2)}
+.op.c .ob i{background:var(--crit)} .op.w .ob i{background:var(--warn)}
+.opl{margin:0 0 16px;padding-left:19px;display:flex;flex-direction:column;gap:6px}
+.opl li{font-size:13.5px;line-height:1.5;color:var(--ink-soft)}
+.opa{font-size:13.5px;line-height:1.55;color:var(--ink);font-weight:500;margin:0}
+@media(max-width:980px){.ops{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.ops{grid-template-columns:1fr}}
 </style>
 
 <div class="page">
@@ -364,148 +385,65 @@ dialog.wide{max-width:860px}
     <div class="aside" onclick="calc('sube')"><b>14 → 23</b>mayo → hoy</div>
   </section>
 
-  <section class="nums">
-    <button class="nm c" onclick="calc('perdido')">
-      <span class="v">168<small style="font-size:15px;color:var(--muted);margin-left:2px">d</small></span>
-      <span class="t">Equipo sin volver</span><span class="s">C03143 · Smart Duck Paris</span>
-    </button>
-    <button class="nm c" onclick="tabGo('p-cobros')">
-      <span class="v">110<small style="font-size:15px;color:var(--muted);margin-left:2px">k€</small></span>
-      <span class="t">Vencido sin cobrar</span><span class="s">73 facturas</span>
-    </button>
-    <button class="nm c" onclick="calc('huerfanas')">
-      <span class="v">28</span>
-      <span class="t">Sin técnico y paradas</span><span class="s">fuera de cadena · de 43</span>
-    </button>
-    <button class="nm w" onclick="calc('sindueno')">
-      <span class="v">74</span>
-      <span class="t">Sin dueño</span><span class="s">de 112 abiertas</span>
-    </button>
-    <button class="nm w" onclick="calc('flota')">
-      <span class="v">34</span>
-      <span class="t">Flota fuera</span><span class="s">3 por encima de 60 d</span>
-    </button>
-  </section>
+
 
 
   <section class="sec">
-    <h2>La operación de hoy <span class="hint">— por tipo de problema, no por cliente. Cada bloque dice qué es, cuánto pesa y qué hay que hacer.</span></h2>
-      <div class="blk a">
-        <header>
-          <span class="ico">🔴</span>
-          <span class="t">Riesgo patrimonial: máquinas nuestras que nadie está reclamando</span>
-          <span class="cnt">6</span>
-          <button class="cp" onclick="calc('perdido')">Ver el cálculo</button>
-        </header>
-        <div class="por">Equipo de Leaseir en casa de un cliente con el ticket que lo justificaba ya cerrado. Ni cuenta como incidencia ni cuenta como flota disponible: no está en ningún sitio.</div>
-        <ul>
-          <li>LEAS-5697 · Smart Duck Paris · prestamos la C03143/H03143 el 26 de marzo y sigue allí 162 días después · la averiada del cliente es la C00996 · sin un comentario en Jira y sin rastro en el grupo de logística</li>
-          <li>LEAS-7054 · Centro Unico Boccea · 46 d · padre resuelto</li>
-          <li>LEAS-7148 · Laser Factory Hospitalet · 38 d · padre resuelto</li>
-          <li>LEAS-7285 · SinVello Cádiz · sí consta expedición en logística: se movió y lo que falla es Jira</li>
-          <li>Cuatro sustituciones salieron sin apuntar qué máquina se prestó, y otras cuatro sin fecha de envío: sin eso no hay forma de reclamarlas</li>
-        </ul>
-        <label class="act accion"><input type="checkbox"><span class="txt">Llamar hoy a Smart Duck Paris y dejarlo escrito en el ticket. Si no aparece, abrir la baja de inmovilizado esta semana</span><span class="tag c">159 d</span></label>
-      </div>
-      <div class="blk a">
-        <header>
-          <span class="ico">💶</span>
-          <span class="t">Dinero parado esperando a que alguien pregunte</span>
-          <span class="cnt">4</span>
-          <button class="cp" onclick="calc('cobro_vencido')">Ver el cálculo</button>
-        </header>
-        <div class="por">No son averías. Son decisiones que nadie ha ido a pedir, y cada día que pasan ahí no facturan.</div>
-        <ul>
-          <li>LEAS-4443 · Dermoscan · 258 días fuera de plazo, parado en «pendiente de confirmar presupuesto»</li>
-          <li>LEAS-6198 · Luxlaser · 112 días en el mismo estado</li>
-          <li>LEAS-6888 y LEAS-6889 · L Medical G Point · 62 días cada uno, pendientes de confirmar presupuesto</li>
-          <li>LEAS-5904 (142 d) y LEAS-7048 (49 d) · presupuesto YA ACEPTADO y sin servir: es venta, no incidencia</li>
-          <li>Epil Point · 22.045 € que no se cobran porque faltan los partes de trabajo prometidos el 2 de septiembre</li>
-        </ul>
-        <label class="act accion"><input type="checkbox"><span class="txt">Una llamada por cada uno hoy: o confirman presupuesto o se cierra el ticket. Y los partes de Epil Point salen hoy</span><span class="tag c">6 casos</span></label>
-      </div>
-      <div class="blk a">
-        <header>
-          <span class="ico">⏱</span>
-          <span class="t">SLA propios reventados</span>
-          <span class="cnt">114</span>
-          <button class="cp" onclick="calc('transporte')">Ver el cálculo</button>
-        </header>
-        <div class="por">No son umbrales inventados: son los plazos que la empresa se ha comprometido a cumplir y que Jira mide sola.</div>
-        <ul>
-          <li>14 equipos salieron del cliente y no han llegado a taller · el peor, LEAS-6768, lleva 66 días en «Gestionado transporte»</li>
-          <li>70 incidencias han pasado el plazo de reparación de 80 h</li>
-          <li>30 de las 34 sustituciones activas están fuera del plazo de préstamo</li>
-          <li>Lo importante: los cuatro peores de reparación NO están en el banco de trabajo. Están esperando una decisión. No es capacidad de taller</li>
-        </ul>
-        <label class="act accion"><input type="checkbox"><span class="txt">Separar en la reunión lo que es taller de lo que es decisión pendiente. Solo lo segundo depende de nosotros hoy</span><span class="tag c">66 d el peor</span></label>
-      </div>
-      <div class="blk a">
-        <header>
-          <span class="ico">👤</span>
-          <span class="t">El 85% de las incidencias no tiene dueño</span>
-          <span class="cnt">158</span>
-          <button class="cp" onclick="calc('carga')">Ver el cálculo</button>
-        </header>
-        <div class="por">De 186 abiertas, 158 sin asignar y 108 sin un solo comentario. El taller sí tiene nombre; la gestión no. Todo el seguimiento lo sostienen dos personas.</div>
-        <ul>
-          <li>43 llevan más de 15 días paradas y sin técnico · 28 son de clientes fuera de las cadenas grandes, que es donde se pudren</li>
-          <li>Isaac carga 35 seguimientos y Chus 20, los dos al día. Gonzalo lleva 7 y va al corriente: es quien tiene margen</li>
-          <li>Borja lleva 6 pero con mediana de 23 días sin tocarlos</li>
-          <li>Cristina está de vacaciones hasta el 21 y se ha sacado de las cadenas</li>
-        </ul>
-        <label class="act accion"><input type="checkbox"><span class="txt">Mandar el report interno con la cadena de tres nombres. Eso convierte 158 huérfanas en 158 con dueño</span><span class="tag c">de 186</span></label>
-      </div>
-      <div class="blk b">
-        <header>
-          <span class="ico">📦</span>
-          <span class="t">El transporte es el cuello de botella y no lo medimos</span>
-          <span class="cnt">6</span>
-          <button class="cp" onclick="calc('transporte')">Ver el cálculo</button>
-        </header>
-        <div class="por">Reparar son 4 días de mediana; el ticket completo son 11. El 65% del tiempo está fuera del taller y la mayor parte se va en transporte.</div>
-        <ul>
-          <li>Seis transportistas a la vez y ningún indicador por proveedor</li>
-          <li>13 de los 20 equipos en ruta no tienen el enlace de seguimiento puesto</li>
-          <li>Palibex no tiene seguimiento consultable para el cliente; en Canarias la expedición cambia de transportista y se pierde el número</li>
-          <li>Casos reales: Tomares figuraba recogido y seguía en la clínica; Cáceres estuvo cinco días sin poder trabajar entre recogidas fallidas</li>
-        </ul>
-        <label class="act accion"><input type="checkbox"><span class="txt">Empezar a medir días de recogida, días de entrega y recogidas fallidas por transportista. Con tres meses se negocia o se cambia</span><span class="tag c">65% del ciclo</span></label>
-      </div>
-      <div class="blk b">
-        <header>
-          <span class="ico">🇮🇹</span>
-          <span class="t">Epil Point no pasa por Jira</span>
-          <span class="cnt">144</span>
-          <button class="cp" onclick="calc('epilpoint')">Ver el cálculo</button>
-        </header>
-        <div class="por">Su bot ha abierto 144 tickets desde 64 centros en tres meses y medio. En Jira tienen 9 abiertas y en 6.436 mensajes hay 5 menciones de LEAS.</div>
-        <ul>
-          <li>El equipo responde en seis minutos de mediana: la atención no es el problema, el registro sí</li>
-          <li>Su siniestralidad real es de unos 4 incidentes por equipo y año, el triple de lo que dice Jira</li>
-          <li>Los umbilicales de manípulo son un defecto recurrente: cinco centros en diez días, uno iba por la tercera reparación</li>
-          <li>Livorno: ticket del 28 de agosto, intervención el sábado. El cuello es el técnico externo italiano, no Gijón</li>
-        </ul>
-        <label class="act accion"><input type="checkbox"><span class="txt">Regla: todo ticket que entre por su WhatsApp se abre en Jira el mismo día. Y los umbilicales suben al report de Nacho como coste de garantía</span><span class="tag c">vs 9 en Jira</span></label>
-      </div>
-      <div class="blk c">
-        <header>
-          <span class="ico">🧟</span>
-          <span class="t">Higiene de Jira: lo que se cierra deja residuo</span>
-          <span class="cnt">21</span>
-          <button class="cp" onclick="calc('subhuerfana')">Ver el cálculo</button>
-        </header>
-        <div class="por">Al cerrar un principal, sus subtareas se quedan abiertas y sin dueño para siempre. No es trabajo pendiente, es ruido que ensucia todos los indicadores.</div>
-        <ul>
-          <li>21 subtareas vivas con el ticket padre ya cerrado · la más antigua, 657 días</li>
-          <li>1.082 tickets parados en «Resuelto» sin pasar a «Finalizada», con mediana de 654 días ahí quietos</li>
-          <li>5 principales terminados y sin finalizar: se cierran hoy sin tocar una máquina</li>
-          <li>9 de los 30 préstamos fuera de plazo ya figuran como devueltos</li>
-        </ul>
-        <label class="act accion"><input type="checkbox"><span class="txt">Pedir a quien lleve la automatización de Jira que al cerrar un principal se cierren o reasignen sus subtareas</span><span class="tag c">657 d</span></label>
-      </div>
+    <h2>La operación de hoy <span class="hint">— pulsa cualquier tarjeta para el detalle y la acción</span></h2>
+    <div class="ops">
+      <button class="op c" onclick="ops('riesgo')">
+        <span class="oh"><span class="oi">📍</span><span class="ot">Equipo sin volver</span></span>
+        <span class="ov">162<small>días</small></span>
+        <span class="os">C03143 · Smart Duck Paris</span>
+        <span class="ob"><i style="width:100%"></i></span>
+      </button>
+      <button class="op c" onclick="ops('dinero')">
+        <span class="oh"><span class="oi">💶</span><span class="ot">Presupuesto sin respuesta</span></span>
+        <span class="ov">258<small>días</small></span>
+        <span class="os">LEAS-4443 · Dermoscan</span>
+        <span class="ob"><i style="width:95%"></i></span>
+      </button>
+      <button class="op c" onclick="ops('sinduenyo')">
+        <span class="oh"><span class="oi">👤</span><span class="ot">Sin dueño</span></span>
+        <span class="ov">85<small>%</small></span>
+        <span class="os">158 de 186 abiertas</span>
+        <span class="ob"><i style="width:85%"></i></span>
+      </button>
+      <button class="op c" onclick="ops('sla')">
+        <span class="oh"><span class="oi">⏱</span><span class="ot">Plazos propios</span></span>
+        <span class="ov">114<small>SLA rotos</small></span>
+        <span class="os">14 sin llegar · 70 reparación · 30 préstamo</span>
+        <span class="ob"><i style="width:80%"></i></span>
+      </button>
+      <button class="op w" onclick="ops('transporte')">
+        <span class="oh"><span class="oi">📦</span><span class="ot">Fuera del taller</span></span>
+        <span class="ov">65<small>% del ciclo</small></span>
+        <span class="os">6 transportistas, 0 indicadores</span>
+        <span class="ob"><i style="width:70%"></i></span>
+      </button>
+      <button class="op w" onclick="ops('epil')">
+        <span class="oh"><span class="oi">🇮🇹</span><span class="ot">Epil Point fuera de Jira</span></span>
+        <span class="ov">144<small>vs 9</small></span>
+        <span class="os">WhatsApp contra Jira</span>
+        <span class="ob"><i style="width:75%"></i></span>
+      </button>
+      <button class="op w" onclick="ops('higiene')">
+        <span class="oh"><span class="oi">🧟</span><span class="ot">Residuo en Jira</span></span>
+        <span class="ov">1.082<small>en Resuelto</small></span>
+        <span class="os">mediana de 654 días</span>
+        <span class="ob"><i style="width:55%"></i></span>
+      </button>
+      <button class="op w" onclick="ops('equipo')">
+        <span class="oh"><span class="oi">🗓</span><span class="ot">Equipo hoy</span></span>
+        <span class="ov">5<small>de 10</small></span>
+        <span class="os">2 de vacaciones · Chus a las 12</span>
+        <span class="ob"><i style="width:40%"></i></span>
+      </button>
+    </div>
   </section>
-
+  <details class="acc" style="margin-top:14px">
+    <summary><b>Detalle en tablas</b><span class="badge w">4</span><span class="sm">estancadas por cadena, equipo, sustituciones fuera de rango y Telegram vs Jira</span></summary>
+    <div style="margin-top:10px">
   <section class="sec">
     <h2>Estancadas por cliente <span class="hint">— por cliente real del ticket, no por quién lo abrió</span></h2>
     <div class="card" style="padding:6px 20px 10px">
@@ -668,6 +606,9 @@ dialog.wide{max-width:860px}
 </div>
 
 
+
+    </div>
+  </details>
 
 <!-- ═════════ REPORT INTERNO ═════════ -->
 <div id="p-interno" class="pane">
@@ -1365,6 +1306,7 @@ dialog.wide{max-width:860px}
 </div></dialog>
 
 
+<dialog id="dlg-ops"><div class="dlg" id="ops-body"></div></dialog>
 <dialog id="dlg-ficha" class="wide"><div class="dlg" id="ficha-body"></div></dialog>
 <dialog id="dlg-calc"><div class="dlg" id="calc-body"></div></dialog>
 
@@ -1532,6 +1474,24 @@ function cpAll(btn){
   }).catch(()=>{btn.textContent='No se pudo copiar';});
 }
 
+
+const OPS = {"riesgo": {"id": "riesgo", "ico": "📍", "n": "162", "u": "días", "tit": "Equipo sin volver", "sub": "C03143 · Smart Duck Paris", "sev": 100, "cl": "c", "l": ["Prestamos la C03143/H03143 el 26 de marzo. Sigue allí 162 días después.", "Ni un comentario en Jira en todo ese tiempo.", "Sin rastro en el grupo de logística ni en ningún chat de Telegram del histórico.", "Otras 5 sustituciones siguen en préstamo con el ticket padre ya cerrado.", "4 salieron sin apuntar qué máquina se prestó y 4 sin fecha de envío."], "acc": "Llamar hoy a Smart Duck Paris, confirmar que está y dejarlo escrito en el ticket. Si no aparece, abrir la baja de inmovilizado esta semana.", "calc": "perdido"}, "dinero": {"id": "dinero", "ico": "💶", "n": "258", "u": "días", "tit": "Presupuesto sin respuesta", "sub": "LEAS-4443 · Dermoscan", "sev": 95, "cl": "c", "l": ["LEAS-4443 Dermoscan: 258 días parado en «pendiente de confirmar presupuesto».", "LEAS-6198 Luxlaser: 112 días. LEAS-6888 y 6889 L Medical: 62 días cada uno.", "LEAS-5904 y LEAS-7048: presupuesto YA ACEPTADO y sin servir. Eso es venta, no incidencia.", "Epil Point: 22.045 € sin cobrar porque faltan los partes de trabajo."], "acc": "Una llamada por cada uno hoy: o confirman presupuesto o se cierra el ticket. Los partes de Epil Point salen hoy.", "calc": "cobro_vencido"}, "sinduenyo": {"id": "sinduenyo", "ico": "👤", "n": "85", "u": "%", "tit": "Sin dueño", "sub": "158 de 186 abiertas", "sev": 85, "cl": "c", "l": ["158 de 186 sin asignar y 108 sin un solo comentario.", "43 llevan más de 15 días paradas y sin técnico; 28 son de clientes fuera de las cadenas grandes.", "El taller sí tiene nombre. La gestión la sostienen dos personas: Isaac con 35 y Chus con 20.", "Gonzalo lleva 7 y va al día: es quien tiene margen."], "acc": "Mandar el report interno con la cadena de tres nombres. Convierte 158 huérfanas en 158 con dueño.", "calc": "carga"}, "sla": {"id": "sla", "ico": "⏱", "n": "114", "u": "SLA rotos", "tit": "Plazos propios", "sub": "14 sin llegar · 70 reparación · 30 préstamo", "sev": 80, "cl": "c", "l": ["14 equipos salieron del cliente y no llegan a taller. El peor lleva 66 días en tránsito.", "70 incidencias han pasado el plazo de reparación de 80 h.", "30 de las 35 sustituciones están fuera del plazo de préstamo.", "Los cuatro peores de reparación NO están en el taller: esperan una decisión."], "acc": "Separar en la reunión lo que es taller de lo que es decisión pendiente. Solo lo segundo depende de nosotros hoy.", "calc": "transporte"}, "transporte": {"id": "transporte", "ico": "📦", "n": "65", "u": "% del ciclo", "tit": "Fuera del taller", "sub": "6 transportistas, 0 indicadores", "sev": 70, "cl": "w", "l": ["Reparar son 4 días de mediana. El ticket completo, 11.", "13 de los 20 equipos en ruta no tienen tracking puesto.", "Palibex no tiene seguimiento para el cliente; en Canarias se pierde el número al cambiar de transportista.", "Tomares figuraba recogido y seguía en la clínica. Cáceres, cinco días sin trabajar entre recogidas fallidas."], "acc": "Empezar a medir días de recogida, días de entrega y recogidas fallidas por transportista. Con tres meses se negocia o se cambia.", "calc": "transporte"}, "epil": {"id": "epil", "ico": "🇮🇹", "n": "144", "u": "vs 9", "tit": "Epil Point fuera de Jira", "sub": "WhatsApp contra Jira", "sev": 75, "cl": "w", "l": ["144 tickets abiertos por su bot desde 64 centros en 3,5 meses. En Jira, 9.", "5 menciones de LEAS en 6.436 mensajes.", "Respondemos en 6 minutos de mediana: la atención no es el problema, el registro sí.", "Los umbilicales de manípulo son defecto recurrente: 5 centros en 10 días."], "acc": "Regla: todo ticket que entre por su WhatsApp se abre en Jira el mismo día. Los umbilicales suben al report de Nacho como coste de garantía.", "calc": "epilpoint"}, "higiene": {"id": "higiene", "ico": "🧟", "n": "1.082", "u": "en Resuelto", "tit": "Residuo en Jira", "sub": "mediana de 654 días", "sev": 55, "cl": "w", "l": ["1.082 tickets parados en «Resuelto» sin pasar a «Finalizada».", "21 subtareas vivas con el ticket padre ya cerrado. La más antigua, 657 días.", "5 principales terminados y sin finalizar: se cierran hoy sin tocar una máquina.", "9 de los 30 préstamos fuera de plazo ya figuran como devueltos."], "acc": "Pedir a quien lleve la automatización que al cerrar un principal se cierren o reasignen sus subtareas.", "calc": "subhuerfana"}, "equipo": {"id": "equipo", "ico": "🗓", "n": "5", "u": "de 10", "tit": "Equipo hoy", "sub": "2 de vacaciones · Chus a las 12", "sev": 40, "cl": "w", "l": ["Fichando: Isaac 07:38, Jonathan 07:24, Bea 07:35, Ernesto 09:34, Gonzalo 09:35.", "Chus entra a las 12:00.", "Cristina de vacaciones hasta el 21. Borja hasta el miércoles.", "Iván y Daniel sin fichar y sin ausencia registrada."], "acc": "Con Cristina y Borja fuera, escalar solo tiene tres nombres: Isaac, Chus y Gonzalo. Meter a Ernesto en el grupo daría un cuarto.", "calc": "equipohoy"}};
+function ops(id){
+  const o = OPS[id]; if(!o) return;
+  let h = '<div class="k">Operación de hoy</div>';
+  h += '<div class="big">'+o.n+'</div><div class="bigu">'+o.u+'</div>';
+  h += '<h3 style="margin:0 0 3px">'+o.ico+'  '+o.tit+'</h3>';
+  h += '<div style="font-size:12.5px;color:var(--muted);margin:0 0 16px">'+o.sub+'</div>';
+  h += '<div class="sec2">Qué hay detrás</div><ul class="opl">';
+  o.l.forEach(x => { h += '<li>'+x+'</li>'; });
+  h += '</ul>';
+  h += '<div class="sec2">Qué hago hoy</div><p class="opa">'+o.acc+'</p>';
+  h += '<div class="fbtns"><button class="fb" onclick="document.getElementById(\'dlg-ops\').close();calc(\''+o.calc+'\')">Ver el cálculo</button>';
+  h += '<button class="fb" onclick="document.getElementById(\'dlg-ops\').close();tabGo(\'p-interno\')">Ir al mensaje del equipo</button></div>';
+  h += '<button class="x" onclick="this.closest(\'dialog\').close()">Cerrar</button>';
+  const b = document.getElementById('ops-body'); b.innerHTML = h; linkTickets(b);
+  document.getElementById('dlg-ops').showModal();
+}
 
 // ── Ficha ampliada por cadena ──
 function ficha(k){
