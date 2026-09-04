@@ -279,6 +279,11 @@ a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
 .acard .ab{display:block;height:4px;border-radius:3px;background:var(--divider);overflow:hidden;margin-top:7px}
 .acard .ab i{display:block;height:100%;border-radius:3px;background:var(--muted-2)}
 .acard.a .ab i{background:var(--good)} .acard.b .ab i{background:var(--cool)}
+.acard .arat{margin-top:7px;padding-top:7px;border-top:1px solid var(--divider-soft);
+  font-size:12px;color:var(--muted)}
+.acard .arat b{font-family:var(--mono);font-size:15px;color:var(--ink);font-weight:600}
+.acard .arat em{display:block;font-style:normal;font-size:10.5px;color:var(--muted-2);margin-top:1px}
+.acard .arat.none{color:var(--muted-2);font-size:11px}
 .acard .ap{margin-top:6px;font-size:10.5px;font-weight:600;padding:1px 8px;border-radius:20px;align-self:flex-start;
   background:var(--good-bg);color:var(--good)}
 .acard .ap.no{background:var(--surface-3);color:var(--muted)}
@@ -1808,6 +1813,12 @@ function renderAct(){
       + '<span class="an">'+n+'<span>último '+a.ult+'</span></span>'
       + '<span class="av">'+a.n+'</span>'
       + '<span class="au">comentarios en '+a.tk+' ticket'+(a.tk===1?'':'s')+'</span>'
+      + (function(){
+          const h = HRS[n];
+          if(!h) return '<span class="arat none">sin fichaje en Sesame · sin ratio</span>';
+          const r = (a.n / h.h).toFixed(1).replace('.', ',');
+          return '<span class="arat"><b>'+r+'</b> por hora <em>'+h.txt+' fichadas'+(h.abierto?' y sumando':'')+'</em></span>';
+        })()
       + '<span class="ab"><i style="width:'+Math.round(a.n*100/max)+'%"></i></span>'
       + '<span class="ap'+(a.panel?'':' no')+'">'+(a.panel ? a.panel+' desde la herramienta' : 'nada por la herramienta')+'</span>'
       + '</button>';
@@ -1816,12 +1827,20 @@ function renderAct(){
   const pan = gente.reduce((s,n)=>s+ACT[n].panel,0);
   const pie = document.getElementById('actpie');
   if(pie) pie.innerHTML = '<b>'+tot+' comentarios</b> hoy en Jira, '+pan+' de ellos escritos desde la herramienta '
-    + 'sin abrir Jira. El resto se escribió a mano en el ticket. Solo cuenta lo que queda por escrito: '
-    + 'lo que se habla y no se anota aquí no aparece.';
+    + 'sin abrir Jira. El resto se escribió a mano en el ticket.'
+    + '<br><br><b>El ratio mide lo que se documenta, no lo que se trabaja.</b> Premia a quien escribe mucho: '
+    + 'quien va punto por punto del panel sube, y quien resuelve por teléfono y no lo anota baja. '
+    + 'Léelo como tendencia de semanas, nunca como nota del día. '
+    + 'Y para el taller el numerador no son comentarios: son presupuestos y equipos a salida — eso va aparte.';
 }
 // ── Actualizar en vivo: relee Jira por el conector de Atlassian del propio Alejandro.
 // Solo funciona con el panel abierto dentro de Claude; en la web de GitHub no hay conector
 // y el botón ni se enseña.
+// Horas fichadas hoy, leídas de Sesame (Who's in). `abierto` = seguía dentro al generar esto.
+// Se mantienen aunque se pulse Actualizar: el botón solo refresca lo de Jira.
+const HRS = {"Gonzalo":{h:9.07,txt:"9h 04min"},
+             "Chus":{h:6.10,txt:"6h 06min",abierto:true},
+             "Isaac":{h:6.52,txt:"6h 31min"}};
 const ACT_CLOUD = "8aafbde8-66aa-4307-94f8-da22cdce723f";
 const ACT_NOM = {"Jesús Fernández Porrúa":"Chus","Isaac Sanchez":"Isaac","Gonzalo":"Gonzalo",
   "Alejandro Vicente":"Alejandro","Iván Lozano Fernández":"Iván","Francisco Fernandez Porrúa":"Fran",
