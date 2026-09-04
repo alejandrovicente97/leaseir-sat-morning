@@ -403,7 +403,7 @@ dialog.wide{max-width:860px}
 .hechos b{color:var(--good);font-size:14px}
 .hechos button{background:none;border:0;font:inherit;color:var(--good);cursor:pointer;
         text-decoration:underline;text-underline-offset:2px;padding:0;font-weight:600}
-#blks li.ok{opacity:.55}
+#blks li.ok{background:var(--good-bg)!important; box-shadow:inset 4px 0 0 var(--good)}
 #blks li.ok > .resp .ri{opacity:.7}
 .tg{margin:5px 0 0;padding:5px 9px;background:var(--surface-2);border-left:2px solid var(--muted-2);
      border-radius:0 7px 7px 0;font-size:11.5px;color:var(--muted);line-height:1.4}
@@ -742,6 +742,38 @@ async function anotar(k, t, inp){
     if(eco){ eco.hidden = false; eco.className="rr mal"; eco.textContent = "Sin conexión con Jira. Inténtalo otra vez."; }
   }
 }
+// Traspaso desde la web: escribe la nota interna Y cambia el responsable en Jira.
+async function pasarWeb(k, t, sel){
+  const para = sel.value; if(!para) return;
+  const leas = (t.match(/\bLEAS-\d{3,5}\b/) || [])[0];
+  const caja = sel.closest(".resp");
+  const inp  = caja ? caja.querySelector(".ri") : null;
+  const eco  = caja ? caja.querySelector(".rr") : null;
+  if(!YO){ sel.value=""; pintarYo(); return; }
+  if(!leas){ sel.value=""; if(eco){ eco.hidden=false; eco.className="rr mal";
+    eco.textContent = "Este punto no tiene un LEAS, así que no hay ticket que traspasar. Dilo por el grupo."; } return; }
+  const suyo = inp ? (inp.value || "").trim() : "";
+  const texto = "se lo paso a " + para + (suyo ? ". " + suyo : "");
+  sel.disabled = true; if(inp) inp.disabled = true;
+  if(eco){ eco.hidden=false; eco.className="rr"; eco.textContent = "Pasando " + leas + " a " + para + "…"; }
+  try{
+    const r = await fetch(JIRA_URL, { method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ leas, quien: YO, texto, clave: JIRA_CLAVE }) });
+    const j = await r.json().catch(()=>({}));
+    if(!r.ok || !j.ok){
+      sel.disabled = false; sel.value = ""; if(inp) inp.disabled = false;
+      if(eco){ eco.className="rr mal";
+        eco.textContent = "No se ha podido pasar (" + ((j && j.error) || r.status) + "). Vuelve a intentarlo."; }
+      return;
+    }
+    LOCAL[idPunto(k,t)] = { texto: suyo, para, quien: YO, cuando: new Date().toISOString(), leas };
+    guardaLocal(); renderInterno();
+  }catch(e){
+    sel.disabled = false; sel.value = ""; if(inp) inp.disabled = false;
+    if(eco){ eco.className="rr mal"; eco.textContent = "Sin conexión. No se ha pasado nada."; }
+  }
+}
+
 function deshacerLocal(k, t){
   delete LOCAL[idPunto(k,t)]; guardaLocal(); renderInterno();
 }
@@ -767,10 +799,16 @@ function respHtml(k, t){
   if(!DB && JIRA_URL){
     const leas = (t.match(/\bLEAS-\d{3,5}\b/) || [])[0];
     if(loc){
-      h += '<div class="rr ok"><b>'+(loc.quien||'')+'</b> · escrito en <b>'+(loc.leas||'')+'</b> · '+loc.texto
+      h += '<div class="rr ok"><b>'+(loc.quien||'')+'</b> · escrito en <b>'+(loc.leas||'')+'</b>'
+        +  (loc.para ? ' · <span class="paso">pasado a '+loc.para+'</span>' : '')
+        +  (loc.texto ? ' · '+loc.texto : '')
         +  ' <span class="rf">'+(loc.cuando||'').slice(11,16)+'</span>'
         +  ' <button class="und" title="Solo lo quita de esta pantalla. El comentario ya está en Jira y no se borra." onclick="deshacerLocal(\''+k+'\',this.closest(\'li\').dataset.t)">quitar de la lista</button></div>';
     } else if(YO && leas){
+      h += '<select class="selp" onchange="pasarWeb(\''+k+'\',this.closest(\'li\').dataset.t,this)">'
+        +  '<option value="">pasárselo a…</option>'
+        +  GRUPO.filter(n => n !== YO).map(n => '<option value="'+n+'">'+n+'</option>').join('')
+        +  '</select>';
       h += '<input class="ri" placeholder="qué has hecho · Enter y entra en '+leas+'" '
         +  'onkeydown="if(event.key===\'Enter\')anotar(\''+k+'\',this.closest(\'li\').dataset.t,this)">'
         +  '<div class="rr" hidden></div>';
@@ -884,7 +922,7 @@ function renderInterno(){
   ORDEN.forEach(k => {
     const b = MSG[k], m = BMETA[k];
     const todas = (b.l || []).filter(t => !FILTRO || titularEf(k,t) === FILTRO);
-    const lineas = (VERHECHOS ? todas : todas.filter(t => !tramitado(k,t))).slice()
+    const lineas = (VERHECHOS ? todas.filter(t => tramitado(k,t)) : todas.filter(t => !tramitado(k,t))).slice()
       .sort((a,b) => (pesoDe(b) - pesoDe(a)) || (nivel(k,b) - nivel(k,a)));
     hechos += todas.filter(t => tramitado(k,t)).length;
     if(!lineas.length) return;
@@ -903,8 +941,8 @@ function renderInterno(){
   });
   const cab = hechos
     ? '<div class="hechos'+(VERHECHOS?' ab':'')+'"><b>'+hechos+'</b> '+(hechos===1?'punto tramitado':'puntos tramitados')+' hoy'
-      + (VERHECHOS ? ' · se están mostrando' : ' · ya no aparecen abajo')
-      + ' <button onclick="verHechos()">'+(VERHECHOS?'ocultarlos':'verlos')+'</button></div>'
+      + (VERHECHOS ? ' · abajo solo salen estos' : ' · ya no aparecen abajo')
+      + ' <button onclick="verHechos()">'+(VERHECHOS?'volver a lo pendiente':'verlos')+'</button></div>'
     : '';
   c.innerHTML = cab + (h || '<div class="blk c"><header><span class="ico">🎉</span><span class="t">'
     + (FILTRO ? FILTRO+' no tiene nada pendiente' : 'Nada pendiente. Todo lo de hoy está tramitado')
