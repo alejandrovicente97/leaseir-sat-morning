@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-09-04T20:25+02:00",
+  "actualizado": "2026-09-05T10:20+02:00",
   "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
   "como_se_usa": [
     "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -220,6 +220,34 @@
       "quien": "Chus",
       "cuando": "2026-09-04",
       "revive_si": "Se vuelve a caer una tercera vez: entonces deja de ser un caso repetido y es una reparación que no funciona."
+    },
+    {
+      "id": "sustmhr033",
+      "que": "SUSTMHR033 no consta en el Inmovilizado",
+      "ambito": {
+        "leas": "LEAS-7388",
+        "serie": "SUSTMHR033",
+        "tipo": "serie-desconocida"
+      },
+      "porque": "Gonzalo lo explicó en LEAS-7388 el 04/09 a las 18:18 desde el panel: «La consola SUSTMHR033 existe y está en el telegram de fotos de equipo como prueba». Falta la ficha en Airtable, no la máquina. Se anota hoy porque el 04/09 se explicó y no llegó a escribirse aquí.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
+      "anotado": "2026-09-05",
+      "revive_si": "Nunca contra el equipo. Vive solo en el bloque de Airtable del panel de Alejandro."
+    },
+    {
+      "id": "sustquad025",
+      "que": "SUSTQUAD025 no consta en el Inmovilizado",
+      "ambito": {
+        "leas": "LEAS-7191",
+        "serie": "SUSTQUAD025",
+        "tipo": "serie-desconocida"
+      },
+      "porque": "Gonzalo lo explicó en LEAS-7191 el 04/09 a las 18:18 desde el panel: «La pieza de sustitución SUSTQUAD025 existe y está en el grupo de telegram de fotos de equipo como prueba». Falta la ficha en Airtable. Se anota hoy porque el 04/09 se explicó y no llegó a escribirse aquí.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
+      "anotado": "2026-09-05",
+      "revive_si": "Nunca contra el equipo. Vive solo en el bloque de Airtable del panel de Alejandro."
     }
   ],
   "enlaces": [
