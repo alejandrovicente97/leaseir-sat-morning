@@ -745,7 +745,7 @@ dialog.wide{max-width:860px}
 
 
   <div id="quiensoy" class="qbar"></div>
-  <div class="avbar"><span id="avresumen">Primera vez que se dicen todos estos puntos. A partir de mañana, lo que siga igual se marca solo.</span><button class="avreset" onclick="reiniciarAvisos()">Reiniciar contador</button></div>
+  <div class="avbar"><span id="avresumen">Primera vez que se dicen todos estos puntos. A partir de mañana, lo que siga igual se marca solo.</span></div>
   <div id="blks"></div>
 </div>
 
@@ -1518,31 +1518,54 @@ function cadena(k, t){
 const BMETA = {"wapp": ["a", "📱", "2"], "serie": ["a", "🏷", "4"], "ruta": ["a", "🔴", "11"], "maps": ["b", "📍", "4"], "track": ["b", "🚚", "14"], "nadie": ["a", "🚩", "5"], "huerf": ["a", "🧟", "48"], "epil": ["a", "🇮🇹", "4"], "parado": ["a", "⏸", "16"], "repara": ["b", "🔧", "71"], "prestamo": ["b", "🔁", "35"], "cerrar": ["c", "✅", "5"], "externo": ["a", "🛠", "15"], "transporte": ["b", "📦", "6"], "medias": ["a", "📝", "5"], "privado": ["a", "🔒", "—"], "telegram": ["a", "💬", "2"], "equipo": ["d", "👏", "—"]};
 const BTIT  = {"wapp": "WhatsApp dice una cosa y Jira otra", "serie": "La serie prestada no cuadra con el inventario", "ruta": "Salió del cliente y no llega a taller", "maps": "Falta el link de ubicación", "track": "Falta el tracking del transporte", "nadie": "Sin técnico y paradas, fuera de cadena", "huerf": "Subtareas con el ticket padre ya cerrado", "epil": "Epil Point · el cliente que no pasa por Jira", "parado": "Incidencias paradas más de 15 días", "repara": "Reparación fuera de plazo", "prestamo": "Préstamos fuera de plazo", "cerrar": "Terminados y sin cerrar", "externo": "Técnico externo: se gestiona y ahí se queda", "transporte": "El transporte, el cuello de botella sin medir", "medias": "A medio gestionar y sin observación en Jira", "privado": "Clientes grandes atendidos por privado", "telegram": "Telegram dice una cosa y Jira otra", "equipo": "Cómo va el equipo"};
 
-// ── Acumulación de avisos: 2ª vez campana, 3ª en rojo ──
+// ── Acumulación de avisos: 2ª jornada campana, 3ª en rojo ──
+// El contador NO vive en el navegador: vive en avisos.json, lo mantiene la pasada y viene
+// escrito aquí abajo. Así Isaac, Chus y Gonzalo ven el mismo número que Alejandro, que antes
+// no pasaba: cada uno contaba desde el día que abrió el panel por primera vez.
+// Y solo cuentan los DÍAS LABORABLES. Un punto que se dice el viernes y sigue el lunes va por
+// el segundo aviso, no por el cuarto: el fin de semana y los festivos no son días de trabajo.
+const FESTIVOS = ["2026-01-01", "2026-01-06", "2026-02-17", "2026-04-02", "2026-04-03", "2026-05-01", "2026-06-29", "2026-08-15", "2026-09-08", "2026-10-12", "2026-11-02", "2026-12-07", "2026-12-08", "2026-12-25"];
+const AVDIAS = {"LEAS-4265": ["2026-09-04"], "LEAS-4443": ["2026-09-04"], "LEAS-4908": ["2026-09-04"], "LEAS-5198": ["2026-09-04"], "LEAS-5211": ["2026-09-04"], "LEAS-5219": ["2026-09-04"], "LEAS-5697": ["2026-09-04"], "LEAS-5830": ["2026-09-04"], "LEAS-5833": ["2026-09-04"], "LEAS-5908": ["2026-09-04"], "LEAS-6198": ["2026-09-04"], "LEAS-6225": ["2026-09-04"], "LEAS-6716": ["2026-09-04"], "LEAS-6754": ["2026-09-04"], "LEAS-6765": ["2026-09-04"], "LEAS-6768": ["2026-09-04"], "LEAS-6779": ["2026-09-04"], "LEAS-6780": ["2026-09-04"], "LEAS-6835": ["2026-09-04"], "LEAS-6879": ["2026-09-04"], "LEAS-6888": ["2026-09-04"], "LEAS-6889": ["2026-09-04"], "LEAS-6890": ["2026-09-04"], "LEAS-6891": ["2026-09-04"], "LEAS-6906": ["2026-09-04"], "LEAS-6907": ["2026-09-04"], "LEAS-7028": ["2026-09-04"], "LEAS-7045": ["2026-09-04"], "LEAS-7048": ["2026-09-04"], "LEAS-7054": ["2026-09-04"], "LEAS-7095": ["2026-09-04"], "LEAS-7102": ["2026-09-04"], "LEAS-7103": ["2026-09-04"], "LEAS-7104": ["2026-09-04"], "LEAS-7112": ["2026-09-04"], "LEAS-7118": ["2026-09-04"], "LEAS-7121": ["2026-09-04"], "LEAS-7140": ["2026-09-04"], "LEAS-7148": ["2026-09-04"], "LEAS-7158": ["2026-09-04"], "LEAS-7162": ["2026-09-04"], "LEAS-7177": ["2026-09-04"], "LEAS-7188": ["2026-09-04"], "LEAS-7190": ["2026-09-04"], "LEAS-7191": ["2026-09-04"], "LEAS-7213": ["2026-09-04"], "LEAS-7227": ["2026-09-04"], "LEAS-7230": ["2026-09-04"], "LEAS-7237": ["2026-09-04"], "LEAS-7247": ["2026-09-04"], "LEAS-7249": ["2026-09-04"], "LEAS-7251": [], "LEAS-7265": [], "LEAS-7282": ["2026-09-04"], "LEAS-7311": ["2026-09-04"], "LEAS-7315": ["2026-09-04"], "LEAS-7320": ["2026-09-04"], "LEAS-7321": ["2026-09-04"], "LEAS-7325": ["2026-09-04"], "LEAS-7332": ["2026-09-04"], "LEAS-7334": ["2026-09-04"], "LEAS-7335": ["2026-09-04"], "LEAS-7343": [], "LEAS-7358": ["2026-09-04"], "LEAS-7361": ["2026-09-04"], "LEAS-7374": ["2026-09-04"], "LEAS-7378": ["2026-09-04"], "LEAS-7386": [], "LEAS-7393": ["2026-09-04"], "LEAS-7406": [], "LEAS-7407": ["2026-09-04"], "LEAS-7413": ["2026-09-04"], "LEAS-7419": ["2026-09-04"], "LEAS-7426": ["2026-09-04"], "LEAS-7427": [], "LEAS-7430": ["2026-09-04"], "LEAS-7436": ["2026-09-04"], "LEAS-7441": ["2026-09-04"], "LEAS-7442": [], "LEAS-7443": ["2026-09-04"], "LEAS-7444": ["2026-09-04"], "LEAS-7445": ["2026-09-04"], "LEAS-7447": ["2026-09-04"], "LEAS-7449": ["2026-09-04"], "LEAS-7450": ["2026-09-04"], "LEAS-7453": ["2026-09-04"], "LEAS-7455": ["2026-09-04"], "LEAS-7461": ["2026-09-04"], "LEAS-7465": ["2026-09-04"], "LEAS-7466": ["2026-09-04"], "LEAS-7468": ["2026-09-04"], "LEAS-7469": ["2026-09-04"], "LEAS-7472": ["2026-09-04"], "LEAS-7475": [], "LEAS-7484": ["2026-09-04"], "LEAS-7485": ["2026-09-04"], "LEAS-7486": [], "LEAS-7489": [], "telegram|Centri Unico Boccea · pidió un cable de alim": []};
 const HOYISO = new Date().toISOString().slice(0,10);
+const MESCORTO = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const DIASEM = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+function laborable(iso){
+  const d = new Date(iso + 'T12:00:00'), s = d.getDay();
+  return s >= 1 && s <= 5 && FESTIVOS.indexOf(iso) === -1;
+}
+function proximoLaborable(desde){
+  const d = new Date((desde || HOYISO) + 'T12:00:00');
+  for(var i = 0; i < 40; i++){
+    d.setDate(d.getDate() + 1);
+    var iso = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0')
+            + '-' + String(d.getDate()).padStart(2,'0');
+    if(laborable(iso)) return iso;
+  }
+  return null;
+}
+function fechaCorta(iso){
+  if(!iso) return '';
+  const d = new Date(iso + 'T12:00:00');
+  return DIASEM[d.getDay()] + ' ' + d.getDate() + ' ' + MESCORTO[d.getMonth()];
+}
+function diasDe(k, t){ return AVDIAS[idLinea(k, t)] || []; }
 function idLinea(k, t){
   const m = t.match(/\bLEAS-\d{3,5}\b/);
   return m ? m[0] : k + '|' + t.replace(/\s+/g,' ').slice(0,44);
 }
-function leerAvisos(){ try{ return JSON.parse(localStorage.getItem('sat.avisos')||'{}'); }catch(e){ return {}; } }
-function registrarAvisos(){
-  const d = leerAvisos(), vivos = {};
-  ORDEN.forEach(k => { if(k!=='equipo') MSG[k].l.forEach(t => { vivos[idLinea(k,t)] = 1; }); });
-  Object.keys(d).forEach(id => { if(!vivos[id]) delete d[id]; });
-  Object.keys(vivos).forEach(id => {
-    if(!d[id]) d[id] = {n:1, ini:HOYISO, ult:HOYISO};
-    else if(d[id].ult !== HOYISO){ d[id].n++; d[id].ult = HOYISO; }
-  });
-  try{ localStorage.setItem('sat.avisos', JSON.stringify(d)); }catch(e){}
-  return d;
+function nivel(k, t){
+  if(k === 'equipo') return 1;
+  const d = diasDe(k, t);
+  return d.length ? d.length : 1;
 }
-let AV = registrarAvisos();
-function nivel(k, t){ const a = AV[idLinea(k,t)]; return (k==='equipo'||!a) ? 1 : a.n; }
 function marcaTxt(k, t){ const n = nivel(k,t); return n>=3 ? '[!! '+n+'º AVISO] ' : (n===2 ? '[! 2º aviso] ' : ''); }
 function marcaHtml(k, t){
-  const n = nivel(k,t);
-  if(n>=3) return '<span class="av av3" title="Dicho '+n+' veces y sigue igual">🔴 '+n+'º aviso</span> ';
-  if(n===2) return '<span class="av av2" title="Segunda vez que se dice">🔔 2º aviso</span> ';
+  const n = nivel(k,t), d = diasDe(k,t);
+  const desde = d.length ? ' Se dice desde el ' + fechaCorta(d[0]) + '.' : '';
+  if(n>=3) return '<span class="av av3" title="Va por el '+n+'º día de trabajo diciéndose y sigue igual.'
+    + desde + ' Aquí ya no hace falta explicación, hace falta fecha de cierre">🔴 '+n+'º aviso</span> ';
+  if(n===2) return '<span class="av av2" title="Segundo día de trabajo que se dice.' + desde
+    + ' Si el ' + fechaCorta(proximoLaborable()) + ' sigue igual, pasa a rojo">🔔 2º aviso</span> ';
   return '';
 }
 function contarAvisos(){
@@ -1642,15 +1665,11 @@ function renderInterno(){
     const a = contarAvisos();
     r.innerHTML = a.tres
       ? '<b style="color:var(--crit)">'+a.tres+' puntos van por el tercer aviso o más</b> y '+a.dos+' por el segundo. Los rojos ya no son un recordatorio: son un problema de seguimiento y toca pedir fecha de cierre.'
-      : (a.dos ? '<b style="color:var(--warn)">'+a.dos+' puntos se repiten por segunda vez.</b> Si mañana siguen igual pasan a rojo.'
-               : 'Primera vez que se dicen todos estos puntos. A partir de mañana, lo que siga igual se marca solo.');
+      : (a.dos ? '<b style="color:var(--warn)">'+a.dos+' puntos se repiten por segundo día de trabajo.</b> Si el '+fechaCorta(proximoLaborable())+' siguen igual pasan a rojo.'
+               : 'Primera vez que se dicen todos estos puntos. El '+fechaCorta(proximoLaborable())+', lo que siga igual se marca solo.');
   }
 }
-function reiniciarAvisos(){
-  if(!confirm('Esto borra el histórico de avisos y todo vuelve a contar desde hoy. ¿Seguro?')) return;
-  try{ localStorage.removeItem('sat.avisos'); }catch(e){}
-  AV = registrarAvisos(); renderInterno();
-}
+
 
 function txtBlk(id){
   const b = MSG[id];
@@ -1664,7 +1683,7 @@ function cabecera(){
   const a = contarAvisos();
   let av = "";
   if(a.tres) av = "\n[!!] " + a.tres + " puntos van ya por el tercer aviso o más. En esos no quiero explicación, quiero fecha de cierre.";
-  else if(a.dos) av = "\n[!] " + a.dos + " puntos se repiten por segunda vez. Si mañana siguen igual pasan a rojo.";
+  else if(a.dos) av = "\n[!] " + a.dos + " puntos se repiten por segundo día de trabajo. Si el " + fechaCorta(proximoLaborable()) + " siguen igual pasan a rojo.";
   return "REVISIÓN SAT · " + f.charAt(0).toUpperCase() + f.slice(1) +
     "\nRepaso de las 100 incidencias principales abiertas (hay 93 subtareas más que no cuentan como fallo). Cada LEAS lleva su enlace en Jira." +
     "\n[!] = segunda vez que se dice · [!!] = tercera o más"
