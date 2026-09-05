@@ -460,6 +460,31 @@ dialog.wide{max-width:860px}
 .chip.t i{color:var(--accent)}
 .chip.mas{color:var(--muted-2);background:transparent;border:1px dashed var(--divider)}
 .cargas{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+/* Cómo funciona, plegado */
+details.comova2{background:var(--surface);border:1px solid var(--divider);border-radius:var(--r);
+  box-shadow:var(--shadow);margin:0 0 14px}
+details.comova2>summary{list-style:none;cursor:pointer;padding:11px 18px;font-size:12px;
+  font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);
+  display:flex;align-items:center;gap:9px}
+details.comova2>summary::-webkit-details-marker{display:none}
+details.comova2>summary::before{content:"▸";font-size:11px;transition:transform .12s}
+details.comova2[open]>summary::before{transform:rotate(90deg)}
+details.comova2>summary:hover{color:var(--ink)}
+details.comova2 .cm-in{padding:0 18px 16px}
+/* Barra de cadena, una sola vez */
+.cadbar{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 12px;padding:9px 14px;margin:0 0 11px;
+  background:var(--surface-2);border:1px solid var(--divider);border-radius:9px;
+  font-size:12px;color:var(--muted);line-height:1.45}
+.cadbar b{color:var(--ink-soft);font-weight:600}
+/* Pastilla de quién, corta */
+.qui{max-width:none;white-space:normal}
+.chipq{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:20px;
+  background:rgba(176,67,31,.10);color:var(--accent);margin-left:5px;white-space:nowrap}
+/* Cuenta atrás y cerrados en la tarjeta de persona */
+.pcard .pr{display:block;margin-top:5px;font-size:11px;color:var(--muted);line-height:1.35}
+.pcard .pr b{color:var(--ink-soft);font-weight:600}
+.pcard .pc{display:block;margin-top:4px;font-size:11px;font-weight:600;color:var(--good)}
+.blk .cnt small{font-family:var(--sans);font-size:11px;font-weight:500;color:var(--muted-2);margin-left:3px}
 </style>
 
 <div class="page">
@@ -484,8 +509,18 @@ dialog.wide{max-width:860px}
 <div id="p-interno" class="pane on">
 
 
-  <section class="comova">
-    <div class="cm-t">Cómo funciona esto</div>
+
+
+  <div id="quiensoy" class="qbar"></div>
+
+  <div id="cargas" class="cargas"></div>
+
+  <div id="cadbar" class="cadbar"></div>
+
+  <details class="comova2" id="comova">
+    <summary>Cómo funciona esto</summary>
+    <div class="cm-in">
+
     <div class="cm-pasos">
       <div class="cm-p">
         <span class="cm-n">1</span>
@@ -514,11 +549,8 @@ dialog.wide{max-width:860px}
       <code>se lo paso a Chus, hoy no llego</code>
       <span class="cm-nota">Solo se puede escribir en los puntos que llevan un LEAS: es el ticket donde se guarda. Los que no lo llevan siguen siendo para hablarlo por el grupo. Y ojo: «deshacer» lo quita de aquí, pero la nota que ya se ha escrito en Jira hay que borrarla en Jira.</span>
     </div>
-  </section>
-
-  <div id="cargas" class="cargas"></div>
-
-  <div id="quiensoy" class="qbar"></div>
+</div>
+  </details>
 
 
   <div id="blks"></div>
@@ -594,6 +626,25 @@ function tgDe(t){
   const m = t.match(/\bLEAS-\d{3,5}\b/);
   return m && TG[m[0]] ? TG[m[0]] : null;
 }
+// La pastilla del punto dice lo mínimo: quién lo tocó el último y, si se ha traspasado,
+// a quién. La frase de la cadena de responsabilidad se dice UNA vez, en la barra de arriba.
+function quienCorto(k, t){
+  const q = quien(t);
+  const r = RESP[idPunto(k, t)] || {};
+  const loc = LOCAL[idPunto(k, t)] || {};
+  const para = r.paraQuien || loc.para || "";
+  const base = !q ? "" : (q.nadie ? "sin gestionar aún" : q.txt.replace(/^último:\s*/, "último: "));
+  return (base ? base : "") + (para ? '<span class="chipq">→ '+para+'</span>' : "");
+}
+function pintarCadena(){
+  const c = document.getElementById('cadbar'); if(!c) return;
+  const GRUPO = ["Isaac","Chus","Gonzalo","Borja","Cristina"].filter(disp);
+  const fuera = Object.keys(FUERA).filter(n => ["Isaac","Chus","Gonzalo","Borja","Cristina"].indexOf(n) !== -1);
+  c.innerHTML = '<span><b>Hoy:</b> ' + (GRUPO.length ? GRUPO.join(', ') : '—')
+    + (fuera.length ? ' · fuera ' + fuera.join(', ') : '') + '</span>'
+    + '<span>¿No es tuyo o hoy no llegas? <b>Pásalo con el desplegable del punto</b>: queda en el ticket, con tu nombre.</span>';
+}
+
 function titularBase(k, t){
   const base = (CAD[k] || ["Isaac","Gonzalo","Borja"]).filter(disp);
   const GRUPO = ["Isaac","Chus","Gonzalo","Borja","Cristina"].filter(disp);
@@ -678,6 +729,8 @@ const GENTE = ["Isaac","Chus","Gonzalo","Borja","Cristina","Alejandro"];
 function leerYo(){ try{ const v = localStorage.getItem("sat.yo"); return GENTE.indexOf(v) !== -1 ? v : null; }catch(e){ return null; } }
 function fijarYo(n){ YO = (GENTE.indexOf(n) !== -1) ? n : null;
   try{ if(YO) localStorage.setItem("sat.yo", YO); else localStorage.removeItem("sat.yo"); }catch(e){}
+  // Decir quién eres ya te deja en tu lista: no hay que pinchar además la tarjeta.
+  FILTRO = YO;
   pintarYo(); renderInterno(); }
 function pintarYo(){
   const c = document.getElementById("quiensoy"); if(!c) return;
@@ -699,6 +752,7 @@ async function initDB(){
         : null;
   YO = leerYo();
   LOCAL = leerLocal();
+  if(YO && FILTRO === null) FILTRO = YO;
   pintarYo();
   if(!DB){ renderInterno(); return; }
   renderInterno();                       // botones ya, sin esperar a la red
@@ -945,6 +999,10 @@ function respHtml(k, t){
   return h + '</div>';
 }
 
+// Tickets que cada uno ha llevado hoy a un estado de cierre. Lo rellena la pasada leyendo
+// el historial de estados de Jira; vacío mientras no haya pasada del día.
+const CERRADO = {};
+
 let FILTRO = null, VERHECHOS = false;
 function verHechos(){ VERHECHOS = !VERHECHOS; renderInterno(); }
 function filtrar(n){ FILTRO = (FILTRO === n) ? null : n; renderInterno(); }
@@ -1006,7 +1064,20 @@ function renderCargas(){
     if(tramitado(k,t)) acc[d].resp++;
     if(r && r.estado === 'Hecho') acc[d].hecho++;
   }));
-  const sem = a => a.n === 0 ? 'o' : (a.resp >= a.n ? 'g' : (a.rojo >= 3 ? 'c' : 'w'));
+  // Jornada del SAT. El semáforo se mide contra la hora, no contra el 100 %: a las 10:00
+  // nadie puede tener todo hecho, y ponerlo en amarillo todo el día no dice nada.
+  const H_INI = 8.5, H_FIN = 19.0;
+  const ahora = new Date(); const hd = ahora.getHours() + ahora.getMinutes()/60;
+  const frac = Math.max(0, Math.min(1, (hd - H_INI) / (H_FIN - H_INI)));
+  const quedan = Math.max(0, H_FIN - hd);
+  const dentro = hd >= H_INI && hd <= H_FIN;
+  const sem = a => {
+    if(a.n === 0) return 'o';
+    if(a.rojo >= 1 && a.resp < a.n) return 'c';           // un 3er aviso sin tocar manda
+    if(a.resp >= a.n) return 'g';
+    if(!dentro) return 'w';
+    return a.resp >= Math.ceil(a.n * frac) ? 'g' : 'w';   // ¿va al ritmo que toca a esta hora?
+  };
   let h = GRUPO.map(n => {
     const a = acc[n], s = sem(a);
     return '<button class="pcard'+(FILTRO===n?' sel':'')+'" onclick="filtrar(\''+n+'\')">'
@@ -1016,6 +1087,18 @@ function renderCargas(){
       + '<div><span class="pb">'+(a.n-a.resp)+'</span><span class="pu">'+((a.n-a.resp)===1?'pendiente':'pendientes')+'</span></div>'
       + '<div class="pd">'+(a.rojo ? '<b style="color:var(--crit)">'+a.rojo+' en rojo</b> · ' : '')
       + (a.resp ? a.resp+' de '+a.n+' tramitados hoy' : 'ninguno tramitado aún de '+a.n)+'</div>'
+      + (function(){
+          const pend = a.n - a.resp;
+          if(!dentro) return '<span class="pr">fuera de jornada</span>';
+          if(pend <= 0) return '<span class="pr"><b>al día</b></span>';
+          const hh = Math.max(0.25, quedan);
+          const ritmo = (pend / hh);
+          return '<span class="pr">quedan <b>'+(hh>=1 ? Math.round(hh)+' h' : Math.round(hh*60)+' min')
+            + '</b> · '+pend+' pendiente'+(pend===1?'':'s')+' → <b>'
+            + (ritmo >= 1 ? Math.ceil(ritmo)+'/h' : 'menos de 1/h')+'</b></span>';
+        })()
+      + ((CERRADO[n] || []).length ? '<span class="pc">✔ '+CERRADO[n].length+' cerrado'
+          + (CERRADO[n].length===1?'':'s')+' hoy</span>' : '')
       + resumenChips(n) + '</button>';
   }).join('');
   c.innerHTML = h;
@@ -1036,9 +1119,11 @@ function renderInterno(){
     h += '<div class="blk '+(alto ? 'a' : m[0])+'">'
       +  '<header><span class="ico">'+m[1]+'</span><span class="t">'+BTIT[k]+'</span>'
       +  (alto ? '<span class="avn">'+alto+' en rojo</span>' : '')
-      +  '<span class="cnt">'+lineas.length+'</span></header>'
+      +  '<span class="cnt">'+lineas.length
+         + (parseInt(m[2],10) > lineas.length ? '<small> de '+m[2]+'</small>' : '')
+         + '</span></header>'
       +  '<div class="por">'+b.p+'</div><ul>';
-    lineas.forEach(t => { const q = quien(t), cd = cadena(k,t);
+    lineas.forEach(t => { const q = quien(t), cd = quienCorto(k,t);
       const tg = tgDe(t);
       h += '<li class="'+(tramitado(k,t)?'ok':'')+'" data-t="'+t.replace(/"/g,'&quot;')+'">'+marcaHtml(k,t)+t+(cd ? ' <span class="qui'+((!q||q.nadie)?' qui0':'')+'">'+cd+'</span>' : '')
         + (tg ? '<div class="tg"><span class="tgg">'+tg.g+'</span> '+tg.q+': '+tg.t+' <span class="tgh">'+tg.h+'</span></div>' : '')
@@ -1054,6 +1139,7 @@ function renderInterno(){
     + (FILTRO ? FILTRO+' no tiene nada pendiente' : 'Nada pendiente. Todo lo de hoy está tramitado')
     + '</span></header></div>');
   renderCargas();
+  pintarCadena();
   linkTickets(c);
   const r = document.getElementById('avresumen');
   if(r){
@@ -1132,6 +1218,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
   linkTickets(document.body);
 try{ renderInterno(); }catch(e){ console.error(e); }
 try{ initDB(); }catch(e){ console.error(e); }
+// «Cómo funciona» abierto solo la primera vez que alguien abre el panel en este navegador.
+try{
+  const d = document.getElementById('comova');
+  if(d && !localStorage.getItem('sat.visto')){ d.open = true; localStorage.setItem('sat.visto','1'); }
+}catch(e){}
 });
 
 
