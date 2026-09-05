@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-09-05T10:20+02:00",
+  "actualizado": "2026-09-05T13:35+02:00",
   "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
   "como_se_usa": [
     "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -248,6 +248,58 @@
       "cuando": "2026-09-04",
       "anotado": "2026-09-05",
       "revive_si": "Nunca contra el equipo. Vive solo en el bloque de Airtable del panel de Alejandro."
+    },
+    {
+      "id": "7230-tracking-sin-susti",
+      "que": "LEAS-7230 sin tracking / recogida pendiente",
+      "ambito": {
+        "leas": "LEAS-7230",
+        "centro": "SinVello Albacete",
+        "tipo": "sin-tracking"
+      },
+      "porque": "Isaac lo explicó desde el panel el 05/09 a las 11:13 y a las 11:21: «aun no se ha enviado sustitución por eso no hay tracking de recogida ni de envio» y «aun no se ha recogido porque no se ha enviado la sustitución». Sin sustitución enviada no hay ni recogida ni tracking que poner.",
+      "quien": "Isaac",
+      "cuando": "2026-09-05",
+      "revive_si": "La sustitución LEAS-7251 sale del taller y LEAS-7230 sigue sin tracking en el campo 11420."
+    },
+    {
+      "id": "7466-tracking-sin-susti",
+      "que": "LEAS-7466 sin tracking / recogida pendiente",
+      "ambito": {
+        "leas": "LEAS-7466",
+        "centro": "Sinvello Teatinos",
+        "tipo": "sin-tracking"
+      },
+      "porque": "Isaac lo explicó desde el panel el 05/09 a las 11:14: «aun no se ha mandado sustitución por eso no hay tracking de recogida ni de envio». La pistola se publicó en ENVIOS SAT LEASEIR a las 11:15 (LEAS-7489), todavía sin salir.",
+      "quien": "Isaac",
+      "cuando": "2026-09-05",
+      "revive_si": "LEAS-7489 pasa a «Equipo enviado» y LEAS-7466 sigue sin tracking."
+    },
+    {
+      "id": "7028-entregado-transporte",
+      "que": "LEAS-7028 como préstamo abierto y subtarea huérfana",
+      "ambito": {
+        "leas": "LEAS-7028",
+        "serie": "H00340",
+        "tipo": "prestamo-huerfano"
+      },
+      "porque": "Isaac lo explicó desde el panel el 05/09 a las 11:19: «ya la entrego el transporte en nuestras instalaciones», y cerró el ticket a las 11:19. El equipo está en casa.",
+      "quien": "Isaac",
+      "cuando": "2026-09-05",
+      "revive_si": "Nunca por esto: el ticket está en «Finalizada»."
+    },
+    {
+      "id": "7493-subtarea-caso-vivo",
+      "que": "LEAS-7493 cuelga de LEAS-7284, que está en «Resuelto»",
+      "ambito": {
+        "leas": "LEAS-7493",
+        "centro": "SinVello Cádiz",
+        "tipo": "jerarquia"
+      },
+      "porque": "Isaac lo explicó desde el panel el 05/09 a las 10:31: «la subtarea se mueve al caso vivo porque el manipulo suyo no da enrgia por la configuración de la consola». El caso vivo es LEAS-7490.",
+      "quien": "Isaac",
+      "cuando": "2026-09-05",
+      "revive_si": "El lunes 07/09 LEAS-7493 sigue colgando de LEAS-7284 y no del caso vivo LEAS-7490."
     }
   ],
   "enlaces": [
@@ -281,6 +333,14 @@
       "vinculado_a": "LEAS-7316",
       "quien": "Chus",
       "cuando": "2026-09-04"
+    },
+    {
+      "centro": "Cádiz",
+      "cliente": "SinVello",
+      "leas": "LEAS-7490",
+      "vinculado_a": "LEAS-7493",
+      "quien": "Isaac",
+      "cuando": "2026-09-05"
     }
   ],
   "que_es_esto_enlaces": "Enlaces aprendidos: centro -> ticket. Cuando un mensaje del chat nombra el centro pero no el LEAS ni la serie, se mira aqui ANTES de darlo por huerfano. Se anade uno cada vez que un tecnico elige un candidato o corrige un enlace. Aqui no se guardan conversaciones de clientes, solo el enlace."
