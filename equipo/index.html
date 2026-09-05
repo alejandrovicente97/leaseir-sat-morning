@@ -1170,12 +1170,12 @@ function cabecera(){
   if(a.tres) av = "\n[!!] " + a.tres + " puntos van ya por el tercer aviso o más. En esos no quiero explicación, quiero fecha de cierre.";
   else if(a.dos) av = "\n[!] " + a.dos + " puntos se repiten por segunda vez. Si mañana siguen igual pasan a rojo.";
   return "REVISIÓN SAT · " + f.charAt(0).toUpperCase() + f.slice(1) +
-    "\nRepaso de las 99 incidencias principales abiertas (hay 95 subtareas más que no cuentan como fallo). Cada LEAS lleva su enlace en Jira." +
+    "\nRepaso de las 100 incidencias principales abiertas (hay 95 subtareas más que no cuentan como fallo). Cada LEAS lleva su enlace en Jira." +
     "\n[!] = segunda vez que se dice · [!!] = tercera o más"
     + "\nEntre corchetes va quién lo tiene. Si nadie lo ha tocado, ahí está el nombre de quien lo coge por defecto: no es de otro, es suyo."
     + "\nSi a la segunda vez sigue igual, el que lo tiene se lo pide al siguiente POR ESTE GRUPO, para que quede constancia. Y a la tercera, ese segundo lo coge y, si tampoco llega, se lo pide al tercero por aquí. Pero ese día queda hecho."
     + "\nEl orden no es por jerarquía, es por carga: primero quien tiene margen."
-    + "\nA las 19:30 el único que sigue fichado es Chus: Gonzalo salió a las 18:39, Isaac a las 14:09, y ni Cristina ni Borja han fichado hoy. Todo lo pendiente le queda a Chus; lo que no dé tiempo hoy se reparte el lunes a primera hora." + av + "\n";
+    + "\nHoy, sábado 5, el único que ha fichado es Isaac (remoto, desde las 9:49). Todo lo pendiente le sale a él por la cadena; lo que no sea urgente se reparte el lunes a primera hora." + av + "\n";
 }
 
 // ── Resumen de un solo mensaje de Telegram ──
