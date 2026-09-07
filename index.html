@@ -280,6 +280,9 @@ a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
 .tcard .tr a:hover{text-decoration:underline}
 .tcard .tnone{color:var(--muted-2)}
 .tcard.ojo{border-color:var(--crit-line);box-shadow:inset 4px 0 0 var(--crit)}
+.tviejo{grid-column:1/-1;background:var(--warn-bg);border:1px solid var(--warn-line);
+  border-radius:10px;padding:10px 14px;font-size:12.5px;color:var(--ink-soft);line-height:1.5}
+.tviejo b{color:var(--warn)}
 .tcard .toj{display:block;margin-top:9px;padding:8px 11px;background:var(--crit-bg);
   border-radius:8px;font-size:11.5px;color:var(--ink-soft);line-height:1.45}
 .tcard .toj b{color:var(--crit)}
@@ -1973,7 +1976,7 @@ const ACT = {"Isaac": {"n": 5, "tk": 5, "panel": 1, "ult": "12:27", "ev": [{"h":
 // Finalizado técnico externo). Se lee del historial de estados, no de los comentarios.
 const RES = {"Gonzalo": ["LEAS-7448", "LEAS-7364", "LEAS-7272", "LEAS-6048", "LEAS-5904"], "Chus": ["LEAS-7480", "LEAS-7397"], "Isaac": ["LEAS-7457", "LEAS-7324"], "Alejandro": ["LEAS-756"]};
 // Taller: presupuestos preparados y equipos a salida, por técnico.
-const TAL = {"Iván": {"pre": ["LEAS-7335", "LEAS-7312"], "sal": ["LEAS-7436", "LEAS-7335"], "ab": [{"k": "LEAS-7312", "e": "En preparación presupuesto", "d": 0}, {"k": "LEAS-7360", "e": "En cola taller", "d": 0}, {"k": "LEAS-7299", "e": "En cola taller", "d": 0}, {"k": "LEAS-7421", "e": "En cola taller", "d": 1}, {"k": "LEAS-7405", "e": "En cola taller", "d": 1}, {"k": "LEAS-7270", "e": "Pendiente confirmación presupuesto", "d": 14}, {"k": "LEAS-6906", "e": "En reparación", "d": 18}], "com": 1, "mov": 3}, "Jonathan": {"pre": [], "sal": ["LEAS-7121"], "ab": [{"k": "LEAS-7403", "e": "Pendiente confirmación presupuesto", "d": 0}, {"k": "LEAS-7420", "e": "Esperando inicio reparación", "d": 0}, {"k": "LEAS-7349", "e": "En reparación", "d": 0}, {"k": "LEAS-7256", "e": "Pendiente confirmación presupuesto", "d": 1}, {"k": "LEAS-7434", "e": "En cola taller", "d": 2}, {"k": "LEAS-6879", "e": "En reparación", "d": 2}, {"k": "LEAS-6907", "e": "Presupuesto preparado pendiente de enviar", "d": 14}, {"k": "LEAS-7190", "e": "Pendiente confirmación presupuesto", "d": 23}], "com": 0, "mov": 1, "h": 7.52, "htxt": "7h 31min", "salida": "14:55"}, "Fran": {"pre": [], "sal": [], "ab": [{"k": "LEAS-7355", "e": "En preparación presupuesto", "d": 0}, {"k": "LEAS-7425", "e": "Esperando inicio reparación", "d": 1}, {"k": "LEAS-7424", "e": "En reparación", "d": 1}, {"k": "LEAS-7423", "e": "En preparación presupuesto", "d": 3}, {"k": "LEAS-7188", "e": "En preparación presupuesto", "d": 22}, {"k": "LEAS-6779", "e": "En reparación", "d": 39}, {"k": "LEAS-6888", "e": "Pendiente confirmación presupuesto", "d": 60}, {"k": "LEAS-6889", "e": "Pendiente confirmación presupuesto", "d": 63}], "com": 0, "mov": 0, "h": 7.48, "htxt": "7h 29min", "salida": "14:53"}};
+const TAL = {"Iván": {"pre": ["LEAS-7421"], "sal": [], "ab": [{"k": "LEAS-7312", "e": "En preparación presupuesto", "d": 0}, {"k": "LEAS-7360", "e": "En cola taller", "d": 0}, {"k": "LEAS-7299", "e": "En cola taller", "d": 0}, {"k": "LEAS-7421", "e": "En cola taller", "d": 1}, {"k": "LEAS-7405", "e": "En cola taller", "d": 1}, {"k": "LEAS-7270", "e": "Pendiente confirmación presupuesto", "d": 14}, {"k": "LEAS-6906", "e": "En reparación", "d": 18}], "com": null, "mov": null, "htxt": null, "salida": null}, "Jonathan": {"pre": [], "sal": ["LEAS-7349"], "ab": [{"k": "LEAS-7403", "e": "Pendiente confirmación presupuesto", "d": 0}, {"k": "LEAS-7420", "e": "Esperando inicio reparación", "d": 0}, {"k": "LEAS-7349", "e": "En reparación", "d": 0}, {"k": "LEAS-7256", "e": "Pendiente confirmación presupuesto", "d": 1}, {"k": "LEAS-7434", "e": "En cola taller", "d": 2}, {"k": "LEAS-6879", "e": "En reparación", "d": 2}, {"k": "LEAS-6907", "e": "Presupuesto preparado pendiente de enviar", "d": 14}, {"k": "LEAS-7190", "e": "Pendiente confirmación presupuesto", "d": 23}], "com": null, "mov": null, "h": 7.52, "htxt": null, "salida": null}, "Fran": {"pre": ["LEAS-6768", "LEAS-7355", "LEAS-7432"], "sal": [], "ab": [{"k": "LEAS-7355", "e": "En preparación presupuesto", "d": 0}, {"k": "LEAS-7425", "e": "Esperando inicio reparación", "d": 1}, {"k": "LEAS-7424", "e": "En reparación", "d": 1}, {"k": "LEAS-7423", "e": "En preparación presupuesto", "d": 3}, {"k": "LEAS-7188", "e": "En preparación presupuesto", "d": 22}, {"k": "LEAS-6779", "e": "En reparación", "d": 39}, {"k": "LEAS-6888", "e": "Pendiente confirmación presupuesto", "d": 60}, {"k": "LEAS-6889", "e": "Pendiente confirmación presupuesto", "d": 63}], "com": null, "mov": null, "h": 7.48, "htxt": null, "salida": null}, "_fecha": "2026-09-07"};
 
 function renderAct(){
   const c = document.getElementById('actg'); if(!c) return;
@@ -2020,7 +2023,8 @@ function renderAct(){
 const JORNADA = "7:30 a 15:00";
 function renderTal(){
   const c = document.getElementById('talg'); if(!c) return;
-  const gente = Object.keys(TAL).sort((a,b) =>
+  // Las claves que empiezan por _ son metadatos (la fecha), no personas.
+  const gente = Object.keys(TAL).filter(k => k.charAt(0) !== '_').sort((a,b) =>
     (TAL[b].pre.length + TAL[b].sal.length) - (TAL[a].pre.length + TAL[a].sal.length));
   const enl = ks => ks.length
     ? ks.map(k => '<a href="https://leaseir.atlassian.net/browse/'+k+'" target="_blank" rel="noopener">'+k+'</a>').join(' ')
@@ -2030,7 +2034,17 @@ function renderTal(){
     const m = /(\d{1,2}):(\d{2})\s*$/.exec(JORNADA || '');
     return m ? (+m[1] + (+m[2])/60) : 15;
   })();
-  c.innerHTML = gente.map(n => {
+  // ¿Estos datos son de hoy? El 07/09 el panel enseñaba las salidas y presupuestos del
+  // viernes como si fueran de hoy: Fran salía a 0 cuando era el que más había hecho.
+  // Si TAL no trae la fecha de hoy, se dice y no se juzga a nadie con ello.
+  const HOY_ISO = (function(){ const d = new Date();
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); })();
+  const TAL_DE_HOY = (TAL._fecha || '') === HOY_ISO;
+  c.innerHTML = (TAL_DE_HOY ? '' :
+      '<div class="tviejo">Estos recuentos <b>no son de hoy</b>'
+      + (TAL._fecha ? ' (son del '+TAL._fecha+')' : '')
+      + ': la pasada no los ha recalculado. No sirven para mirar el día de nadie.</div>')
+    + gente.map(n => {
     const t = TAL[n], tot = t.pre.length + t.sal.length;
     // Estados en los que la pelota la tiene el técnico. «Pendiente confirmación presupuesto»
     // y «Presupuesto preparado pendiente de enviar» NO cuentan: ahí espera el cliente o comercial.
