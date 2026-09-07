@@ -450,37 +450,53 @@ dialog.wide{max-width:860px}
   --k-nos:#D9683C; --k-ter:#4A8FCC; --k-cli:#87953A } }
 :root[data-theme="dark"]{ --k-nos:#D9683C; --k-ter:#4A8FCC; --k-cli:#87953A }
 
-.khero{display:grid;grid-template-columns:auto auto 1fr;gap:26px;align-items:center;
+.khero{display:grid;grid-template-columns:repeat(3,1fr);gap:0;
   background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow-lift);
-  padding:18px 24px;margin:0 0 14px}
-.kh1{display:flex;flex-direction:column;gap:1px;cursor:pointer;border:0;background:none;
-  font:inherit;color:inherit;text-align:left;padding:0}
-.kh1 b{font-family:var(--mono);font-size:34px;font-weight:600;letter-spacing:-.03em;line-height:1}
+  overflow:hidden;margin:0 0 12px}
+.kh1{display:flex;flex-direction:column;gap:3px;cursor:pointer;border:0;background:none;
+  font:inherit;color:inherit;text-align:left;padding:18px 24px 17px;
+  border-left:1px solid var(--divider-soft)}
+.kh1:first-child{border-left:0}
+.kh1:hover{background:var(--surface-2)}
+.kh1 b{font-family:var(--mono);font-size:40px;font-weight:600;letter-spacing:-.035em;line-height:1}
 .kh1 span{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
-.kh1:hover b{color:var(--accent)}
-.khs{font-size:13.5px;color:var(--ink-soft);line-height:1.55;max-width:62ch}
-.khs b{font-weight:600}
-@media(max-width:820px){.khero{grid-template-columns:1fr 1fr;gap:14px}.khs{grid-column:1/-1}}
+.kh1 em{font-style:normal;font-size:11.5px;color:var(--muted-2);line-height:1.35;margin-top:3px}
+.kh1.nos b{color:var(--k-nos)}
+@media(max-width:820px){.khero{grid-template-columns:1fr}.kh1{border-left:0;border-top:1px solid var(--divider-soft)}.kh1:first-child{border-top:0}}
+.khs{font-size:13.5px;color:var(--ink-soft);line-height:1.55;margin:0 0 14px;
+  padding:0 2px;max-width:96ch}
+.khs b{font-weight:600;color:var(--ink)}
 
-.kleg{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin:0 0 10px}
-.kleg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:0}
-.kfila{display:grid;grid-template-columns:170px 1fr 62px;gap:12px;align-items:center;
-  padding:7px 0;border:0;background:none;font:inherit;color:inherit;text-align:left;
-  width:100%;cursor:pointer;border-radius:8px}
-.kfila:hover{background:var(--surface-2)}
-.kfila .kt{font-size:12.5px;font-weight:500;color:var(--ink);line-height:1.25}
-.kfila .kt em{display:block;font-style:normal;font-size:10.5px;color:var(--muted-2);font-weight:400}
-.kbar{position:relative;height:19px}
-.kbar .kp90{position:absolute;top:3px;height:13px;border-radius:0 4px 4px 0;opacity:.26}
-.kbar .kmed{position:absolute;top:0;height:19px;border-radius:0 4px 4px 0;min-width:3px}
-.kbar .kum{position:absolute;top:-2px;bottom:-2px;width:0;border-left:1.5px dashed var(--muted-2);opacity:.75}
-.kbar .kv{position:absolute;top:1px;font-family:var(--mono);font-size:11.5px;font-weight:600;
-  white-space:nowrap;color:var(--ink)}
-.kbar .kv em{font-style:normal;color:var(--muted-2);font-weight:500;margin-left:7px}
-.kfila .kpc{font-family:var(--mono);font-size:12.5px;font-weight:600;text-align:right}
+.kleg{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);
+  margin:0 0 14px;padding-bottom:11px;border-bottom:1px solid var(--divider-soft)}
+.kleg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+/* Una fila por tramo. Los números en columnas fijas y alineadas: es una tabla con barras,
+   no etiquetas flotando por encima del dibujo. */
+.kfila{display:grid;grid-template-columns:186px 1fr 60px 70px 52px;gap:14px;align-items:center;
+  padding:9px 12px;border:0;background:none;font:inherit;color:inherit;text-align:left;
+  width:100%;cursor:pointer;border-radius:9px}
+.kfila:nth-child(even){background:var(--surface-2)}
+.kfila:hover{background:var(--surface-3)}
+.kfila .kt{font-size:13px;font-weight:500;color:var(--ink);line-height:1.3;
+  display:flex;align-items:baseline;gap:7px}
+.kfila .kt i{width:9px;height:9px;border-radius:3px;flex:none;transform:translateY(-1px)}
+.kbar{position:relative;height:26px}
+.kbar .kp90{position:absolute;top:5px;height:16px;border-radius:0 3px 3px 0;opacity:.30}
+.kbar .kmed{position:absolute;top:0;height:26px;border-radius:0 4px 4px 0;min-width:4px;
+  box-shadow:2px 0 0 var(--surface)}
+.kbar .kcap{position:absolute;top:5px;height:16px;width:2px;border-radius:1px;opacity:.85}
+.kbar .kum{position:absolute;top:-3px;bottom:-3px;width:0;border-left:1.5px dashed var(--muted-2);opacity:.6}
+.kfila .kn{font-family:var(--mono);font-size:13px;font-weight:600;text-align:right;
+  font-variant-numeric:tabular-nums;color:var(--ink)}
+.kfila .kn.sec{font-weight:500;color:var(--muted)}
+.kfila .kpc{font-family:var(--mono);font-size:13px;font-weight:600;text-align:right;
+  font-variant-numeric:tabular-nums}
 .kfila .kpc.mal{color:var(--crit)} .kfila .kpc.med{color:var(--warn)} .kfila .kpc.ok{color:var(--good)}
-.keje{display:grid;grid-template-columns:170px 1fr 62px;gap:12px;font-size:10.5px;
-  color:var(--muted-2);margin-top:3px}
+.kcab{display:grid;grid-template-columns:186px 1fr 60px 70px 52px;gap:14px;padding:0 12px 7px;
+  font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted-2);font-weight:600}
+.kcab span:nth-child(n+3){text-align:right}
+.keje{display:grid;grid-template-columns:186px 1fr 60px 70px 52px;gap:14px;padding:5px 12px 0;
+  font-size:10.5px;color:var(--muted-2)}
 .keje div:nth-child(2){display:flex;justify-content:space-between}
 
 .kdos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
@@ -1393,22 +1409,29 @@ dialog.wide{max-width:860px}
 <div id="p-kpis" class="pane">
 
   <div class="khero">
-    <button class="kh1" onclick="kcalc('_ciclo')"><b id="k-med">—</b><span>Mediana del ciclo</span></button>
-    <button class="kh1" onclick="kcalc('_ciclo')"><b id="k-p90">—</b><span>El 10% peor</span></button>
-    <div class="khs" id="k-frase"></div>
+    <button class="kh1" onclick="kcalc('_ciclo')"><b id="k-med">—</b><span>Mediana del ciclo</span>
+      <em>la mitad de las incidencias se cierran antes</em></button>
+    <button class="kh1" onclick="kcalc('_ciclo')"><b id="k-p90">—</b><span>El 10% peor</span>
+      <em>y ahí es donde llaman los clientes</em></button>
+    <button class="kh1 nos" onclick="kcalc('_nuestro')"><b id="k-nos">—</b><span>En nuestras manos</span>
+      <em>el resto es transporte, externos y el cliente</em></button>
   </div>
 
+  <div class="khs" id="k-frase"></div>
+
   <section class="sec">
-    <h2>Dónde se va el tiempo <span class="hint">— barra sólida: la mitad de los casos. Barra clara: hasta el 10% peor. Raya: el compromiso. Pincha cualquier tramo.</span></h2>
-    <div class="card" style="padding:16px 20px 14px">
+    <h2>Dónde se va el tiempo <span class="hint">— pincha cualquier tramo</span></h2>
+    <div class="card" style="padding:16px 12px 12px">
       <div class="kleg">
         <span><i style="background:var(--k-nos)"></i>Depende de nosotros</span>
         <span><i style="background:var(--k-ter)"></i>Transportista o técnico externo</span>
         <span><i style="background:var(--k-cli)"></i>Depende del cliente</span>
+        <span style="margin-left:auto">Barra fuerte: la mitad de los casos · barra clara: hasta el 10% peor · raya: el compromiso</span>
       </div>
+      <div class="kcab"><span>Tramo</span><span></span><span>Mitad</span><span>10% peor</span><span>Fuera</span></div>
       <div id="k-tramos"></div>
-      <div class="keje"><div></div><div><span>0 d</span><span id="k-eje">—</span></div><div style="text-align:right">fuera</div></div>
-      <div class="knota" id="k-nota"></div>
+      <div class="keje"><div></div><div><span>0 d</span><span id="k-eje">—</span></div></div>
+      <div class="knota" id="k-nota" style="margin:12px 12px 0"></div>
     </div>
   </section>
 
@@ -1420,7 +1443,7 @@ dialog.wide{max-width:860px}
     <section class="sec" style="margin:0">
       <h2>Por técnico de taller <span class="hint">— solo lo suyo</span></h2>
       <div class="card" style="padding:6px 18px 12px"><div class="kwrap"><table class="tbl" id="k-tec"></table></div>
-        <div class="knota">Aquí solo entran <b>cola de taller, reparación e inspección</b>, que es lo que hace el taller. El transporte y el técnico externo no son suyos y por eso no cuentan en esta tabla.</div>
+        <div class="knota">Aquí solo entran <b>cola de taller, reparación e inspección</b>, que es lo que hace el taller. El transporte y el técnico externo no son suyos y por eso no cuentan.<br><b>No lo uses como un ranking.</b> El porcentaje se mide contra unos compromisos que he puesto yo, y las medianas de todos están por debajo de tres días. Además esto no sabe qué avería le tocó a cada uno: una consola abierta y un cambio de casquillo cuentan igual.</div>
       </div>
     </section>
   </div>
@@ -2002,6 +2025,11 @@ function renderTal(){
   const enl = ks => ks.length
     ? ks.map(k => '<a href="https://leaseir.atlassian.net/browse/'+k+'" target="_blank" rel="noopener">'+k+'</a>').join(' ')
     : '<span class="tnone">ninguno</span>';
+  // La hora a la que acaba el turno de taller, sacada de JORNADA ("7:30 a 15:00").
+  const FIN_JORNADA = (function(){
+    const m = /(\d{1,2}):(\d{2})\s*$/.exec(JORNADA || '');
+    return m ? (+m[1] + (+m[2])/60) : 15;
+  })();
   c.innerHTML = gente.map(n => {
     const t = TAL[n], tot = t.pre.length + t.sal.length;
     // Estados en los que la pelota la tiene el técnico. «Pendiente confirmación presupuesto»
@@ -2009,7 +2037,23 @@ function renderTal(){
     const SUYOS = ['En reparación','En cola taller','En preparación presupuesto','Esperando inicio reparación'];
     const suyosParados = (t.ab||[]).filter(x => x.d >= 15 && SUYOS.indexOf(x.e) !== -1);
     const tocados = (t.ab||[]).filter(x => x.d === 0).length;
-    const ojo = tot === 0 && suyosParados.length > 0;
+    // Dos guardas antes de poner a nadie en rojo, aprendidas a base de equivocarse:
+    //  1. No se juzga una jornada a media mañana. «0 comentarios en todo el día» a las 13:05
+    //     es sencillamente mentira: el día no ha terminado.
+    //  2. Si el fichaje que traigo no puede ser de hoy (la hora de salida es posterior al
+    //     momento en que se generó el panel), es un dato arrastrado de otro día y no se enseña.
+    // A qué hora se generó este panel. Sale de la cabecera («Última actualización: 7 sep 13:05»).
+    // Si no se puede leer, se devuelve null y NO se acusa a nadie: ante la duda, callar.
+    const genH = (function(){
+      const e = document.querySelector('.head .when');
+      const m = e ? /(\d{1,2}):(\d{2})/.exec(e.textContent || '') : null;
+      return m ? (+m[1] + (+m[2])/60) : null;
+    })();
+    const hSal = (function(){ const m = /^(\d{1,2}):(\d{2})$/.exec(t.salida || '');
+      return m ? (+m[1] + (+m[2])/60) : null; })();
+    const fichajeDeHoy = (genH !== null && t.htxt) ? (hSal === null || hSal <= genH + 0.05) : false;
+    const jornadaAcabada = genH !== null && genH >= FIN_JORNADA;
+    const ojo = tot === 0 && suyosParados.length > 0 && jornadaAcabada && fichajeDeHoy;
     return '<div class="tcard'+(ojo?' ojo':'')+'"><span class="tn">'+n+'</span>'
       + '<span class="tv">'+tot+'</span>'
       + '<span class="tu">'+t.pre.length+' presupuesto'+(t.pre.length===1?'':'s')+' · '
@@ -2223,35 +2267,35 @@ const d1 = x => (x === null || x === undefined) ? '—' : String(x).replace('.',
 
 function kpintar(){
   const T = KPI.tramos, esc = Math.max.apply(null, T.map(t => t.p90));
+  const nos = Math.round(T.filter(t => t.quien === 'nosotros').reduce((a, t) => a + t.med, 0) * 10) / 10;
   document.getElementById('k-med').textContent = d1(KPI.ciclo.med);
   document.getElementById('k-p90').textContent = d1(KPI.ciclo.p90);
+  document.getElementById('k-nos').textContent = d1(nos);
   document.getElementById('k-eje').textContent = Math.round(esc) + ' d';
 
-  // La frase de arriba se calcula, no se escribe a mano: si mañana el taller es el
-  // problema, lo dirá ella sola.
-  const nos = T.filter(t => t.quien === 'nosotros').reduce((a, t) => a + t.med, 0);
+  // La frase se calcula, no se escribe a mano: si mañana el taller pasa a ser el problema,
+  // lo dirá ella sola.
   const peor = T.slice().sort((a, b) => b.p90 - a.p90)[0];
+  const mejor = T.filter(t => t.quien === 'nosotros').sort((a, b) => a.med - b.med)[0];
   document.getElementById('k-frase').innerHTML =
-      'De punta a punta la mediana es <b>' + d1(KPI.ciclo.med) + '</b>, y el 10% peor se va a <b>'
-    + d1(KPI.ciclo.p90) + '</b>. De esa mediana, lo que está en nuestras manos suma <b>'
-    + d1(Math.round(nos * 10) / 10) + '</b>. La cola más larga está en <b>' + peor.tit.toLowerCase()
-    + '</b>: uno de cada diez pasa de ' + d1(peor.p90) + '.';
+      'La cola más larga está en <b>' + peor.tit.toLowerCase() + '</b>: uno de cada diez pasa de <b>'
+    + d1(peor.p90) + '</b>, y eso no lo arregla el taller. De hecho <b>' + mejor.tit.toLowerCase()
+    + '</b> tiene una mediana de ' + d1(mejor.med) + '.';
 
   document.getElementById('k-tramos').innerHTML = T.map(t => {
     const pc = Math.round(100 * t.malos / t.n);
     const cl = pc >= 35 ? 'mal' : (pc >= 15 ? 'med' : 'ok');
     const w = x => (100 * Math.min(x, esc) / esc);
-    // La etiqueta se sale fuera de la barra cuando la barra es corta, para que se lea.
-    const fuera = w(t.p90) > 74;
     return '<button class="kfila" onclick="kcalc(\'' + t.id + '\')">'
-      + '<span class="kt">' + t.tit + '<em>' + KQUIEN[t.quien] + '</em></span>'
+      + '<span class="kt"><i style="background:' + KCOL[t.quien] + '"></i>' + t.tit + '</span>'
       + '<span class="kbar">'
       +   '<i class="kp90" style="left:0;width:' + w(t.p90) + '%;background:' + KCOL[t.quien] + '"></i>'
       +   '<i class="kmed" style="left:0;width:' + w(t.med) + '%;background:' + KCOL[t.quien] + '"></i>'
+      +   '<i class="kcap" style="left:calc(' + w(t.p90) + '% - 2px);background:' + KCOL[t.quien] + '"></i>'
       +   '<i class="kum" style="left:' + w(t.umbral) + '%"></i>'
-      +   '<span class="kv" style="' + (fuera ? 'right:2px;text-align:right' : 'left:calc(' + w(t.p90) + '% + 8px)') + '">'
-      +     d1(t.med) + '<em>' + d1(t.p90) + '</em></span>'
       + '</span>'
+      + '<span class="kn">' + d1(t.med) + '</span>'
+      + '<span class="kn sec">' + d1(t.p90) + '</span>'
       + '<span class="kpc ' + cl + '">' + pc + '%</span></button>';
   }).join('');
 
@@ -2291,6 +2335,26 @@ function kpintar(){
 
 // Cada cifra se puede abrir: de dónde sale, con qué se ha contado y qué hay hoy dentro.
 function kcalc(id){
+  if(id === '_nuestro'){
+    const T = KPI.tramos.filter(x => x.quien === 'nosotros');
+    const suma = Math.round(T.reduce((a, x) => a + x.med, 0) * 10) / 10;
+    let h = '<div class="k">Cómo sale este número</div>'
+      + '<div class="big">' + d1(suma) + '</div><div class="bigu">de mediana, en nuestras manos</div>'
+      + '<h3 style="margin:0 0 10px">Lo que no depende de terceros ni del cliente</h3>'
+      + '<div class="sec2">Los tramos que sumo</div>';
+    T.forEach(x => { h += '<div class="r"><span class="l">' + x.tit + '</span><span class="v">'
+      + d1(x.med) + '</span></div>'; });
+    h += '<div class="src">Es la suma de las medianas de los tramos que gestionamos nosotros. '
+      + 'Ojo con leerlo como «el ciclo son ' + d1(KPI.ciclo.med) + ' y nosotros ponemos ' + d1(suma) + '»: '
+      + 'las medianas no se suman como si fueran trozos de una tarta, porque no todas las incidencias '
+      + 'pasan por todos los tramos. Sirve para el orden de magnitud —lo nuestro es la parte pequeña—, '
+      + 'no para un reparto exacto.'
+      + '<div class="fsrc">Origen: ' + KPI._fuente + '</div></div>'
+      + '<button class="x" onclick="this.closest(\'dialog\').close()">Cerrar</button>';
+    const b = document.getElementById('calc-body');
+    b.innerHTML = h; document.getElementById('dlg-calc').showModal();
+    return;
+  }
   const t = id === '_ciclo' ? null : KPI.tramos.find(x => x.id === id);
   const r = t || KPI.ciclo;
   let h = '<div class="k">Cómo sale este número</div>'
