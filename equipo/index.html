@@ -247,6 +247,14 @@ a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
 .blk.cerrado > header{border-bottom:0}
 .blk.cerrado .por, .blk.cerrado ul{display:none}
 .blk.cerrado .cnt{color:var(--ink)}
+.busca{display:flex;align-items:center;gap:8px;margin:0 0 10px}
+.busca input{flex:1;max-width:420px;font:inherit;font-size:14px;padding:8px 12px;border:1px solid var(--divider);border-radius:10px;background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.busca input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.busca .bx{font:inherit;font-size:12px;color:var(--muted);background:var(--surface);border:1px solid var(--divider);border-radius:8px;padding:6px 10px;cursor:pointer}
+.busca .bx:hover{color:var(--accent);border-color:var(--accent)}
+.busca .bn{font-size:12.5px;color:var(--muted)}
+.busca .bn b{color:var(--ink)}
+mark.hit{background:var(--warn-bg);color:inherit;padding:0 2px;border-radius:3px}
 .plegar{display:flex; justify-content:flex-end; gap:12px; margin:0 0 8px; font-size:11.5px; color:var(--muted-2)}
 .plegar button{background:none; border:0; font:inherit; color:var(--accent); cursor:pointer; text-decoration:underline; text-underline-offset:2px; padding:0}
 .blk li:first-child{border-top:0}
@@ -538,6 +546,12 @@ details.comova2 .cm-in{padding:0 18px 16px}
 
 
 
+
+  <div class="busca">
+    <input id="busca" type="search" placeholder="Buscar un LEAS, un centro o una serie… (p. ej. 7499)" autocomplete="off"
+      oninput="buscar(this.value)" onkeydown="if(event.key==='Escape'){this.value='';buscar('')}">
+    <span class="bn" id="busca-n"></span>
+  </div>
 
   <div id="quiensoy" class="qbar"></div>
 
@@ -1226,20 +1240,38 @@ function plegarTodos(abrir){
   guardaAbiertos();
 }
 
+// ── Buscador: LEAS, centro o serie. Enseña también lo tramitado y abre los bloques con resultado ──
+let BUSCA = '';
+function normB(x){ return String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); }
+function buscar(v){
+  v = normB(v).trim();
+  if(/^\d{3,5}$/.test(v)) v = 'leas-'+v;          // «7499» → LEAS-7499
+  v = v.replace(/^leas\s+/, 'leas-');
+  BUSCA = v; renderInterno();
+}
+function pega(t){ return BUSCA && normB(t).indexOf(BUSCA) !== -1; }
+function marcaBusca(html){
+  if(!BUSCA) return html;
+  const re = new RegExp(BUSCA.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'ig');
+  return html.replace(/>([^<]+)</g, (m, txt) => '>' + txt.replace(re, x => '<mark class="hit">'+x+'</mark>') + '<');
+}
+
 function renderInterno(){
   const c = document.getElementById('blks'); if(!c) return;
+  let nb = 0;
   let h = '';
   let hechos = 0;
   ORDEN.forEach(k => {
     const b = MSG[k], m = BMETA[k];
     const todas = (b.l || []).filter(t =>
-      (!FILTRO || titularEf(k,t) === FILTRO) && (!FCLI || clienteDe(t) === FCLI));
-    const lineas = (VERHECHOS ? todas.filter(t => tramitado(k,t)) : todas.filter(t => !tramitado(k,t))).slice()
+      BUSCA ? pega(t) : ((!FILTRO || titularEf(k,t) === FILTRO) && (!FCLI || clienteDe(t) === FCLI)));
+    if(BUSCA) nb += todas.length;
+    const lineas = (BUSCA ? todas : (VERHECHOS ? todas.filter(t => tramitado(k,t)) : todas.filter(t => !tramitado(k,t)))).slice()
       .sort((a,b) => (pesoDe(b) - pesoDe(a)) || (nivel(k,b) - nivel(k,a)));
     hechos += todas.filter(t => tramitado(k,t)).length;
     if(!lineas.length) return;
     const alto = lineas.filter(t => nivel(k,t)>=3).length;
-    h += '<div class="blk '+(alto ? 'a' : m[0])+(ABIERTOS[k] ? '' : ' cerrado')+'" data-k="'+k+'">'
+    h += '<div class="blk '+(alto ? 'a' : m[0])+((ABIERTOS[k] || BUSCA) ? '' : ' cerrado')+'" data-k="'+k+'">'
       +  '<header onclick="plegar(this.parentNode)" title="Pinchar para abrir o cerrar el bloque"><span class="chev">▼</span><span class="ico">'+m[1]+'</span><span class="t">'+BTIT[k]+'</span>'
       +  (alto ? '<span class="avn">'+alto+' en rojo</span>' : '')
       +  '<span class="cnt">'+lineas.length
@@ -1260,6 +1292,15 @@ function renderInterno(){
     : '';
   if(h) h = '<div class="plegar"><span>Bloques cerrados: pincha el título para abrir el que vayas a trabajar.</span>'
     + '<button onclick="plegarTodos(true)">abrir todos</button><button onclick="plegarTodos(false)">cerrar todos</button></div>' + h;
+  if(BUSCA){
+    const esLeas = /^leas-\d{3,5}$/.test(BUSCA);
+    const bn = document.getElementById('busca-n');
+    if(bn) bn.innerHTML = nb ? '<b>'+nb+'</b> '+(nb===1?'punto':'puntos')+' con «'+BUSCA.toUpperCase()+'»' : 'ningún punto con «'+BUSCA.toUpperCase()+'»';
+    h = marcaBusca(h);
+    if(!h) h = '<div class="blk c"><header><span class="ico">🔍</span><span class="t">No hay ningún punto con «'+BUSCA.toUpperCase()+'»'
+      + (esLeas ? ' · <a class="jira" target="_blank" rel="noopener" href="https://leaseir.atlassian.net/browse/'+BUSCA.toUpperCase()+'">abrirlo en Jira</a>' : '')
+      + '</span></header></div>';
+  } else { const bn = document.getElementById('busca-n'); if(bn) bn.textContent = ''; }
   c.innerHTML = cab + (h || '<div class="blk c"><header><span class="ico">🎉</span><span class="t">'
     + (FCLI ? 'Nada pendiente de '+FCLI+(FILTRO ? ' para '+FILTRO : '')
              : (FILTRO ? FILTRO+' no tiene nada pendiente' : 'Nada pendiente. Todo lo de hoy está tramitado'))
