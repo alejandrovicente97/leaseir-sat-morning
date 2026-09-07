@@ -5,8 +5,8 @@
 <style>
 :root{
   color-scheme: light;
-  --bg:#F3F5F7; --surface:#FFFFFF; --surface-2:#F8FAFB; --surface-3:#EBEEF2;
-  --ink:#0F1620; --ink-soft:#2C3644; --muted:#5D6775; --muted-2:#8B94A2;
+  --bg:#E5E8EC; --surface:#FFFFFF; --surface-2:#F8FAFB; --surface-3:#EBEEF2;
+  --ink:#0F1620; --ink-soft:#2C3644; --muted:#5D6775; --muted-2:#737E8D;
   --divider:#E2E6EB; --divider-soft:#EDF0F3;
   --accent:#B0431F;
   --crit:#B22026; --crit-bg:#FCEBEB; --crit-line:#E8A9AC;
@@ -19,9 +19,11 @@
   --sans:'IBM Plex Sans', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   --mono:'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 }
-/* El panel es en claro, siempre. Alejandro lo quiere en blanco, y antes se ponía
-   oscuro solo si el sistema del que lo abría estaba en oscuro. Sin bloques de tema
-   oscuro: los tokens de arriba son los únicos, y valen para pantalla y para papel. */
+/* El panel es en claro, siempre: antes se ponía oscuro solo si el sistema del que lo
+   abría estaba en oscuro. Sin bloques de tema oscuro, los tokens de arriba son los únicos.
+   El fondo es un gris (#E5E8EC), no blanco: las tarjetas son blancas y así se despegan
+   del fondo en vez de fundirse con él. Contraste comprobado sobre ese gris — el gris de
+   los rótulos pequeños se ha oscurecido a #737E8D porque el anterior se perdía. */
 
 *{box-sizing:border-box}
 body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:15px; line-height:1.45; -webkit-font-smoothing:antialiased}
