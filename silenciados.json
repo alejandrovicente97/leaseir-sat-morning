@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-09-07T13:35+02:00",
+  "actualizado": "2026-09-07T15:45+02:00",
   "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
   "como_se_usa": [
     "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -366,6 +366,23 @@
       "quien": "Isaac",
       "cuando": "2026-09-07",
       "nota": "Isaac abrio LEAS-7503 a las 12:10 y su sustitucion LEAS-7504 a las 12:11 (series 91129 / 40481, publicadas en ENVIOS a las 12:12)."
+    },
+    {
+      "centro": "Sin Vello Cadiz",
+      "cliente": "SinVello",
+      "leas": "LEAS-7505",
+      "vinculado_a": "LEAS-7490",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "nota": "Isaac corrigio el enlace en ENVIOS SAT LEASEIR a las 15:14: la sustitucion de Cadiz no es LEAS-7493 (cancelado) sino LEAS-7505, serie H03204."
+    },
+    {
+      "centro": "Centri Unico Globo",
+      "cliente": "Centri Unico",
+      "leas": "LEAS-7438",
+      "quien": "pasada 15:30",
+      "cuando": "2026-09-07",
+      "nota": "Atado por nombre de centro, no elegido por un tecnico: el ticket LEAS-7438 es el unico abierto de Centri Unico Globo y el centro escribe en el grupo de Centri Unico Italia. Confirmadlo o corregidlo."
     }
   ],
   "que_es_esto_enlaces": "Enlaces aprendidos: centro -> ticket. Cuando un mensaje del chat nombra el centro pero no el LEAS ni la serie, se mira aqui ANTES de darlo por huerfano. Se anade uno cada vez que un tecnico elige un candidato o corrige un enlace. Aqui no se guardan conversaciones de clientes, solo el enlace."
