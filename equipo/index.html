@@ -1,3 +1,4 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SAT · Lo de cada uno</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -238,6 +239,16 @@ a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
 .blk li{font-size:13.5px; color:var(--ink-soft); line-height:1.5;
         padding:11px 18px 12px 34px; position:relative;
         border-top:1px solid var(--divider-soft)}
+/* Bloques plegables: cerrados por defecto, se abre el que se va a trabajar */
+.blk > header{cursor:pointer; user-select:none}
+.blk > header:hover{background:var(--surface-2)}
+.blk .chev{width:18px; height:18px; flex:none; display:grid; place-items:center; color:var(--muted-2); font-size:11px; transition:transform .15s}
+.blk.cerrado .chev{transform:rotate(-90deg)}
+.blk.cerrado > header{border-bottom:0}
+.blk.cerrado .por, .blk.cerrado ul{display:none}
+.blk.cerrado .cnt{color:var(--ink)}
+.plegar{display:flex; justify-content:flex-end; gap:12px; margin:0 0 8px; font-size:11.5px; color:var(--muted-2)}
+.plegar button{background:none; border:0; font:inherit; color:var(--accent); cursor:pointer; text-decoration:underline; text-underline-offset:2px; padding:0}
 .blk li:first-child{border-top:0}
 .blk li:nth-child(even){background:var(--surface-3)}
 .blk li::before{content:""; position:absolute; left:21px; top:19px; width:5px; height:5px;
@@ -502,6 +513,7 @@ details.comova2 .cm-in{padding:0 18px 16px}
 .pcard .pc{display:block;margin-top:4px;font-size:11px;font-weight:600;color:var(--good)}
 .blk .cnt small{font-family:var(--sans);font-size:11px;font-weight:500;color:var(--muted-2);margin-left:3px}
 </style>
+</head><body>
 
 <div class="page">
 
@@ -1194,6 +1206,26 @@ function renderCargas(){
   c.innerHTML = h;
 }
 
+// ── Bloques plegables: qué bloques tiene abiertos este navegador (sat.abiertos) ──
+let ABIERTOS = {};
+try{ ABIERTOS = JSON.parse(localStorage.getItem('sat.abiertos') || '{}') || {}; }catch(e){ ABIERTOS = {}; }
+function guardaAbiertos(){ try{ localStorage.setItem('sat.abiertos', JSON.stringify(ABIERTOS)); }catch(e){} }
+// Solo cambia la clase: no se vuelve a pintar, para no perder lo que haya escrito en una casilla.
+function plegar(blk){
+  const k = blk.dataset.k; if(!k) return;
+  const abre = blk.classList.contains('cerrado');
+  blk.classList.toggle('cerrado', !abre);
+  if(abre) ABIERTOS[k] = 1; else delete ABIERTOS[k];
+  guardaAbiertos();
+}
+function plegarTodos(abrir){
+  document.querySelectorAll('#blks .blk[data-k]').forEach(b => {
+    b.classList.toggle('cerrado', !abrir);
+    if(abrir) ABIERTOS[b.dataset.k] = 1; else delete ABIERTOS[b.dataset.k];
+  });
+  guardaAbiertos();
+}
+
 function renderInterno(){
   const c = document.getElementById('blks'); if(!c) return;
   let h = '';
@@ -1207,8 +1239,8 @@ function renderInterno(){
     hechos += todas.filter(t => tramitado(k,t)).length;
     if(!lineas.length) return;
     const alto = lineas.filter(t => nivel(k,t)>=3).length;
-    h += '<div class="blk '+(alto ? 'a' : m[0])+'">'
-      +  '<header><span class="ico">'+m[1]+'</span><span class="t">'+BTIT[k]+'</span>'
+    h += '<div class="blk '+(alto ? 'a' : m[0])+(ABIERTOS[k] ? '' : ' cerrado')+'" data-k="'+k+'">'
+      +  '<header onclick="plegar(this.parentNode)" title="Pinchar para abrir o cerrar el bloque"><span class="chev">▼</span><span class="ico">'+m[1]+'</span><span class="t">'+BTIT[k]+'</span>'
       +  (alto ? '<span class="avn">'+alto+' en rojo</span>' : '')
       +  '<span class="cnt">'+lineas.length
          + (parseInt(m[2],10) > lineas.length ? '<small> de '+m[2]+'</small>' : '')
@@ -1226,6 +1258,8 @@ function renderInterno(){
       + (VERHECHOS ? ' · abajo solo salen estos' : ' · ya no aparecen abajo')
       + ' <button onclick="verHechos()">'+(VERHECHOS?'volver a lo pendiente':'verlos')+'</button></div>'
     : '';
+  if(h) h = '<div class="plegar"><span>Bloques cerrados: pincha el título para abrir el que vayas a trabajar.</span>'
+    + '<button onclick="plegarTodos(true)">abrir todos</button><button onclick="plegarTodos(false)">cerrar todos</button></div>' + h;
   c.innerHTML = cab + (h || '<div class="blk c"><header><span class="ico">🎉</span><span class="t">'
     + (FCLI ? 'Nada pendiente de '+FCLI+(FILTRO ? ' para '+FILTRO : '')
              : (FILTRO ? FILTRO+' no tiene nada pendiente' : 'Nada pendiente. Todo lo de hoy está tramitado'))
@@ -1375,3 +1409,4 @@ function cp(btn,text){
   }).catch(()=>{btn.textContent='Selecciona';});
 }
 </script>
+</body></html>
