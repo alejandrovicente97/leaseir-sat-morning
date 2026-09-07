@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-09-07T15:45+02:00",
+  "actualizado": "2026-09-07T17:00+02:00",
   "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
   "como_se_usa": [
     "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -301,6 +301,127 @@
       "cuando": "2026-09-05",
       "revive_si": "El lunes 07/09 LEAS-7493 sigue colgando de LEAS-7284 y no del caso vivo LEAS-7490.",
       "revivido": "2026-09-07: revivio a las 09:45 porque seguia colgando de LEAS-7284. A las 12:45 Isaac ha CANCELADO LEAS-7493, asi que el ticket esta cerrado y el punto sale del panel. No vuelve a salir por esto."
+    },
+    {
+      "id": "7499-sincronis-llamada",
+      "que": "LEAS-7499 Centri Unico Toledo sin comentario y sin fecha para el centro",
+      "ambito": {
+        "leas": "LEAS-7499",
+        "centro": "Centri Unico Toledo",
+        "tipo": "sin-movimiento"
+      },
+      "porque": "Gonzalo lo contestó desde el panel el 07/09 a las 16:16: «Se le ha dicho a Sincronis, que por favor llamen cuanto antes». Ya hay nota en el ticket y la gestión está hecha con el proveedor.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Pasa un día laborable más y el centro sigue sin fecha, o Sincronis no ha llamado."
+    },
+    {
+      "id": "7419-material-entregado",
+      "que": "LEAS-7419 Elha Ramón y Cajal · 6 días sin nota del técnico externo",
+      "ambito": {
+        "leas": "LEAS-7419",
+        "tipo": "externo-sin-nota"
+      },
+      "porque": "Gonzalo escribió desde el panel el 07/09 a las 16:05: «Material entregado y recordado al técnico». Ya hay nota de hoy.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Pasan 3 días laborables sin nota nueva, comprobado releyendo el ticket en esa pasada."
+    },
+    {
+      "id": "7469-material-recibido",
+      "que": "LEAS-7469 Elha Cerdanyola · 3 días sin nota del técnico externo",
+      "ambito": {
+        "leas": "LEAS-7469",
+        "tipo": "externo-sin-nota"
+      },
+      "porque": "Gonzalo escribió desde el panel el 07/09 a las 16:02: «Material recibido, se avisa al técnico».",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Pasan 3 días laborables sin nota nueva, comprobado releyendo el ticket."
+    },
+    {
+      "id": "7455-maps-agendar-llamada",
+      "que": "LEAS-7455 BiNatural · falta el link de ubicación",
+      "ambito": {
+        "leas": "LEAS-7455",
+        "centro": "BiNatural",
+        "tipo": "sin-maps"
+      },
+      "porque": "Gonzalo lo explicó desde el panel el 07/09 a las 16:09: «Se pone la direción pero en agendar llamada no te deja poner el link de google maps». No es que no lo pongan: el formulario del estado «Pendiente agendar llamada» no ofrece el campo 11354. Es un fallo de configuración de Jira, no del equipo.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Nunca contra el equipo mientras el ticket esté en «Pendiente agendar llamada». Si pasa a otro estado y sigue sin link, entonces sí. El arreglo del formulario va al panel de Alejandro."
+    },
+    {
+      "id": "7444-tecnico-de-baja",
+      "que": "LEAS-7444 Miguel Parra (ex-Brull) · falta el link de ubicación / servicio externo sin definir",
+      "ambito": {
+        "leas": "LEAS-7444",
+        "centro": "Miguel Parra",
+        "tipo": "sin-maps"
+      },
+      "porque": "Gonzalo lo contestó desde el panel el 07/09 a las 16:10: «El técnico está de baja, y el cliente quiere ese técnico por lo que estamos esperando». El ticket está parado a propósito.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Se define el servicio externo o el técnico vuelve, y el ticket sigue sin link de ubicación en el campo 11354."
+    },
+    {
+      "id": "7343-7472-recogida-enora",
+      "que": "LEAS-7343 y LEAS-7472 (Elha Sta Teresa) salieron del cliente y no llegan a taller",
+      "ambito": {
+        "leas": [
+          "LEAS-7343",
+          "LEAS-7472"
+        ],
+        "centro": "Elha Sta Teresa",
+        "tipo": "no-llega-taller"
+      },
+      "porque": "Gonzalo dio el número de recogida desde el panel el 07/09 a las 16:13 y 16:14: «Numero de recogida por enora: 1036143». Las dos van en el mismo porte y la recogida está gestionada.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Pasan 3 días laborables desde el 07/09 y el equipo sigue sin entrar en taller. Lo del campo de tracking vacío de LEAS-7472 sí sigue saliendo, que es otra cosa."
+    },
+    {
+      "id": "7249-pieza-de-mano-30748",
+      "que": "LEAS-7249 BiNatural · 715 h de reparación fuera de plazo y abierto",
+      "ambito": {
+        "leas": "LEAS-7249",
+        "centro": "BiNatural",
+        "tipo": "reparacion-fuera-de-plazo"
+      },
+      "porque": "Gonzalo lo explicó desde el panel el 07/09 a las 16:35: «El problema erradica en la pieza de mano 30748, como lo ha comprobado el técnico el 19/08/2026, vamos a preguntar de nuevo sobre el asunto por si podemos recoger la pieza de mano». Está identificado y a la espera del cliente.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Pasa una semana sin que se consiga recoger la pieza de mano 30748 ni haya nota nueva."
+    },
+    {
+      "id": "6768-buzzer-miercoles",
+      "que": "LEAS-6768 CVL Distribuidor · 1.838 h de reparación fuera de plazo, «pendiente asignar técnico»",
+      "ambito": {
+        "leas": "LEAS-6768",
+        "tipo": "reparacion-fuera-de-plazo"
+      },
+      "porque": "Ya no está sin técnico: está «En reparación» con Fran, que escribió el 07/09 a las 15:38 «Falla el buzzer durante las pruebas de temperatura, dado que ya pasa ampliamente de la hora de salida, queda pendiente para el miércoles 9». Gonzalo añadió a las 16:07 que se envía material. El equipo está en el banco.",
+      "quien": "Fran",
+      "cuando": "2026-09-07",
+      "revive_si": "Pasa el miércoles 9 sin que se retome, o el ticket vuelve a quedarse sin técnico. Lo de qué dirección de Mallorca es la buena sigue vivo en el bloque de envíos."
+    },
+    {
+      "id": "7509-7505-cadiz-dos-sustis",
+      "que": "LEAS-7505 y LEAS-7509 como sustituciones duplicadas de SinVello Cádiz",
+      "ambito": {
+        "leas": [
+          "LEAS-7505",
+          "LEAS-7509",
+          "LEAS-7490"
+        ],
+        "centro": "SinVello Cádiz",
+        "tipo": "duplicacion-inventario"
+      },
+      "porque": "No hay duplicación. Ernesto lo dejó dicho en «ENVIOS SAT LEASEIR» el 07/09 a las 16:18: «Se abre LEAS nuevo 7509 para no reescribir el 7505 que ya tenia tiempo». Las dos cuelgan del mismo padre LEAS-7490 y llevan piezas distintas: consola C00552 en LEAS-7505 y manípulo H03204 en LEAS-7509.",
+      "quien": "Ernesto",
+      "cuando": "2026-09-07",
+      "revive_si": "Nunca como duplicación. Solo si las dos quedaran en préstamo abierto pasado el cierre del caso."
     }
   ],
   "enlaces": [
@@ -383,6 +504,15 @@
       "quien": "pasada 15:30",
       "cuando": "2026-09-07",
       "nota": "Atado por nombre de centro, no elegido por un tecnico: el ticket LEAS-7438 es el unico abierto de Centri Unico Globo y el centro escribe en el grupo de Centri Unico Italia. Confirmadlo o corregidlo."
+    },
+    {
+      "centro": "Sin Vello Cadiz",
+      "cliente": "SinVello",
+      "leas": "LEAS-7509",
+      "vinculado_a": "LEAS-7490",
+      "quien": "Ernesto",
+      "cuando": "2026-09-07",
+      "nota": "Segunda sustitucion de Cadiz, abierta a las 16:18 para no reescribir LEAS-7505. Manipulo H03204; la consola C00552 va en LEAS-7505."
     }
   ],
   "que_es_esto_enlaces": "Enlaces aprendidos: centro -> ticket. Cuando un mensaje del chat nombra el centro pero no el LEAS ni la serie, se mira aqui ANTES de darlo por huerfano. Se anade uno cada vez que un tecnico elige un candidato o corrige un enlace. Aqui no se guardan conversaciones de clientes, solo el enlace."
