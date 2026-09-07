@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-09-07T18:05+02:00",
+  "actualizado": "2026-09-07T19:55+02:00",
   "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
   "como_se_usa": [
     "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -448,6 +448,61 @@
       "quien": "Gonzalo",
       "cuando": "2026-09-07",
       "revive_si": "Se cierra el caso raíz LEAS-7490 y la consola sigue en el centro sin ticket que la sostenga."
+    },
+    {
+      "id": "7486-laser-a-taller",
+      "que": "LEAS-7486 Laser Factory Sabadell · nadie contesta lo de Manresa y sigue con un solo comentario",
+      "ambito": {
+        "leas": "LEAS-7486",
+        "centro": "Laser Factory Sabadell",
+        "tipo": "sin-movimiento"
+      },
+      "porque": "Isaac lo contestó en el ticket el 07/09 a las 19:14: «como no sabemos muy bien cual es la averia vamos a traer a taller el laser completo, se movera cuando nos avisen mañana una sustitución de ellos que esta en Manresa». La decisión está tomada y escrita.",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "revive_si": "Pasan 3 días laborables sin que la recogida se materialice o sin nota nueva, comprobado releyendo el ticket."
+    },
+    {
+      "id": "cerdanyola-umbilical",
+      "que": "Elha Cerdanyola · el técnico externo dice que el umbilical no se puede sanear y hace falta uno nuevo",
+      "ambito": {
+        "leas": [
+          "LEAS-7447",
+          "LEAS-7469"
+        ],
+        "centro": "Elha Cerdanyola",
+        "tipo": "reparacion-externo"
+      },
+      "porque": "Resuelto el mismo día. El externo Jesús (Caypri) lo dijo en «Caypri Láser - Leaseir» a las 17:44 y a las 19:13 Isaac escribió en LEAS-7447 «al final el técnico a cambiado el umbilical» y a las 19:39 en LEAS-7469 «se cambia tambien umbilical avisando al cliente». Los dos tickets quedaron en «Finalizado técnico externo».",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "revive_si": "El centro vuelve a reportar el mismo fallo del umbilical después del cambio."
+    },
+    {
+      "id": "7492-villarroel-carlos",
+      "que": "LEAS-7492 Elha Villarroel · sigue en «Abierto» y sin nadie asignado desde el viernes",
+      "ambito": {
+        "leas": "LEAS-7492",
+        "centro": "Elha Villarroel",
+        "tipo": "sin-movimiento"
+      },
+      "porque": "Isaac lo cerró en falso no: lo gestionó. El 07/09 a las 19:32 escribió en el ticket «se habla con Carlos y cuando vaya a Villarroel por la LEAS-7488 aprovechara y revisara esta consola que no enciende. Se le envia parte de trabajo», y el ticket pasó a «Enviado a técnico externo».",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "revive_si": "Carlos hace la visita de LEAS-7488 y LEAS-7492 sigue sin nota del resultado."
+    },
+    {
+      "id": "7406-livorno-taranto",
+      "que": "LEAS-7406 Epil Point Livorno · el material se entregó en Taranto y nadie contestó al técnico lo del 14/09",
+      "ambito": {
+        "leas": "LEAS-7406",
+        "centro": "Epil Point Livorno",
+        "tipo": "externo-sin-nota"
+      },
+      "porque": "Cerrado el mismo día con el motivo escrito. Isaac a las 18:18: «tras reparar el técnico el umbilical dicen que da otra vez fallo pero nos avisan al poco tiempo que vuelve a funcionar. Se envia material por si acaso y cuando llegue se le avisara al tecnico», y Gonzalo subió a las 18:19 el parte de trabajo de Light Solutions. El ticket quedó en «Finalizado técnico externo».",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "revive_si": "Livorno vuelve a reportar el fallo y hay que reabrir o abrir ticket nuevo."
     }
   ],
   "enlaces": [
@@ -539,6 +594,46 @@
       "quien": "Ernesto",
       "cuando": "2026-09-07",
       "nota": "Segunda sustitucion de Cadiz, abierta a las 16:18 para no reescribir LEAS-7505. Manipulo H03204; la consola C00552 va en LEAS-7505."
+    },
+    {
+      "centro": "Elha Caracol",
+      "cliente": "Elha",
+      "leas": "LEAS-7495",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "nota": "Isaac publicó el umbilical con casquillo QUAD para Elha Caracol en ENVIOS SAT LEASEIR a las 19:36 y lo escribió en LEAS-7495 a las 19:37: «se envia material y se avisa a Gee»."
+    },
+    {
+      "centro": "Cavitbell Centro Médico Estético",
+      "cliente": "Directo",
+      "leas": "LEAS-7507",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "nota": "Envío de tornillos de nylon y tuercas publicado en ENVIOS SAT LEASEIR a las 18:49 (Pamplona); Isaac lo escribió en LEAS-7507 a las 18:48."
+    },
+    {
+      "centro": "Centro Médico Estético Deleite",
+      "cliente": "Directo",
+      "leas": "LEAS-7500",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "nota": "Isaac escribió «se avisa a innet» en LEAS-7500 a las 18:34. Ese centro tiene además la queja de calidad LEAS-7513, que no es del SAT."
+    },
+    {
+      "centro": "Depil Planet Las Rosas",
+      "cliente": "Directo",
+      "leas": "LEAS-7501",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "nota": "Isaac escribió «se ha mando material y avisado a innet» en LEAS-7501 a las 18:34. OJO: NO es el mismo centro que Depil Planet Avda. de Niza, cuyo envío quedó cancelado a las 15:02 por falta de dirección."
+    },
+    {
+      "centro": "Elha Boltaña",
+      "cliente": "Elha",
+      "leas": "LEAS-7510",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "nota": "Gonzalo publicó en ENVIOS SAT LEASEIR a las 18:34 «LEAS-7510 Enviar caja a Elha Boltaña, C/ de Boltaña, 78, San Blas-Canillejas, 28022 Madrid»."
     }
   ],
   "que_es_esto_enlaces": "Enlaces aprendidos: centro -> ticket. Cuando un mensaje del chat nombra el centro pero no el LEAS ni la serie, se mira aqui ANTES de darlo por huerfano. Se anade uno cada vez que un tecnico elige un candidato o corrige un enlace. Aqui no se guardan conversaciones de clientes, solo el enlace."
