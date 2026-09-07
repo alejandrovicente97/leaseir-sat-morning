@@ -457,7 +457,16 @@ dialog.wide{max-width:860px}
 /* ═══ KPIs del ciclo ═══ */
 /* Paleta por dueño del tramo. Validada con el comprobador de contraste y daltonismo
    sobre fondo claro: son tres identidades, no tres grados de nada. */
-:root{ --k-nos:#B0431F; --k-ter:#1F6FB2; --k-cli:#6B7A18 }
+:root{ --k-nos:#22333B; --k-ter:#127D8E; --k-cli:#7D3C69;
+        --s-num:#2F4858; --s-eur:#7FA0B5 }
+/* El color no basta: en daltonismo no hay tres colores que se separen entre sí Y del
+   semáforo a la vez (lo mejor que se encuentra baja de 14 y hace falta 25). Así que
+   cada dueño lleva también textura: nosotros liso, el tercero rayado, el cliente punteado.
+   Eso funciona además impreso en blanco y negro. */
+.pat-nosotros{}
+.pat-tercero{background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.34) 0 3px,transparent 3px 7px)}
+.pat-cliente{background-image:radial-gradient(rgba(255,255,255,.45) 1.1px,transparent 1.2px);background-size:6px 6px}
+.pat-otros{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.28) 0 2px,transparent 2px 5px)}
 
 
 .khero{display:grid;grid-template-columns:repeat(3,1fr);gap:0;
@@ -626,8 +635,8 @@ dialog.wide{max-width:860px}
 .fgraf{display:flex;align-items:flex-end;gap:2px;height:104px;padding:0 2px}
 .fgd{flex:1;display:flex;flex-direction:row;align-items:flex-end;gap:1px;
   min-width:0;position:relative;cursor:default}
-.fgd i{flex:1;display:block;border-radius:2px 2px 0 0;background:var(--cool);min-height:1px}
-.fgd i.f{background:var(--good)}
+.fgd i{flex:1;display:block;border-radius:2px 2px 0 0;background:var(--s-num);min-height:1px}
+.fgd i.f{background:var(--s-eur)}
 .fgd:hover i{filter:brightness(1.2)}
 .fejex{display:flex;gap:2px;padding:5px 2px 0;font-size:9.5px;color:var(--muted-2);
   font-family:var(--mono)}
@@ -650,7 +659,11 @@ dialog.wide{max-width:860px}
 .un b{font-family:var(--mono);font-size:32px;font-weight:600;letter-spacing:-.03em;line-height:1}
 .un .ut{font-size:12.5px;font-weight:500;color:var(--ink-soft);margin-top:4px}
 .un .us{font-size:11.5px;color:var(--muted);line-height:1.45;margin-top:3px}
-.un.fuerte b{color:var(--good)} .un.medio b{color:var(--cool)} .un.debil b{color:var(--muted-2)}
+.un b{color:var(--ink)}
+.un .uf{display:inline-block;font-size:9.5px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.07em;padding:1px 8px;border-radius:20px;margin-top:7px;align-self:flex-start;
+  background:var(--surface-3);color:var(--muted)}
+.un.fuerte .uf{background:#E3E7EA;color:#22333B}
 .un .uw{margin-top:7px;font-size:11px;color:var(--warn);line-height:1.4}
 .uti .upie{padding:11px 20px 14px;border-top:1px solid var(--divider-soft);
   font-size:11.5px;color:var(--muted);line-height:1.55}
@@ -726,6 +739,51 @@ dialog.wide{max-width:860px}
 .wcab span{font-size:11px;color:var(--muted);background:var(--surface-2);
   border:1px solid var(--divider);border-radius:20px;padding:3px 11px}
 @media(max-width:700px){.wl,.wsem,.wat{grid-template-columns:1fr;gap:3px}}
+
+
+/* ═══ Casos de Epil Point ═══ */
+.wcaso{border:1px solid var(--divider);border-left:5px solid var(--divider);border-radius:11px;
+  background:var(--surface);margin:0 0 10px;overflow:hidden}
+.wcaso.nosotros{border-left-color:var(--k-nos)}
+.wcaso.tercero{border-left-color:var(--k-ter)}
+.wcaso.cliente{border-left-color:var(--k-cli)}
+.wcaso>summary{list-style:none;cursor:pointer;display:grid;
+  grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:12px 16px}
+.wcaso>summary::-webkit-details-marker{display:none}
+.wcaso>summary:hover{background:var(--surface-2)}
+.wct{font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.wct em{display:block;font-style:normal;font-size:11.5px;color:var(--muted);font-weight:400;margin-top:2px}
+.wcq{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);white-space:nowrap}
+.wcq i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.wce{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+  padding:2px 10px;border-radius:20px;white-space:nowrap}
+.wce.atascado{background:var(--crit-bg);color:var(--crit)}
+.wce.esperando{background:var(--warn-bg);color:var(--warn)}
+.wce.marcha{background:var(--good-bg);color:var(--good)}
+.wcb{padding:0 16px 14px}
+.wcf{font-size:13px;line-height:1.55;color:var(--ink-soft);background:var(--surface-2);
+  border-radius:9px;padding:11px 13px;margin:0 0 11px}
+.wcf b{color:var(--ink)}
+.wck{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 11px}
+.wck button{font:inherit;font-family:var(--mono);font-size:11.5px;font-weight:600;
+  padding:4px 11px;border-radius:8px;border:1px solid var(--divider);background:var(--surface-2);
+  color:var(--ink);cursor:pointer}
+.wck button:hover{border-color:var(--accent);color:var(--accent)}
+.wck a{font-size:11.5px;padding:4px 11px;border-radius:8px;border:1px solid var(--divider);
+  color:var(--muted);text-decoration:none}
+.wck a:hover{color:var(--ink)}
+.wcl{display:grid;grid-template-columns:52px 44px 1fr;gap:11px;padding:8px 2px;
+  border-top:1px solid var(--divider-soft);font-size:12.5px;line-height:1.5;align-items:baseline}
+.wcl:first-of-type{border-top:0}
+.wcl .wd{font-size:11.5px;font-weight:600;color:var(--ink-soft)}
+.wcl .wh{font-family:var(--mono);font-size:11px;color:var(--muted-2)}
+.wcl .wx{color:var(--ink-soft)}
+.wcl .wx b{color:var(--ink);font-weight:600}
+.wcl .wg2{display:block;font-size:10.5px;color:var(--muted-2);margin-top:2px}
+.wcl.c{border-left:3px solid var(--crit);padding-left:9px;margin-left:-12px}
+.wcl.w{border-left:3px solid var(--warn);padding-left:9px;margin-left:-12px}
+.wcl.g{border-left:3px solid var(--good);padding-left:9px;margin-left:-12px}
+@media(max-width:700px){.wcaso>summary{grid-template-columns:1fr}.wcl{grid-template-columns:1fr}}
 
 /* ═══ Epil Point ═══ */
 .epdos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 0}
@@ -1153,8 +1211,8 @@ dialog.wide{max-width:860px}
     <div class="card" style="margin-bottom:12px">
       <h2 style="margin:0 0 4px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)">Día a día · últimas seis semanas laborables</h2>
       <div style="font-size:11.5px;color:var(--muted-2);margin:0 0 12px">
-        <span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--cool);margin-right:5px"></span>presupuestos emitidos (nº)
-        <span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--good);margin:0 5px 0 16px"></span>importe cerrado con factura (€)
+        <span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--s-num);margin-right:5px"></span>presupuestos emitidos (nº)
+        <span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--s-eur);margin:0 5px 0 16px"></span>importe cerrado con factura (€)
       </div>
       <div class="fgraf" id="fr-graf"></div>
       <div class="fejex" id="fr-eje"></div>
@@ -1530,9 +1588,9 @@ dialog.wide{max-width:860px}
     <h2>Dónde se va el tiempo <span class="hint">— pincha cualquier tramo</span></h2>
     <div class="card" style="padding:16px 12px 12px">
       <div class="kleg">
-        <span><i style="background:var(--k-nos)"></i>Depende de nosotros</span>
-        <span><i style="background:var(--k-ter)"></i>Transportista o técnico externo</span>
-        <span><i style="background:var(--k-cli)"></i>Depende del cliente</span>
+        <span><i class="pat-nosotros" style="background-color:var(--k-nos)"></i>Depende de nosotros <em style="font-style:normal;color:var(--muted-2)">· liso</em></span>
+        <span><i class="pat-tercero" style="background-color:var(--k-ter)"></i>Transportista o técnico externo <em style="font-style:normal;color:var(--muted-2)">· rayado</em></span>
+        <span><i class="pat-cliente" style="background-color:var(--k-cli)"></i>Depende del cliente <em style="font-style:normal;color:var(--muted-2)">· punteado</em></span>
         <span style="margin-left:auto">Barra fuerte: la mitad de los casos · barra clara: hasta el 10% peor · raya: el compromiso</span>
       </div>
       <div class="kcab"><span>Tramo</span><span></span><span>Mitad</span><span>10% peor</span><span>Fuera</span></div>
@@ -2409,11 +2467,11 @@ function kpintar(){
     const cl = pc >= 35 ? 'mal' : (pc >= 15 ? 'med' : 'ok');
     const w = x => (100 * Math.min(x, esc) / esc);
     return '<button class="kfila" onclick="kcalc(\'' + t.id + '\')">'
-      + '<span class="kt"><i style="background:' + KCOL[t.quien] + '"></i>' + t.tit + '</span>'
+      + '<span class="kt"><i class="pat-'+t.quien+'" style="background-color:' + KCOL[t.quien] + '"></i>' + t.tit + '</span>'
       + '<span class="kbar">'
-      +   '<i class="kp90" style="left:0;width:' + w(t.p90) + '%;background:' + KCOL[t.quien] + '"></i>'
-      +   '<i class="kmed" style="left:0;width:' + w(t.med) + '%;background:' + KCOL[t.quien] + '"></i>'
-      +   '<i class="kcap" style="left:calc(' + w(t.p90) + '% - 2px);background:' + KCOL[t.quien] + '"></i>'
+      +   '<i class="kp90 pat-'+t.quien+'" style="left:0;width:' + w(t.p90) + '%;background-color:' + KCOL[t.quien] + '"></i>'
+      +   '<i class="kmed pat-'+t.quien+'" style="left:0;width:' + w(t.med) + '%;background-color:' + KCOL[t.quien] + '"></i>'
+      +   '<i class="kcap pat-'+t.quien+'" style="left:calc(' + w(t.p90) + '% - 2px);background-color:' + KCOL[t.quien] + '"></i>'
       +   '<i class="kum" style="left:' + w(t.umbral) + '%"></i>'
       + '</span>'
       + '<span class="kn">' + d1(t.med) + '</span>'
@@ -2633,11 +2691,11 @@ function pintarAbiertas(){
   const tira = document.getElementById('ab-tira'); if(!tira) return;
   const tot = AB.tramos.reduce((a,x)=>a+x.n,0);
   tira.innerHTML = AB.tramos.map(x =>
-    '<button style="flex:'+x.n+';background:'+ABCOL[x.q]+'" title="'+x.t+': '+x.n+'" '
+    '<button class="pat-'+x.q+'" style="flex:'+x.n+';background-color:'+ABCOL[x.q]+'" title="'+x.t+': '+x.n+'" '
     + 'onclick="abcalc(\''+x.id+'\')">' + (x.n/tot > .06 ? '<b>'+x.n+'</b>' : '') + '</button>').join('');
   document.getElementById('ab-lista').innerHTML = AB.tramos.map(x =>
     '<button class="abf" onclick="abcalc(\''+x.id+'\')">'
-    + '<i style="background:'+ABCOL[x.q]+'"></i>'
+    + '<i class="pat-'+x.q+'" style="background-color:'+ABCOL[x.q]+'"></i>'
     + '<span class="abt">'+x.t+'<em>'+x.d+'</em></span>'
     + '<span class="abn">'+x.n+'</span>'
     + '<span class="abp">'+Math.round(100*x.n/tot)+' %</span></button>').join('');
@@ -3115,15 +3173,15 @@ function pintarUtil(){
     + '— y hoy es floja. Ventana medida: '+U.vent+'.</p></header>'
     + '<div class="unv">'
     + '<div class="un fuerte"><div class="ug">1 · pasó por la herramienta</div><b>'+U.notas+'</b>'
-    +   '<div class="ut">notas escritas desde el panel</div>'
+    +   '<div class="ut">notas escritas desde el panel</div><span class="uf">prueba directa</span>'
     +   '<div class="us">en '+U.notas_tk+' tickets, de las '+U.notas_tot+' que escribió '+U.notas_quien
     +   ' hoy. Sin el panel, esas notas se escriben en Jira una a una o no se escriben.</div></div>'
     + '<div class="un medio"><div class="ug">2 · se movió después de salir</div><b>'+pm+' %</b>'
-    +   '<div class="ut">'+U.movio+' de '+U.pub+' puntos publicados</div>'
+    +   '<div class="ut">'+U.movio+' de '+U.pub+' puntos publicados</div><span class="uf">indicio</span>'
     +   '<div class="us">y '+U.cerro+' se cerraron ('+pc+' %). Que se muevan después de salir en el panel '
     +   'no demuestra que sea por el panel: son los mismos tickets que el equipo ya estaba mirando.</div></div>'
     + '<div class="un debil"><div class="ug">3 · contraste</div><b>'+U.ctrl_movio+' de '+U.ctrl+'</b>'
-    +   '<div class="ut">abiertos que NO salieron y se movieron</div>'
+    +   '<div class="ut">abiertos que NO salieron y se movieron</div><span class="uf">no concluyente</span>'
     +   '<div class="us">Ninguno. Sería la comparación buena si el grupo fuera grande, pero son '+U.ctrl
     +   ' tickets: con esa muestra no se sostiene nada.</div>'
     +   '<div class="uw">⚠ Muestra insuficiente. Se vuelve fiable con dos o tres semanas de pasadas.</div></div>'
@@ -3136,27 +3194,51 @@ function pintarUtil(){
 }
 
 // ═══ Epil Point ═══
-const WA = {"_f":"2026-09-07","_leido":"WhatsApp leído a las 15:45; lo posterior a esa hora sale de Jira y del panel del equipo.","grupos":["EPIL POINT LASER SUPPORT","Light Solutions - Leaseir","ENVIOS SAT LEASEIR"],"hoy":[["08:03","Light Solutions","LEAS-7467","El técnico externo avisa de que tiene cita <b>hoy a las 12:00 en Sesto Fiorentino</b>, de que <b>el material todavía no le ha llegado</b> y de que esta tarde empieza sus vacaciones. «oggi è l'ultimo giorno che ho a disposizione per intervenire».","c"],["08:51","EPIL POINT LASER SUPPORT","LEAS-7494","Alta nueva de <b>Pomezia</b>: umbilical rajado por la parte de la pistola. Isaac anota a las 09:41 que va Francesco a repararlo y Gonzalo lo confirma a las 12:18. El ticket sigue <b>sin nadie asignado</b>.","w"],["12:25","EPIL POINT LASER SUPPORT","LEAS-7406","El cliente enseña la etiqueta de DHL: <b>«you sent it to Taranto and not Livorno»</b>. A las 12:38 se le piden disculpas. El material de Livorno se entregó en otra ciudad.","c"],["12:33","Light Solutions","LEAS-7467","«Laser ok!! rifatta la saldatura sul cavo bianco». <b>La soldadura del cable blanco sí quedó bien</b> — pero no es toda la avería, ver la corrección de las 16:27.","g"],["12:41","Light Solutions","LEAS-7406","Se anula la intervención de Livorno. A las 12:45 el técnico ofrece <b>«se volete livorno lo possiamo fare il 14/09»</b>. <b>Nadie le ha contestado</b> y desde esta tarde está de vacaciones.","c"],["14:41","EPIL POINT LASER SUPPORT","LEAS-7468","«We are sending express material to Sesto Directly», y a las 15:43 «Yes, if we could move a substitution». La sustitución sigue en <b>«Solicitado» desde el 03/09</b>.","c"],["15:02","ENVIOS SAT LEASEIR","LEAS-7406","Gonzalo publica un umbilical LM express para Livorno; Ernesto pone dos seguimientos de DHL a las 15:50 y 15:55.","g"],["16:27","desde el panel","LEAS-7468","<b>CORRECCIÓN.</b> Gonzalo escribe que «el técnico fue a reparar el umbilcal pero la repración ha sido fallida». <b>Sesto no está resuelto</b>, aunque a las 12:33 lo pareciera. El ticket padre sigue en «Pendiente definir servicio externo».","c"]],"semana":[["vie 04","15:47","EPIL POINT LASER SUPPORT","","El bot abre una incidencia por un <b>láser completo de Napoli Vomero</b> — consola y manípulo — que «doveva arrivare». <b>No se abrió ningún LEAS para ese centro</b>, y sigue sin abrirse. Es el patrón de siempre: entra por WhatsApp y no llega a Jira.","c"],["vie 04","17:36","EPIL POINT LASER SUPPORT","LEAS-7213","Se pregunta por el manípulo 40471 de Pavia, y otra vez a las 18:29 («do we have more updates on it?»). Epil Point no contestó ese día.","w"],["sáb 05","13:20","EPIL POINT LASER SUPPORT","LEAS-7213","Contestan: «Pomezia solved by Francesco and the same will be for Pavia, Francesco will be there in the next maintenance tour he will do for the North clinics». Isaac lo da por bueno a las 13:22. <b>Dos días después sigue sin estar escrito en el ticket y sin fecha de esa ronda.</b>","c"],["lun 07","","","","La jornada entera está arriba: Sesto fallido, Livorno entregado en Taranto, alta de Pomezia y el 14/09 sin contestar.","n"]],"atras":[["Partes de trabajo","02/09","","Isaac los prometió el 2 de septiembre a primera hora. <b>Sin ellos el cliente no acepta las facturas y el cobro se queda parado</b>, y Epil Point tiene 22.045 € vencidos, el segundo mayor del grupo. No consta que se enviaran.","c"],["Napoli Vomero","04/09","","El láser que «doveva arrivare» se reclamó por WhatsApp y <b>nunca se abrió el ticket</b>. Mientras no exista el LEAS, ni se mide ni se puede defender una factura.","c"],["Pavia","05/09","LEAS-7213","La respuesta de Epil Point sobre Francesco lleva dos días sin pasar al ticket, y nadie les ha pedido <b>fecha concreta</b> de esa ronda del norte.","c"],["Livorno","07/09","LEAS-7406","La oferta del técnico para ir <b>el 14/09</b> sigue sin respuesta, y él ya está de vacaciones. Cuanto más se tarde, más difícil recolocarlo.","c"],["Specialisti","20/08","LEAS-7332","<b>17 días en «Pendiente recogida» y sin tracking.</b> Su sustitución LEAS-7333 ya está «En préstamo», es decir entregada: la recogida procede y hay que pedirla.","c"],["Tarano","03/09","LEAS-7449","Queja abierta con el ticket padre LEAS-7448 ya en «Finalizado técnico externo». Cerrarla o decir qué queda.","w"]],"regla":"Todo lo que entre por el grupo de WhatsApp de Epil Point se abre en Jira el mismo día y se le responde con el LEAS. Si no, ni medimos su siniestralidad real ni podemos defender una factura. Napoli Vomero es lo que pasa cuando no se hace."};
-// Lo que se habla en los grupos de WhatsApp de Epil Point, que es donde de verdad pasa
-// todo con este cliente. Lo rellena la pasada diaria al leer los grupos; aquí solo se pinta.
-function jl(k){ return k ? '<a href="https://leaseir.atlassian.net/browse/'+k+'" target="_blank" '
-  + 'rel="noopener">'+k+'</a>' : ''; }
+const WA = {"_f":"2026-09-07","_leido":"WhatsApp leído a las 15:45; lo posterior a esa hora sale de Jira y del panel del equipo.","grupos":["EPIL POINT LASER SUPPORT","Light Solutions - Leaseir","ENVIOS SAT LEASEIR"],"casos":[{"id":"sesto","t":"Sesto Fiorentino · el umbilical","k":["LEAS-7467","LEAS-7468"],"q":"nosotros","desde":"03/09","est":"atascado","falta":"La reparación falló y la sustitución sigue en «Solicitado» desde el 03/09. Sacarla de ahí y decirles cuándo sale. El técnico que iba a intervenir está de vacaciones desde esta tarde.","hilo":[["lun 07","08:03","Light Solutions","El técnico avisa de que va <b>hoy a las 12:00</b>, de que <b>el material no le ha llegado</b> y de que esta tarde empieza vacaciones: «oggi è l'ultimo giorno che ho a disposizione per intervenire».","c"],["lun 07","12:33","Light Solutions","«Laser ok!! rifatta la saldatura sul cavo bianco». La soldadura del cable blanco sí quedó bien.","g"],["lun 07","14:41","EPIL POINT LASER SUPPORT","«We are sending express material to Sesto Directly», y a las 15:43 «Yes, if we could move a substitution».","w"],["lun 07","16:27","desde el panel","<b>Gonzalo corrige:</b> «el técnico fue a reparar el umbilcal pero la repración ha sido fallida». <b>No está resuelto</b>, aunque a las 12:33 lo pareciera.","c"]]},{"id":"livorno","t":"Livorno · el material fue a Taranto","k":["LEAS-7406"],"q":"nosotros","desde":"07/09","est":"atascado","falta":"El técnico ofreció ir el <b>14/09</b> y nadie le ha contestado; ya está de vacaciones. Decidir si se acepta esa fecha y escribirlo en el ticket antes de que se caiga.","hilo":[["lun 07","12:25","EPIL POINT LASER SUPPORT","El cliente enseña la etiqueta de DHL: <b>«you sent it to Taranto and not Livorno»</b>. A las 12:38 se le piden disculpas.","c"],["lun 07","12:41","Light Solutions","Se anula la intervención. A las 12:45 el técnico ofrece «se volete livorno lo possiamo fare il 14/09». <b>Sin respuesta.</b>","c"],["lun 07","15:02","ENVIOS SAT LEASEIR","Gonzalo publica un umbilical LM express para Livorno; Ernesto pone dos seguimientos de DHL a las 15:50 y 15:55.","g"]]},{"id":"pavia","t":"Pavia · el manípulo 40471","k":["LEAS-7213"],"q":"cliente","desde":"04/09","est":"esperando","falta":"Contestaron que lo resuelve su técnico Francesco en la próxima ronda del norte. <b>Dos días después sigue sin estar escrito en el ticket y sin fecha</b>. Pedirles fecha concreta y anotarlo.","hilo":[["vie 04","17:36","EPIL POINT LASER SUPPORT","Se pregunta por el manípulo 40471, y otra vez a las 18:29: «do we have more updates on it?». Ese día no contestaron.","w"],["sáb 05","13:20","EPIL POINT LASER SUPPORT","Contestan: «Pomezia solved by Francesco and the same will be for Pavia, Francesco will be there in the next maintenance tour he will do for the North clinics». Isaac lo da por bueno a las 13:22.","w"]]},{"id":"vomero","t":"Napoli Vomero · el láser que nunca tuvo ticket","k":[],"q":"nosotros","desde":"04/09","est":"atascado","falta":"Se reclamó por WhatsApp y <b>nunca se abrió el LEAS</b>. Mientras no exista el ticket, ni se mide ni se puede defender una factura. Abrirlo.","hilo":[["vie 04","15:47","EPIL POINT LASER SUPPORT","El bot abre una incidencia por un <b>láser completo</b> — consola y manípulo — que «doveva arrivare». No se abrió ningún LEAS para ese centro, y sigue sin abrirse.","c"]]},{"id":"pomezia","t":"Pomezia · umbilical rajado","k":["LEAS-7494"],"q":"nosotros","desde":"07/09","est":"en marcha","falta":"Atendido el mismo día: va Francesco a repararlo. Falta poner un nombre en el campo de asignado, que sigue vacío.","hilo":[["lun 07","08:51","EPIL POINT LASER SUPPORT","Alta nueva: umbilical rajado por la parte de la pistola. Isaac anota a las 09:41 que va Francesco y Gonzalo lo confirma a las 12:18.","g"]]},{"id":"partes","t":"Los partes de trabajo · bloquean el cobro","k":[],"q":"nosotros","desde":"02/09","est":"atascado","falta":"Isaac los prometió el 2 de septiembre. <b>Sin ellos el cliente no acepta las facturas</b>, y Epil Point tiene 22.045 € vencidos, el segundo mayor del grupo. No consta que se enviaran.","hilo":[["mié 02","","—","Se prometen los partes a primera hora. Desde entonces no consta el envío en ningún grupo.","c"]]},{"id":"specialisti","t":"Specialisti in Epilazione Laser · la recogida","k":["LEAS-7332","LEAS-7333"],"q":"nosotros","desde":"20/08","est":"atascado","falta":"<b>17 días en «Pendiente recogida» y sin tracking.</b> La sustitución LEAS-7333 ya está «En préstamo», o sea entregada: la recogida procede y hay que pedirla.","hilo":[["20/08","","—","Entra en «Pendiente recogida» y ahí sigue, sin número de seguimiento en el campo del ticket.","c"]]},{"id":"tarano","t":"Tarano · la queja abierta","k":["LEAS-7449","LEAS-7448"],"q":"nosotros","desde":"03/09","est":"esperando","falta":"La queja sigue abierta con el ticket padre ya en «Finalizado técnico externo». Cerrarla o decir qué queda.","hilo":[["03/09","","—","Se abre la queja como subtarea del LEAS-7448.","w"]]}],"regla":"Todo lo que entre por el grupo de WhatsApp de Epil Point se abre en Jira el mismo día y se le responde con el LEAS. Si no, ni medimos su siniestralidad real ni podemos defender una factura. Napoli Vomero es lo que pasa cuando no se hace."};
+// Los casos, no los mensajes sueltos: cada uno con su hilo completo (el día, la semana y
+// lo que arrastra de atrás), quién lo tiene parado y qué falta. Los LEAS abren el
+// expediente aquí mismo, sin salir a Jira.
+const WQ = {nosotros:'lo tenemos nosotros', tercero:'un tercero', cliente:'el cliente'};
+function verCaso(k){
+  tabGo('p-buscar');
+  const i = document.getElementById('bus-q'); if(i) i.value = k;
+  buscar(k); verFicha(k);
+}
 function pintarWapp(){
   const c = document.getElementById('ep-wapp'); if(!c) return;
-  const hoy = WA.hoy.map(x => '<div class="wl '+x[4]+'"><span class="wh">'+x[0]+'</span>'
-      + '<span class="wt">'+x[3]+'<span class="wg">'+jl(x[2])+x[1]+'</span></span></div>').join('');
-  const sem = WA.semana.map(x => '<div class="wsem '+x[5]+'"><span class="wd">'+x[0]+'</span>'
-      + '<span class="wh">'+x[1]+'</span><span class="wt">'+x[4]
-      + '<span class="wg">'+jl(x[3])+x[2]+'</span></span></div>').join('');
-  const atr = WA.atras.map(x => '<div class="wat '+x[5]+'"><span class="wq">'+x[0]
-      + '<em>desde el '+x[1]+'</em></span><span class="wt">'+x[3]
-      + (x[2] ? '<span class="wg">'+jl(x[2])+'</span>' : '')+'</span></div>').join('');
+  const orden = {atascado:0, esperando:1, 'en marcha':2};
+  const casos = WA.casos.slice().sort((a,b) => (orden[a.est]-orden[b.est]) || a.desde.localeCompare(b.desde));
+  const hoy = [];
+  WA.casos.forEach(x => x.hilo.forEach(l => { if(l[0] === 'lun 07') hoy.push([l, x]); }));
+  hoy.sort((a,b) => a[0][1].localeCompare(b[0][1]));
+
   c.innerHTML =
-      '<div class="wcab">'+WA.grupos.map(g => '<span>'+g+'</span>').join('')
-    + '<span>'+WA._leido+'</span></div>'
-    + '<div class="wsec">Hoy, lunes 7</div>' + hoy
-    + '<div class="wsec">La semana · desde el viernes 4</div>' + sem
-    + '<div class="wsec">Lo pendiente de atrás</div>' + atr
+      '<div class="wcab">' + WA.grupos.map(g => '<span>'+g+'</span>').join('')
+    + '<span>' + WA._leido + '</span></div>'
+
+    + '<div class="wsec">Los casos · ' + casos.filter(x=>x.est==='atascado').length + ' atascados de ' + casos.length + '</div>'
+    + casos.map((x,n) => '<details class="wcaso '+x.q+'"'+(x.est === 'atascado' ? ' open' : '')+'>'
+        + '<summary><span class="wct">'+x.t
+        +   '<em>desde el '+x.desde+' · '+x.hilo.length+' mensaje'+(x.hilo.length===1?'':'s')+' en los grupos</em></span>'
+        + '<span class="wcq"><i class="pat-'+x.q+'" style="background-color:var(--k-'
+        +   (x.q === 'nosotros' ? 'nos' : x.q === 'tercero' ? 'ter' : 'cli')+')"></i>'+WQ[x.q]+'</span>'
+        + '<span class="wce '+(x.est === 'en marcha' ? 'marcha' : x.est)+'">'+x.est+'</span></summary>'
+        + '<div class="wcb">'
+        +   '<div class="wcf"><b>Qué falta:</b> '+x.falta+'</div>'
+        +   (x.k.length ? '<div class="wck">'
+              + x.k.map(k => '<button onclick="verCaso(\''+k+'\')">'+k+' · expediente</button>').join('')
+              + x.k.map(k => '<a href="https://leaseir.atlassian.net/browse/'+k+'" target="_blank" rel="noopener">'+k+' en Jira</a>').join('')
+              + '</div>'
+            : '<div class="wck"><a style="color:var(--crit);border-color:var(--crit-line)">sin ticket en Jira</a></div>')
+        +   x.hilo.map(l => '<div class="wcl '+l[4]+'"><span class="wd">'+l[0]+'</span>'
+              + '<span class="wh">'+l[1]+'</span><span class="wx">'+l[3]
+              + '<span class="wg2">'+l[2]+'</span></span></div>').join('')
+        + '</div></details>').join('')
+
+    + '<div class="wsec">Hoy, por orden · lunes 7</div>'
+    + hoy.map(([l,x]) => '<div class="wl '+l[4]+'"><span class="wh">'+l[1]+'</span>'
+        + '<span class="wt">'+l[3]+'<span class="wg">'+x.t+' · '+l[2]+'</span></span></div>').join('')
+
     + '<div class="knota" style="margin-top:14px"><b>La regla que evita todo esto.</b> '+WA.regla+'</div>';
 }
 
