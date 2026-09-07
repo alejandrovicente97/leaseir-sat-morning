@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-09-07T10:06+02:00",
+  "actualizado": "2026-09-07T13:35+02:00",
   "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
   "como_se_usa": [
     "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -300,7 +300,7 @@
       "quien": "Isaac",
       "cuando": "2026-09-05",
       "revive_si": "El lunes 07/09 LEAS-7493 sigue colgando de LEAS-7284 y no del caso vivo LEAS-7490.",
-      "revivido": "2026-09-07: comprobado a las 09:45 que LEAS-7493 sigue colgando de LEAS-7284 («Resuelto»). Se cumple el revive_si, así que el punto vuelve a salir en el bloque de subtareas huérfanas citando eso, no la explicación de Isaac."
+      "revivido": "2026-09-07: revivio a las 09:45 porque seguia colgando de LEAS-7284. A las 12:45 Isaac ha CANCELADO LEAS-7493, asi que el ticket esta cerrado y el punto sale del panel. No vuelve a salir por esto."
     }
   ],
   "enlaces": [
@@ -349,6 +349,23 @@
       "leas": "LEAS-7492",
       "quien": "Chus",
       "cuando": "2026-09-07"
+    },
+    {
+      "centro": "Centri Unico Toledo",
+      "cliente": "Centri Unico",
+      "leas": "LEAS-7499",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "nota": "Gonzalo abrio el ticket a las 11:25 tras atender el chat de 10:21 a 10:44; el caso se paso a Sincronis a las 12:08."
+    },
+    {
+      "centro": "Clinica Cibeles CC Holea",
+      "cliente": "Directo",
+      "leas": "LEAS-7503",
+      "vinculado_a": "LEAS-7504",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "nota": "Isaac abrio LEAS-7503 a las 12:10 y su sustitucion LEAS-7504 a las 12:11 (series 91129 / 40481, publicadas en ENVIOS a las 12:12)."
     }
   ],
   "que_es_esto_enlaces": "Enlaces aprendidos: centro -> ticket. Cuando un mensaje del chat nombra el centro pero no el LEAS ni la serie, se mira aqui ANTES de darlo por huerfano. Se anade uno cada vez que un tecnico elige un candidato o corrige un enlace. Aqui no se guardan conversaciones de clientes, solo el enlace."
