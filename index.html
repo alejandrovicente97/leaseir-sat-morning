@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
 :root{
+  color-scheme: light;
   --bg:#F3F5F7; --surface:#FFFFFF; --surface-2:#F8FAFB; --surface-3:#EBEEF2;
   --ink:#0F1620; --ink-soft:#2C3644; --muted:#5D6775; --muted-2:#8B94A2;
   --divider:#E2E6EB; --divider-soft:#EDF0F3;
@@ -18,32 +19,9 @@
   --sans:'IBM Plex Sans', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   --mono:'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 }
-:root:not([data-theme="light"]){
-  @media (prefers-color-scheme: dark){
-    --bg:#0C1016; --surface:#151A22; --surface-2:#1A2029; --surface-3:#222933;
-    --ink:#EFF2F6; --ink-soft:#D2D8E0; --muted:#96A0AE; --muted-2:#6A7382;
-    --divider:#232A34; --divider-soft:#1D242D;
-    --accent:#E06B3E;
-    --crit:#EE6A70; --crit-bg:#37191C; --crit-line:#6E2E33;
-    --warn:#D6A147; --warn-bg:#352A11; --warn-line:#6A5426;
-    --good:#5BBA85; --good-bg:#15301F; --good-line:#2C5F41;
-    --cool:#7BA3D4; --cool-bg:#1A2532; --cool-line:#33506F;
-    --shadow:0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.35);
-    --shadow-lift:0 2px 8px rgba(0,0,0,.45), 0 14px 40px rgba(0,0,0,.45);
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0C1016; --surface:#151A22; --surface-2:#1A2029; --surface-3:#222933;
-  --ink:#EFF2F6; --ink-soft:#D2D8E0; --muted:#96A0AE; --muted-2:#6A7382;
-  --divider:#232A34; --divider-soft:#1D242D;
-  --accent:#E06B3E;
-  --crit:#EE6A70; --crit-bg:#37191C; --crit-line:#6E2E33;
-  --warn:#D6A147; --warn-bg:#352A11; --warn-line:#6A5426;
-  --good:#5BBA85; --good-bg:#15301F; --good-line:#2C5F41;
-  --cool:#7BA3D4; --cool-bg:#1A2532; --cool-line:#33506F;
-  --shadow:0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.35);
-  --shadow-lift:0 2px 8px rgba(0,0,0,.45), 0 14px 40px rgba(0,0,0,.45);
-}
+/* El panel es en claro, siempre. Alejandro lo quiere en blanco, y antes se ponía
+   oscuro solo si el sistema del que lo abría estaba en oscuro. Sin bloques de tema
+   oscuro: los tokens de arriba son los únicos, y valen para pantalla y para papel. */
 
 *{box-sizing:border-box}
 body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:15px; line-height:1.45; -webkit-font-smoothing:antialiased}
@@ -476,11 +454,9 @@ dialog.wide{max-width:860px}
 
 /* ═══ KPIs del ciclo ═══ */
 /* Paleta por dueño del tramo. Validada con el comprobador de contraste y daltonismo
-   en claro y en oscuro: son tres identidades, no tres grados de nada. */
+   sobre fondo claro: son tres identidades, no tres grados de nada. */
 :root{ --k-nos:#B0431F; --k-ter:#1F6FB2; --k-cli:#6B7A18 }
-:root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
-  --k-nos:#D9683C; --k-ter:#4A8FCC; --k-cli:#87953A } }
-:root[data-theme="dark"]{ --k-nos:#D9683C; --k-ter:#4A8FCC; --k-cli:#87953A }
+
 
 .khero{display:grid;grid-template-columns:repeat(3,1fr);gap:0;
   background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow-lift);
