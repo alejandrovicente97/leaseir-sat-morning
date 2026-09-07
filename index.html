@@ -599,19 +599,37 @@ dialog.wide{max-width:860px}
 .fbtns2 button:hover{border-color:var(--muted-2)}
 .fbtns2 button.main:hover{opacity:.9}
 
-/* Al imprimir: solo el informe */
+/* Al imprimir: solo el informe. #informe se mueve a hijo directo de <body>
+   antes de imprimir, porque si su padre está oculto ningún hijo se ve. */
 #informe{display:none}
+@page{margin:15mm 16mm}
 @media print{
-  body > *{display:none!important}
-  body.imprimiendo #informe{display:block!important}
+  body.imprimiendo > *{display:none!important}
+  body.imprimiendo > #informe{display:block!important}
   body.imprimiendo{background:#fff}
-  #informe{padding:0;color:#000;font-size:12px}
-  #informe h1{font-size:19px;margin:0 0 3px}
-  #informe .im-sub{font-size:12px;color:#555;margin:0 0 18px}
-  #informe table{width:100%;border-collapse:collapse;margin:0 0 16px}
-  #informe th,#informe td{text-align:left;padding:5px 7px;border-bottom:1px solid #ddd;font-size:11.5px}
-  #informe th{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#666}
-  #informe .im-pie{margin-top:22px;padding-top:9px;border-top:1px solid #ccc;font-size:10px;color:#666}
+  #informe{padding:0;color:#111;font-size:11.5px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  #informe .im-marca{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:#666;border-bottom:1.5px solid #111;padding-bottom:7px;margin:0 0 16px}
+  #informe h1{font-size:18px;margin:0 0 4px;font-weight:650;letter-spacing:-.01em}
+  #informe .im-sub{font-size:11px;color:#555;margin:0 0 4px;line-height:1.55}
+  #informe .im-caja{border:1px solid #ddd;border-radius:4px;padding:9px 11px;margin:14px 0 16px;
+    font-size:11px;color:#333;line-height:1.6}
+  #informe .im-caja b{font-weight:650;color:#111}
+  #informe h2{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:#666;
+    margin:0 0 7px;font-weight:600}
+  #informe table{width:100%;border-collapse:collapse;margin:0 0 14px}
+  #informe th,#informe td{text-align:left;padding:6px 8px;border-bottom:1px solid #e4e4e4;
+    font-size:11px;vertical-align:top}
+  #informe th{font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:#777;
+    border-bottom:1px solid #111;font-weight:600}
+  #informe td.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  #informe th.n{text-align:right}
+  #informe td.f{white-space:nowrap;color:#555;font-variant-numeric:tabular-nums}
+  #informe tr{break-inside:avoid}
+  #informe tr.im-fin td{font-weight:650;color:#111}
+  #informe .im-pie{margin-top:20px;padding-top:9px;border-top:1px solid #ccc;
+    font-size:9px;color:#777;line-height:1.65}
 }
 
 /* ═══ Epil Point ═══ */
@@ -2539,6 +2557,7 @@ function fmtF(iso){
 }
 function fmtD(dias){
   if(dias === null || dias === undefined) return '';
+  if(dias < 1/24) return Math.max(1, Math.round(dias*1440)) + ' min';
   if(dias < 1) return Math.round(dias*24) + ' h';
   return (dias < 10 ? dias.toFixed(1).replace('.',',') : Math.round(dias)) + ' d';
 }
@@ -2563,6 +2582,7 @@ function buscar(q){
   }).join('');
 }
 // Los pasos, con lo que tardó en salir de cada estado. El último sigue corriendo.
+const CERRADOS = ["Finalizada","Resuelto","Cancelado","Finalizado técnico externo","Devuelto a fábrica"];
 function pasosDe(k){
   const v = BUS.t[k], tr = v.tr || [], out = [];
   for(let i = 0; i < tr.length; i++){
@@ -2601,33 +2621,75 @@ function verFicha(k){
     + '<button class="main" onclick="informe(\''+k+'\')">Informe para el cliente</button>'
     + '<a class="fb" style="padding:9px 16px;border-radius:10px" target="_blank" rel="noopener" '
     + 'href="https://leaseir.atlassian.net/browse/'+k+'">Abrir en Jira</a>'
-    + '</div></div>';
+    + '</div>'
+    + '<div class="knota" style="margin-top:9px;font-size:12px">En el diálogo de impresión: '
+    + '<b>Destino: Guardar como PDF</b> y, en «Más opciones», <b>desmarca «Encabezados y pies de página»</b>. '
+    + 'Si no, el PDF sale con la fecha del navegador y la dirección de la herramienta impresas arriba y abajo, '
+    + 'y eso no se le manda a un cliente.</div>'
+    + '</div>';
   document.getElementById('bus-ficha').scrollIntoView({behavior:'smooth', block:'start'});
 }
 // Informe imprimible: se pinta aparte y se manda a imprimir. Desde el diálogo del navegador
 // se guarda como PDF, que es lo que se le manda al cliente.
 function informe(k){
   const v = BUS.t[k], pasos = pasosDe(k);
-  const total = pasos.length ? (new Date(pasos[pasos.length-1].f) - new Date(v.cr))/86400000 : null;
+  const fin  = pasos.length ? pasos[pasos.length-1] : null;
+  const ini  = new Date(v.cr);
+  const cerr = CERRADOS.indexOf(BUS.est[v.e]) >= 0;
+  const hasta = cerr && fin ? new Date(fin.f) : new Date();
+  const total = (hasta - ini)/86400000;
+  const om0 = pasos.filter(x => x.reb).length;
+  const vis = [];
+  pasos.filter(x => !x.reb).forEach(x => {
+    const ult = vis[vis.length-1];
+    if(ult && ult.est === x.est){                     // nunca llegó a salir de ahí
+      ult.d = (ult.d === null || x.d === null) ? null : ult.d + x.d;
+    } else vis.push({f:x.f, est:x.est, d:x.d});
+  });
+  const om  = om0;
+
+  // Fila de apertura + una fila por cada cambio de estado real.
+  const filas = [['<tr><td class="f">'+fmtF(v.cr)+'</td><td>Incidencia registrada</td>'
+      + '<td class="n">'+(vis.length ? fmtD((new Date(vis[0].f)-ini)/86400000) : '')+'</td></tr>'].join('')]
+    .concat(vis.map((x,n) => '<tr'+(n === vis.length-1 && cerr ? ' class="im-fin"' : '')+'>'
+      + '<td class="f">'+fmtF(x.f)+'</td><td>'+x.est+'</td>'
+      + '<td class="n">'+(x.d !== null ? fmtD(x.d)
+          : (cerr ? '<span style="color:#888">cierre</span>' : 'en curso'))+'</td></tr>'));
+
   document.getElementById('informe').innerHTML =
-      '<h1>Incidencia '+k+(v.c ? ' · '+v.c : '')+'</h1>'
-    + '<p class="im-sub">Abierta el '+fmtF(v.cr)+(v.ti ? ' · '+v.ti : '')
-    + (v.cs && v.cs !== '-' ? ' · consola '+v.cs : '')+(v.hp && v.hp !== '-' ? ' · manípulo '+v.hp : '')
-    + '<br>Estado actual: '+(BUS.est[v.e]||'')
-    + (total !== null ? ' · '+pasos.length+' movimientos en '+fmtD(total) : '')+'</p>'
-    + '<table><thead><tr><th>Fecha y hora</th><th>Pasa a</th><th>Desde</th><th>Tiempo en ese estado</th></tr></thead><tbody>'
-    + pasos.filter(x => !x.reb).map(x => '<tr><td>'+fmtF(x.f)+'</td><td>'+x.est+'</td><td>'+x.de+'</td><td>'
-        + (x.d === null ? 'en curso' : fmtD(x.d))+'</td></tr>').join('')
-    + '</tbody></table>'
-    + '<div class="im-pie">Leaseir Technologies · trazabilidad del ticket '+k+' tomada de Jira. '
-    + 'Cada línea es un cambio de estado registrado con su hora exacta.'
-    + (pasos.filter(x=>x.reb).length ? ' Se omiten '+pasos.filter(x=>x.reb).length+' movimientos de menos '
-      + 'de dos minutos, que son correcciones de registro y no reflejan tiempo de servicio.' : '') + ' '
-    + 'Documento generado el '+fmtF(new Date().toISOString())+'.</div>';
+      '<div class="im-marca">Leaseir Technologies · Servicio de Asistencia Técnica</div>'
+    + '<h1>Incidencia '+k+'</h1>'
+    + '<p class="im-sub">'+(v.c ? '<b>'+v.c+'</b><br>' : '')
+    + 'Abierta el '+fmtF(v.cr)+(v.ti ? ' · '+v.ti : '')
+    + (v.cs && v.cs !== '-' ? '<br>Consola '+v.cs : '')
+    + (v.hp && v.hp !== '-' ? ' · manípulo '+v.hp : '')+'</p>'
+    + '<div class="im-caja"><b>Estado actual: '+(BUS.est[v.e]||'—')+'</b> · '
+    + (cerr ? 'cerrada tras ' : 'abierta desde hace ')+fmtD(total)
+    + ' · '+vis.length+' cambio'+(vis.length === 1 ? '' : 's')+' de estado registrado'
+    + (vis.length === 1 ? '' : 's')+'.</div>'
+    + '<h2>Recorrido de la incidencia</h2>'
+    + '<table><thead><tr><th>Fecha y hora</th><th>Estado</th>'
+    + '<th class="n">Tiempo en ese estado</th></tr></thead><tbody>'
+    + filas.join('') + '</tbody></table>'
+    + '<div class="im-pie">Trazabilidad tomada del sistema de gestión de incidencias de Leaseir. '
+    + 'Cada línea es un cambio de estado registrado con su fecha y hora exactas; la columna de la '
+    + 'derecha es el tiempo que la incidencia permaneció en el estado de esa misma línea.'
+    + (om ? ' Se omiten '+om+' movimiento'+(om === 1 ? '' : 's')+' de menos de dos minutos, que son '
+      + 'correcciones de registro y no reflejan tiempo de servicio.' : '')
+    + '<br>Documento generado el '+fmtF(new Date().toISOString())+'.</div>';
+  imprimir();
+}
+// Mover el informe a hijo directo de <body>: si se queda dentro de .page, al ocultar
+// .page para imprimir se lleva por delante al informe y sale la hoja en blanco.
+// Y la clase se quita en 'afterprint', no con un temporizador: si el diálogo tarda
+// más que el temporizador, lo que se guarda es una hoja vacía.
+function imprimir(){
+  const el = document.getElementById('informe');
+  if(el.parentNode !== document.body) document.body.appendChild(el);
   document.body.classList.add('imprimiendo');
   window.print();
-  setTimeout(() => document.body.classList.remove('imprimiendo'), 400);
 }
+window.addEventListener('afterprint', () => document.body.classList.remove('imprimiendo'));
 
 // ═══ Epil Point ═══
 function pintarEpil(){
