@@ -693,6 +693,40 @@ dialog.wide{max-width:860px}
 .exd4 span{font-size:10.5px;color:var(--muted);line-height:1.3;display:block;margin-top:2px}
 .exd4 div.mal{background:var(--crit-bg)} .exd4 div.mal b{color:var(--crit)}
 
+
+/* ═══ WhatsApp de Epil Point ═══ */
+.wsec{font-size:11px;text-transform:uppercase;letter-spacing:.11em;color:var(--muted);
+  font-weight:700;margin:22px 0 9px;padding-bottom:7px;border-bottom:1px solid var(--divider)}
+.wl{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:11px 12px;
+  border-radius:9px;font-size:13px;line-height:1.55;align-items:baseline;margin-bottom:4px}
+.wl.c{background:var(--crit-bg)} .wl.w{background:var(--warn-bg)}
+.wl.g{background:var(--good-bg)} .wl.n{background:var(--surface-2)}
+.wl .wh{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--muted)}
+.wl .wt{color:var(--ink-soft)}
+.wl .wt b{color:var(--ink);font-weight:600}
+.wg{display:block;margin-top:4px;font-size:10.5px;color:var(--muted)}
+.wg a{font-family:var(--mono);font-weight:600;color:var(--ink);text-decoration:none;
+  border-bottom:1px solid var(--divider);margin-right:7px}
+.wg a:hover{color:var(--accent)}
+.wsem .wt,.wat .wt{color:var(--ink-soft)}
+.wsem .wt b,.wat .wt b{color:var(--ink);font-weight:600}
+.wsem{display:grid;grid-template-columns:58px 46px 1fr;gap:12px;padding:10px 12px;
+  border-radius:9px;font-size:13px;line-height:1.55;margin-bottom:4px}
+.wsem.c{background:var(--crit-bg)} .wsem.w{background:var(--warn-bg)} .wsem.n{background:var(--surface-2)}
+.wsem .wd{font-size:12px;font-weight:600;color:var(--ink)}
+.wsem .wh{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.wat{display:grid;grid-template-columns:118px 1fr;gap:13px;padding:11px 12px;
+  border-top:1px solid var(--divider-soft);font-size:13px;line-height:1.55}
+.wat:first-of-type{border-top:0}
+.wat .wq{font-size:12.5px;font-weight:600;color:var(--ink)}
+.wat .wq em{display:block;font-style:normal;font-size:11px;color:var(--muted);
+  font-family:var(--mono);margin-top:2px}
+.wat.c .wq{color:var(--crit)} .wat.w .wq{color:var(--warn)}
+.wcab{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 12px}
+.wcab span{font-size:11px;color:var(--muted);background:var(--surface-2);
+  border:1px solid var(--divider);border-radius:20px;padding:3px 11px}
+@media(max-width:700px){.wl,.wsem,.wat{grid-template-columns:1fr;gap:3px}}
+
 /* ═══ Epil Point ═══ */
 .epdos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 0}
 @media(max-width:900px){.epdos{grid-template-columns:1fr}}
@@ -1033,6 +1067,11 @@ dialog.wide{max-width:860px}
 
 <!-- ═════════ EPIL POINT ═════════ -->
 <div id="p-epil" class="pane">
+  <section class="sec" id="s-wapp" style="order:-1">
+    <h2>Lo que se habla por WhatsApp <span class="hint">— con este cliente, casi todo pasa aquí antes que en Jira</span></h2>
+    <div class="card" id="ep-wapp"></div>
+  </section>
+
   <div class="khero">
     <button class="kh1" onclick="epcalc('ciclo')"><b style="color:var(--good)">10,7 d</b>
       <span>Su ciclo, mediana</span><em>los demás clientes: 14,0 d</em></button>
@@ -2509,7 +2548,7 @@ function pintarEdades(root){
 
 // Cada bloque dice de que dia son sus datos. La pasada tiene que actualizar estas fechas
 // cuando recalcula; si se le olvida, sale el aviso solo.
-const FRESCURA = {"tablero Hoy": "2026-09-07", "cola de taller": "2026-09-07", "actividad del dia": "2026-09-07", "KPIs del ciclo": "2026-09-07", "ritmo de presupuestos": "2026-09-07", "tasa de utilidad": "2026-09-07"};
+const FRESCURA = {"tablero Hoy": "2026-09-07", "cola de taller": "2026-09-07", "actividad del dia": "2026-09-07", "KPIs del ciclo": "2026-09-07", "ritmo de presupuestos": "2026-09-07", "tasa de utilidad": "2026-09-07", "whatsapp de Epil Point": "2026-09-07"};
 function avisarViejos(){
   const viejos = Object.keys(FRESCURA).filter(k => (diasDesde(FRESCURA[k]) || 0) >= 1);
   const c = document.getElementById('frescura'); if(!c) return;
@@ -3097,6 +3136,30 @@ function pintarUtil(){
 }
 
 // ═══ Epil Point ═══
+const WA = {"_f":"2026-09-07","_leido":"WhatsApp leído a las 15:45; lo posterior a esa hora sale de Jira y del panel del equipo.","grupos":["EPIL POINT LASER SUPPORT","Light Solutions - Leaseir","ENVIOS SAT LEASEIR"],"hoy":[["08:03","Light Solutions","LEAS-7467","El técnico externo avisa de que tiene cita <b>hoy a las 12:00 en Sesto Fiorentino</b>, de que <b>el material todavía no le ha llegado</b> y de que esta tarde empieza sus vacaciones. «oggi è l'ultimo giorno che ho a disposizione per intervenire».","c"],["08:51","EPIL POINT LASER SUPPORT","LEAS-7494","Alta nueva de <b>Pomezia</b>: umbilical rajado por la parte de la pistola. Isaac anota a las 09:41 que va Francesco a repararlo y Gonzalo lo confirma a las 12:18. El ticket sigue <b>sin nadie asignado</b>.","w"],["12:25","EPIL POINT LASER SUPPORT","LEAS-7406","El cliente enseña la etiqueta de DHL: <b>«you sent it to Taranto and not Livorno»</b>. A las 12:38 se le piden disculpas. El material de Livorno se entregó en otra ciudad.","c"],["12:33","Light Solutions","LEAS-7467","«Laser ok!! rifatta la saldatura sul cavo bianco». <b>La soldadura del cable blanco sí quedó bien</b> — pero no es toda la avería, ver la corrección de las 16:27.","g"],["12:41","Light Solutions","LEAS-7406","Se anula la intervención de Livorno. A las 12:45 el técnico ofrece <b>«se volete livorno lo possiamo fare il 14/09»</b>. <b>Nadie le ha contestado</b> y desde esta tarde está de vacaciones.","c"],["14:41","EPIL POINT LASER SUPPORT","LEAS-7468","«We are sending express material to Sesto Directly», y a las 15:43 «Yes, if we could move a substitution». La sustitución sigue en <b>«Solicitado» desde el 03/09</b>.","c"],["15:02","ENVIOS SAT LEASEIR","LEAS-7406","Gonzalo publica un umbilical LM express para Livorno; Ernesto pone dos seguimientos de DHL a las 15:50 y 15:55.","g"],["16:27","desde el panel","LEAS-7468","<b>CORRECCIÓN.</b> Gonzalo escribe que «el técnico fue a reparar el umbilcal pero la repración ha sido fallida». <b>Sesto no está resuelto</b>, aunque a las 12:33 lo pareciera. El ticket padre sigue en «Pendiente definir servicio externo».","c"]],"semana":[["vie 04","15:47","EPIL POINT LASER SUPPORT","","El bot abre una incidencia por un <b>láser completo de Napoli Vomero</b> — consola y manípulo — que «doveva arrivare». <b>No se abrió ningún LEAS para ese centro</b>, y sigue sin abrirse. Es el patrón de siempre: entra por WhatsApp y no llega a Jira.","c"],["vie 04","17:36","EPIL POINT LASER SUPPORT","LEAS-7213","Se pregunta por el manípulo 40471 de Pavia, y otra vez a las 18:29 («do we have more updates on it?»). Epil Point no contestó ese día.","w"],["sáb 05","13:20","EPIL POINT LASER SUPPORT","LEAS-7213","Contestan: «Pomezia solved by Francesco and the same will be for Pavia, Francesco will be there in the next maintenance tour he will do for the North clinics». Isaac lo da por bueno a las 13:22. <b>Dos días después sigue sin estar escrito en el ticket y sin fecha de esa ronda.</b>","c"],["lun 07","","","","La jornada entera está arriba: Sesto fallido, Livorno entregado en Taranto, alta de Pomezia y el 14/09 sin contestar.","n"]],"atras":[["Partes de trabajo","02/09","","Isaac los prometió el 2 de septiembre a primera hora. <b>Sin ellos el cliente no acepta las facturas y el cobro se queda parado</b>, y Epil Point tiene 22.045 € vencidos, el segundo mayor del grupo. No consta que se enviaran.","c"],["Napoli Vomero","04/09","","El láser que «doveva arrivare» se reclamó por WhatsApp y <b>nunca se abrió el ticket</b>. Mientras no exista el LEAS, ni se mide ni se puede defender una factura.","c"],["Pavia","05/09","LEAS-7213","La respuesta de Epil Point sobre Francesco lleva dos días sin pasar al ticket, y nadie les ha pedido <b>fecha concreta</b> de esa ronda del norte.","c"],["Livorno","07/09","LEAS-7406","La oferta del técnico para ir <b>el 14/09</b> sigue sin respuesta, y él ya está de vacaciones. Cuanto más se tarde, más difícil recolocarlo.","c"],["Specialisti","20/08","LEAS-7332","<b>17 días en «Pendiente recogida» y sin tracking.</b> Su sustitución LEAS-7333 ya está «En préstamo», es decir entregada: la recogida procede y hay que pedirla.","c"],["Tarano","03/09","LEAS-7449","Queja abierta con el ticket padre LEAS-7448 ya en «Finalizado técnico externo». Cerrarla o decir qué queda.","w"]],"regla":"Todo lo que entre por el grupo de WhatsApp de Epil Point se abre en Jira el mismo día y se le responde con el LEAS. Si no, ni medimos su siniestralidad real ni podemos defender una factura. Napoli Vomero es lo que pasa cuando no se hace."};
+// Lo que se habla en los grupos de WhatsApp de Epil Point, que es donde de verdad pasa
+// todo con este cliente. Lo rellena la pasada diaria al leer los grupos; aquí solo se pinta.
+function jl(k){ return k ? '<a href="https://leaseir.atlassian.net/browse/'+k+'" target="_blank" '
+  + 'rel="noopener">'+k+'</a>' : ''; }
+function pintarWapp(){
+  const c = document.getElementById('ep-wapp'); if(!c) return;
+  const hoy = WA.hoy.map(x => '<div class="wl '+x[4]+'"><span class="wh">'+x[0]+'</span>'
+      + '<span class="wt">'+x[3]+'<span class="wg">'+jl(x[2])+x[1]+'</span></span></div>').join('');
+  const sem = WA.semana.map(x => '<div class="wsem '+x[5]+'"><span class="wd">'+x[0]+'</span>'
+      + '<span class="wh">'+x[1]+'</span><span class="wt">'+x[4]
+      + '<span class="wg">'+jl(x[3])+x[2]+'</span></span></div>').join('');
+  const atr = WA.atras.map(x => '<div class="wat '+x[5]+'"><span class="wq">'+x[0]
+      + '<em>desde el '+x[1]+'</em></span><span class="wt">'+x[3]
+      + (x[2] ? '<span class="wg">'+jl(x[2])+'</span>' : '')+'</span></div>').join('');
+  c.innerHTML =
+      '<div class="wcab">'+WA.grupos.map(g => '<span>'+g+'</span>').join('')
+    + '<span>'+WA._leido+'</span></div>'
+    + '<div class="wsec">Hoy, lunes 7</div>' + hoy
+    + '<div class="wsec">La semana · desde el viernes 4</div>' + sem
+    + '<div class="wsec">Lo pendiente de atrás</div>' + atr
+    + '<div class="knota" style="margin-top:14px"><b>La regla que evita todo esto.</b> '+WA.regla+'</div>';
+}
+
 function pintarEpil(){
   const c = document.getElementById('ep-tramos'); if(!c) return;
   c.innerHTML = EPIL.tramos.map(t => {
@@ -3139,7 +3202,7 @@ function epcalc(id){
   b.innerHTML = h; linkTickets(b);
   document.getElementById('dlg-calc').showModal();
 }
-try{ buscar(''); pintarEpil(); pintarRitmo(); pintarUtil(); pintarBusFecha(); }catch(e){ console.error('buscar/epil/ritmo', e); }
+try{ buscar(''); pintarEpil(); pintarWapp(); pintarRitmo(); pintarUtil(); pintarBusFecha(); }catch(e){ console.error('buscar/epil/ritmo', e); }
 
 function dlg(id){const d=document.getElementById(id); if(d&&d.showModal) d.showModal();}
 document.querySelectorAll('dialog').forEach(d=>{
