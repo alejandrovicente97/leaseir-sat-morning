@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-09-05T13:35+02:00",
+  "actualizado": "2026-09-07T09:55+02:00",
   "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
   "como_se_usa": [
     "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -299,7 +299,8 @@
       "porque": "Isaac lo explicó desde el panel el 05/09 a las 10:31: «la subtarea se mueve al caso vivo porque el manipulo suyo no da enrgia por la configuración de la consola». El caso vivo es LEAS-7490.",
       "quien": "Isaac",
       "cuando": "2026-09-05",
-      "revive_si": "El lunes 07/09 LEAS-7493 sigue colgando de LEAS-7284 y no del caso vivo LEAS-7490."
+      "revive_si": "El lunes 07/09 LEAS-7493 sigue colgando de LEAS-7284 y no del caso vivo LEAS-7490.",
+      "revivido": "2026-09-07: comprobado a las 09:45 que LEAS-7493 sigue colgando de LEAS-7284 («Resuelto»). Se cumple el revive_si, así que el punto vuelve a salir en el bloque de subtareas huérfanas citando eso, no la explicación de Isaac."
     }
   ],
   "enlaces": [
