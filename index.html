@@ -8,7 +8,7 @@
   --bg:#E5E8EC; --surface:#FFFFFF; --surface-2:#F8FAFB; --surface-3:#EBEEF2;
   --ink:#0F1620; --ink-soft:#2C3644; --muted:#5D6775; --muted-2:#737E8D;
   --divider:#E2E6EB; --divider-soft:#EDF0F3;
-  --accent:#B0431F;
+  --accent:#011839;   /* azul marino Leaseir · cromo: botones, pestaña activa, enlaces */
   --crit:#B22026; --crit-bg:#FCEBEB; --crit-line:#E8A9AC;
   --warn:#A96C00; --warn-bg:#FBF2DF; --warn-line:#E0C182;
   --good:#2A7048; --good-bg:#E6F2EA; --good-line:#9CCBAF;
@@ -457,8 +457,12 @@ dialog.wide{max-width:860px}
 /* ═══ KPIs del ciclo ═══ */
 /* Paleta por dueño del tramo. Validada con el comprobador de contraste y daltonismo
    sobre fondo claro: son tres identidades, no tres grados de nada. */
-:root{ --k-nos:#22333B; --k-ter:#127D8E; --k-cli:#7D3C69;
-        --s-num:#2F4858; --s-eur:#7FA0B5 }
+:root{ --k-nos:#013567; --k-ter:#4E7C80; --k-cli:#604BEB;
+        --s-num:#013567; --s-eur:#7FA0C4 }
+/* Colores de Leaseir, tomados de landing.leaseir.com: marino #011839, azul #013567,
+   agua #99BBBD (oscurecida a #4E7C80 para que aguante texto blanco encima) y violeta
+   #604BEB. El semáforo NO se cambia: rojo, ámbar y verde tienen que seguir siendo
+   alarma y no marca. */
 /* El color no basta: en daltonismo no hay tres colores que se separen entre sí Y del
    semáforo a la vez (lo mejor que se encuentra baja de 14 y hace falta 25). Así que
    cada dueño lleva también textura: nosotros liso, el tercero rayado, el cliente punteado.
@@ -784,6 +788,24 @@ dialog.wide{max-width:860px}
 .wcl.w{border-left:3px solid var(--warn);padding-left:9px;margin-left:-12px}
 .wcl.g{border-left:3px solid var(--good);padding-left:9px;margin-left:-12px}
 @media(max-width:700px){.wcaso>summary{grid-template-columns:1fr}.wcl{grid-template-columns:1fr}}
+
+
+/* Resumen ejecutivo de Epil Point: lo que hay que saber sin abrir nada */
+.wres{background:var(--surface-2);border:1px solid var(--divider);border-radius:11px;
+  padding:15px 18px 16px;margin:0 0 14px}
+.wrn{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:0 0 13px}
+@media(max-width:760px){.wrn{grid-template-columns:repeat(2,1fr);gap:12px 0}}
+.wrn div{border-left:1px solid var(--divider);padding:0 14px}
+.wrn div:first-child{border-left:0;padding-left:0}
+.wrn b{display:block;font-family:var(--mono);font-size:27px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.wrn b.mal{color:var(--crit)}
+.wrn span{display:block;font-size:11px;color:var(--muted);line-height:1.35;margin-top:4px}
+.wrt{font-size:13.5px;line-height:1.6;color:var(--ink-soft);margin:0}
+.wrt b{color:var(--ink);font-weight:600}
+.wrt + .wrt{margin-top:8px}
+.wabrir{font:inherit;font-size:11.5px;font-weight:600;color:var(--muted);background:none;
+  border:0;cursor:pointer;padding:0;text-decoration:underline;margin:0 0 10px}
+.wabrir:hover{color:var(--accent)}
 
 /* ═══ Epil Point ═══ */
 .epdos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 0}
@@ -3204,6 +3226,11 @@ function verCaso(k){
   const i = document.getElementById('bus-q'); if(i) i.value = k;
   buscar(k); verFicha(k);
 }
+function wTodos(b){
+  const abrir = b.textContent.indexOf('abrir') === 0;
+  document.querySelectorAll('#ep-wapp .wcaso').forEach(d => { d.open = abrir; });
+  b.textContent = abrir ? 'cerrar todos' : 'abrir todos';
+}
 function pintarWapp(){
   const c = document.getElementById('ep-wapp'); if(!c) return;
   const orden = {atascado:0, esperando:1, 'en marcha':2};
@@ -3212,12 +3239,38 @@ function pintarWapp(){
   WA.casos.forEach(x => x.hilo.forEach(l => { if(l[0] === 'lun 07') hoy.push([l, x]); }));
   hoy.sort((a,b) => a[0][1].localeCompare(b[0][1]));
 
+  const nAt = casos.filter(x=>x.est==='atascado').length;
+  const sinTk = casos.filter(x=>!x.k.length).length;
+  const nMsg = casos.reduce((s,x)=>s+x.hilo.length,0);
+  const hoyN = hoy.length;
   c.innerHTML =
       '<div class="wcab">' + WA.grupos.map(g => '<span>'+g+'</span>').join('')
     + '<span>' + WA._leido + '</span></div>'
 
-    + '<div class="wsec">Los casos · ' + casos.filter(x=>x.est==='atascado').length + ' atascados de ' + casos.length + '</div>'
-    + casos.map((x,n) => '<details class="wcaso '+x.q+'"'+(x.est === 'atascado' ? ' open' : '')+'>'
+    + '<div class="wres">'
+    +   '<div class="wrn">'
+    +     '<div><b class="mal">'+nAt+'</b><span>casos atascados<br>de '+casos.length+' abiertos</span></div>'
+    +     '<div><b>'+hoyN+'</b><span>mensajes hoy<br>en los tres grupos</span></div>'
+    +     '<div><b class="mal">'+sinTk+'</b><span>casos sin ticket<br>en Jira</span></div>'
+    +     '<div><b class="mal">22,0<small style="font-size:14px;color:var(--muted)"> k€</small></b>'
+    +       '<span>vencido de Epil Point<br>bloqueado por los partes</span></div>'
+    +   '</div>'
+    +   '<p class="wrt"><b>Hoy ha sido un mal día y acaba peor de lo que parecía.</b> A mediodía Sesto '
+    +   'daba señales de estar resuelto y a las 16:27 Gonzalo escribió que la reparación del umbilical '
+    +   'había fallado. Livorno se ha caído por un error nuestro —el material se entregó en Taranto— y '
+    +   'el técnico que podía arreglarlo ofreció el 14/09 antes de irse de vacaciones: '
+    +   '<b>esa oferta sigue sin contestar</b>. Lo único que salió bien fue Pomezia, atendido el mismo día.</p>'
+    +   '<p class="wrt"><b>Lo que arrastra no es técnico, es de registro.</b> '+sinTk+' de los '+casos.length
+    +   ' casos no tienen ticket: el láser de Napoli Vomero que reclamaron el viernes y los partes de '
+    +   'trabajo prometidos el 2 de septiembre. Esos partes son los que bloquean <b>22.045 € vencidos</b>, '
+    +   'el segundo mayor del grupo. No es un problema del SAT: es dinero parado por un papel.</p>'
+    +   '<p class="wrt"><b>Si hoy solo se hacen dos cosas:</b> contestar al técnico si se acepta el 14/09 '
+    +   'para Livorno, y sacar la sustitución de Sesto de «Solicitado», donde lleva desde el 03/09.</p>'
+    + '</div>'
+
+    + '<div class="wsec">Los casos · ' + nAt + ' atascados de ' + casos.length
+    +   ' <button class="wabrir" onclick="wTodos(this)" style="margin-left:8px">abrir todos</button></div>'
+    + casos.map((x,n) => '<details class="wcaso '+x.q+'">'
         + '<summary><span class="wct">'+x.t
         +   '<em>desde el '+x.desde+' · '+x.hilo.length+' mensaje'+(x.hilo.length===1?'':'s')+' en los grupos</em></span>'
         + '<span class="wcq"><i class="pat-'+x.q+'" style="background-color:var(--k-'
