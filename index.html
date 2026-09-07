@@ -442,6 +442,56 @@ dialog.wide{max-width:860px}
 @media(max-width:560px){.ops{grid-template-columns:1fr}}
 .rep-tools .main.alt{background:var(--surface-2);color:var(--ink);border:1px solid var(--divider)}
 
+/* ═══ KPIs del ciclo ═══ */
+/* Paleta por dueño del tramo. Validada con el comprobador de contraste y daltonismo
+   en claro y en oscuro: son tres identidades, no tres grados de nada. */
+:root{ --k-nos:#B0431F; --k-ter:#1F6FB2; --k-cli:#6B7A18 }
+:root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+  --k-nos:#D9683C; --k-ter:#4A8FCC; --k-cli:#87953A } }
+:root[data-theme="dark"]{ --k-nos:#D9683C; --k-ter:#4A8FCC; --k-cli:#87953A }
+
+.khero{display:grid;grid-template-columns:auto auto 1fr;gap:26px;align-items:center;
+  background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow-lift);
+  padding:18px 24px;margin:0 0 14px}
+.kh1{display:flex;flex-direction:column;gap:1px;cursor:pointer;border:0;background:none;
+  font:inherit;color:inherit;text-align:left;padding:0}
+.kh1 b{font-family:var(--mono);font-size:34px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.kh1 span{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
+.kh1:hover b{color:var(--accent)}
+.khs{font-size:13.5px;color:var(--ink-soft);line-height:1.55;max-width:62ch}
+.khs b{font-weight:600}
+@media(max-width:820px){.khero{grid-template-columns:1fr 1fr;gap:14px}.khs{grid-column:1/-1}}
+
+.kleg{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin:0 0 10px}
+.kleg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:0}
+.kfila{display:grid;grid-template-columns:170px 1fr 62px;gap:12px;align-items:center;
+  padding:7px 0;border:0;background:none;font:inherit;color:inherit;text-align:left;
+  width:100%;cursor:pointer;border-radius:8px}
+.kfila:hover{background:var(--surface-2)}
+.kfila .kt{font-size:12.5px;font-weight:500;color:var(--ink);line-height:1.25}
+.kfila .kt em{display:block;font-style:normal;font-size:10.5px;color:var(--muted-2);font-weight:400}
+.kbar{position:relative;height:19px}
+.kbar .kp90{position:absolute;top:3px;height:13px;border-radius:0 4px 4px 0;opacity:.26}
+.kbar .kmed{position:absolute;top:0;height:19px;border-radius:0 4px 4px 0;min-width:3px}
+.kbar .kum{position:absolute;top:-2px;bottom:-2px;width:0;border-left:1.5px dashed var(--muted-2);opacity:.75}
+.kbar .kv{position:absolute;top:1px;font-family:var(--mono);font-size:11.5px;font-weight:600;
+  white-space:nowrap;color:var(--ink)}
+.kbar .kv em{font-style:normal;color:var(--muted-2);font-weight:500;margin-left:7px}
+.kfila .kpc{font-family:var(--mono);font-size:12.5px;font-weight:600;text-align:right}
+.kfila .kpc.mal{color:var(--crit)} .kfila .kpc.med{color:var(--warn)} .kfila .kpc.ok{color:var(--good)}
+.keje{display:grid;grid-template-columns:170px 1fr 62px;gap:12px;font-size:10.5px;
+  color:var(--muted-2);margin-top:3px}
+.keje div:nth-child(2){display:flex;justify-content:space-between}
+
+.kdos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+@media(max-width:980px){.kdos{grid-template-columns:1fr}}
+.kwrap{max-height:290px;overflow-y:auto}
+.knota{font-size:11.5px;color:var(--muted);line-height:1.5;margin:9px 0 0;
+  padding:9px 12px;background:var(--surface-2);border-radius:9px}
+.knota b{color:var(--ink-soft)}
+.kbadge{display:inline-block;font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;
+  text-transform:uppercase;letter-spacing:.05em;color:#fff}
+
 .qbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:9px 14px;margin:0 0 10px;border:1px solid var(--divider);border-radius:9px;font-size:12.5px}
 .qnota{color:var(--muted);line-height:1.4}
 .qbtn{font:inherit;font-size:12px;font-weight:600;padding:3px 11px;border-radius:20px;border:1px solid var(--divider);background:var(--surface-2);color:var(--ink);cursor:pointer}
@@ -474,6 +524,7 @@ dialog.wide{max-width:860px}
     <button class="on" role="tab" onclick="tab(this,'p-hoy')">Hoy<small>Operación</small></button>
     <button role="tab" onclick="tab(this,'p-interno')">Report interno<small>para copiar</small></button>
     <button role="tab" onclick="tab(this,'p-actividad')">Actividad<small>quién ha hecho qué</small></button>
+    <button role="tab" onclick="tab(this,'p-kpis')">KPIs<small>tiempos medidos</small></button>
     <button role="tab" onclick="tab(this,'p-flota')">Flota<small>sustituciones</small></button>
     <button role="tab" onclick="tab(this,'p-clientes')">Clientes<small>por cadena</small></button>
     <button role="tab" onclick="tab(this,'p-cobros')">Cobros<small>110 k€ vencido</small></button>
@@ -1338,6 +1389,43 @@ dialog.wide{max-width:860px}
 
 </div>
 
+<!-- ═════════ KPIs ═════════ -->
+<div id="p-kpis" class="pane">
+
+  <div class="khero">
+    <button class="kh1" onclick="kcalc('_ciclo')"><b id="k-med">—</b><span>Mediana del ciclo</span></button>
+    <button class="kh1" onclick="kcalc('_ciclo')"><b id="k-p90">—</b><span>El 10% peor</span></button>
+    <div class="khs" id="k-frase"></div>
+  </div>
+
+  <section class="sec">
+    <h2>Dónde se va el tiempo <span class="hint">— barra sólida: la mitad de los casos. Barra clara: hasta el 10% peor. Raya: el compromiso. Pincha cualquier tramo.</span></h2>
+    <div class="card" style="padding:16px 20px 14px">
+      <div class="kleg">
+        <span><i style="background:var(--k-nos)"></i>Depende de nosotros</span>
+        <span><i style="background:var(--k-ter)"></i>Transportista o técnico externo</span>
+        <span><i style="background:var(--k-cli)"></i>Depende del cliente</span>
+      </div>
+      <div id="k-tramos"></div>
+      <div class="keje"><div></div><div><span>0 d</span><span id="k-eje">—</span></div><div style="text-align:right">fuera</div></div>
+      <div class="knota" id="k-nota"></div>
+    </div>
+  </section>
+
+  <div class="kdos">
+    <section class="sec" style="margin:0">
+      <h2>Por cadena <span class="hint">— ciclo completo</span></h2>
+      <div class="card" style="padding:6px 18px 12px"><div class="kwrap"><table class="tbl" id="k-cad"></table></div></div>
+    </section>
+    <section class="sec" style="margin:0">
+      <h2>Por técnico de taller <span class="hint">— solo lo suyo</span></h2>
+      <div class="card" style="padding:6px 18px 12px"><div class="kwrap"><table class="tbl" id="k-tec"></table></div>
+        <div class="knota">Aquí solo entran <b>cola de taller, reparación e inspección</b>, que es lo que hace el taller. El transporte y el técnico externo no son suyos y por eso no cuentan en esta tabla.</div>
+      </div>
+    </section>
+  </div>
+</div>
+
 <dialog id="d-perdido"><div class="dlg">
   <div class="k">Posible pérdida de activo</div><h3>Consola C03143 · 168 días fuera</h3>
   <div class="r"><span class="l">Ticket</span><span class="v">LEAS-5697</span></div>
@@ -2122,6 +2210,129 @@ function verAct(n){
   dlg('dlg-act');
 }
 try{ renderAct(); renderTal(); }catch(e){ console.error(e); }
+
+// ═══ KPIs del ciclo ═══
+// Medido sobre el historial de transiciones de estado de Jira, no sobre el SLA teórico.
+// La unidad es el TICKET: si un equipo entra tres veces en reparación, se suman las tres.
+// Se descartan los rebotes de menos de 2 minutos (entrar y salir de un estado seguido
+// es alguien corrigiendo un clic, no tiempo real).
+const KPI = {"_fuente": "iortizfigueroa/leaseir-sat-dashboard · cache/jira_status_timeline.json", "_fecha_datos": "2026-09-07T09:22:15.969054+00:00", "_calculado": "2026-09-07T11:18+00:00", "_tickets": 2289, "_rebote_seg": 120, "tramos": [{"n": 1478, "med": 1.0, "p90": 13.8, "media": 6.4, "max": 219.0, "malos": 608, "umbral": 2, "id": "triaje", "tit": "Alta y triaje", "quien": "nosotros", "estados": ["Abierto", "Pendiente agendar llamada", "Pendiente asignar técnico", "Pendiente definir servicio externo"], "cad": {"Centri Unico": {"n": 67, "med": 4.7, "p90": 16.2, "media": 8.4, "max": 97.0, "malos": 40, "umbral": 2}, "Otros y directos": {"n": 403, "med": 2.0, "p90": 26.5, "media": 11.8, "max": 219.0, "malos": 199, "umbral": 2}, "Dermasana": {"n": 76, "med": 2.2, "p90": 12.9, "media": 6.2, "max": 129.0, "malos": 40, "umbral": 2}, "Sin Vello": {"n": 239, "med": 0.9, "p90": 10.0, "media": 3.7, "max": 106.0, "malos": 73, "umbral": 2}, "Epil Point": {"n": 148, "med": 1.0, "p90": 11.0, "media": 3.7, "max": 34.0, "malos": 62, "umbral": 2}, "Elha": {"n": 384, "med": 0.7, "p90": 5.9, "media": 2.3, "max": 58.0, "malos": 107, "umbral": 2}, "Zurimed": {"n": 18, "med": 1.2, "p90": 3.3, "media": 2.1, "max": 13.0, "malos": 4, "umbral": 2}, "Laser Factory": {"n": 51, "med": 6.6, "p90": 23.2, "media": 11.3, "max": 64.0, "malos": 30, "umbral": 2}, "Dermoscan": {"n": 30, "med": 1.9, "p90": 14.0, "media": 5.3, "max": 20.0, "malos": 15, "umbral": 2}, "Smart Duck": {"n": 10, "med": 1.0, "p90": 3.9, "media": 3.4, "max": 22.0, "malos": 5, "umbral": 2}, "Brull": {"n": 28, "med": 4.0, "p90": 14.2, "media": 6.4, "max": 43.0, "malos": 16, "umbral": 2}, "Belenus": {"n": 20, "med": 3.3, "p90": 65.2, "media": 18.9, "max": 113.0, "malos": 15, "umbral": 2}}, "tec": {}}, {"n": 1041, "med": 6.1, "p90": 28.0, "media": 11.5, "max": 168.0, "malos": 421, "umbral": 8, "id": "transporte", "tit": "Transporte a taller", "quien": "tercero", "estados": ["Gestionado transporte", "Pendiente recogida"], "cad": {"Otros y directos": {"n": 311, "med": 6.0, "p90": 33.8, "media": 12.6, "max": 113.0, "malos": 127, "umbral": 8}, "Dermasana": {"n": 38, "med": 2.0, "p90": 9.0, "media": 3.9, "max": 19.0, "malos": 6, "umbral": 8}, "Centri Unico": {"n": 40, "med": 8.8, "p90": 54.0, "media": 18.5, "max": 114.0, "malos": 20, "umbral": 8}, "Zurimed": {"n": 20, "med": 1.0, "p90": 13.0, "media": 3.9, "max": 27.0, "malos": 3, "umbral": 8}, "Elha": {"n": 259, "med": 5.7, "p90": 16.9, "media": 8.2, "max": 113.0, "malos": 87, "umbral": 8}, "Sin Vello": {"n": 184, "med": 9.8, "p90": 33.9, "media": 15.3, "max": 111.0, "malos": 103, "umbral": 8}, "Epil Point": {"n": 88, "med": 8.0, "p90": 28.2, "media": 14.0, "max": 168.0, "malos": 44, "umbral": 8}, "Dermoscan": {"n": 26, "med": 0.1, "p90": 16.9, "media": 10.2, "max": 117.0, "malos": 9, "umbral": 8}, "Brull": {"n": 28, "med": 0.9, "p90": 5.0, "media": 3.2, "max": 30.0, "malos": 3, "umbral": 8}, "Laser Factory": {"n": 21, "med": 3.0, "p90": 11.6, "media": 5.4, "max": 20.0, "malos": 5, "umbral": 8}, "Belenus": {"n": 15, "med": 6.6, "p90": 35.0, "media": 14.2, "max": 90.0, "malos": 6, "umbral": 8}}, "tec": {}}, {"n": 824, "med": 1.2, "p90": 6.9, "media": 3.0, "max": 116.0, "malos": 255, "umbral": 3, "id": "cola", "tit": "Cola de taller", "quien": "nosotros", "estados": ["En cola taller", "Esperando inicio reparación"], "cad": {"Otros y directos": {"n": 244, "med": 1.9, "p90": 7.9, "media": 3.6, "max": 116.0, "malos": 91, "umbral": 3}, "Dermasana": {"n": 33, "med": 1.0, "p90": 4.0, "media": 3.0, "max": 40.0, "malos": 8, "umbral": 3}, "Elha": {"n": 216, "med": 1.1, "p90": 6.9, "media": 2.9, "max": 59.0, "malos": 58, "umbral": 3}, "Sin Vello": {"n": 133, "med": 1.0, "p90": 5.9, "media": 2.3, "max": 18.0, "malos": 41, "umbral": 3}, "Centri Unico": {"n": 28, "med": 2.6, "p90": 6.3, "media": 5.7, "max": 51.0, "malos": 11, "umbral": 3}, "Epil Point": {"n": 66, "med": 0.8, "p90": 3.3, "media": 1.5, "max": 10.0, "malos": 8, "umbral": 3}, "Dermoscan": {"n": 25, "med": 3.0, "p90": 7.5, "media": 4.0, "max": 19.0, "malos": 12, "umbral": 3}, "Brull": {"n": 24, "med": 3.8, "p90": 8.0, "media": 4.3, "max": 16.0, "malos": 12, "umbral": 3}, "Zurimed": {"n": 15, "med": 0.2, "p90": 9.0, "media": 2.1, "max": 12.0, "malos": 3, "umbral": 3}, "Laser Factory": {"n": 15, "med": 1.3, "p90": 5.0, "media": 2.1, "max": 6.0, "malos": 5, "umbral": 3}, "Belenus": {"n": 14, "med": 2.0, "p90": 6.7, "media": 2.9, "max": 7.0, "malos": 3, "umbral": 3}}, "tec": {"Jonathan Zarauza": {"n": 186, "med": 1.8, "p90": 6.7, "media": 2.7, "max": 19.0, "malos": 63, "umbral": 3}, "Iván Lozano Fernández": {"n": 242, "med": 1.0, "p90": 4.8, "media": 2.1, "max": 18.0, "malos": 60, "umbral": 3}, "Francisco Fernández Porrúa": {"n": 155, "med": 1.0, "p90": 5.1, "media": 2.1, "max": 20.0, "malos": 39, "umbral": 3}, "Borja Canteli Trabanco": {"n": 109, "med": 2.7, "p90": 11.0, "media": 6.5, "max": 116.0, "malos": 50, "umbral": 3}, "Daniel Rodriguez Fernandez": {"n": 73, "med": 1.2, "p90": 7.4, "media": 2.5, "max": 14.0, "malos": 19, "umbral": 3}}}, {"n": 860, "med": 1.2, "p90": 8.0, "media": 3.6, "max": 118.0, "malos": 286, "umbral": 3, "id": "presup", "tit": "Preparar presupuesto", "quien": "nosotros", "estados": ["En preparación presupuesto", "Presupuesto preparado pendiente de enviar"], "cad": {"Otros y directos": {"n": 254, "med": 1.8, "p90": 9.1, "media": 4.2, "max": 118.0, "malos": 98, "umbral": 3}, "Dermasana": {"n": 36, "med": 2.1, "p90": 9.8, "media": 5.3, "max": 59.0, "malos": 15, "umbral": 3}, "Zurimed": {"n": 17, "med": 1.2, "p90": 5.2, "media": 3.8, "max": 26.0, "malos": 6, "umbral": 3}, "Elha": {"n": 219, "med": 1.0, "p90": 6.2, "media": 2.6, "max": 23.0, "malos": 57, "umbral": 3}, "Sin Vello": {"n": 139, "med": 1.8, "p90": 5.9, "media": 2.9, "max": 25.0, "malos": 44, "umbral": 3}, "Centri Unico": {"n": 28, "med": 2.2, "p90": 16.9, "media": 9.7, "max": 88.0, "malos": 13, "umbral": 3}, "Epil Point": {"n": 70, "med": 1.0, "p90": 7.0, "media": 3.5, "max": 83.0, "malos": 18, "umbral": 3}, "Dermoscan": {"n": 26, "med": 1.8, "p90": 7.9, "media": 2.9, "max": 9.0, "malos": 11, "umbral": 3}, "Brull": {"n": 29, "med": 2.4, "p90": 7.0, "media": 3.4, "max": 16.0, "malos": 13, "umbral": 3}, "Laser Factory": {"n": 19, "med": 0.4, "p90": 5.3, "media": 2.1, "max": 9.0, "malos": 5, "umbral": 3}, "Belenus": {"n": 14, "med": 1.1, "p90": 4.3, "media": 2.0, "max": 6.0, "malos": 4, "umbral": 3}}, "tec": {}}, {"n": 495, "med": 1.0, "p90": 27.0, "media": 15.4, "max": 396.0, "malos": 100, "umbral": 7, "id": "cliente", "tit": "Esperando al cliente", "quien": "cliente", "estados": ["Esperando respuesta cliente a presupuesto", "Pendiente confirmación presupuesto"], "cad": {"Centri Unico": {"n": 16, "med": 3.0, "p90": 26.0, "media": 20.5, "max": 260.0, "malos": 3, "umbral": 7}, "Elha": {"n": 112, "med": 0.1, "p90": 7.0, "media": 5.0, "max": 169.0, "malos": 10, "umbral": 7}, "Otros y directos": {"n": 148, "med": 2.9, "p90": 85.3, "media": 31.9, "max": 396.0, "malos": 54, "umbral": 7}, "Sin Vello": {"n": 124, "med": 1.7, "p90": 7.1, "media": 6.0, "max": 221.0, "malos": 14, "umbral": 7}, "Epil Point": {"n": 35, "med": 1.2, "p90": 8.2, "media": 3.2, "max": 25.0, "malos": 5, "umbral": 7}, "Dermasana": {"n": 19, "med": 1.0, "p90": 10.1, "media": 15.6, "max": 223.0, "malos": 3, "umbral": 7}, "Brull": {"n": 16, "med": 1.0, "p90": 115.1, "media": 28.3, "max": 192.0, "malos": 6, "umbral": 7}, "Laser Factory": {"n": 10, "med": 0.8, "p90": 21.0, "media": 7.8, "max": 32.0, "malos": 4, "umbral": 7}}, "tec": {}}, {"n": 599, "med": 0.2, "p90": 3.8, "media": 1.6, "max": 90.0, "malos": 63, "umbral": 3.3, "id": "repara", "tit": "Reparación", "quien": "nosotros", "estados": ["En reparación"], "cad": {"Otros y directos": {"n": 171, "med": 0.1, "p90": 3.8, "media": 2.0, "max": 90.0, "malos": 19, "umbral": 3.3}, "Dermasana": {"n": 26, "med": 0.1, "p90": 4.2, "media": 3.2, "max": 44.0, "malos": 5, "umbral": 3.3}, "Elha": {"n": 157, "med": 0.1, "p90": 3.1, "media": 1.4, "max": 41.0, "malos": 14, "umbral": 3.3}, "Sin Vello": {"n": 104, "med": 0.2, "p90": 3.2, "media": 1.1, "max": 7.0, "malos": 10, "umbral": 3.3}, "Centri Unico": {"n": 18, "med": 0.9, "p90": 1.0, "media": 0.8, "max": 3.0, "malos": 0, "umbral": 3.3}, "Epil Point": {"n": 46, "med": 0.1, "p90": 4.2, "media": 1.6, "max": 18.0, "malos": 7, "umbral": 3.3}, "Laser Factory": {"n": 15, "med": 0.1, "p90": 1.8, "media": 0.4, "max": 2.0, "malos": 0, "umbral": 3.3}, "Dermoscan": {"n": 18, "med": 0.2, "p90": 4.0, "media": 1.3, "max": 6.0, "malos": 3, "umbral": 3.3}, "Belenus": {"n": 13, "med": 0.2, "p90": 1.2, "media": 0.9, "max": 6.0, "malos": 1, "umbral": 3.3}, "Brull": {"n": 18, "med": 1.1, "p90": 4.1, "media": 2.1, "max": 10.0, "malos": 3, "umbral": 3.3}}, "tec": {"Jonathan Zarauza": {"n": 145, "med": 0.1, "p90": 2.8, "media": 0.8, "max": 7.0, "malos": 8, "umbral": 3.3}, "Iván Lozano Fernández": {"n": 230, "med": 0.1, "p90": 1.1, "media": 0.5, "max": 11.0, "malos": 7, "umbral": 3.3}, "Francisco Fernández Porrúa": {"n": 108, "med": 0.8, "p90": 4.2, "media": 1.8, "max": 41.0, "malos": 17, "umbral": 3.3}, "Borja Canteli Trabanco": {"n": 75, "med": 1.1, "p90": 13.0, "media": 4.5, "max": 90.0, "malos": 19, "umbral": 3.3}, "Isaac Sanchez": {"n": 12, "med": 0.1, "p90": 5.1, "media": 1.7, "max": 7.0, "malos": 3, "umbral": 3.3}, "Daniel Rodriguez Fernandez": {"n": 12, "med": 1.0, "p90": 6.1, "media": 2.9, "max": 10.0, "malos": 5, "umbral": 3.3}}}, {"n": 729, "med": 5.0, "p90": 16.2, "media": 8.5, "max": 187.0, "malos": 246, "umbral": 7, "id": "externo", "tit": "Técnico externo", "quien": "tercero", "estados": ["Enviado a técnico externo"], "cad": {"Otros y directos": {"n": 110, "med": 6.1, "p90": 24.3, "media": 12.7, "max": 187.0, "malos": 50, "umbral": 7}, "Sin Vello": {"n": 109, "med": 4.9, "p90": 13.2, "media": 7.1, "max": 66.0, "malos": 38, "umbral": 7}, "Elha": {"n": 249, "med": 3.9, "p90": 9.0, "media": 5.7, "max": 141.0, "malos": 45, "umbral": 7}, "Epil Point": {"n": 117, "med": 5.2, "p90": 13.3, "media": 6.9, "max": 37.0, "malos": 42, "umbral": 7}, "Dermasana": {"n": 41, "med": 5.7, "p90": 13.1, "media": 7.2, "max": 29.0, "malos": 14, "umbral": 7}, "Laser Factory": {"n": 53, "med": 9.6, "p90": 48.1, "media": 19.2, "max": 69.0, "malos": 29, "umbral": 7}, "Centri Unico": {"n": 47, "med": 7.7, "p90": 16.1, "media": 8.9, "max": 35.0, "malos": 26, "umbral": 7}}, "tec": {}}, {"n": 806, "med": 0.3, "p90": 4.1, "media": 2.4, "max": 364.0, "malos": 278, "umbral": 1, "id": "inspec", "tit": "Inspección de salida", "quien": "nosotros", "estados": ["Inspección de salida"], "cad": {"Otros y directos": {"n": 226, "med": 0.3, "p90": 6.2, "media": 5.0, "max": 364.0, "malos": 88, "umbral": 1}, "Dermasana": {"n": 35, "med": 0.3, "p90": 9.1, "media": 2.3, "max": 17.0, "malos": 11, "umbral": 1}, "Elha": {"n": 215, "med": 0.2, "p90": 3.0, "media": 1.1, "max": 20.0, "malos": 68, "umbral": 1}, "Sin Vello": {"n": 137, "med": 0.2, "p90": 3.3, "media": 1.3, "max": 16.0, "malos": 41, "umbral": 1}, "Centri Unico": {"n": 24, "med": 0.2, "p90": 1.8, "media": 0.8, "max": 7.0, "malos": 5, "umbral": 1}, "Epil Point": {"n": 66, "med": 0.2, "p90": 4.0, "media": 1.8, "max": 27.0, "malos": 21, "umbral": 1}, "Dermoscan": {"n": 22, "med": 0.2, "p90": 1.1, "media": 0.7, "max": 6.0, "malos": 4, "umbral": 1}, "Brull": {"n": 25, "med": 1.9, "p90": 5.1, "media": 2.1, "max": 6.0, "malos": 16, "umbral": 1}, "Zurimed": {"n": 14, "med": 1.0, "p90": 3.2, "media": 1.4, "max": 4.0, "malos": 9, "umbral": 1}, "Laser Factory": {"n": 19, "med": 0.2, "p90": 2.1, "media": 1.4, "max": 17.0, "malos": 4, "umbral": 1}, "Belenus": {"n": 14, "med": 1.1, "p90": 6.3, "media": 2.9, "max": 13.0, "malos": 9, "umbral": 1}}, "tec": {"Jonathan Zarauza": {"n": 186, "med": 0.3, "p90": 4.1, "media": 2.0, "max": 31.0, "malos": 74, "umbral": 1}, "Iván Lozano Fernández": {"n": 253, "med": 0.2, "p90": 4.1, "media": 2.1, "max": 112.0, "malos": 80, "umbral": 1}, "Francisco Fernández Porrúa": {"n": 162, "med": 0.3, "p90": 3.1, "media": 1.7, "max": 70.0, "malos": 54, "umbral": 1}, "Borja Canteli Trabanco": {"n": 101, "med": 0.2, "p90": 3.3, "media": 1.7, "max": 26.0, "malos": 32, "umbral": 1}, "Daniel Rodriguez Fernandez": {"n": 82, "med": 0.3, "p90": 5.9, "media": 2.5, "max": 29.0, "malos": 32, "umbral": 1}}}, {"n": 780, "med": 3.7, "p90": 7.0, "media": 4.0, "max": 44.0, "malos": 227, "umbral": 5, "id": "vuelta", "tit": "Transporte de vuelta", "quien": "tercero", "estados": ["Devuelto a cliente"], "cad": {"Otros y directos": {"n": 214, "med": 4.0, "p90": 7.8, "media": 4.9, "max": 44.0, "malos": 86, "umbral": 5}, "Dermasana": {"n": 35, "med": 3.1, "p90": 6.1, "media": 3.3, "max": 11.0, "malos": 6, "umbral": 5}, "Elha": {"n": 214, "med": 2.8, "p90": 5.7, "media": 2.9, "max": 13.0, "malos": 34, "umbral": 5}, "Sin Vello": {"n": 132, "med": 3.0, "p90": 6.9, "media": 3.9, "max": 27.0, "malos": 36, "umbral": 5}, "Centri Unico": {"n": 24, "med": 5.1, "p90": 9.8, "media": 5.5, "max": 11.0, "malos": 13, "umbral": 5}, "Epil Point": {"n": 64, "med": 3.8, "p90": 7.1, "media": 4.0, "max": 19.0, "malos": 20, "umbral": 5}, "Dermoscan": {"n": 22, "med": 5.0, "p90": 8.0, "media": 5.3, "max": 11.0, "malos": 11, "umbral": 5}, "Brull": {"n": 23, "med": 2.7, "p90": 7.1, "media": 3.6, "max": 14.0, "malos": 7, "umbral": 5}, "Zurimed": {"n": 13, "med": 1.9, "p90": 4.0, "media": 1.8, "max": 4.0, "malos": 0, "umbral": 5}, "Laser Factory": {"n": 18, "med": 1.9, "p90": 6.7, "media": 3.2, "max": 9.0, "malos": 4, "umbral": 5}, "Belenus": {"n": 13, "med": 4.0, "p90": 20.1, "media": 8.5, "max": 37.0, "malos": 5, "umbral": 5}}, "tec": {}}], "ciclo": {"n": 2174, "med": 12.1, "p90": 48.1, "media": 22.4, "max": 436.0, "malos": 424, "umbral": 30}, "ciclo_cad": {"Centri Unico": {"n": 112, "med": 13.7, "p90": 51.7, "media": 24.8, "max": 265.0, "malos": 23, "umbral": 30}, "Otros y directos": {"n": 571, "med": 17.1, "p90": 68.1, "media": 33.6, "max": 436.0, "malos": 174, "umbral": 30}, "Dermasana": {"n": 118, "med": 8.7, "p90": 27.9, "media": 15.5, "max": 308.0, "malos": 10, "umbral": 30}, "Sin Vello": {"n": 337, "med": 14.0, "p90": 49.0, "media": 22.9, "max": 392.0, "malos": 74, "umbral": 30}, "Epil Point": {"n": 254, "med": 9.1, "p90": 35.1, "media": 15.0, "max": 168.0, "malos": 33, "umbral": 30}, "Elha": {"n": 564, "med": 7.8, "p90": 31.0, "media": 14.3, "max": 197.0, "malos": 62, "umbral": 30}, "Laser Factory": {"n": 98, "med": 15.9, "p90": 48.1, "media": 20.2, "max": 69.0, "malos": 22, "umbral": 30}, "Dermoscan": {"n": 29, "med": 20.2, "p90": 40.1, "media": 28.1, "max": 122.0, "malos": 6, "umbral": 30}, "Smart Duck": {"n": 13, "med": 14.2, "p90": 40.9, "media": 17.4, "max": 50.0, "malos": 3, "umbral": 30}, "Brull": {"n": 33, "med": 18.8, "p90": 40.9, "media": 31.2, "max": 212.0, "malos": 6, "umbral": 30}, "Zurimed": {"n": 17, "med": 9.7, "p90": 26.1, "media": 13.4, "max": 28.0, "malos": 0, "umbral": 30}, "Belenus": {"n": 23, "med": 20.9, "p90": 89.9, "media": 39.1, "max": 166.0, "malos": 10, "umbral": 30}}, "abiertos": {"triaje": [[31.2, "LEAS-7249", "BiNatural"], [4.9, "LEAS-7455", "BiNatural Consola 20.046 20046"], [4.9, "LEAS-7453", "JD Aesthetics"], [4.9, "LEAS-7444", "Miguel Parra (ex-brull)"], [4.8, "LEAS-7452", "Sinvello Estepona"], [4.1, "LEAS-7467", "Epil Point  Sesto Firenze"], [4.1, "LEAS-7458", "Elha Laser Center Milano - Carducci"], [3.9, "LEAS-7470", "Bella Forme"], [3.0, "LEAS-7486", "Laser Factory Sabadell"], [3.0, "LEAS-7482", "Patricia García Tamayo"], [2.9, "LEAS-7488", "Elha Villarroel"], [0.1, "LEAS-7450", "No filters cliente de Dinamica impulso Yolanda Jaramillo  AHR0110"]], "transporte": [[31.2, "LEAS-7230", "SinVello Albacete"], [19.8, "LEAS-7320", "Belleza Begoña Tapia  (AHR0019)"], [19.1, "LEAS-7325", "Deseja (Lituania)"], [17.9, "LEAS-7332", "EPIL POINT - Specialisti in Epilazione Laser"], [17.8, "LEAS-7334", "BEAUTY Centre d'estètica  90159 20076"], [13.1, "LEAS-7358", "Centri Unico Olbia"], [12.0, "LEAS-7374", "Cleanbody CC La Villa ( 30267 )"], [10.8, "LEAS-7386", "Belenus"], [10.7, "LEAS-7361", "Elha Martín el Humano"], [9.8, "LEAS-7343", "Elha Sta teresa"], [7.1, "LEAS-7416", "Centro Unico Palermo"], [6.2, "LEAS-7430", "Elha Isaac Albéniz"]], "cola": [[24.1, "LEAS-6765", "Bella Forme"], [11.1, "LEAS-7379", "Elha Badalona"], [4.2, "LEAS-7425", "Radiante Estética Avanzada  ( FC 00031 )"], [4.1, "LEAS-7405", "Elha Juan de Austria"], [3.0, "LEAS-7360", "SinVello Ibiza"], [3.0, "LEAS-7299", "SinVello Granada Constitucion"], [0.1, "LEAS-7434", "Bianca House of Beauty"], [0.1, "LEAS-7256", "SinVello Miraflores"], [0.1, "LEAS-6768", "CVL Distribuidor Aparatología Estética (Samuel)"]], "presup": [[42.1, "LEAS-6907", "Apain Estetika ( AHR0071)"], [25.1, "LEAS-7188", "Centro Unico Boccea SRF00014"], [7.1, "LEAS-7355", "Zurimed Parque principado"], [6.1, "LEAS-7423", "RADIANTE AVILES ( SUST011 SRF-FC)"], [3.0, "LEAS-7312", "Elha Vilanova"], [0.2, "LEAS-7421", "L Medical (G-Point)"], [0.1, "LEAS-7432", "Elha Sta Coloma"]], "cliente": [[123.0, "LEAS-4443", "Dermoscan"], [88.1, "LEAS-6198", "Luxlaser andre belgica"], [65.9, "LEAS-6889", "L Medical G point"], [63.2, "LEAS-6888", "L Medical G point"], [26.1, "LEAS-7190", "Harmonie Salamanca"], [16.8, "LEAS-7270", "Epil Point Lecce"], [5.9, "LEAS-7437", "SinVello Alicante Gran Via"], [3.1, "LEAS-7403", "Dermoscan"]], "repara": [[42.1, "LEAS-6779", "Centri Unico Campania BS00019"], [25.2, "LEAS-7118", "Corpoderm"], [21.2, "LEAS-6906", "Daniel JAramillo Holea"], [5.1, "LEAS-6879", "Brull"], [4.2, "LEAS-7424", "Radiante Estética Avanzada   ( SUST004 SRF-BS )"], [0.1, "LEAS-7420", "Medical & Aesthetics Solutions, Inc - Adolfo Panamá"]], "externo": [[35.0, "LEAS-7213", "Epil Point Pavia"], [28.0, "LEAS-7268", "Clínica de Estétitca Dileima"], [25.9, "LEAS-7282", "Bekalon"], [20.9, "LEAS-7311", "Elha Pisa"], [10.1, "LEAS-7393", "SinVello Colmenar Viejo"], [10.1, "LEAS-7378", "SinVello Badalona"], [10.0, "LEAS-7406", "Epil Point Livorno"], [9.8, "LEAS-7407", "Elha C/Barcelona"], [6.8, "LEAS-7427", "Dermasana Orense"], [6.8, "LEAS-7419", "Elha Ramón y Cajal"], [6.0, "LEAS-7426", "Elha león"], [4.9, "LEAS-7413", "Sinvello Provenza"]], "inspec": [[3.2, "LEAS-7436", "RADIANTE AVILES"], [0.2, "LEAS-7349", "Cris Peña Beauty Center"]], "vuelta": [[3.8, "LEAS-7321", "Dermoscan"], [3.8, "LEAS-7315", "Belenus"], [2.9, "LEAS-7335", "Laser Factory man & woman Terrassa"], [2.8, "LEAS-7121", "Smart duck paris 15 Convention"]]}};
+const KCOL = {nosotros:'var(--k-nos)', tercero:'var(--k-ter)', cliente:'var(--k-cli)'};
+const KQUIEN = {nosotros:'Nosotros', tercero:'Transportista / externo', cliente:'El cliente'};
+const d1 = x => (x === null || x === undefined) ? '—' : String(x).replace('.', ',') + ' d';
+
+function kpintar(){
+  const T = KPI.tramos, esc = Math.max.apply(null, T.map(t => t.p90));
+  document.getElementById('k-med').textContent = d1(KPI.ciclo.med);
+  document.getElementById('k-p90').textContent = d1(KPI.ciclo.p90);
+  document.getElementById('k-eje').textContent = Math.round(esc) + ' d';
+
+  // La frase de arriba se calcula, no se escribe a mano: si mañana el taller es el
+  // problema, lo dirá ella sola.
+  const nos = T.filter(t => t.quien === 'nosotros').reduce((a, t) => a + t.med, 0);
+  const peor = T.slice().sort((a, b) => b.p90 - a.p90)[0];
+  document.getElementById('k-frase').innerHTML =
+      'De punta a punta la mediana es <b>' + d1(KPI.ciclo.med) + '</b>, y el 10% peor se va a <b>'
+    + d1(KPI.ciclo.p90) + '</b>. De esa mediana, lo que está en nuestras manos suma <b>'
+    + d1(Math.round(nos * 10) / 10) + '</b>. La cola más larga está en <b>' + peor.tit.toLowerCase()
+    + '</b>: uno de cada diez pasa de ' + d1(peor.p90) + '.';
+
+  document.getElementById('k-tramos').innerHTML = T.map(t => {
+    const pc = Math.round(100 * t.malos / t.n);
+    const cl = pc >= 35 ? 'mal' : (pc >= 15 ? 'med' : 'ok');
+    const w = x => (100 * Math.min(x, esc) / esc);
+    // La etiqueta se sale fuera de la barra cuando la barra es corta, para que se lea.
+    const fuera = w(t.p90) > 74;
+    return '<button class="kfila" onclick="kcalc(\'' + t.id + '\')">'
+      + '<span class="kt">' + t.tit + '<em>' + KQUIEN[t.quien] + '</em></span>'
+      + '<span class="kbar">'
+      +   '<i class="kp90" style="left:0;width:' + w(t.p90) + '%;background:' + KCOL[t.quien] + '"></i>'
+      +   '<i class="kmed" style="left:0;width:' + w(t.med) + '%;background:' + KCOL[t.quien] + '"></i>'
+      +   '<i class="kum" style="left:' + w(t.umbral) + '%"></i>'
+      +   '<span class="kv" style="' + (fuera ? 'right:2px;text-align:right' : 'left:calc(' + w(t.p90) + '% + 8px)') + '">'
+      +     d1(t.med) + '<em>' + d1(t.p90) + '</em></span>'
+      + '</span>'
+      + '<span class="kpc ' + cl + '">' + pc + '%</span></button>';
+  }).join('');
+
+  document.getElementById('k-nota').innerHTML =
+      'Sobre <b>' + KPI._tickets + ' incidencias</b> con historial completo, desde octubre de 2024. '
+    + 'La columna de la derecha es cuántas pasan del compromiso de ese tramo. '
+    + '<b>Los compromisos los he puesto yo de partida</b> salvo el de reparación, que son las 80 h del SLA 11122: '
+    + 'dime los buenos y se recalcula. Datos de Jira a ' + (KPI._fecha_datos || '').slice(0, 16).replace('T', ' ') + '.';
+
+  // Por cadena
+  const cad = Object.entries(KPI.ciclo_cad).sort((a, b) => b[1].p90 - a[1].p90);
+  document.getElementById('k-cad').innerHTML =
+      '<thead><tr><th>Cadena</th><th class="n">Casos</th><th class="n">Mediana</th><th class="n">El 10% peor</th></tr></thead><tbody>'
+    + cad.map(([c, r]) => '<tr><td>' + c + '</td><td class="n">' + r.n + '</td><td class="n">' + d1(r.med)
+        + '</td><td class="n" style="font-weight:600' + (r.p90 >= 50 ? ';color:var(--crit)' : '') + '">'
+        + d1(r.p90) + '</td></tr>').join('') + '</tbody>';
+
+  // Por técnico: se suman sus tres tramos propios
+  const tec = {};
+  KPI.tramos.filter(t => t.tec && Object.keys(t.tec).length).forEach(t =>
+    Object.entries(t.tec).forEach(([n, r]) => {
+      tec[n] = tec[n] || {n: 0, malos: 0, tr: []};
+      tec[n].n += r.n; tec[n].malos += r.malos;
+      tec[n].tr.push(t.tit.toLowerCase() + ' ' + d1(r.med));
+    }));
+  const filas = Object.entries(tec).sort((a, b) => (b[1].malos / b[1].n) - (a[1].malos / a[1].n));
+  document.getElementById('k-tec').innerHTML =
+      '<thead><tr><th>Técnico</th><th class="n">Tramos</th><th class="n">Fuera de plazo</th></tr></thead><tbody>'
+    + filas.map(([n, r]) => {
+        const pc = Math.round(100 * r.malos / r.n);
+        return '<tr><td>' + n.split(' ')[0] + ' ' + (n.split(' ')[1] || '')
+          + '<div style="font-size:10.5px;color:var(--muted-2)">' + r.tr.join(' · ') + '</div></td>'
+          + '<td class="n">' + r.n + '</td><td class="n" style="font-weight:600'
+          + (pc >= 30 ? ';color:var(--crit)' : (pc >= 18 ? ';color:var(--warn)' : '')) + '">' + pc + '%</td></tr>';
+      }).join('') + '</tbody>';
+}
+
+// Cada cifra se puede abrir: de dónde sale, con qué se ha contado y qué hay hoy dentro.
+function kcalc(id){
+  const t = id === '_ciclo' ? null : KPI.tramos.find(x => x.id === id);
+  const r = t || KPI.ciclo;
+  let h = '<div class="k">Cómo sale este número</div>'
+    + '<div class="big">' + d1(r.med) + '</div><div class="bigu">mediana</div>'
+    + '<h3 style="margin:0 0 10px">' + (t ? t.tit : 'Ciclo completo, de alta a cierre') + '</h3>';
+  if(t) h += '<p style="margin:0 0 12px;font-size:13px;color:var(--ink-soft)">Depende de: <b>'
+    + KQUIEN[t.quien] + '</b></p>';
+  h += '<div class="sec2">El reparto</div>'
+    + '<div class="r"><span class="l">Casos medidos</span><span class="v">' + r.n + '</span></div>'
+    + '<div class="r"><span class="l">La mitad tarda menos de</span><span class="v">' + d1(r.med) + '</span></div>'
+    + '<div class="r"><span class="l">Uno de cada diez pasa de</span><span class="v">' + d1(r.p90) + '</span></div>'
+    + '<div class="r"><span class="l">Media aritmética</span><span class="v">' + d1(r.media) + '</span></div>'
+    + '<div class="r"><span class="l">El peor de todos</span><span class="v">' + d1(r.max) + '</span></div>'
+    + '<div class="r"><span class="l">Pasan del compromiso (' + d1(r.umbral) + ')</span><span class="v">'
+    + r.malos + ' de ' + r.n + ' · ' + Math.round(100 * r.malos / r.n) + '%</span></div>';
+  if(t){
+    h += '<div class="sec2">Estados de Jira que cuentan como este tramo</div>'
+      + '<p style="margin:0;font-size:12.5px;color:var(--muted)">' + t.estados.join(' · ') + '</p>';
+    const ab = (KPI.abiertos || {})[t.id] || [];
+    if(ab.length){
+      h += '<div class="sec2">Ahí dentro ahora mismo (' + ab.length + ')</div>';
+      ab.forEach(x => { h += '<div class="tk"><span>' + x[1] + '</span><span class="q">' + x[2]
+        + '</span><span class="d' + (x[0] <= t.umbral ? ' w' : '') + '">' + d1(x[0]) + '</span></div>'; });
+    }
+    const cad = Object.entries(t.cad || {}).sort((a, b) => b[1].p90 - a[1].p90).slice(0, 6);
+    if(cad.length){
+      h += '<div class="sec2">Las cadenas con la cola más larga en este tramo</div>';
+      cad.forEach(([c, x]) => { h += '<div class="r"><span class="l">' + c + ' <span class="hint">('
+        + x.n + ' casos)</span></span><span class="v">' + d1(x.med) + ' · 10% peor ' + d1(x.p90) + '</span></div>'; });
+    }
+  }
+  h += '<div class="src">Se mide el tiempo que cada ticket pasa en los estados del tramo, sumando '
+    + 'todas las veces que entra: si un equipo vuelve a reparación, ese tiempo también cuenta. '
+    + 'Se descartan las entradas y salidas de menos de 2 minutos, que son clics corregidos y no tiempo real. '
+    + 'Se usa la mediana y no la media porque la media la levantan cuatro casos extremos y deja de describir a nadie.'
+    + '<div class="fsrc">Origen: ' + KPI._fuente + ' · datos de ' + (KPI._fecha_datos || '').slice(0, 16).replace('T', ' ') + '</div></div>'
+    + '<button class="x" onclick="this.closest(\'dialog\').close()">Cerrar</button>';
+  const b = document.getElementById('calc-body');
+  b.innerHTML = h; linkTickets(b);
+  document.getElementById('dlg-calc').showModal();
+}
+try{ kpintar(); }catch(e){ console.error('kpis', e); }
 
 function dlg(id){const d=document.getElementById(id); if(d&&d.showModal) d.showModal();}
 document.querySelectorAll('dialog').forEach(d=>{

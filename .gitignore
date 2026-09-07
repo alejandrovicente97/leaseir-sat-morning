@@ -7,3 +7,8 @@
 equipo.html
 mensaje-equipo-sat.txt
 mensaje-presentacion.txt
+
+# tokens: nunca al repo, que es publico
+jira-token*
+jira2*
+*TOKEN*

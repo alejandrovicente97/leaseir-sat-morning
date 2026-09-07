@@ -1,0 +1,1652 @@
+{
+ "_fuente": "iortizfigueroa/leaseir-sat-dashboard · cache/jira_status_timeline.json",
+ "_fecha_datos": "2026-09-07T09:22:15.969054+00:00",
+ "_calculado": "2026-09-07T11:18+00:00",
+ "_tickets": 2289,
+ "_rebote_seg": 120,
+ "tramos": [
+  {
+   "n": 1478,
+   "med": 1.0,
+   "p90": 13.8,
+   "media": 6.4,
+   "max": 219.0,
+   "malos": 608,
+   "umbral": 2,
+   "id": "triaje",
+   "tit": "Alta y triaje",
+   "quien": "nosotros",
+   "estados": [
+    "Abierto",
+    "Pendiente agendar llamada",
+    "Pendiente asignar técnico",
+    "Pendiente definir servicio externo"
+   ],
+   "cad": {
+    "Centri Unico": {
+     "n": 67,
+     "med": 4.7,
+     "p90": 16.2,
+     "media": 8.4,
+     "max": 97.0,
+     "malos": 40,
+     "umbral": 2
+    },
+    "Otros y directos": {
+     "n": 403,
+     "med": 2.0,
+     "p90": 26.5,
+     "media": 11.8,
+     "max": 219.0,
+     "malos": 199,
+     "umbral": 2
+    },
+    "Dermasana": {
+     "n": 76,
+     "med": 2.2,
+     "p90": 12.9,
+     "media": 6.2,
+     "max": 129.0,
+     "malos": 40,
+     "umbral": 2
+    },
+    "Sin Vello": {
+     "n": 239,
+     "med": 0.9,
+     "p90": 10.0,
+     "media": 3.7,
+     "max": 106.0,
+     "malos": 73,
+     "umbral": 2
+    },
+    "Epil Point": {
+     "n": 148,
+     "med": 1.0,
+     "p90": 11.0,
+     "media": 3.7,
+     "max": 34.0,
+     "malos": 62,
+     "umbral": 2
+    },
+    "Elha": {
+     "n": 384,
+     "med": 0.7,
+     "p90": 5.9,
+     "media": 2.3,
+     "max": 58.0,
+     "malos": 107,
+     "umbral": 2
+    },
+    "Zurimed": {
+     "n": 18,
+     "med": 1.2,
+     "p90": 3.3,
+     "media": 2.1,
+     "max": 13.0,
+     "malos": 4,
+     "umbral": 2
+    },
+    "Laser Factory": {
+     "n": 51,
+     "med": 6.6,
+     "p90": 23.2,
+     "media": 11.3,
+     "max": 64.0,
+     "malos": 30,
+     "umbral": 2
+    },
+    "Dermoscan": {
+     "n": 30,
+     "med": 1.9,
+     "p90": 14.0,
+     "media": 5.3,
+     "max": 20.0,
+     "malos": 15,
+     "umbral": 2
+    },
+    "Smart Duck": {
+     "n": 10,
+     "med": 1.0,
+     "p90": 3.9,
+     "media": 3.4,
+     "max": 22.0,
+     "malos": 5,
+     "umbral": 2
+    },
+    "Brull": {
+     "n": 28,
+     "med": 4.0,
+     "p90": 14.2,
+     "media": 6.4,
+     "max": 43.0,
+     "malos": 16,
+     "umbral": 2
+    },
+    "Belenus": {
+     "n": 20,
+     "med": 3.3,
+     "p90": 65.2,
+     "media": 18.9,
+     "max": 113.0,
+     "malos": 15,
+     "umbral": 2
+    }
+   },
+   "tec": {}
+  },
+  {
+   "n": 1041,
+   "med": 6.1,
+   "p90": 28.0,
+   "media": 11.5,
+   "max": 168.0,
+   "malos": 421,
+   "umbral": 8,
+   "id": "transporte",
+   "tit": "Transporte a taller",
+   "quien": "tercero",
+   "estados": [
+    "Gestionado transporte",
+    "Pendiente recogida"
+   ],
+   "cad": {
+    "Otros y directos": {
+     "n": 311,
+     "med": 6.0,
+     "p90": 33.8,
+     "media": 12.6,
+     "max": 113.0,
+     "malos": 127,
+     "umbral": 8
+    },
+    "Dermasana": {
+     "n": 38,
+     "med": 2.0,
+     "p90": 9.0,
+     "media": 3.9,
+     "max": 19.0,
+     "malos": 6,
+     "umbral": 8
+    },
+    "Centri Unico": {
+     "n": 40,
+     "med": 8.8,
+     "p90": 54.0,
+     "media": 18.5,
+     "max": 114.0,
+     "malos": 20,
+     "umbral": 8
+    },
+    "Zurimed": {
+     "n": 20,
+     "med": 1.0,
+     "p90": 13.0,
+     "media": 3.9,
+     "max": 27.0,
+     "malos": 3,
+     "umbral": 8
+    },
+    "Elha": {
+     "n": 259,
+     "med": 5.7,
+     "p90": 16.9,
+     "media": 8.2,
+     "max": 113.0,
+     "malos": 87,
+     "umbral": 8
+    },
+    "Sin Vello": {
+     "n": 184,
+     "med": 9.8,
+     "p90": 33.9,
+     "media": 15.3,
+     "max": 111.0,
+     "malos": 103,
+     "umbral": 8
+    },
+    "Epil Point": {
+     "n": 88,
+     "med": 8.0,
+     "p90": 28.2,
+     "media": 14.0,
+     "max": 168.0,
+     "malos": 44,
+     "umbral": 8
+    },
+    "Dermoscan": {
+     "n": 26,
+     "med": 0.1,
+     "p90": 16.9,
+     "media": 10.2,
+     "max": 117.0,
+     "malos": 9,
+     "umbral": 8
+    },
+    "Brull": {
+     "n": 28,
+     "med": 0.9,
+     "p90": 5.0,
+     "media": 3.2,
+     "max": 30.0,
+     "malos": 3,
+     "umbral": 8
+    },
+    "Laser Factory": {
+     "n": 21,
+     "med": 3.0,
+     "p90": 11.6,
+     "media": 5.4,
+     "max": 20.0,
+     "malos": 5,
+     "umbral": 8
+    },
+    "Belenus": {
+     "n": 15,
+     "med": 6.6,
+     "p90": 35.0,
+     "media": 14.2,
+     "max": 90.0,
+     "malos": 6,
+     "umbral": 8
+    }
+   },
+   "tec": {}
+  },
+  {
+   "n": 824,
+   "med": 1.2,
+   "p90": 6.9,
+   "media": 3.0,
+   "max": 116.0,
+   "malos": 255,
+   "umbral": 3,
+   "id": "cola",
+   "tit": "Cola de taller",
+   "quien": "nosotros",
+   "estados": [
+    "En cola taller",
+    "Esperando inicio reparación"
+   ],
+   "cad": {
+    "Otros y directos": {
+     "n": 244,
+     "med": 1.9,
+     "p90": 7.9,
+     "media": 3.6,
+     "max": 116.0,
+     "malos": 91,
+     "umbral": 3
+    },
+    "Dermasana": {
+     "n": 33,
+     "med": 1.0,
+     "p90": 4.0,
+     "media": 3.0,
+     "max": 40.0,
+     "malos": 8,
+     "umbral": 3
+    },
+    "Elha": {
+     "n": 216,
+     "med": 1.1,
+     "p90": 6.9,
+     "media": 2.9,
+     "max": 59.0,
+     "malos": 58,
+     "umbral": 3
+    },
+    "Sin Vello": {
+     "n": 133,
+     "med": 1.0,
+     "p90": 5.9,
+     "media": 2.3,
+     "max": 18.0,
+     "malos": 41,
+     "umbral": 3
+    },
+    "Centri Unico": {
+     "n": 28,
+     "med": 2.6,
+     "p90": 6.3,
+     "media": 5.7,
+     "max": 51.0,
+     "malos": 11,
+     "umbral": 3
+    },
+    "Epil Point": {
+     "n": 66,
+     "med": 0.8,
+     "p90": 3.3,
+     "media": 1.5,
+     "max": 10.0,
+     "malos": 8,
+     "umbral": 3
+    },
+    "Dermoscan": {
+     "n": 25,
+     "med": 3.0,
+     "p90": 7.5,
+     "media": 4.0,
+     "max": 19.0,
+     "malos": 12,
+     "umbral": 3
+    },
+    "Brull": {
+     "n": 24,
+     "med": 3.8,
+     "p90": 8.0,
+     "media": 4.3,
+     "max": 16.0,
+     "malos": 12,
+     "umbral": 3
+    },
+    "Zurimed": {
+     "n": 15,
+     "med": 0.2,
+     "p90": 9.0,
+     "media": 2.1,
+     "max": 12.0,
+     "malos": 3,
+     "umbral": 3
+    },
+    "Laser Factory": {
+     "n": 15,
+     "med": 1.3,
+     "p90": 5.0,
+     "media": 2.1,
+     "max": 6.0,
+     "malos": 5,
+     "umbral": 3
+    },
+    "Belenus": {
+     "n": 14,
+     "med": 2.0,
+     "p90": 6.7,
+     "media": 2.9,
+     "max": 7.0,
+     "malos": 3,
+     "umbral": 3
+    }
+   },
+   "tec": {
+    "Jonathan Zarauza": {
+     "n": 186,
+     "med": 1.8,
+     "p90": 6.7,
+     "media": 2.7,
+     "max": 19.0,
+     "malos": 63,
+     "umbral": 3
+    },
+    "Iván Lozano Fernández": {
+     "n": 242,
+     "med": 1.0,
+     "p90": 4.8,
+     "media": 2.1,
+     "max": 18.0,
+     "malos": 60,
+     "umbral": 3
+    },
+    "Francisco Fernández Porrúa": {
+     "n": 155,
+     "med": 1.0,
+     "p90": 5.1,
+     "media": 2.1,
+     "max": 20.0,
+     "malos": 39,
+     "umbral": 3
+    },
+    "Borja Canteli Trabanco": {
+     "n": 109,
+     "med": 2.7,
+     "p90": 11.0,
+     "media": 6.5,
+     "max": 116.0,
+     "malos": 50,
+     "umbral": 3
+    },
+    "Daniel Rodriguez Fernandez": {
+     "n": 73,
+     "med": 1.2,
+     "p90": 7.4,
+     "media": 2.5,
+     "max": 14.0,
+     "malos": 19,
+     "umbral": 3
+    }
+   }
+  },
+  {
+   "n": 860,
+   "med": 1.2,
+   "p90": 8.0,
+   "media": 3.6,
+   "max": 118.0,
+   "malos": 286,
+   "umbral": 3,
+   "id": "presup",
+   "tit": "Preparar presupuesto",
+   "quien": "nosotros",
+   "estados": [
+    "En preparación presupuesto",
+    "Presupuesto preparado pendiente de enviar"
+   ],
+   "cad": {
+    "Otros y directos": {
+     "n": 254,
+     "med": 1.8,
+     "p90": 9.1,
+     "media": 4.2,
+     "max": 118.0,
+     "malos": 98,
+     "umbral": 3
+    },
+    "Dermasana": {
+     "n": 36,
+     "med": 2.1,
+     "p90": 9.8,
+     "media": 5.3,
+     "max": 59.0,
+     "malos": 15,
+     "umbral": 3
+    },
+    "Zurimed": {
+     "n": 17,
+     "med": 1.2,
+     "p90": 5.2,
+     "media": 3.8,
+     "max": 26.0,
+     "malos": 6,
+     "umbral": 3
+    },
+    "Elha": {
+     "n": 219,
+     "med": 1.0,
+     "p90": 6.2,
+     "media": 2.6,
+     "max": 23.0,
+     "malos": 57,
+     "umbral": 3
+    },
+    "Sin Vello": {
+     "n": 139,
+     "med": 1.8,
+     "p90": 5.9,
+     "media": 2.9,
+     "max": 25.0,
+     "malos": 44,
+     "umbral": 3
+    },
+    "Centri Unico": {
+     "n": 28,
+     "med": 2.2,
+     "p90": 16.9,
+     "media": 9.7,
+     "max": 88.0,
+     "malos": 13,
+     "umbral": 3
+    },
+    "Epil Point": {
+     "n": 70,
+     "med": 1.0,
+     "p90": 7.0,
+     "media": 3.5,
+     "max": 83.0,
+     "malos": 18,
+     "umbral": 3
+    },
+    "Dermoscan": {
+     "n": 26,
+     "med": 1.8,
+     "p90": 7.9,
+     "media": 2.9,
+     "max": 9.0,
+     "malos": 11,
+     "umbral": 3
+    },
+    "Brull": {
+     "n": 29,
+     "med": 2.4,
+     "p90": 7.0,
+     "media": 3.4,
+     "max": 16.0,
+     "malos": 13,
+     "umbral": 3
+    },
+    "Laser Factory": {
+     "n": 19,
+     "med": 0.4,
+     "p90": 5.3,
+     "media": 2.1,
+     "max": 9.0,
+     "malos": 5,
+     "umbral": 3
+    },
+    "Belenus": {
+     "n": 14,
+     "med": 1.1,
+     "p90": 4.3,
+     "media": 2.0,
+     "max": 6.0,
+     "malos": 4,
+     "umbral": 3
+    }
+   },
+   "tec": {}
+  },
+  {
+   "n": 495,
+   "med": 1.0,
+   "p90": 27.0,
+   "media": 15.4,
+   "max": 396.0,
+   "malos": 100,
+   "umbral": 7,
+   "id": "cliente",
+   "tit": "Esperando al cliente",
+   "quien": "cliente",
+   "estados": [
+    "Esperando respuesta cliente a presupuesto",
+    "Pendiente confirmación presupuesto"
+   ],
+   "cad": {
+    "Centri Unico": {
+     "n": 16,
+     "med": 3.0,
+     "p90": 26.0,
+     "media": 20.5,
+     "max": 260.0,
+     "malos": 3,
+     "umbral": 7
+    },
+    "Elha": {
+     "n": 112,
+     "med": 0.1,
+     "p90": 7.0,
+     "media": 5.0,
+     "max": 169.0,
+     "malos": 10,
+     "umbral": 7
+    },
+    "Otros y directos": {
+     "n": 148,
+     "med": 2.9,
+     "p90": 85.3,
+     "media": 31.9,
+     "max": 396.0,
+     "malos": 54,
+     "umbral": 7
+    },
+    "Sin Vello": {
+     "n": 124,
+     "med": 1.7,
+     "p90": 7.1,
+     "media": 6.0,
+     "max": 221.0,
+     "malos": 14,
+     "umbral": 7
+    },
+    "Epil Point": {
+     "n": 35,
+     "med": 1.2,
+     "p90": 8.2,
+     "media": 3.2,
+     "max": 25.0,
+     "malos": 5,
+     "umbral": 7
+    },
+    "Dermasana": {
+     "n": 19,
+     "med": 1.0,
+     "p90": 10.1,
+     "media": 15.6,
+     "max": 223.0,
+     "malos": 3,
+     "umbral": 7
+    },
+    "Brull": {
+     "n": 16,
+     "med": 1.0,
+     "p90": 115.1,
+     "media": 28.3,
+     "max": 192.0,
+     "malos": 6,
+     "umbral": 7
+    },
+    "Laser Factory": {
+     "n": 10,
+     "med": 0.8,
+     "p90": 21.0,
+     "media": 7.8,
+     "max": 32.0,
+     "malos": 4,
+     "umbral": 7
+    }
+   },
+   "tec": {}
+  },
+  {
+   "n": 599,
+   "med": 0.2,
+   "p90": 3.8,
+   "media": 1.6,
+   "max": 90.0,
+   "malos": 63,
+   "umbral": 3.3,
+   "id": "repara",
+   "tit": "Reparación",
+   "quien": "nosotros",
+   "estados": [
+    "En reparación"
+   ],
+   "cad": {
+    "Otros y directos": {
+     "n": 171,
+     "med": 0.1,
+     "p90": 3.8,
+     "media": 2.0,
+     "max": 90.0,
+     "malos": 19,
+     "umbral": 3.3
+    },
+    "Dermasana": {
+     "n": 26,
+     "med": 0.1,
+     "p90": 4.2,
+     "media": 3.2,
+     "max": 44.0,
+     "malos": 5,
+     "umbral": 3.3
+    },
+    "Elha": {
+     "n": 157,
+     "med": 0.1,
+     "p90": 3.1,
+     "media": 1.4,
+     "max": 41.0,
+     "malos": 14,
+     "umbral": 3.3
+    },
+    "Sin Vello": {
+     "n": 104,
+     "med": 0.2,
+     "p90": 3.2,
+     "media": 1.1,
+     "max": 7.0,
+     "malos": 10,
+     "umbral": 3.3
+    },
+    "Centri Unico": {
+     "n": 18,
+     "med": 0.9,
+     "p90": 1.0,
+     "media": 0.8,
+     "max": 3.0,
+     "malos": 0,
+     "umbral": 3.3
+    },
+    "Epil Point": {
+     "n": 46,
+     "med": 0.1,
+     "p90": 4.2,
+     "media": 1.6,
+     "max": 18.0,
+     "malos": 7,
+     "umbral": 3.3
+    },
+    "Laser Factory": {
+     "n": 15,
+     "med": 0.1,
+     "p90": 1.8,
+     "media": 0.4,
+     "max": 2.0,
+     "malos": 0,
+     "umbral": 3.3
+    },
+    "Dermoscan": {
+     "n": 18,
+     "med": 0.2,
+     "p90": 4.0,
+     "media": 1.3,
+     "max": 6.0,
+     "malos": 3,
+     "umbral": 3.3
+    },
+    "Belenus": {
+     "n": 13,
+     "med": 0.2,
+     "p90": 1.2,
+     "media": 0.9,
+     "max": 6.0,
+     "malos": 1,
+     "umbral": 3.3
+    },
+    "Brull": {
+     "n": 18,
+     "med": 1.1,
+     "p90": 4.1,
+     "media": 2.1,
+     "max": 10.0,
+     "malos": 3,
+     "umbral": 3.3
+    }
+   },
+   "tec": {
+    "Jonathan Zarauza": {
+     "n": 145,
+     "med": 0.1,
+     "p90": 2.8,
+     "media": 0.8,
+     "max": 7.0,
+     "malos": 8,
+     "umbral": 3.3
+    },
+    "Iván Lozano Fernández": {
+     "n": 230,
+     "med": 0.1,
+     "p90": 1.1,
+     "media": 0.5,
+     "max": 11.0,
+     "malos": 7,
+     "umbral": 3.3
+    },
+    "Francisco Fernández Porrúa": {
+     "n": 108,
+     "med": 0.8,
+     "p90": 4.2,
+     "media": 1.8,
+     "max": 41.0,
+     "malos": 17,
+     "umbral": 3.3
+    },
+    "Borja Canteli Trabanco": {
+     "n": 75,
+     "med": 1.1,
+     "p90": 13.0,
+     "media": 4.5,
+     "max": 90.0,
+     "malos": 19,
+     "umbral": 3.3
+    },
+    "Isaac Sanchez": {
+     "n": 12,
+     "med": 0.1,
+     "p90": 5.1,
+     "media": 1.7,
+     "max": 7.0,
+     "malos": 3,
+     "umbral": 3.3
+    },
+    "Daniel Rodriguez Fernandez": {
+     "n": 12,
+     "med": 1.0,
+     "p90": 6.1,
+     "media": 2.9,
+     "max": 10.0,
+     "malos": 5,
+     "umbral": 3.3
+    }
+   }
+  },
+  {
+   "n": 729,
+   "med": 5.0,
+   "p90": 16.2,
+   "media": 8.5,
+   "max": 187.0,
+   "malos": 246,
+   "umbral": 7,
+   "id": "externo",
+   "tit": "Técnico externo",
+   "quien": "tercero",
+   "estados": [
+    "Enviado a técnico externo"
+   ],
+   "cad": {
+    "Otros y directos": {
+     "n": 110,
+     "med": 6.1,
+     "p90": 24.3,
+     "media": 12.7,
+     "max": 187.0,
+     "malos": 50,
+     "umbral": 7
+    },
+    "Sin Vello": {
+     "n": 109,
+     "med": 4.9,
+     "p90": 13.2,
+     "media": 7.1,
+     "max": 66.0,
+     "malos": 38,
+     "umbral": 7
+    },
+    "Elha": {
+     "n": 249,
+     "med": 3.9,
+     "p90": 9.0,
+     "media": 5.7,
+     "max": 141.0,
+     "malos": 45,
+     "umbral": 7
+    },
+    "Epil Point": {
+     "n": 117,
+     "med": 5.2,
+     "p90": 13.3,
+     "media": 6.9,
+     "max": 37.0,
+     "malos": 42,
+     "umbral": 7
+    },
+    "Dermasana": {
+     "n": 41,
+     "med": 5.7,
+     "p90": 13.1,
+     "media": 7.2,
+     "max": 29.0,
+     "malos": 14,
+     "umbral": 7
+    },
+    "Laser Factory": {
+     "n": 53,
+     "med": 9.6,
+     "p90": 48.1,
+     "media": 19.2,
+     "max": 69.0,
+     "malos": 29,
+     "umbral": 7
+    },
+    "Centri Unico": {
+     "n": 47,
+     "med": 7.7,
+     "p90": 16.1,
+     "media": 8.9,
+     "max": 35.0,
+     "malos": 26,
+     "umbral": 7
+    }
+   },
+   "tec": {}
+  },
+  {
+   "n": 806,
+   "med": 0.3,
+   "p90": 4.1,
+   "media": 2.4,
+   "max": 364.0,
+   "malos": 278,
+   "umbral": 1,
+   "id": "inspec",
+   "tit": "Inspección de salida",
+   "quien": "nosotros",
+   "estados": [
+    "Inspección de salida"
+   ],
+   "cad": {
+    "Otros y directos": {
+     "n": 226,
+     "med": 0.3,
+     "p90": 6.2,
+     "media": 5.0,
+     "max": 364.0,
+     "malos": 88,
+     "umbral": 1
+    },
+    "Dermasana": {
+     "n": 35,
+     "med": 0.3,
+     "p90": 9.1,
+     "media": 2.3,
+     "max": 17.0,
+     "malos": 11,
+     "umbral": 1
+    },
+    "Elha": {
+     "n": 215,
+     "med": 0.2,
+     "p90": 3.0,
+     "media": 1.1,
+     "max": 20.0,
+     "malos": 68,
+     "umbral": 1
+    },
+    "Sin Vello": {
+     "n": 137,
+     "med": 0.2,
+     "p90": 3.3,
+     "media": 1.3,
+     "max": 16.0,
+     "malos": 41,
+     "umbral": 1
+    },
+    "Centri Unico": {
+     "n": 24,
+     "med": 0.2,
+     "p90": 1.8,
+     "media": 0.8,
+     "max": 7.0,
+     "malos": 5,
+     "umbral": 1
+    },
+    "Epil Point": {
+     "n": 66,
+     "med": 0.2,
+     "p90": 4.0,
+     "media": 1.8,
+     "max": 27.0,
+     "malos": 21,
+     "umbral": 1
+    },
+    "Dermoscan": {
+     "n": 22,
+     "med": 0.2,
+     "p90": 1.1,
+     "media": 0.7,
+     "max": 6.0,
+     "malos": 4,
+     "umbral": 1
+    },
+    "Brull": {
+     "n": 25,
+     "med": 1.9,
+     "p90": 5.1,
+     "media": 2.1,
+     "max": 6.0,
+     "malos": 16,
+     "umbral": 1
+    },
+    "Zurimed": {
+     "n": 14,
+     "med": 1.0,
+     "p90": 3.2,
+     "media": 1.4,
+     "max": 4.0,
+     "malos": 9,
+     "umbral": 1
+    },
+    "Laser Factory": {
+     "n": 19,
+     "med": 0.2,
+     "p90": 2.1,
+     "media": 1.4,
+     "max": 17.0,
+     "malos": 4,
+     "umbral": 1
+    },
+    "Belenus": {
+     "n": 14,
+     "med": 1.1,
+     "p90": 6.3,
+     "media": 2.9,
+     "max": 13.0,
+     "malos": 9,
+     "umbral": 1
+    }
+   },
+   "tec": {
+    "Jonathan Zarauza": {
+     "n": 186,
+     "med": 0.3,
+     "p90": 4.1,
+     "media": 2.0,
+     "max": 31.0,
+     "malos": 74,
+     "umbral": 1
+    },
+    "Iván Lozano Fernández": {
+     "n": 253,
+     "med": 0.2,
+     "p90": 4.1,
+     "media": 2.1,
+     "max": 112.0,
+     "malos": 80,
+     "umbral": 1
+    },
+    "Francisco Fernández Porrúa": {
+     "n": 162,
+     "med": 0.3,
+     "p90": 3.1,
+     "media": 1.7,
+     "max": 70.0,
+     "malos": 54,
+     "umbral": 1
+    },
+    "Borja Canteli Trabanco": {
+     "n": 101,
+     "med": 0.2,
+     "p90": 3.3,
+     "media": 1.7,
+     "max": 26.0,
+     "malos": 32,
+     "umbral": 1
+    },
+    "Daniel Rodriguez Fernandez": {
+     "n": 82,
+     "med": 0.3,
+     "p90": 5.9,
+     "media": 2.5,
+     "max": 29.0,
+     "malos": 32,
+     "umbral": 1
+    }
+   }
+  },
+  {
+   "n": 780,
+   "med": 3.7,
+   "p90": 7.0,
+   "media": 4.0,
+   "max": 44.0,
+   "malos": 227,
+   "umbral": 5,
+   "id": "vuelta",
+   "tit": "Transporte de vuelta",
+   "quien": "tercero",
+   "estados": [
+    "Devuelto a cliente"
+   ],
+   "cad": {
+    "Otros y directos": {
+     "n": 214,
+     "med": 4.0,
+     "p90": 7.8,
+     "media": 4.9,
+     "max": 44.0,
+     "malos": 86,
+     "umbral": 5
+    },
+    "Dermasana": {
+     "n": 35,
+     "med": 3.1,
+     "p90": 6.1,
+     "media": 3.3,
+     "max": 11.0,
+     "malos": 6,
+     "umbral": 5
+    },
+    "Elha": {
+     "n": 214,
+     "med": 2.8,
+     "p90": 5.7,
+     "media": 2.9,
+     "max": 13.0,
+     "malos": 34,
+     "umbral": 5
+    },
+    "Sin Vello": {
+     "n": 132,
+     "med": 3.0,
+     "p90": 6.9,
+     "media": 3.9,
+     "max": 27.0,
+     "malos": 36,
+     "umbral": 5
+    },
+    "Centri Unico": {
+     "n": 24,
+     "med": 5.1,
+     "p90": 9.8,
+     "media": 5.5,
+     "max": 11.0,
+     "malos": 13,
+     "umbral": 5
+    },
+    "Epil Point": {
+     "n": 64,
+     "med": 3.8,
+     "p90": 7.1,
+     "media": 4.0,
+     "max": 19.0,
+     "malos": 20,
+     "umbral": 5
+    },
+    "Dermoscan": {
+     "n": 22,
+     "med": 5.0,
+     "p90": 8.0,
+     "media": 5.3,
+     "max": 11.0,
+     "malos": 11,
+     "umbral": 5
+    },
+    "Brull": {
+     "n": 23,
+     "med": 2.7,
+     "p90": 7.1,
+     "media": 3.6,
+     "max": 14.0,
+     "malos": 7,
+     "umbral": 5
+    },
+    "Zurimed": {
+     "n": 13,
+     "med": 1.9,
+     "p90": 4.0,
+     "media": 1.8,
+     "max": 4.0,
+     "malos": 0,
+     "umbral": 5
+    },
+    "Laser Factory": {
+     "n": 18,
+     "med": 1.9,
+     "p90": 6.7,
+     "media": 3.2,
+     "max": 9.0,
+     "malos": 4,
+     "umbral": 5
+    },
+    "Belenus": {
+     "n": 13,
+     "med": 4.0,
+     "p90": 20.1,
+     "media": 8.5,
+     "max": 37.0,
+     "malos": 5,
+     "umbral": 5
+    }
+   },
+   "tec": {}
+  }
+ ],
+ "ciclo": {
+  "n": 2174,
+  "med": 12.1,
+  "p90": 48.1,
+  "media": 22.4,
+  "max": 436.0,
+  "malos": 424,
+  "umbral": 30
+ },
+ "ciclo_cad": {
+  "Centri Unico": {
+   "n": 112,
+   "med": 13.7,
+   "p90": 51.7,
+   "media": 24.8,
+   "max": 265.0,
+   "malos": 23,
+   "umbral": 30
+  },
+  "Otros y directos": {
+   "n": 571,
+   "med": 17.1,
+   "p90": 68.1,
+   "media": 33.6,
+   "max": 436.0,
+   "malos": 174,
+   "umbral": 30
+  },
+  "Dermasana": {
+   "n": 118,
+   "med": 8.7,
+   "p90": 27.9,
+   "media": 15.5,
+   "max": 308.0,
+   "malos": 10,
+   "umbral": 30
+  },
+  "Sin Vello": {
+   "n": 337,
+   "med": 14.0,
+   "p90": 49.0,
+   "media": 22.9,
+   "max": 392.0,
+   "malos": 74,
+   "umbral": 30
+  },
+  "Epil Point": {
+   "n": 254,
+   "med": 9.1,
+   "p90": 35.1,
+   "media": 15.0,
+   "max": 168.0,
+   "malos": 33,
+   "umbral": 30
+  },
+  "Elha": {
+   "n": 564,
+   "med": 7.8,
+   "p90": 31.0,
+   "media": 14.3,
+   "max": 197.0,
+   "malos": 62,
+   "umbral": 30
+  },
+  "Laser Factory": {
+   "n": 98,
+   "med": 15.9,
+   "p90": 48.1,
+   "media": 20.2,
+   "max": 69.0,
+   "malos": 22,
+   "umbral": 30
+  },
+  "Dermoscan": {
+   "n": 29,
+   "med": 20.2,
+   "p90": 40.1,
+   "media": 28.1,
+   "max": 122.0,
+   "malos": 6,
+   "umbral": 30
+  },
+  "Smart Duck": {
+   "n": 13,
+   "med": 14.2,
+   "p90": 40.9,
+   "media": 17.4,
+   "max": 50.0,
+   "malos": 3,
+   "umbral": 30
+  },
+  "Brull": {
+   "n": 33,
+   "med": 18.8,
+   "p90": 40.9,
+   "media": 31.2,
+   "max": 212.0,
+   "malos": 6,
+   "umbral": 30
+  },
+  "Zurimed": {
+   "n": 17,
+   "med": 9.7,
+   "p90": 26.1,
+   "media": 13.4,
+   "max": 28.0,
+   "malos": 0,
+   "umbral": 30
+  },
+  "Belenus": {
+   "n": 23,
+   "med": 20.9,
+   "p90": 89.9,
+   "media": 39.1,
+   "max": 166.0,
+   "malos": 10,
+   "umbral": 30
+  }
+ },
+ "abiertos": {
+  "triaje": [
+   [
+    31.2,
+    "LEAS-7249",
+    "BiNatural"
+   ],
+   [
+    4.9,
+    "LEAS-7455",
+    "BiNatural Consola 20.046 20046"
+   ],
+   [
+    4.9,
+    "LEAS-7453",
+    "JD Aesthetics"
+   ],
+   [
+    4.9,
+    "LEAS-7444",
+    "Miguel Parra (ex-brull)"
+   ],
+   [
+    4.8,
+    "LEAS-7452",
+    "Sinvello Estepona"
+   ],
+   [
+    4.1,
+    "LEAS-7467",
+    "Epil Point  Sesto Firenze"
+   ],
+   [
+    4.1,
+    "LEAS-7458",
+    "Elha Laser Center Milano - Carducci"
+   ],
+   [
+    3.9,
+    "LEAS-7470",
+    "Bella Forme"
+   ],
+   [
+    3.0,
+    "LEAS-7486",
+    "Laser Factory Sabadell"
+   ],
+   [
+    3.0,
+    "LEAS-7482",
+    "Patricia García Tamayo"
+   ],
+   [
+    2.9,
+    "LEAS-7488",
+    "Elha Villarroel"
+   ],
+   [
+    0.1,
+    "LEAS-7450",
+    "No filters cliente de Dinamica impulso Yolanda Jaramillo  AHR0110"
+   ]
+  ],
+  "transporte": [
+   [
+    31.2,
+    "LEAS-7230",
+    "SinVello Albacete"
+   ],
+   [
+    19.8,
+    "LEAS-7320",
+    "Belleza Begoña Tapia  (AHR0019)"
+   ],
+   [
+    19.1,
+    "LEAS-7325",
+    "Deseja (Lituania)"
+   ],
+   [
+    17.9,
+    "LEAS-7332",
+    "EPIL POINT - Specialisti in Epilazione Laser"
+   ],
+   [
+    17.8,
+    "LEAS-7334",
+    "BEAUTY Centre d'estètica  90159 20076"
+   ],
+   [
+    13.1,
+    "LEAS-7358",
+    "Centri Unico Olbia"
+   ],
+   [
+    12.0,
+    "LEAS-7374",
+    "Cleanbody CC La Villa ( 30267 )"
+   ],
+   [
+    10.8,
+    "LEAS-7386",
+    "Belenus"
+   ],
+   [
+    10.7,
+    "LEAS-7361",
+    "Elha Martín el Humano"
+   ],
+   [
+    9.8,
+    "LEAS-7343",
+    "Elha Sta teresa"
+   ],
+   [
+    7.1,
+    "LEAS-7416",
+    "Centro Unico Palermo"
+   ],
+   [
+    6.2,
+    "LEAS-7430",
+    "Elha Isaac Albéniz"
+   ]
+  ],
+  "cola": [
+   [
+    24.1,
+    "LEAS-6765",
+    "Bella Forme"
+   ],
+   [
+    11.1,
+    "LEAS-7379",
+    "Elha Badalona"
+   ],
+   [
+    4.2,
+    "LEAS-7425",
+    "Radiante Estética Avanzada  ( FC 00031 )"
+   ],
+   [
+    4.1,
+    "LEAS-7405",
+    "Elha Juan de Austria"
+   ],
+   [
+    3.0,
+    "LEAS-7360",
+    "SinVello Ibiza"
+   ],
+   [
+    3.0,
+    "LEAS-7299",
+    "SinVello Granada Constitucion"
+   ],
+   [
+    0.1,
+    "LEAS-7434",
+    "Bianca House of Beauty"
+   ],
+   [
+    0.1,
+    "LEAS-7256",
+    "SinVello Miraflores"
+   ],
+   [
+    0.1,
+    "LEAS-6768",
+    "CVL Distribuidor Aparatología Estética (Samuel)"
+   ]
+  ],
+  "presup": [
+   [
+    42.1,
+    "LEAS-6907",
+    "Apain Estetika ( AHR0071)"
+   ],
+   [
+    25.1,
+    "LEAS-7188",
+    "Centro Unico Boccea SRF00014"
+   ],
+   [
+    7.1,
+    "LEAS-7355",
+    "Zurimed Parque principado"
+   ],
+   [
+    6.1,
+    "LEAS-7423",
+    "RADIANTE AVILES ( SUST011 SRF-FC)"
+   ],
+   [
+    3.0,
+    "LEAS-7312",
+    "Elha Vilanova"
+   ],
+   [
+    0.2,
+    "LEAS-7421",
+    "L Medical (G-Point)"
+   ],
+   [
+    0.1,
+    "LEAS-7432",
+    "Elha Sta Coloma"
+   ]
+  ],
+  "cliente": [
+   [
+    123.0,
+    "LEAS-4443",
+    "Dermoscan"
+   ],
+   [
+    88.1,
+    "LEAS-6198",
+    "Luxlaser andre belgica"
+   ],
+   [
+    65.9,
+    "LEAS-6889",
+    "L Medical G point"
+   ],
+   [
+    63.2,
+    "LEAS-6888",
+    "L Medical G point"
+   ],
+   [
+    26.1,
+    "LEAS-7190",
+    "Harmonie Salamanca"
+   ],
+   [
+    16.8,
+    "LEAS-7270",
+    "Epil Point Lecce"
+   ],
+   [
+    5.9,
+    "LEAS-7437",
+    "SinVello Alicante Gran Via"
+   ],
+   [
+    3.1,
+    "LEAS-7403",
+    "Dermoscan"
+   ]
+  ],
+  "repara": [
+   [
+    42.1,
+    "LEAS-6779",
+    "Centri Unico Campania BS00019"
+   ],
+   [
+    25.2,
+    "LEAS-7118",
+    "Corpoderm"
+   ],
+   [
+    21.2,
+    "LEAS-6906",
+    "Daniel JAramillo Holea"
+   ],
+   [
+    5.1,
+    "LEAS-6879",
+    "Brull"
+   ],
+   [
+    4.2,
+    "LEAS-7424",
+    "Radiante Estética Avanzada   ( SUST004 SRF-BS )"
+   ],
+   [
+    0.1,
+    "LEAS-7420",
+    "Medical & Aesthetics Solutions, Inc - Adolfo Panamá"
+   ]
+  ],
+  "externo": [
+   [
+    35.0,
+    "LEAS-7213",
+    "Epil Point Pavia"
+   ],
+   [
+    28.0,
+    "LEAS-7268",
+    "Clínica de Estétitca Dileima"
+   ],
+   [
+    25.9,
+    "LEAS-7282",
+    "Bekalon"
+   ],
+   [
+    20.9,
+    "LEAS-7311",
+    "Elha Pisa"
+   ],
+   [
+    10.1,
+    "LEAS-7393",
+    "SinVello Colmenar Viejo"
+   ],
+   [
+    10.1,
+    "LEAS-7378",
+    "SinVello Badalona"
+   ],
+   [
+    10.0,
+    "LEAS-7406",
+    "Epil Point Livorno"
+   ],
+   [
+    9.8,
+    "LEAS-7407",
+    "Elha C/Barcelona"
+   ],
+   [
+    6.8,
+    "LEAS-7427",
+    "Dermasana Orense"
+   ],
+   [
+    6.8,
+    "LEAS-7419",
+    "Elha Ramón y Cajal"
+   ],
+   [
+    6.0,
+    "LEAS-7426",
+    "Elha león"
+   ],
+   [
+    4.9,
+    "LEAS-7413",
+    "Sinvello Provenza"
+   ]
+  ],
+  "inspec": [
+   [
+    3.2,
+    "LEAS-7436",
+    "RADIANTE AVILES"
+   ],
+   [
+    0.2,
+    "LEAS-7349",
+    "Cris Peña Beauty Center"
+   ]
+  ],
+  "vuelta": [
+   [
+    3.8,
+    "LEAS-7321",
+    "Dermoscan"
+   ],
+   [
+    3.8,
+    "LEAS-7315",
+    "Belenus"
+   ],
+   [
+    2.9,
+    "LEAS-7335",
+    "Laser Factory man & woman Terrassa"
+   ],
+   [
+    2.8,
+    "LEAS-7121",
+    "Smart duck paris 15 Convention"
+   ]
+  ]
+ }
+}
