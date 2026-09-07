@@ -603,17 +603,17 @@ dialog.wide{max-width:860px}
         <span class="os">10 sin llegar · 78 reparación · 35 préstamo</span>
         <span class="ob"><i style="width:80%"></i></span>
       </button>
-      <button class="op w" onclick="ops('transporte')">
+      <button class="op w" onclick="opsx('fuera')">
         <span class="oh"><span class="oi">📦</span><span class="ot">Fuera del taller</span></span>
-        <span class="ov">65<small>% del ciclo</small></span>
-        <span class="os">6 transportistas, 0 indicadores</span>
-        <span class="ob"><i style="width:70%"></i></span>
+        <span class="ov">55<small>% del ciclo</small></span>
+        <span class="os">transporte 30 % · externo 12 % · cliente 13 %</span>
+        <span class="ob"><i style="width:55%"></i></span>
       </button>
-      <button class="op w" onclick="ops('epil')">
-        <span class="oh"><span class="oi">🇮🇹</span><span class="ot">Epil Point fuera de Jira</span></span>
-        <span class="ov">144<small>vs 9</small></span>
-        <span class="os">WhatsApp contra Jira</span>
-        <span class="ob"><i style="width:75%"></i></span>
+      <button class="op w" onclick="opsx('notas')">
+        <span class="oh"><span class="oi">📝</span><span class="ot">Sin una sola nota</span></span>
+        <span class="ov">28<small>% de los tickets</small></span>
+        <span class="os">632 de 2.274 · no es cosa de un cliente</span>
+        <span class="ob"><i style="width:28%"></i></span>
       </button>
       <button class="op w" onclick="ops('higiene')">
         <span class="oh"><span class="oi">🧟</span><span class="ot">Residuo en Jira</span></span>
@@ -2453,10 +2453,7 @@ const FRESCURA = {
   "tablero Hoy":                          "2026-09-07",
   "cola de taller":                       "2026-09-07",
   "actividad del dia":                    "2026-09-07",
-  "KPIs del ciclo":                       "2026-09-07",
-  // Estas dos no son contadores diarios y no se han vuelto a medir hoy. Van con su fecha
-  // para que el aviso las nombre en vez de dejarlas pasar por buenas.
-  "«fuera del taller» y «Epil Point»":     "2026-09-02"
+  "KPIs del ciclo":                       "2026-09-07"
 };
 function avisarViejos(){
   const viejos = Object.keys(FRESCURA).filter(k => (diasDesde(FRESCURA[k]) || 0) >= 1);
@@ -2468,6 +2465,55 @@ function avisarViejos(){
         + diasDesde(FRESCURA[k]) + ' d)</span>').join(' · ')
     + '. La cabecera dice la hora de la última pasada, pero esos bloques no se han vuelto a '
     + 'calcular: no decidas con ellos.';
+}
+
+// Las dos tarjetas que antes iban a ojo. Medidas sobre el historial de transiciones de
+// Jira (2.289 tickets desde octubre de 2024), no estimadas.
+const OPSX = {
+ fuera: {
+   v: "55 %", u: "del ciclo, fuera del taller",
+   t: "Dónde pasa el tiempo un equipo, de verdad",
+   filas: [["Dentro del taller","35,7 %"],["Transporte (ida y vuelta)","29,8 %"],
+           ["Esperando al cliente","13,4 %"],["Técnico externo","12,2 %"],
+           ["Sin clasificar","8,8 %"]],
+   nota: "Sobre 1.989 incidencias cerradas y 47.987 días de ciclo acumulados. Es el reparto del "
+       + "tiempo TOTAL, que es lo único que se puede sumar: los porcentajes de un reparto tienen que "
+       + "dar 100 y las medianas no lo hacen. Si en vez de eso miras ticket a ticket qué porcentaje "
+       + "de SU ciclo pasa fuera y coges la mediana, sale 68 %: la mitad de los equipos pasan más de "
+       + "dos tercios de su vida fuera del taller. "
+       + "El «sin clasificar» son estados que no agrupo y huecos entre transiciones; no lo reparto "
+       + "para no inflar ninguna cifra. "
+       + "Antes esta tarjeta decía 65 % y era una estimación, no una medida."
+ },
+ notas: {
+   v: "28 %", u: "de los tickets, sin una sola nota",
+   t: "Y no es cosa de un cliente concreto",
+   filas: [["Dermasana","37 % · 44 de 120"],["Laser Factory","37 % · 37 de 101"],
+           ["Elha","33 % · 193 de 588"],["Epil Point","31 % · 81 de 262"],
+           ["Otros y directos","25 % · 181 de 733"],["Centri Unico","23 % · 27 de 118"],
+           ["Sin Vello","20 % · 69 de 352"]],
+   nota: "Esta tarjeta decía antes «Epil Point fuera de Jira · 144 vs 9». Ese número no se sostiene: "
+       + "era una estimación de mensajes de WhatsApp contra comentarios de Jira que no he podido "
+       + "reproducir. Y al medir lo que sí se puede medir —cuántos tickets se cierran sin que nadie "
+       + "escriba una línea— resulta que Epil Point (31 %) no destaca: Dermasana y Laser Factory están "
+       + "peor, y Elha también. El problema de documentación es de todo el SAT, no de un cliente. "
+       + "Eso cambia la conversación: no es «Epil Point se salta Jira», es «uno de cada cuatro equipos "
+       + "pasa por taller sin dejar rastro escrito»."
+ }
+};
+function opsx(id){
+  const o = OPSX[id]; if(!o) return;
+  let h = '<div class="k">Cómo sale este número</div>'
+    + '<div class="big">' + o.v + '</div><div class="bigu">' + o.u + '</div>'
+    + '<h3 style="margin:0 0 10px">' + o.t + '</h3><div class="sec2">El reparto</div>';
+  o.filas.forEach(r => { h += '<div class="r"><span class="l">'+r[0]+'</span><span class="v">'+r[1]+'</span></div>'; });
+  h += '<div class="src">' + o.nota
+    + '<div class="fsrc">Origen: iortizfigueroa/leaseir-sat-dashboard · cache/jira_status_timeline.json · '
+    + 'medido el 07/09/2026</div></div>'
+    + '<button class="x" onclick="this.closest(\'dialog\').close()">Cerrar</button>';
+  const b = document.getElementById('calc-body');
+  b.innerHTML = h; linkTickets(b);
+  document.getElementById('dlg-calc').showModal();
 }
 
 function dlg(id){const d=document.getElementById(id); if(d&&d.showModal) d.showModal();}
