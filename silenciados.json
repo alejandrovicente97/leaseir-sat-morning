@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-09-07T17:00+02:00",
+  "actualizado": "2026-09-07T18:05+02:00",
   "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
   "como_se_usa": [
     "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -422,6 +422,32 @@
       "quien": "Ernesto",
       "cuando": "2026-09-07",
       "revive_si": "Nunca como duplicación. Solo si las dos quedaran en préstamo abierto pasado el cierre del caso."
+    },
+    {
+      "id": "7227-prestamo-en-uso",
+      "que": "LEAS-7227 Elha Limoneros como préstamo fuera de plazo y subtarea huérfana",
+      "ambito": {
+        "leas": "LEAS-7227",
+        "centro": "Elha Limoneros",
+        "tipo": "prestamo-huerfano"
+      },
+      "porque": "Gonzalo lo contestó desde el panel el 07/09 a las 16:48: «Sigue en prestamo ya que el cliente lo está usando». El préstamo está vivo a propósito; que el padre LEAS-7224 esté en «Resuelto» no lo convierte en huérfano.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "El cliente devuelve el equipo y el ticket sigue abierto, o pasan más de 30 días sin nota nueva sobre ese préstamo."
+    },
+    {
+      "id": "7285-prestamo-en-uso",
+      "que": "LEAS-7285 SinVello Cádiz como préstamo fuera de plazo y subtarea huérfana",
+      "ambito": {
+        "leas": "LEAS-7285",
+        "centro": "SinVello Cadiz",
+        "tipo": "prestamo-huerfano"
+      },
+      "porque": "Gonzalo lo contestó desde el panel el 07/09 a las 16:49: «Sigue de prestamo con el cliente». Isaac ya lo había explicado a las 12:27 en LEAS-7505: la consola C00552 está allí porque fue la primera sustitución que se mandó.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Se cierra el caso raíz LEAS-7490 y la consola sigue en el centro sin ticket que la sostenga."
     }
   ],
   "enlaces": [
