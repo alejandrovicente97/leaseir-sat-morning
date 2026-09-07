@@ -632,6 +632,51 @@ dialog.wide{max-width:860px}
     font-size:9px;color:#777;line-height:1.65}
 }
 
+
+/* ═══ Ritmo de presupuestos y facturación ═══ */
+.frit{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 14px}
+@media(max-width:900px){.frit{grid-template-columns:repeat(2,1fr)}}
+.fr1{background:var(--surface);border:0;border-top:3px solid var(--divider);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:13px 15px 14px;text-align:left;font:inherit;color:inherit;
+  display:flex;flex-direction:column;gap:2px;cursor:pointer}
+.fr1:hover{box-shadow:var(--shadow-lift)}
+.fr1.g{border-top-color:var(--good)} .fr1.n{border-top-color:var(--cool)}
+.fr1 b{font-family:var(--mono);font-size:29px;font-weight:600;letter-spacing:-.03em;line-height:1.05}
+.fr1 b small{font-size:14px;color:var(--muted);margin-left:2px;font-weight:500}
+.fr1 .t{font-size:12px;color:var(--ink-soft);font-weight:500;margin-top:4px}
+.fr1 .s{font-size:11.5px;color:var(--muted-2)}
+.fgraf{display:flex;align-items:flex-end;gap:2px;height:104px;padding:0 2px}
+.fgd{flex:1;display:flex;flex-direction:row;align-items:flex-end;gap:1px;
+  min-width:0;position:relative;cursor:default}
+.fgd i{flex:1;display:block;border-radius:2px 2px 0 0;background:var(--cool);min-height:1px}
+.fgd i.f{background:var(--good)}
+.fgd:hover i{filter:brightness(1.2)}
+.fejex{display:flex;gap:2px;padding:5px 2px 0;font-size:9.5px;color:var(--muted-2);
+  font-family:var(--mono)}
+.fejex span{flex:1;text-align:center;overflow:hidden;white-space:nowrap}
+
+
+/* ═══ Tasa de utilidad de la herramienta ═══ */
+.uti{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);
+  border-left:4px solid var(--accent);overflow:hidden;margin:0 0 14px}
+.uti>header{padding:14px 20px 12px;border-bottom:1px solid var(--divider-soft)}
+.uti>header h3{margin:0;font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.uti>header p{margin:4px 0 0;font-size:12px;color:var(--muted);line-height:1.5;max-width:92ch}
+.unv{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+@media(max-width:820px){.unv{grid-template-columns:1fr}}
+.un{padding:15px 20px 16px;border-left:1px solid var(--divider-soft);
+  display:flex;flex-direction:column;gap:2px}
+.un:first-child{border-left:0}
+.un .ug{font-size:9.5px;text-transform:uppercase;letter-spacing:.11em;font-weight:700;
+  color:var(--muted-2);margin-bottom:4px}
+.un b{font-family:var(--mono);font-size:32px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.un .ut{font-size:12.5px;font-weight:500;color:var(--ink-soft);margin-top:4px}
+.un .us{font-size:11.5px;color:var(--muted);line-height:1.45;margin-top:3px}
+.un.fuerte b{color:var(--good)} .un.medio b{color:var(--cool)} .un.debil b{color:var(--muted-2)}
+.un .uw{margin-top:7px;font-size:11px;color:var(--warn);line-height:1.4}
+.uti .upie{padding:11px 20px 14px;border-top:1px solid var(--divider-soft);
+  font-size:11.5px;color:var(--muted);line-height:1.55}
+
 /* ═══ Epil Point ═══ */
 .epdos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 0}
 @media(max-width:900px){.epdos{grid-template-columns:1fr}}
@@ -1023,6 +1068,12 @@ dialog.wide{max-width:860px}
 
 <div id="p-actividad" class="pane">
   <section class="sec">
+    <h2>¿Sirve de algo la herramienta? <span class="hint">— tres medidas, de la más sólida a la más floja</span></h2>
+    <div class="uti" id="uti"></div>
+  </section>
+
+
+  <section class="sec">
     <h2>Quién ha escrito hoy en Jira <span class="hint">— pincha una tarjeta para ver comentario a comentario</span></h2>
     <div class="actbar">
       <button class="actbig" id="actbtn" onclick="refrescarAct()" hidden>↻&nbsp; Actualizar ahora</button>
@@ -1040,6 +1091,44 @@ dialog.wide{max-width:860px}
 </div>
 
 <div id="p-cobros" class="pane">
+  <section class="sec" id="s-ritmo">
+    <h2>El ritmo del dinero — qué se emite y qué se cierra cada día</h2>
+    <div class="frit" id="fr-nums"></div>
+    <div class="card" style="margin-bottom:12px">
+      <h2 style="margin:0 0 4px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)">Día a día · últimas seis semanas laborables</h2>
+      <div style="font-size:11.5px;color:var(--muted-2);margin:0 0 12px">
+        <span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--cool);margin-right:5px"></span>presupuestos emitidos (nº)
+        <span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--good);margin:0 5px 0 16px"></span>importe cerrado con factura (€)
+      </div>
+      <div class="fgraf" id="fr-graf"></div>
+      <div class="fejex" id="fr-eje"></div>
+    </div>
+    <div class="two">
+      <div class="card">
+        <h2 style="margin:0 0 11px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)">Mes a mes</h2>
+        <table class="tbl"><thead><tr><th>Mes</th><th class="n">Presup.</th><th class="n">Importe</th>
+          <th class="n">Cerrado c/fra</th><th class="n">Importe</th></tr></thead>
+          <tbody id="fr-mes"></tbody></table>
+      </div>
+      <div class="card">
+        <h2 style="margin:0 0 11px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)">Lo que este número NO es</h2>
+        <div class="knota" style="margin:0 0 9px"><b>Esto no es la facturación del día.</b> En los datos que maneja
+          la herramienta están el número de factura, el importe, lo cobrado, lo pendiente y el vencimiento,
+          pero <b>no la fecha de emisión</b>. Lo que se dibuja es el día en que se cerró un ticket que lleva
+          factura asociada, que es otra cosa: la factura puede salir después. Para la facturación real por día
+          hace falta sacarla de Holded.</div>
+        <div class="knota" style="margin:0 0 9px"><b>Solo cuatro de cada diez cierres llevan factura.</b>
+          El resto son garantía o cierres sin cargo. En agosto: 115 cerrados, 46 con factura, 35 en garantía.
+          Así que el importe de la derecha es el de una parte del trabajo, no el de todo.</div>
+        <div class="knota"><b>«Presupuesto emitido» es la entrada en «Pendiente confirmación presupuesto».</b>
+          El estado «Esperando respuesta cliente a presupuesto» ya no se usa en este flujo: en los últimos
+          treinta días ningún presupuesto pasó por él. El importe es el del campo del ticket en el momento
+          de mirarlo, así que un presupuesto emitido sin importe cargado cuenta como cero.</div>
+      </div>
+    </div>
+  </section>
+
+
   <div class="card" style="border-left:4px solid var(--warn);padding:12px 16px;margin:0 0 12px">
     <div style="font-size:13px;font-weight:600;margin-bottom:4px">✔ Corregido con el fichero de cuotas: el vencido era falso</div>
     <div style="font-size:12.5px;color:var(--muted);line-height:1.5">Cruzado con el control de cuotas: <b>112 facturas de 2026 están financiadas</b>, con 1,70 M€ de cuotas programadas de septiembre de 2026 en adelante. La mayor del listado de vencidos — <b>Brull, 29.911 €</b> — no está vencida: son nueve cuotas de septiembre a mayo, y ya se han cobrado 9.970 €. Antes de reclamar nada, comprueba aquí si el cliente está financiado. <button onclick="calc('financiadas')" style="font:inherit;font-size:12px;font-weight:600;color:var(--accent);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline">Ver quién está financiado</button></div>
@@ -2403,7 +2492,7 @@ function pintarEdades(root){
 
 // Cada bloque dice de que dia son sus datos. La pasada tiene que actualizar estas fechas
 // cuando recalcula; si se le olvida, sale el aviso solo.
-const FRESCURA = {"tablero Hoy": "2026-09-07", "cola de taller": "2026-09-07", "actividad del dia": "2026-09-07", "KPIs del ciclo": "2026-09-07"};
+const FRESCURA = {"tablero Hoy": "2026-09-07", "cola de taller": "2026-09-07", "actividad del dia": "2026-09-07", "KPIs del ciclo": "2026-09-07", "ritmo de presupuestos": "2026-09-07", "tasa de utilidad": "2026-09-07"};
 function avisarViejos(){
   const viejos = Object.keys(FRESCURA).filter(k => (diasDesde(FRESCURA[k]) || 0) >= 1);
   const c = document.getElementById('frescura'); if(!c) return;
@@ -2691,6 +2780,124 @@ function imprimir(){
 }
 window.addEventListener('afterprint', () => document.body.classList.remove('imprimiendo'));
 
+// ═══ Ritmo: presupuestos emitidos y trabajo facturable cerrado ═══
+const FACT = {"_f":"2026-09-07","dias":[["07-28",7,1830,4,2166],["07-29",5,1397,1,720],["07-30",2,55406,1,266],["07-31",4,39157,3,2274],["08-03",1,1791,3,1176],["08-04",5,2468,7,4719],["08-05",1,0,4,3497],["08-06",1,15028,3,3868],["08-07",0,0,3,1337],["08-10",4,4280,0,0],["08-11",1,1452,3,788],["08-12",4,12339,1,334],["08-13",0,0,0,0],["08-14",5,2578,1,1452],["08-17",1,218,0,0],["08-18",7,5306,6,6647],["08-19",2,1936,2,7518],["08-20",5,2526,0,0],["08-21",8,18703,0,0],["08-24",2,2467,3,3497],["08-25",2,2899,3,1295],["08-26",3,1426,3,2634],["08-27",0,0,0,0],["08-28",4,7791,3,2617],["08-31",0,0,1,895],["09-01",3,0,3,8738],["09-02",3,332,1,2795],["09-03",11,16046,0,0],["09-04",2,9700,3,4826],["09-07",0,0,0,0]],"mes":[{"m":"2026-03","en":110,"ei":193044,"fn":81,"fi":111199,"cn":192,"lab":22},{"m":"2026-04","en":89,"ei":176470,"fn":73,"fi":92596,"cn":181,"lab":22},{"m":"2026-05","en":115,"ei":286054,"fn":87,"fi":149588,"cn":201,"lab":21},{"m":"2026-06","en":102,"ei":202216,"fn":95,"fi":255539,"cn":197,"lab":22},{"m":"2026-07","en":85,"ei":214605,"fn":69,"fi":79568,"cn":164,"lab":23},{"m":"2026-08","en":56,"ei":83208,"fn":46,"fi":42274,"cn":115,"lab":21},{"m":"2026-09","en":19,"ei":26078,"fn":7,"fi":16360,"cn":24,"lab":5}]};
+function eur(n){ return n >= 1000 ? (n/1000).toFixed(n >= 10000 ? 0 : 1).replace('.',',')+' k€'
+                                  : Math.round(n)+' €'; }
+function pintarRitmo(){
+  const g = document.getElementById('fr-graf'); if(!g) return;
+  const D = FACT.dias, maxE = Math.max(...D.map(d=>d[1]), 1), maxF = Math.max(...D.map(d=>d[4]), 1);
+  g.innerHTML = D.map(d =>
+    '<div class="fgd" title="'+d[0]+' · '+d[1]+' presupuestos ('+eur(d[2])+') · '
+      + d[3]+' cierres con factura ('+eur(d[4])+')">'
+    + '<i style="height:'+Math.round(96*d[1]/maxE)+'px"></i>'
+    + '<i class="f" style="height:'+Math.round(96*d[4]/maxF)+'px"></i></div>').join('');
+  document.getElementById('fr-eje').innerHTML = D.map((d,i) =>
+    '<span>'+(i % 5 === 0 ? d[0] : '')+'</span>').join('');
+
+  const M = FACT.mes, m = M[M.length-1], ant = M[M.length-2];
+  document.getElementById('fr-nums').innerHTML =
+      '<button class="fr1 n" onclick="ritcalc(\'emi\')"><b>'+m.en+'</b>'
+    + '<span class="t">Presupuestos emitidos</span>'
+    + '<span class="s">en septiembre · '+(m.en/m.lab).toFixed(1).replace('.',',')+' al día laborable</span></button>'
+    + '<button class="fr1 n" onclick="ritcalc(\'emi\')"><b>'+eur(m.ei)+'</b>'
+    + '<span class="t">Importe presupuestado</span>'
+    + '<span class="s">'+eur(Math.round(m.ei/m.lab))+' al día · agosto '+eur(ant.ei)+'</span></button>'
+    + '<button class="fr1 g" onclick="ritcalc(\'fac\')"><b>'+m.fn+'</b>'
+    + '<span class="t">Cierres con factura</span>'
+    + '<span class="s">de '+m.cn+' cerrados · '+Math.round(100*m.fn/Math.max(m.cn,1))+' % del cierre</span></button>'
+    + '<button class="fr1 g" onclick="ritcalc(\'fac\')"><b>'+eur(m.fi)+'</b>'
+    + '<span class="t">Importe de ese trabajo</span>'
+    + '<span class="s">no es la facturación del día · pulsa</span></button>';
+
+  document.getElementById('fr-mes').innerHTML = M.slice().reverse().map(x =>
+    '<tr'+(x === m ? ' style="font-weight:600"' : '')+'><td>'+x.m+'</td>'
+    + '<td class="n">'+x.en+'</td><td class="n">'+eur(x.ei)+'</td>'
+    + '<td class="n">'+x.fn+'</td><td class="n">'+eur(x.fi)+'</td></tr>').join('');
+}
+
+// Fichas de los dos números del ritmo. No van por CALC porque explican un método,
+// no un cálculo de una sola pasada.
+function ritcalc(id){
+  const M = FACT.mes, m = M[M.length-1];
+  let h = '<div class="k">Cómo sale este número</div>';
+  if(id === 'emi'){
+    h += '<div class="big">'+m.en+'</div><div class="bigu">presupuestos emitidos en septiembre</div>'
+      + '<h3 style="margin:0 0 10px">Un presupuesto emitido es una entrada en «Pendiente confirmación presupuesto»</h3>'
+      + '<p style="margin:0 0 12px;font-size:13px;color:var(--ink-soft)">Se cuenta cada vez que un ticket entra '
+      + 'en ese estado, con el historial completo de Jira desde octubre de 2024. Si un ticket vuelve a pasar por '
+      + 'ahí con un presupuesto nuevo, cuenta otra vez, que es lo correcto: son dos presupuestos.</p>'
+      + '<div class="r"><span class="l">Emitidos en septiembre</span><span class="v">'+m.en+'</span></div>'
+      + '<div class="r"><span class="l">Días laborables transcurridos</span><span class="v">'+m.lab+'</span></div>'
+      + '<div class="r"><span class="l">Media diaria</span><span class="v">'+(m.en/m.lab).toFixed(1).replace('.',',')+'</span></div>'
+      + '<div class="r"><span class="l">Importe acumulado</span><span class="v">'+eur(m.ei)+'</span></div>'
+      + '<div class="src">El importe es el del campo del ticket <b>ahora</b>, no el que tenía el día que se emitió: '
+      + 'un presupuesto emitido con el campo todavía vacío suma cero. Por eso hay días con presupuestos y 0 €.'
+      + '<div class="fsrc">Origen: historial de estados de Jira · caché del dashboard SAT</div></div>';
+  } else {
+    h += '<div class="big">'+eur(m.fi)+'</div><div class="bigu">trabajo cerrado con factura en septiembre</div>'
+      + '<h3 style="margin:0 0 10px">Esto NO es la facturación del mes</h3>'
+      + '<p style="margin:0 0 12px;font-size:13px;color:var(--ink-soft)">Es la suma del importe de las facturas '
+      + 'asociadas a los tickets <b>que se cerraron</b> en el periodo. La fecha que se usa es la del cierre del '
+      + 'ticket, porque <b>la fecha de emisión de la factura no está en los datos</b>: de Holded llegan el número, '
+      + 'el importe, lo cobrado, lo pendiente y el vencimiento, y nada más. Una factura puede emitirse días '
+      + 'después del cierre, así que el reparto por día es aproximado y el total del mes puede moverse.</p>'
+      + '<div class="r"><span class="l">Tickets cerrados en septiembre</span><span class="v">'+m.cn+'</span></div>'
+      + '<div class="r"><span class="l">De ellos, con factura asociada</span><span class="v">'+m.fn+'</span></div>'
+      + '<div class="r"><span class="l">Importe de esas facturas</span><span class="v">'+eur(m.fi)+'</span></div>'
+      + '<div class="src">El resto de cierres son garantía o sin cargo: en agosto, 115 cerrados, 46 con factura '
+      + 'y 35 en garantía. Si quieres la facturación real por día, hay que traer la fecha de emisión de Holded; '
+      + 'con lo que hay hoy no se puede dar y no la voy a inventar.'
+      + '<div class="fsrc">Origen: campos de Holded cruzados en la caché del dashboard SAT</div></div>';
+  }
+  h += '<button class="x" onclick="this.closest(\'dialog\').close()">Cerrar</button>';
+  const b = document.getElementById('calc-body');
+  b.innerHTML = h; linkTickets(b);
+  document.getElementById('dlg-calc').showModal();
+}
+
+// ═══ Tasa de utilidad de la herramienta ═══
+// Tres medidas separadas a propósito. La primera es trabajo que pasó por la herramienta y
+// no admite discusión. La segunda es seguimiento y puede confundir causa con coincidencia.
+// La tercera es el contraste honesto, y cuando el grupo de control es pequeño lo dice.
+const UTIL = {
+  "_f": "2026-09-07",
+  "vent": "del viernes 04/09 a las 09:20 al lunes 07/09 a las 11:22",
+  "notas": 12, "notas_tk": 12, "notas_quien": "Gonzalo", "notas_tot": 13,
+  "noaplica": 0,
+  "pub": 94, "movio": 23, "cerro": 6,
+  "ctrl": 14, "ctrl_movio": 0
+};
+function pintarUtil(){
+  const c = document.getElementById('uti'); if(!c) return;
+  const U = UTIL, pm = Math.round(100*U.movio/U.pub), pc = Math.round(100*U.cerro/U.pub);
+  c.innerHTML =
+      '<header><h3>Tasa de utilidad</h3><p>Ni una sola de estas tres cifras dice por sí sola que la '
+    + 'herramienta funcione. Van en orden: la primera es trabajo que pasó materialmente por ella, la '
+    + 'segunda es lo que se movió después de sacarlo, y la tercera es lo único que se parece a una prueba '
+    + '— y hoy es floja. Ventana medida: '+U.vent+'.</p></header>'
+    + '<div class="unv">'
+    + '<div class="un fuerte"><div class="ug">1 · pasó por la herramienta</div><b>'+U.notas+'</b>'
+    +   '<div class="ut">notas escritas desde el panel</div>'
+    +   '<div class="us">en '+U.notas_tk+' tickets, de las '+U.notas_tot+' que escribió '+U.notas_quien
+    +   ' hoy. Sin el panel, esas notas se escriben en Jira una a una o no se escriben.</div></div>'
+    + '<div class="un medio"><div class="ug">2 · se movió después de salir</div><b>'+pm+' %</b>'
+    +   '<div class="ut">'+U.movio+' de '+U.pub+' puntos publicados</div>'
+    +   '<div class="us">y '+U.cerro+' se cerraron ('+pc+' %). Que se muevan después de salir en el panel '
+    +   'no demuestra que sea por el panel: son los mismos tickets que el equipo ya estaba mirando.</div></div>'
+    + '<div class="un debil"><div class="ug">3 · contraste</div><b>'+U.ctrl_movio+' de '+U.ctrl+'</b>'
+    +   '<div class="ut">abiertos que NO salieron y se movieron</div>'
+    +   '<div class="us">Ninguno. Sería la comparación buena si el grupo fuera grande, pero son '+U.ctrl
+    +   ' tickets: con esa muestra no se sostiene nada.</div>'
+    +   '<div class="uw">⚠ Muestra insuficiente. Se vuelve fiable con dos o tres semanas de pasadas.</div></div>'
+    + '</div>'
+    + '<div class="upie"><b>Cómo leerlo.</b> El panel saca precisamente los tickets atascados, así que '
+    + 'juega en contra: si un grupo elegido por estar parado se mueve más que el resto, la señal es buena. '
+    + 'Aun así, la única cifra que no se puede discutir es la primera, y es la que hay que hacer crecer: '
+    + 'cuanto más se escriba desde el panel, menos hace falta creerse las otras dos. '
+    + 'Los datos son de la caché de Jira de las 11:22; lo hecho esta tarde entra en la pasada siguiente.</div>';
+}
+
 // ═══ Epil Point ═══
 function pintarEpil(){
   const c = document.getElementById('ep-tramos'); if(!c) return;
@@ -2734,7 +2941,7 @@ function epcalc(id){
   b.innerHTML = h; linkTickets(b);
   document.getElementById('dlg-calc').showModal();
 }
-try{ buscar(''); pintarEpil(); }catch(e){ console.error('buscar/epil', e); }
+try{ buscar(''); pintarEpil(); pintarRitmo(); pintarUtil(); }catch(e){ console.error('buscar/epil/ritmo', e); }
 
 function dlg(id){const d=document.getElementById(id); if(d&&d.showModal) d.showModal();}
 document.querySelectorAll('dialog').forEach(d=>{
