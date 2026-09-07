@@ -283,6 +283,8 @@ a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
 .caduco{background:var(--crit-bg);border:1px solid var(--crit-line);border-left:5px solid var(--crit);
   border-radius:11px;padding:13px 17px;margin:0 0 14px;font-size:13px;color:var(--ink-soft);line-height:1.55}
 .caduco b{color:var(--crit)}
+.caduco .fd{color:var(--muted);font-weight:500}
+.op .ov i.edad{font-style:normal}
 .tviejo{grid-column:1/-1;background:var(--warn-bg);border:1px solid var(--warn-line);
   border-radius:10px;padding:10px 14px;font-size:12.5px;color:var(--ink-soft);line-height:1.5}
 .tviejo b{color:var(--warn)}
@@ -542,6 +544,8 @@ dialog.wide{max-width:860px}
     </div>
   </header>
 
+  <div id="frescura" class="caduco" hidden></div>
+
   <nav class="tabbar" role="tablist">
     <button class="on" role="tab" onclick="tab(this,'p-hoy')">Hoy<small>Operación</small></button>
     <button role="tab" onclick="tab(this,'p-interno')">Report interno<small>para copiar</small></button>
@@ -558,17 +562,9 @@ dialog.wide{max-width:860px}
 <!-- ═════════ HOY ═════════ -->
 <div id="p-hoy" class="pane on">
 
-  <div class="caduco" id="hoy-caduco">
-    <b>Cuidado: las cifras de días de este tablero son del 2 de septiembre.</b>
-    Comprobado contra Jira el 07/09: las incidencias antiguas cuadran al día con un cálculo
-    hecho el 02/09, no con hoy. O sea que llevan cinco días sin recalcularse aunque la cabecera
-    diga otra cosa. Ejemplos: LEAS-7299 sale con 17 d y en Jira lleva 3; LEAS-7256 sale con 27 d
-    y se tocó esta mañana. <b>No tomes decisiones con los números de esta pestaña</b> hasta que
-    una pasada los regenere. Las pestañas de KPIs y Actividad sí están al día.
-  </div>
 
   <section class="statebar">
-    <div class="lead" onclick="calc('estancadas')"><i></i><b>35 estancadas · sube desde mayo</b></div>
+    <div class="lead" onclick="calc('estancadas')"><i></i><b>28 estancadas · sube desde mayo</b></div>
     <svg viewBox="0 0 600 44" preserveAspectRatio="none" role="img" aria-label="Estancadas de mayo a septiembre: sube de 14 a 23">
       <path d="M6,17.3 L38.1,24 L70.1,21.3 L102.2,21.3 L134.3,18.7 L166.4,20 L198.4,25.3 L230.5,20 L262.6,18.7 L294.7,21.3 L326.7,17.3 L358.8,10.7 L390.9,14.7 L422.9,21.3 L455,16 L487.1,16 L519.2,14.7 L551.2,12 L572.6,5.3 L594,5.3 L594,38 L6,38 Z" fill="var(--crit)" opacity="0.13"/>
       <path d="M6,17.3 L38.1,24 L70.1,21.3 L102.2,21.3 L134.3,18.7 L166.4,20 L198.4,25.3 L230.5,20 L262.6,18.7 L294.7,21.3 L326.7,17.3 L358.8,10.7 L390.9,14.7 L422.9,21.3 L455,16 L487.1,16 L519.2,14.7 L551.2,12 L572.6,5.3 L594,5.3" fill="none" stroke="var(--crit)" stroke-width="2" stroke-linejoin="round"/>
@@ -585,26 +581,26 @@ dialog.wide{max-width:860px}
     <div class="ops">
       <button class="op c" onclick="ops('riesgo')">
         <span class="oh"><span class="oi">📍</span><span class="ot">Equipo sin volver</span></span>
-        <span class="ov">162<small>días</small></span>
+        <span class="ov"><i class="edad" data-desde="2026-03-27">—</i><small>días</small></span>
         <span class="os">C03143 · Smart Duck Paris</span>
         <span class="ob"><i style="width:100%"></i></span>
       </button>
       <button class="op c" onclick="ops('dinero')">
         <span class="oh"><span class="oi">💶</span><span class="ot">Presupuesto sin respuesta</span></span>
-        <span class="ov">258<small>días</small></span>
+        <span class="ov"><i class="edad" data-desde="2025-12-20">—</i><small>días</small></span>
         <span class="os">LEAS-4443 · Dermoscan</span>
         <span class="ob"><i style="width:95%"></i></span>
       </button>
       <button class="op c" onclick="ops('sinduenyo')">
         <span class="oh"><span class="oi">👤</span><span class="ot">Sin dueño</span></span>
         <span class="ov">72<small>%</small></span>
-        <span class="os">138 de 193 abiertas</span>
+        <span class="os">146 de 202 abiertas</span>
         <span class="ob"><i style="width:72%"></i></span>
       </button>
       <button class="op c" onclick="ops('sla')">
         <span class="oh"><span class="oi">⏱</span><span class="ot">Plazos propios</span></span>
-        <span class="ov">109<small>SLA rotos</small></span>
-        <span class="os">12 sin llegar · 67 reparación · 30 préstamo</span>
+        <span class="ov">123<small>SLA rotos</small></span>
+        <span class="os">10 sin llegar · 78 reparación · 35 préstamo</span>
         <span class="ob"><i style="width:80%"></i></span>
       </button>
       <button class="op w" onclick="ops('transporte')">
@@ -621,8 +617,8 @@ dialog.wide{max-width:860px}
       </button>
       <button class="op w" onclick="ops('higiene')">
         <span class="oh"><span class="oi">🧟</span><span class="ot">Residuo en Jira</span></span>
-        <span class="ov">25<small>subtareas</small></span>
-        <span class="os">huérfanas · la más antigua, 283 días</span>
+        <span class="ov">24<small>subtareas</small></span>
+        <span class="os">huérfanas · la más antigua, LEAS-5833, 145 d</span>
         <span class="ob"><i style="width:55%"></i></span>
       </button>
       <button class="op w" onclick="ops('equipo')">
@@ -701,42 +697,42 @@ dialog.wide{max-width:860px}
       <div class="col">
         <header><span class="who">Jonathan</span><span class="cnt">12</span></header>
         <div class="cards">
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-6879" target="_blank" rel="noopener"><span><span class="k">6879</span><span class="st">Reparación</span></span><span class="age">65d</span></a>
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-7121" target="_blank" rel="noopener"><span><span class="k">7121</span><span class="st">Reparación</span></span><span class="age">42d</span></a>
-          <a class="tik b" href="https://leaseir.atlassian.net/browse/LEAS-7256" target="_blank" rel="noopener"><span><span class="k">7256</span><span class="st">Pdte. cliente</span></span><span class="age">27d</span></a>
-          <a class="tik b" href="https://leaseir.atlassian.net/browse/LEAS-7299" target="_blank" rel="noopener"><span><span class="k">7299</span><span class="st">Cola taller</span></span><span class="age">17d</span></a>
-          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7349" target="_blank" rel="noopener"><span><span class="k">7349</span><span class="st">Esperando inicio</span></span><span class="age">10d</span></a>
+          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-6879" target="_blank" rel="noopener"><span><span class="k">6879</span><span class="st">Reparación</span></span><span class="age" data-desde="2026-09-02"></span></a>
+          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-7121" target="_blank" rel="noopener"><span><span class="k">7121</span><span class="st">Reparación</span></span><span class="age" data-desde="2026-09-04"></span></a>
+          <a class="tik b" href="https://leaseir.atlassian.net/browse/LEAS-7256" target="_blank" rel="noopener"><span><span class="k">7256</span><span class="st">Pdte. cliente</span></span><span class="age" data-desde="2026-09-07"></span></a>
+          <a class="tik b" href="https://leaseir.atlassian.net/browse/LEAS-7299" target="_blank" rel="noopener"><span><span class="k">7299</span><span class="st">Cola taller</span></span><span class="age" data-desde="2026-09-04"></span></a>
+          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7349" target="_blank" rel="noopener"><span><span class="k">7349</span><span class="st">Esperando inicio</span></span><span class="age" data-desde="2026-09-07"></span></a>
         </div>
         <div class="more">+7 · mueve a diario · 2 estancados</div>
       </div>
       <div class="col">
         <header><span class="who">Fran</span><span class="cnt">10</span></header>
         <div class="cards">
-          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7355" target="_blank" rel="noopener"><span><span class="k">7355</span><span class="st">Presupuesto</span></span><span class="age">10d</span></a>
-          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7423" target="_blank" rel="noopener"><span><span class="k">7423</span><span class="st">Presupuesto</span></span><span class="age">3d</span></a>
-          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7424" target="_blank" rel="noopener"><span><span class="k">7424</span><span class="st">Reparación</span></span><span class="age">3d</span></a>
-          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7425" target="_blank" rel="noopener"><span><span class="k">7425</span><span class="st">Esperando inicio</span></span><span class="age">3d</span></a>
+          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7355" target="_blank" rel="noopener"><span><span class="k">7355</span><span class="st">Presupuesto</span></span><span class="age" data-desde="2026-09-07"></span></a>
+          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7423" target="_blank" rel="noopener"><span><span class="k">7423</span><span class="st">Presupuesto</span></span><span class="age" data-desde="2026-09-01"></span></a>
+          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7424" target="_blank" rel="noopener"><span><span class="k">7424</span><span class="st">Reparación</span></span><span class="age" data-desde="2026-09-03"></span></a>
+          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7425" target="_blank" rel="noopener"><span><span class="k">7425</span><span class="st">Esperando inicio</span></span><span class="age" data-desde="2026-09-03"></span></a>
         </div>
         <div class="more">+6 · mueve a diario · 3 estancados</div>
       </div>
       <div class="col">
         <header><span class="who">Iván</span><span class="cnt">8</span></header>
         <div class="cards">
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-6048" target="_blank" rel="noopener"><span><span class="k">6048</span><span class="st">Inspección salida</span></span><span class="age">111d</span></a>
-          <a class="tik b" href="https://leaseir.atlassian.net/browse/LEAS-7312" target="_blank" rel="noopener"><span><span class="k">7312</span><span class="st">Cola taller</span></span><span class="age">17d</span></a>
-          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7335" target="_blank" rel="noopener"><span><span class="k">7335</span><span class="st">Cola taller</span></span><span class="age">14d</span></a>
-          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7436" target="_blank" rel="noopener"><span><span class="k">7436</span><span class="st">Reparación</span></span><span class="age">2d</span></a>
+          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-6048" target="_blank" rel="noopener"><span><span class="k">6048</span><span class="st">Inspección salida</span></span><span class="age" data-desde="2026-09-04"></span></a>
+          <a class="tik b" href="https://leaseir.atlassian.net/browse/LEAS-7312" target="_blank" rel="noopener"><span><span class="k">7312</span><span class="st">Cola taller</span></span><span class="age" data-desde="2026-09-04"></span></a>
+          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7335" target="_blank" rel="noopener"><span><span class="k">7335</span><span class="st">Cola taller</span></span><span class="age" data-desde="2026-09-07"></span></a>
+          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7436" target="_blank" rel="noopener"><span><span class="k">7436</span><span class="st">Reparación</span></span><span class="age" data-desde="2026-09-04"></span></a>
         </div>
         <div class="more">+4 · 9 d sin mover · 2 estancados</div>
       </div>
       <div class="col orphan">
         <header><span class="who">Sin dueño</span><span class="cnt">74</span></header>
         <div class="cards">
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-1351" target="_blank" rel="noopener"><span><span class="k">1351</span><span class="st">Bedda Lugo · fábrica</span></span><span class="age">301d</span></a>
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-4076" target="_blank" rel="noopener"><span><span class="k">4076</span><span class="st">Dermoscan · fábrica</span></span><span class="age">288d</span></a>
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-4149" target="_blank" rel="noopener"><span><span class="k">4149</span><span class="st">Binatural · fábrica</span></span><span class="age">271d</span></a>
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-3827" target="_blank" rel="noopener"><span><span class="k">3827</span><span class="st">Cibeles · fábrica</span></span><span class="age">226d</span></a>
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-4908" target="_blank" rel="noopener"><span><span class="k">4908</span><span class="st">Elha Felo Monzón</span></span><span class="age">218d</span></a>
+          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-1351" target="_blank" rel="noopener"><span><span class="k">1351</span><span class="st">Bedda Lugo · fábrica</span></span><span class="age" data-desde="2025-11-05"></span></a>
+          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-4076" target="_blank" rel="noopener"><span><span class="k">4076</span><span class="st">Dermoscan · fábrica</span></span><span class="age" data-desde="2025-11-18"></span></a>
+          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-4149" target="_blank" rel="noopener"><span><span class="k">4149</span><span class="st">Binatural · fábrica</span></span><span class="age" data-desde="2025-12-19"></span></a>
+          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-3827" target="_blank" rel="noopener"><span><span class="k">3827</span><span class="st">Cibeles · fábrica</span></span><span class="age" data-desde="2026-01-19"></span></a>
+          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-4908" target="_blank" rel="noopener"><span><span class="k">4908</span><span class="st">Elha Felo Monzón</span></span><span class="age" data-desde="2026-05-26"></span></a>
         </div>
         <div class="more">+69 · 22 estancados</div>
       </div>
@@ -1969,6 +1965,7 @@ function linkTickets(root){
 // ── Números sueltos de tablas: pulsables por data-c ──
 document.addEventListener('DOMContentLoaded', ()=>{
   linkTickets(document.body);
+  try{ pintarEdades(); avisarViejos(); }catch(e){ console.error('frescura', e); }
 try{ renderInterno(); }catch(e){ console.error(e); }
 try{ initDB(); }catch(e){ console.error(e); }
   document.querySelectorAll('[data-c]').forEach(el=>{
@@ -2423,6 +2420,55 @@ function kcalc(id){
   document.getElementById('dlg-calc').showModal();
 }
 try{ kpintar(); }catch(e){ console.error('kpis', e); }
+
+// ═══ Frescura: que un dato viejo no pueda hacerse pasar por el de hoy ═══
+// El 07/09 el tablero "Hoy" llevaba cinco dias sin recalcularse y nadie lo sabia, porque
+// la cabecera decia la hora de la pasada y los numeros eran del 02/09. Dos medidas:
+//   1. Toda edad se guarda como FECHA (data-desde) y se resta en el navegador. Una cifra
+//      derivada de una fecha no puede caducar si guardas la fecha en vez de la cifra.
+//   2. Cada bloque de datos declara de que dia son los suyos, y si no son de hoy la propia
+//      pagina lo dice arriba. No depende de que nadie se acuerde.
+const HOY_D = new Date(); HOY_D.setHours(0,0,0,0);
+function diasDesde(iso){
+  if(!iso) return null;
+  const d = new Date(iso + 'T00:00:00'); if(isNaN(d)) return null;
+  return Math.round((HOY_D - d) / 86400000);
+}
+function pintarEdades(root){
+  (root || document).querySelectorAll('.edad[data-desde]').forEach(e => {
+    const n = diasDesde(e.dataset.desde);
+    e.textContent = (n === null) ? '—' : n;
+    e.title = 'Desde el ' + e.dataset.desde;
+  });
+  (root || document).querySelectorAll('.age[data-desde]').forEach(e => {
+    const n = diasDesde(e.dataset.desde);
+    e.textContent = (n === null) ? '—' : (n + 'd');
+    e.title = 'Sin moverse desde el ' + e.dataset.desde;
+  });
+}
+
+// Cada bloque dice de que dia son sus datos. La pasada tiene que actualizar estas fechas
+// cuando recalcula; si se le olvida, sale el aviso solo.
+const FRESCURA = {
+  "tablero Hoy":                          "2026-09-07",
+  "cola de taller":                       "2026-09-07",
+  "actividad del dia":                    "2026-09-07",
+  "KPIs del ciclo":                       "2026-09-07",
+  // Estas dos no son contadores diarios y no se han vuelto a medir hoy. Van con su fecha
+  // para que el aviso las nombre en vez de dejarlas pasar por buenas.
+  "«fuera del taller» y «Epil Point»":     "2026-09-02"
+};
+function avisarViejos(){
+  const viejos = Object.keys(FRESCURA).filter(k => (diasDesde(FRESCURA[k]) || 0) >= 1);
+  const c = document.getElementById('frescura'); if(!c) return;
+  if(!viejos.length){ c.hidden = true; c.innerHTML = ''; return; }
+  c.hidden = false;
+  c.innerHTML = '<b>Ojo: hay datos que no son de hoy.</b> '
+    + viejos.map(k => k + ' <span class="fd">(' + FRESCURA[k] + ', hace '
+        + diasDesde(FRESCURA[k]) + ' d)</span>').join(' · ')
+    + '. La cabecera dice la hora de la última pasada, pero esos bloques no se han vuelto a '
+    + 'calcular: no decidas con ellos.';
+}
 
 function dlg(id){const d=document.getElementById(id); if(d&&d.showModal) d.showModal();}
 document.querySelectorAll('dialog').forEach(d=>{
