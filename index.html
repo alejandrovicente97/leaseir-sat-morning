@@ -280,6 +280,9 @@ a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
 .tcard .tr a:hover{text-decoration:underline}
 .tcard .tnone{color:var(--muted-2)}
 .tcard.ojo{border-color:var(--crit-line);box-shadow:inset 4px 0 0 var(--crit)}
+.caduco{background:var(--crit-bg);border:1px solid var(--crit-line);border-left:5px solid var(--crit);
+  border-radius:11px;padding:13px 17px;margin:0 0 14px;font-size:13px;color:var(--ink-soft);line-height:1.55}
+.caduco b{color:var(--crit)}
 .tviejo{grid-column:1/-1;background:var(--warn-bg);border:1px solid var(--warn-line);
   border-radius:10px;padding:10px 14px;font-size:12.5px;color:var(--ink-soft);line-height:1.5}
 .tviejo b{color:var(--warn)}
@@ -554,6 +557,15 @@ dialog.wide{max-width:860px}
 
 <!-- ═════════ HOY ═════════ -->
 <div id="p-hoy" class="pane on">
+
+  <div class="caduco" id="hoy-caduco">
+    <b>Cuidado: las cifras de días de este tablero son del 2 de septiembre.</b>
+    Comprobado contra Jira el 07/09: las incidencias antiguas cuadran al día con un cálculo
+    hecho el 02/09, no con hoy. O sea que llevan cinco días sin recalcularse aunque la cabecera
+    diga otra cosa. Ejemplos: LEAS-7299 sale con 17 d y en Jira lleva 3; LEAS-7256 sale con 27 d
+    y se tocó esta mañana. <b>No tomes decisiones con los números de esta pestaña</b> hasta que
+    una pasada los regenere. Las pestañas de KPIs y Actividad sí están al día.
+  </div>
 
   <section class="statebar">
     <div class="lead" onclick="calc('estancadas')"><i></i><b>35 estancadas · sube desde mayo</b></div>
@@ -1976,7 +1988,7 @@ const ACT = {"Isaac": {"n": 5, "tk": 5, "panel": 1, "ult": "12:27", "ev": [{"h":
 // Finalizado técnico externo). Se lee del historial de estados, no de los comentarios.
 const RES = {"Gonzalo": ["LEAS-7448", "LEAS-7364", "LEAS-7272", "LEAS-6048", "LEAS-5904"], "Chus": ["LEAS-7480", "LEAS-7397"], "Isaac": ["LEAS-7457", "LEAS-7324"], "Alejandro": ["LEAS-756"]};
 // Taller: presupuestos preparados y equipos a salida, por técnico.
-const TAL = {"Iván": {"pre": ["LEAS-7421"], "sal": [], "ab": [{"k": "LEAS-7312", "e": "En preparación presupuesto", "d": 0}, {"k": "LEAS-7360", "e": "En cola taller", "d": 0}, {"k": "LEAS-7299", "e": "En cola taller", "d": 0}, {"k": "LEAS-7421", "e": "En cola taller", "d": 1}, {"k": "LEAS-7405", "e": "En cola taller", "d": 1}, {"k": "LEAS-7270", "e": "Pendiente confirmación presupuesto", "d": 14}, {"k": "LEAS-6906", "e": "En reparación", "d": 18}], "com": null, "mov": null, "htxt": null, "salida": null}, "Jonathan": {"pre": [], "sal": ["LEAS-7349"], "ab": [{"k": "LEAS-7403", "e": "Pendiente confirmación presupuesto", "d": 0}, {"k": "LEAS-7420", "e": "Esperando inicio reparación", "d": 0}, {"k": "LEAS-7349", "e": "En reparación", "d": 0}, {"k": "LEAS-7256", "e": "Pendiente confirmación presupuesto", "d": 1}, {"k": "LEAS-7434", "e": "En cola taller", "d": 2}, {"k": "LEAS-6879", "e": "En reparación", "d": 2}, {"k": "LEAS-6907", "e": "Presupuesto preparado pendiente de enviar", "d": 14}, {"k": "LEAS-7190", "e": "Pendiente confirmación presupuesto", "d": 23}], "com": null, "mov": null, "h": 7.52, "htxt": null, "salida": null}, "Fran": {"pre": ["LEAS-6768", "LEAS-7355", "LEAS-7432"], "sal": [], "ab": [{"k": "LEAS-7355", "e": "En preparación presupuesto", "d": 0}, {"k": "LEAS-7425", "e": "Esperando inicio reparación", "d": 1}, {"k": "LEAS-7424", "e": "En reparación", "d": 1}, {"k": "LEAS-7423", "e": "En preparación presupuesto", "d": 3}, {"k": "LEAS-7188", "e": "En preparación presupuesto", "d": 22}, {"k": "LEAS-6779", "e": "En reparación", "d": 39}, {"k": "LEAS-6888", "e": "Pendiente confirmación presupuesto", "d": 60}, {"k": "LEAS-6889", "e": "Pendiente confirmación presupuesto", "d": 63}], "com": null, "mov": null, "h": 7.48, "htxt": null, "salida": null}, "_fecha": "2026-09-07"};
+const TAL = {"Iván": {"pre": ["LEAS-7421"], "sal": [], "ab": [{"k": "LEAS-6906", "e": "En reparación", "d": 21}, {"k": "LEAS-7270", "e": "Pendiente confirmación presupuesto", "d": 17}, {"k": "LEAS-7405", "e": "En cola taller", "d": 4}, {"k": "LEAS-7312", "e": "En preparación presupuesto", "d": 3}, {"k": "LEAS-7360", "e": "En cola taller", "d": 3}, {"k": "LEAS-7299", "e": "En cola taller", "d": 3}, {"k": "LEAS-7421", "e": "En cola taller", "d": 0}], "com": null, "mov": null, "htxt": null, "salida": null}, "Jonathan": {"pre": [], "sal": ["LEAS-7349"], "ab": [{"k": "LEAS-7190", "e": "Pendiente confirmación presupuesto", "d": 26}, {"k": "LEAS-6907", "e": "Presupuesto preparado pendiente de enviar", "d": 17}, {"k": "LEAS-6879", "e": "En reparación", "d": 5}, {"k": "LEAS-7403", "e": "Pendiente confirmación presupuesto", "d": 3}, {"k": "LEAS-7420", "e": "Esperando inicio reparación", "d": 0}, {"k": "LEAS-7349", "e": "En reparación", "d": 0}, {"k": "LEAS-7256", "e": "Pendiente confirmación presupuesto", "d": 0}, {"k": "LEAS-7434", "e": "En cola taller", "d": 0}], "com": null, "mov": null, "h": 7.52, "htxt": null, "salida": null}, "Fran": {"pre": ["LEAS-6768", "LEAS-7355", "LEAS-7432"], "sal": [], "ab": [{"k": "LEAS-6779", "e": "En reparación", "d": 42}, {"k": "LEAS-7188", "e": "En preparación presupuesto", "d": 25}, {"k": "LEAS-7423", "e": "En preparación presupuesto", "d": 6}, {"k": "LEAS-7425", "e": "Esperando inicio reparación", "d": 4}, {"k": "LEAS-7424", "e": "En reparación", "d": 4}, {"k": "LEAS-7355", "e": "En preparación presupuesto", "d": 0}, {"k": "LEAS-6888", "e": "Pendiente confirmación presupuesto", "d": 0}, {"k": "LEAS-6889", "e": "Pendiente confirmación presupuesto", "d": 0}], "com": null, "mov": null, "h": 7.48, "htxt": null, "salida": null}, "_fecha": "2026-09-07"};
 
 function renderAct(){
   const c = document.getElementById('actg'); if(!c) return;
