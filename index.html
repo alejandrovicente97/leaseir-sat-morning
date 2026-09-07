@@ -284,6 +284,30 @@ a.jira:hover{color:var(--accent); border-bottom-color:var(--accent)}
   border-radius:11px;padding:13px 17px;margin:0 0 14px;font-size:13px;color:var(--ink-soft);line-height:1.55}
 .caduco b{color:var(--crit)}
 .caduco .fd{color:var(--muted);font-weight:500}
+
+/* ═══ Portada: qué hay abierto y cómo se reparte ═══ */
+/* Una sola tira: 106 incidencias, cada tramo su trozo. Un reparto se ve, no se lee. */
+.abtira{display:flex;height:46px;border-radius:10px;overflow:hidden;gap:2px;margin:0 0 16px}
+.abtira button{border:0;padding:0;cursor:pointer;font:inherit;position:relative;
+  display:flex;align-items:center;justify-content:center;transition:filter .12s}
+.abtira button:hover{filter:brightness(1.12)}
+.abtira b{color:#fff;font-family:var(--mono);font-size:15px;font-weight:600;
+  text-shadow:0 1px 2px rgba(0,0,0,.25)}
+.ablista{display:grid;grid-template-columns:repeat(2,1fr);gap:2px 26px}
+@media(max-width:760px){.ablista{grid-template-columns:1fr}}
+.abf{display:grid;grid-template-columns:11px 1fr auto auto;gap:10px;align-items:baseline;
+  padding:7px 8px;border:0;background:none;font:inherit;color:inherit;text-align:left;
+  cursor:pointer;border-radius:7px;width:100%}
+.abf:hover{background:var(--surface-2)}
+.abf i{width:11px;height:11px;border-radius:3px;transform:translateY(1px)}
+.abf .abt{font-size:13px;color:var(--ink)}
+.abf .abt em{font-style:normal;font-size:11px;color:var(--muted-2);margin-left:6px}
+.abf .abn{font-family:var(--mono);font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.abf .abp{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);width:34px;text-align:right}
+
+/* Los KPIs se iban por los lados en pantalla ancha: la barra crecía sin tope y los
+   números quedaban a un palmo de su etiqueta. Se le pone techo. */
+.kfila, .kcab, .keje{grid-template-columns:186px minmax(120px,1fr) 60px 70px 52px}
 .op .ov i.edad{font-style:normal}
 .tviejo{grid-column:1/-1;background:var(--warn-bg);border:1px solid var(--warn-line);
   border-radius:10px;padding:10px 14px;font-size:12.5px;color:var(--ink-soft);line-height:1.5}
@@ -547,285 +571,18 @@ dialog.wide{max-width:860px}
   <div id="frescura" class="caduco" hidden></div>
 
   <nav class="tabbar" role="tablist">
-    <button class="on" role="tab" onclick="tab(this,'p-hoy')">Hoy<small>Operación</small></button>
-    <button role="tab" onclick="tab(this,'p-interno')">Report interno<small>para copiar</small></button>
+    <button class="on" role="tab" onclick="tab(this,'p-abiertas')">Abiertas<small>qué hay y dónde está</small></button>
     <button role="tab" onclick="tab(this,'p-actividad')">Actividad<small>quién ha hecho qué</small></button>
     <button role="tab" onclick="tab(this,'p-kpis')">KPIs<small>tiempos medidos</small></button>
     <button role="tab" onclick="tab(this,'p-flota')">Flota<small>sustituciones</small></button>
     <button role="tab" onclick="tab(this,'p-clientes')">Clientes<small>por cadena</small></button>
     <button role="tab" onclick="tab(this,'p-cobros')">Cobros<small>110 k€ vencido</small></button>
     <button role="tab" onclick="tab(this,'p-report')">Report<small>Cierre mensual</small></button>
+    <button role="tab" onclick="tab(this,'p-airtable')">Airtable<small>el inventario no cuadra</small></button>
     <span class="spacer"></span>
     <button class="msgbtn" onclick="dlg('d-msg')">Mensajes al equipo</button>
   </nav>
 
-<!-- ═════════ HOY ═════════ -->
-<div id="p-hoy" class="pane on">
-
-
-  <section class="statebar">
-    <div class="lead" onclick="calc('estancadas')"><i></i><b>28 estancadas · sube desde mayo</b></div>
-    <svg viewBox="0 0 600 44" preserveAspectRatio="none" role="img" aria-label="Estancadas de mayo a septiembre: sube de 14 a 23">
-      <path d="M6,17.3 L38.1,24 L70.1,21.3 L102.2,21.3 L134.3,18.7 L166.4,20 L198.4,25.3 L230.5,20 L262.6,18.7 L294.7,21.3 L326.7,17.3 L358.8,10.7 L390.9,14.7 L422.9,21.3 L455,16 L487.1,16 L519.2,14.7 L551.2,12 L572.6,5.3 L594,5.3 L594,38 L6,38 Z" fill="var(--crit)" opacity="0.13"/>
-      <path d="M6,17.3 L38.1,24 L70.1,21.3 L102.2,21.3 L134.3,18.7 L166.4,20 L198.4,25.3 L230.5,20 L262.6,18.7 L294.7,21.3 L326.7,17.3 L358.8,10.7 L390.9,14.7 L422.9,21.3 L455,16 L487.1,16 L519.2,14.7 L551.2,12 L572.6,5.3 L594,5.3" fill="none" stroke="var(--crit)" stroke-width="2" stroke-linejoin="round"/>
-      <circle cx="594" cy="5.3" r="3.2" fill="var(--crit)"/>
-    </svg>
-    <div class="aside" onclick="calc('sube')"><b>14 → 23</b>mayo → hoy</div>
-  </section>
-
-
-
-
-  <section class="sec">
-    <h2>La operación de hoy <span class="hint">— pulsa cualquier tarjeta para el detalle y la acción</span></h2>
-    <div class="ops">
-      <button class="op c" onclick="ops('riesgo')">
-        <span class="oh"><span class="oi">📍</span><span class="ot">Equipo sin volver</span></span>
-        <span class="ov"><i class="edad" data-desde="2026-03-27">—</i><small>días</small></span>
-        <span class="os">C03143 · Smart Duck Paris</span>
-        <span class="ob"><i style="width:100%"></i></span>
-      </button>
-      <button class="op c" onclick="ops('dinero')">
-        <span class="oh"><span class="oi">💶</span><span class="ot">Presupuesto sin respuesta</span></span>
-        <span class="ov"><i class="edad" data-desde="2025-12-20">—</i><small>días</small></span>
-        <span class="os">LEAS-4443 · Dermoscan</span>
-        <span class="ob"><i style="width:95%"></i></span>
-      </button>
-      <button class="op c" onclick="ops('sinduenyo')">
-        <span class="oh"><span class="oi">👤</span><span class="ot">Sin dueño</span></span>
-        <span class="ov">72<small>%</small></span>
-        <span class="os">146 de 202 abiertas</span>
-        <span class="ob"><i style="width:72%"></i></span>
-      </button>
-      <button class="op c" onclick="ops('sla')">
-        <span class="oh"><span class="oi">⏱</span><span class="ot">Plazos propios</span></span>
-        <span class="ov">123<small>SLA rotos</small></span>
-        <span class="os">10 sin llegar · 78 reparación · 35 préstamo</span>
-        <span class="ob"><i style="width:80%"></i></span>
-      </button>
-      <button class="op w" onclick="opsx('fuera')">
-        <span class="oh"><span class="oi">📦</span><span class="ot">Fuera del taller</span></span>
-        <span class="ov">55<small>% del ciclo</small></span>
-        <span class="os">transporte 30 % · externo 12 % · cliente 13 %</span>
-        <span class="ob"><i style="width:55%"></i></span>
-      </button>
-      <button class="op w" onclick="opsx('notas')">
-        <span class="oh"><span class="oi">📝</span><span class="ot">Sin una sola nota</span></span>
-        <span class="ov">28<small>% de los tickets</small></span>
-        <span class="os">632 de 2.274 · no es cosa de un cliente</span>
-        <span class="ob"><i style="width:28%"></i></span>
-      </button>
-      <button class="op w" onclick="ops('higiene')">
-        <span class="oh"><span class="oi">🧟</span><span class="ot">Residuo en Jira</span></span>
-        <span class="ov">24<small>subtareas</small></span>
-        <span class="os">huérfanas · la más antigua, LEAS-5833, 145 d</span>
-        <span class="ob"><i style="width:55%"></i></span>
-      </button>
-      <button class="op w" onclick="ops('equipo')">
-        <span class="oh"><span class="oi">🗓</span><span class="ot">Equipo hoy</span></span>
-        <span class="ov">2<small>de 5 en el SAT</small></span>
-        <span class="os">Isaac (8:29) y Gonzalo (9:30) · Chus, Borja y Cristina de vacaciones</span>
-        <span class="ob"><i style="width:40%"></i></span>
-      </button>
-    </div>
-  </section>
-  <section class="sec" style="margin-top:14px">
-    <h2>Airtable · para revisar tú <span class="hint">— el Inmovilizado no cuadra con lo que hay en la calle. Esto no va al panel del equipo: es tuyo.</span></h2>
-    <div class="card" style="padding:6px 22px 14px">
-      <div class="atl"><div class="ati c"><span class="as">C00410<em>LEAS-7148 · Laser Factory Hospitalet</em></span><span class="ad">En el Inmovilizado C00410 figura como «Renting S&amp;L», o sea del propio cliente, y h00410 no consta. Alguien la metió como consola prestada, así que ese préstamo no existe. Hoy no se ha podido abrir el Inmovilizado: esto es el cruce del 05/09, y el campo del ticket sí está comprobado hoy en Jira.<span class="aa"><b>Qué hacer:</b> Quitar las series del ticket, o poner la SUST que salió de verdad.</span></span></div><div class="ati c"><span class="as">91119<em>LEAS-7475 · Dermasana Albufera</em></span><span class="ad"><b>Nuevo hoy.</b> Se puso 91119 como consola prestada y en el Inmovilizado 91119 figura como «Traditional Renting»: es del propio cliente. El envío se publicó en ENVIOS SAT LEASEIR el 04/09 a las 16:56 («Sustitución completa MHR a Dermasana Albufera»).<span class="aa"><b>Qué hacer:</b> Pedir la serie de la sustitución que salió de verdad y corregir el campo 10199 del ticket.</span></span></div><div class="ati w"><span class="as">SUSTAHRD005<em>LEAS-7401</em></span><span class="ad">No consta en el Inmovilizado. Gonzalo confirmó el 04/09 con fotos que salió el 27 de agosto y están en el grupo de fotos de equipos. Sigue sin constar hoy.<span class="aa"><b>Qué hacer:</b> La máquina existe: lo que falta es la ficha. Darla de alta en Airtable.</span></span></div><div class="ati w"><span class="as">SUSTMHR025<em>LEAS-7366 · SinVello Ibiza</em></span><span class="ad">No consta en el Inmovilizado. Gonzalo confirmó el 04/09 que existe y que está en el grupo de fotos de equipos. Sigue sin constar hoy.<span class="aa"><b>Qué hacer:</b> Igual que la anterior: alta o corrección de la ficha.</span></span></div><div class="ati w"><span class="as">SUSTMHR033<em>LEAS-7388 · CVL Distribuidor</em></span><span class="ad">Sigue sin constar: en Airtable la familia MHR llega hasta la 031. Gonzalo dijo el 04/09 a las 18:18 que la pieza existe y está en el grupo de fotos, así que esto es ficha, no máquina.<span class="aa"><b>Qué hacer:</b> Darla de alta en Airtable con la serie que Gonzalo confirmó.</span></span></div><div class="ati w"><span class="as">SUSTQUAD025<em>LEAS-7191 · Harmonie Salamanca</em></span><span class="ad">Sigue sin constar: en Airtable existen la 024, la 032 y la 035, no la 025. Gonzalo dijo el 04/09 a las 18:18 que la pieza existe y está en el grupo de fotos.<span class="aa"><b>Qué hacer:</b> Darla de alta en Airtable. No es un fallo del ticket.</span></span></div><div class="ati w"><span class="as">BS SUST008<em>LEAS-6780 · Centri Unico Campania</em></span><span class="ad">La familia BS solo tiene 002, 003, 004 y 005, y además convive «BS - SUST005» con «BS SUST005».<span class="aa"><b>Qué hacer:</b> Averiguar de cuál procede antes de darla por buena, y unificar el formato de la familia BS.</span></span></div><div class="ati w"><span class="as">C03143 / H03143<em>LEAS-5697 · Smart Duck Paris</em></span><span class="ad">Gonzalo escribió «Corregido» el 04/09 a las 18:10, pero hoy siguen sin constar en el Inmovilizado: la que figura como backup de Smart Duck es la C03164/H03164.<span class="aa"><b>Qué hacer:</b> Comprobar con qué serie quedó el ticket y dar de alta la que falte.</span></span></div><div class="ati g"><span class="as">C03258 / H03258<em>LEAS-7140 · Smart Duck Paris 15</em></span><span class="ad">Llevaban un cero de más. Gonzalo lo corrigió el 04/09 y hoy el cruce ya sale limpio: las dos constan en el Inmovilizado.<span class="aa"><b>Qué hacer:</b> Nada. Solo comprobado.</span></span></div><div class="ati g"><span class="as">SUSTMHR030 · 41003<em>LEAS-7415 · LEAS-7158</em></span><span class="ad">SUSTMHR030 ya cuadra tras la corrección de Gonzalo. Queda «H41003» en LEAS-7158: en Airtable la serie es 41003, sin la H.<span class="aa"><b>Qué hacer:</b> Corregir el campo de LEAS-7158 en Jira. En Airtable está bien.</span></span></div><div class="ati c"><span class="as">Duplicados y espacios<em>Inmovilizado, tabla entera</em></span><span class="ad">1.119 registros y 1.115 claves distintas al normalizar: «SustMhr011» conviviendo con «SUSTMHR011», IDs con un espacio delante (« SUSTQUAD032»), «FC - SUST 005» junto a «FC - SUST005», y «FC - SUST003» duplicada en dos registros.<span class="aa"><b>Qué hacer:</b> Limpiarlo de una vez: mientras esté así, cualquier cruce automático da falsos positivos.</span></span></div></div>
-    </div>
-    <div class="pending" style="margin-top:11px"><b>10 cosas</b> — mientras el Inmovilizado esté así, el cruce automático de series seguirá dando falsos positivos y el equipo seguirá viendo puntos que no son suyos. Las tres primeras son de dato equivocado; las marcadas en verde ya las tocó el equipo hoy y solo hay que comprobarlas.</div>
-  </section>
-
-  <details class="acc" style="margin-top:14px">
-    <summary><b>Detalle en tablas</b><span class="badge w">4</span><span class="sm">estancadas por cadena, equipo, sustituciones fuera de rango y Telegram vs Jira</span></summary>
-    <div style="margin-top:10px">
-  <section class="sec">
-    <h2>Estancadas por cliente <span class="hint">— por cliente real del ticket, no por quién lo abrió</span></h2>
-    <div class="card" style="padding:6px 20px 10px">
-      <table class="tbl">
-        <thead><tr><th>Cadena / cliente</th><th class="n">Abiertas</th><th class="n">Estancadas</th><th class="n">% atasco</th><th class="n">Máx parado</th><th class="n">Importe</th><th>Tickets</th></tr></thead>
-        <tbody>
-          <tr><td data-c="otros">Otros y directos</td><td class="n">41</td><td class="n" style="color:var(--crit);font-weight:600">18</td><td class="n" style="color:var(--crit)">44%</td><td class="n">294 d</td><td class="n" style="font-weight:600">42.993 €</td><td style="font-size:11.5px;color:var(--muted)">LEAS-3852 LEAS-4149 LEAS-3827</td></tr>
-          <tr><td data-c="cadenas">Unico Italia</td><td class="n">7</td><td class="n" style="color:var(--crit);font-weight:600">4</td><td class="n" style="color:var(--crit)">57%</td><td class="n">111 d</td><td class="n">4.549 €</td><td style="font-size:11.5px;color:var(--muted)">LEAS-6196 LEAS-5851 LEAS-6779</td></tr>
-          <tr><td>Dermoscan</td><td class="n">5</td><td class="n" style="color:var(--crit);font-weight:600">3</td><td class="n" style="color:var(--crit)">60%</td><td class="n" style="color:var(--crit)">288 d</td><td class="n" style="font-weight:600">12.560 €</td><td style="font-size:11.5px;color:var(--muted)">LEAS-4076 LEAS-5454 LEAS-4443</td></tr>
-          <tr><td>Zurimed</td><td class="n">3</td><td class="n" style="color:var(--warn);font-weight:600">2</td><td class="n" style="color:var(--crit)">67%</td><td class="n">106 d</td><td class="n">—</td><td style="font-size:11.5px;color:var(--muted)">LEAS-6193 LEAS-6909</td></tr>
-          <tr><td>Bedda</td><td class="n">2</td><td class="n" style="color:var(--warn);font-weight:600">2</td><td class="n" style="color:var(--crit)">100%</td><td class="n" style="color:var(--crit)">301 d</td><td class="n">—</td><td style="font-size:11.5px;color:var(--muted)">LEAS-1351 LEAS-3144</td></tr>
-          <tr><td data-c="cadenas">Elha</td><td class="n">23</td><td class="n">2</td><td class="n" style="color:var(--good)">9%</td><td class="n">218 d</td><td class="n">—</td><td style="font-size:11.5px;color:var(--muted)">LEAS-4908 LEAS-7311</td></tr>
-          <tr><td data-c="cadenas">Epil Point</td><td class="n">9</td><td class="n">2</td><td class="n" style="color:var(--warn)">22%</td><td class="n">69 d</td><td class="n">—</td><td style="font-size:11.5px;color:var(--muted)">LEAS-6586 LEAS-7213</td></tr>
-          <tr><td data-c="cadenas">Smart Duck</td><td class="n">4</td><td class="n">1</td><td class="n" style="color:var(--warn)">25%</td><td class="n">126 d</td><td class="n">—</td><td style="font-size:11.5px;color:var(--muted)">LEAS-5774</td></tr>
-          <tr><td data-c="cadenas">Sin Vello</td><td class="n">15</td><td class="n">1</td><td class="n" style="color:var(--good)">7%</td><td class="n">26 d</td><td class="n">—</td><td style="font-size:11.5px;color:var(--muted)">LEAS-7230</td></tr>
-          <tr><td data-c="cadenas">Laser Factory</td><td class="n">2</td><td class="n" style="color:var(--good)">0</td><td class="n" style="color:var(--good)">0%</td><td class="n">—</td><td class="n">—</td><td></td></tr>
-          <tr><td data-c="cadenas">Dermasana</td><td class="n">1</td><td class="n" style="color:var(--good)">0</td><td class="n" style="color:var(--good)">0%</td><td class="n">—</td><td class="n">—</td><td></td></tr>
-          <tr class="tot"><td data-c="estancadas">Total</td><td class="n">112</td><td class="n">35</td><td class="n">31%</td><td class="n">301 d</td><td class="n">60.102 €</td><td></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-
-  <section class="sec">
-    <h2>Sin técnico asignado y paradas <span class="hint">— 42 tickets sin asignar y sin mover más de 15 días. 24 son subtareas huérfanas y 11 son de clientes fuera de las cadenas grandes: nadie pregunta por ellos.</span></h2>
-    <div class="stq">
-      <button class="q c" onclick="calc('huerfanas')"><b>11</b><span>fuera de cadena</span></button>
-      <button class="q c" onclick="calc('carga')"><b>165</b><span>de 194 sin asignar · cómo va la carga</span></button>
-      <button class="q w" onclick="calc('cadena')"><b>3</b><span>nombres por bloque · la cadena</span></button>
-      <button class="q w" onclick="calc('equipohoy')"><b>5</b><span>del SAT fichando hoy · 1 de vacaciones</span></button>
-      <button class="q w" onclick="calc('huerfanas')"><b>15</b><span>cadenas top</span></button>
-      <button class="q c" onclick="calc('subhuerfana')"><b>25</b><span>subtareas con el padre ya cerrado</span></button>
-      <button class="q c" onclick="calc('flotahuerfana')"><b>7</b><span>máquinas prestadas sin dueño</span></button>
-    </div>
-    <details class="acc" open>
-      <summary><b>Fuera de las cadenas grandes</b><span class="badge c">11</span><span class="sm">lo que nadie reclama</span></summary>
-      <div class="card" style="padding:6px 20px 10px;margin-top:8px"><table class="tbl"><thead><tr><th>Ticket</th><th class="n">Parado</th><th>Tipo</th><th>Estado</th><th>Cliente</th><th>Ticket padre</th></tr></thead><tbody><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-5904" target="_blank" rel="noopener" style='font-weight:600'>LEAS-5904</a></td><td class="n" style="color:var(--crit);font-weight:600">143 d</td><td style="color:var(--warn)">Material</td><td>Presupuesto aceptado</td><td>Noemi Valero · 2 pedales</td><td><span style="font-size:11.5px">—</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-6225" target="_blank" rel="noopener" style='font-weight:600'>LEAS-6225</a></td><td class="n" style="color:var(--crit);font-weight:600">114 d</td><td style="color:var(--muted)">Cobro</td><td>Solicitado</td><td>Centros Perfect Laser · D. Jaramillo</td><td><span style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-6048" target="_blank" rel="noopener">LEAS-6048</a> <span style="color:var(--muted)">Inspección de salida</span></span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-6048" target="_blank" rel="noopener" style='font-weight:600'>LEAS-6048</a></td><td class="n" style="color:var(--crit);font-weight:600">112 d</td><td style="color:var(--crit)">Incidencia</td><td>Inspección de salida</td><td>Centros Perfect Laser · D. Jaramillo</td><td><span style="font-size:11.5px">—</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7048" target="_blank" rel="noopener" style='font-weight:600'>LEAS-7048</a></td><td class="n" style="color:var(--warn);font-weight:600">50 d</td><td style="color:var(--warn)">Material</td><td>Presupuesto aceptado</td><td>Dermoscan · 4 umbilicales</td><td><span style="font-size:11.5px">—</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7103" target="_blank" rel="noopener" style='font-weight:600'>LEAS-7103</a></td><td class="n" style="color:var(--warn);font-weight:600">44 d</td><td style="color:var(--crit)">Incidencia</td><td>Abierto</td><td>NR Clinics · Dinámica Impulso</td><td><span style="font-size:11.5px">—</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7104" target="_blank" rel="noopener" style='font-weight:600'>LEAS-7104</a></td><td class="n" style="color:var(--warn);font-weight:600">44 d</td><td style="color:var(--crit)">Incidencia</td><td>Abierto</td><td>NR Clinics · Dinámica Impulso</td><td><span style="font-size:11.5px">—</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7191" target="_blank" rel="noopener" style='font-weight:600'>LEAS-7191</a></td><td class="n" style="color:var(--muted);font-weight:600">30 d</td><td style="color:var(--warn)">Sustitución</td><td>En préstamo</td><td>Harmonie Salamanca</td><td><span style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7190" target="_blank" rel="noopener">LEAS-7190</a> <span style="color:var(--muted)">Pendiente confirmación presupuesto</span></span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7118" target="_blank" rel="noopener" style='font-weight:600'>LEAS-7118</a></td><td class="n" style="color:var(--muted);font-weight:600">22 d</td><td style="color:var(--crit)">Incidencia</td><td>En reparación</td><td>Corpoderm</td><td><span style="font-size:11.5px">—</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7288" target="_blank" rel="noopener" style='font-weight:600'>LEAS-7288</a></td><td class="n" style="color:var(--muted);font-weight:600">22 d</td><td style="color:var(--muted)">Cobro</td><td>Solicitado</td><td>Corpoderm · cobro de LEAS-7118</td><td><span style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7118" target="_blank" rel="noopener">LEAS-7118</a> <span style="color:var(--muted)">En reparación</span></span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7298" target="_blank" rel="noopener" style='font-weight:600'>LEAS-7298</a></td><td class="n" style="color:var(--muted);font-weight:600">18 d</td><td style="color:var(--muted)">Cobro</td><td>Solicitado</td><td>D. Jaramillo Holea · cobro de LEAS-6906</td><td><span style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-6906" target="_blank" rel="noopener">LEAS-6906</a> <span style="color:var(--muted)">En reparación</span></span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7326" target="_blank" rel="noopener" style='font-weight:600'>LEAS-7326</a></td><td class="n" style="color:var(--muted);font-weight:600">15 d</td><td style="color:var(--muted)">Queja</td><td>Investigación</td><td>Deseja (Lituania)</td><td><span style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7325" target="_blank" rel="noopener">LEAS-7325</a> <span style="color:var(--muted)">Gestionado transporte</span></span></td></tr></tbody></table></div>
-    </details>
-    <details class="acc">
-      <summary><b>Cadenas top</b><span class="badge w">15</span><span class="sm">Elha, Sin Vello, Epil Point, Smart Duck, Unico Italia</span></summary>
-      <div class="card" style="padding:6px 20px 10px;margin-top:8px"><table class="tbl"><thead><tr><th>Ticket</th><th class="n">Parado</th><th>Tipo</th><th>Estado</th><th>Cliente</th><th>Ticket padre</th></tr></thead><tbody><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-5219" target="_blank" rel="noopener" style="font-weight:600">LEAS-5219</a></td><td class="n" style="color:var(--crit);font-weight:600">196 d</td><td style="color:var(--muted)">Cobro</td><td>Solicitado</td><td>Elha Sant Boi</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-5209" target="_blank" rel="noopener">LEAS-5209</a> <span style="color:var(--crit)">Cancelado</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-5697" target="_blank" rel="noopener" style="font-weight:600">LEAS-5697</a></td><td class="n" style="color:var(--crit);font-weight:600">105 d</td><td style="color:var(--warn)">Sustitución</td><td>En préstamo</td><td>Smart Duck Paris · C03143</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-5623" target="_blank" rel="noopener">LEAS-5623</a> <span style="color:var(--crit)">Resuelto</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-4908" target="_blank" rel="noopener" style="font-weight:600">LEAS-4908</a></td><td class="n" style="color:var(--crit);font-weight:600">100 d</td><td style="color:var(--crit)">Incidencia</td><td>Abierto</td><td>Elha Pintor Felo</td><td style="font-size:11.5px">—</td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-6835" target="_blank" rel="noopener" style="font-weight:600">LEAS-6835</a></td><td class="n" style="color:var(--warn);font-weight:600">69 d</td><td style="color:var(--muted)">Cobro</td><td>Solicitado</td><td>Elha Uruguai</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-6826" target="_blank" rel="noopener">LEAS-6826</a> <span style="color:var(--crit)">Resuelto</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7140" target="_blank" rel="noopener" style="font-weight:600">LEAS-7140</a></td><td class="n" style="color:var(--warn);font-weight:600">41 d</td><td style="color:var(--warn)">Sustitución</td><td>En préstamo</td><td>Smart Duck Paris 15 Convention</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7121" target="_blank" rel="noopener">LEAS-7121</a> <span style="color:var(--muted)">En reparación</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7054" target="_blank" rel="noopener" style="font-weight:600">LEAS-7054</a></td><td class="n" style="color:var(--warn);font-weight:600">38 d</td><td style="color:var(--warn)">Sustitución</td><td>En préstamo</td><td>Centro Unico Boccea</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7052" target="_blank" rel="noopener">LEAS-7052</a> <span style="color:var(--crit)">Resuelto</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7139" target="_blank" rel="noopener" style="font-weight:600">LEAS-7139</a></td><td class="n" style="color:var(--warn);font-weight:600">38 d</td><td style="color:var(--muted)">Queja</td><td>Investigación</td><td>Smart Duck Paris 15 Convention</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7121" target="_blank" rel="noopener">LEAS-7121</a> <span style="color:var(--muted)">En reparación</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7230" target="_blank" rel="noopener" style="font-weight:600">LEAS-7230</a></td><td class="n" style="color:var(--muted);font-weight:600">27 d</td><td style="color:var(--crit)">Incidencia</td><td>Pendiente recogida</td><td>SinVello Albacete</td><td style="font-size:11.5px">—</td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7251" target="_blank" rel="noopener" style="font-weight:600">LEAS-7251</a></td><td class="n" style="color:var(--muted);font-weight:600">27 d</td><td style="color:var(--warn)">Sustitución</td><td>Solicitado</td><td>SinVello Albacete</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7230" target="_blank" rel="noopener">LEAS-7230</a> <span style="color:var(--muted)">Pendiente recogida</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7237" target="_blank" rel="noopener" style="font-weight:600">LEAS-7237</a></td><td class="n" style="color:var(--muted);font-weight:600">24 d</td><td style="color:var(--warn)">Sustitución</td><td>En préstamo</td><td>Smart Duck Labège</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7236" target="_blank" rel="noopener">LEAS-7236</a> <span style="color:var(--muted)">Devuelto a cliente</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7227" target="_blank" rel="noopener" style="font-weight:600">LEAS-7227</a></td><td class="n" style="color:var(--muted);font-weight:600">24 d</td><td style="color:var(--warn)">Sustitución</td><td>En préstamo</td><td>Elha Limoneros</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7224" target="_blank" rel="noopener">LEAS-7224</a> <span style="color:var(--muted)">Devuelto a cliente</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7271" target="_blank" rel="noopener" style="font-weight:600">LEAS-7271</a></td><td class="n" style="color:var(--muted);font-weight:600">24 d</td><td style="color:var(--warn)">Sustitución</td><td>En préstamo</td><td>Epil Point Lecce</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7270" target="_blank" rel="noopener">LEAS-7270</a> <span style="color:var(--muted)">Pdte. presupuesto</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7269" target="_blank" rel="noopener" style="font-weight:600">LEAS-7269</a></td><td class="n" style="color:var(--muted);font-weight:600">24 d</td><td style="color:var(--muted)">Cobro</td><td>Solicitado</td><td>Elha Cristòfor Colom</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7124" target="_blank" rel="noopener">LEAS-7124</a> <span style="color:var(--muted)">Devuelto a cliente</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7258" target="_blank" rel="noopener" style="font-weight:600">LEAS-7258</a></td><td class="n" style="color:var(--muted);font-weight:600">23 d</td><td style="color:var(--warn)">Sustitución</td><td>En préstamo</td><td>SinVello Miraflores</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7256" target="_blank" rel="noopener">LEAS-7256</a> <span style="color:var(--muted)">Pdte. presupuesto</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7285" target="_blank" rel="noopener" style="font-weight:600">LEAS-7285</a></td><td class="n" style="color:var(--muted);font-weight:600">20 d</td><td style="color:var(--warn)">Sustitución</td><td>En préstamo</td><td>SinVello Cádiz</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7284" target="_blank" rel="noopener">LEAS-7284</a> <span style="color:var(--crit)">Resuelto</span></td></tr></tbody></table></div>
-    </details>
-    <details class="acc">
-      <summary><b>Máquinas de sustitución con el ticket padre cerrado</b><span class="badge c">4</span><span class="sm">a validar con Ernesto · logística</span></summary>
-      <div class="card" style="padding:6px 20px 10px;margin-top:8px"><table class="tbl"><thead><tr><th>Ticket</th><th class="n">Parado</th><th>Tipo</th><th>Estado</th><th>Cliente</th><th>Ticket padre</th></tr></thead><tbody><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-5697" target="_blank" rel="noopener" style="font-weight:600">LEAS-5697</a></td><td class="n" style="color:var(--crit);font-weight:600">105 d</td><td style="color:var(--warn)">Sustitución</td><td>En préstamo</td><td>Smart Duck Paris · C03143</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-5623" target="_blank" rel="noopener">LEAS-5623</a> <span style="color:var(--crit)">Resuelto</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7054" target="_blank" rel="noopener" style="font-weight:600">LEAS-7054</a></td><td class="n" style="color:var(--warn);font-weight:600">38 d</td><td style="color:var(--warn)">Sustitución</td><td>En préstamo</td><td>Centro Unico Boccea</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7052" target="_blank" rel="noopener">LEAS-7052</a> <span style="color:var(--crit)">Resuelto</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7148" target="_blank" rel="noopener" style="font-weight:600">LEAS-7148</a></td><td class="n" style="color:var(--warn);font-weight:600">38 d</td><td style="color:var(--warn)">Sustitución</td><td>En préstamo</td><td>Laser Factory Hospitalet</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7146" target="_blank" rel="noopener">LEAS-7146</a> <span style="color:var(--crit)">Resuelto</span></td></tr><tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7285" target="_blank" rel="noopener" style="font-weight:600">LEAS-7285</a></td><td class="n" style="color:var(--muted);font-weight:600">20 d</td><td style="color:var(--warn)">Sustitución</td><td>En préstamo</td><td>SinVello Cádiz</td><td style="font-size:11.5px"><a href="https://leaseir.atlassian.net/browse/LEAS-7284" target="_blank" rel="noopener">LEAS-7284</a> <span style="color:var(--crit)">Resuelto</span></td></tr></tbody></table>
-        <p style="font-size:12px;color:var(--muted);margin:8px 0 2px">El ticket principal se dio por resuelto y la subtarea de préstamo se quedó abierta, sin técnico y sin comentarios. Nadie está reclamando estos equipos. Hay que contrastar cada uno con los grupos de logística de Ernesto: si hay recogida o albarán de retorno, se cierra la subtarea; si no hay movimiento, se llama al centro.</p>
-      </div>
-    </details>
-  </section>
-
-  <section class="sec">
-    <h2>Equipo</h2>
-    <div class="board">
-      <div class="col">
-        <header><span class="who">Jonathan</span><span class="cnt">12</span></header>
-        <div class="cards">
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-6879" target="_blank" rel="noopener"><span><span class="k">6879</span><span class="st">Reparación</span></span><span class="age" data-desde="2026-09-02"></span></a>
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-7121" target="_blank" rel="noopener"><span><span class="k">7121</span><span class="st">Reparación</span></span><span class="age" data-desde="2026-09-04"></span></a>
-          <a class="tik b" href="https://leaseir.atlassian.net/browse/LEAS-7256" target="_blank" rel="noopener"><span><span class="k">7256</span><span class="st">Pdte. cliente</span></span><span class="age" data-desde="2026-09-07"></span></a>
-          <a class="tik b" href="https://leaseir.atlassian.net/browse/LEAS-7299" target="_blank" rel="noopener"><span><span class="k">7299</span><span class="st">Cola taller</span></span><span class="age" data-desde="2026-09-04"></span></a>
-          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7349" target="_blank" rel="noopener"><span><span class="k">7349</span><span class="st">Esperando inicio</span></span><span class="age" data-desde="2026-09-07"></span></a>
-        </div>
-        <div class="more">+7 · mueve a diario · 2 estancados</div>
-      </div>
-      <div class="col">
-        <header><span class="who">Fran</span><span class="cnt">10</span></header>
-        <div class="cards">
-          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7355" target="_blank" rel="noopener"><span><span class="k">7355</span><span class="st">Presupuesto</span></span><span class="age" data-desde="2026-09-07"></span></a>
-          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7423" target="_blank" rel="noopener"><span><span class="k">7423</span><span class="st">Presupuesto</span></span><span class="age" data-desde="2026-09-01"></span></a>
-          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7424" target="_blank" rel="noopener"><span><span class="k">7424</span><span class="st">Reparación</span></span><span class="age" data-desde="2026-09-03"></span></a>
-          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7425" target="_blank" rel="noopener"><span><span class="k">7425</span><span class="st">Esperando inicio</span></span><span class="age" data-desde="2026-09-03"></span></a>
-        </div>
-        <div class="more">+6 · mueve a diario · 3 estancados</div>
-      </div>
-      <div class="col">
-        <header><span class="who">Iván</span><span class="cnt">8</span></header>
-        <div class="cards">
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-6048" target="_blank" rel="noopener"><span><span class="k">6048</span><span class="st">Inspección salida</span></span><span class="age" data-desde="2026-09-04"></span></a>
-          <a class="tik b" href="https://leaseir.atlassian.net/browse/LEAS-7312" target="_blank" rel="noopener"><span><span class="k">7312</span><span class="st">Cola taller</span></span><span class="age" data-desde="2026-09-04"></span></a>
-          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7335" target="_blank" rel="noopener"><span><span class="k">7335</span><span class="st">Cola taller</span></span><span class="age" data-desde="2026-09-07"></span></a>
-          <a class="tik c" href="https://leaseir.atlassian.net/browse/LEAS-7436" target="_blank" rel="noopener"><span><span class="k">7436</span><span class="st">Reparación</span></span><span class="age" data-desde="2026-09-04"></span></a>
-        </div>
-        <div class="more">+4 · 9 d sin mover · 2 estancados</div>
-      </div>
-      <div class="col orphan">
-        <header><span class="who">Sin dueño</span><span class="cnt">74</span></header>
-        <div class="cards">
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-1351" target="_blank" rel="noopener"><span><span class="k">1351</span><span class="st">Bedda Lugo · fábrica</span></span><span class="age" data-desde="2025-11-05"></span></a>
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-4076" target="_blank" rel="noopener"><span><span class="k">4076</span><span class="st">Dermoscan · fábrica</span></span><span class="age" data-desde="2025-11-18"></span></a>
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-4149" target="_blank" rel="noopener"><span><span class="k">4149</span><span class="st">Binatural · fábrica</span></span><span class="age" data-desde="2025-12-19"></span></a>
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-3827" target="_blank" rel="noopener"><span><span class="k">3827</span><span class="st">Cibeles · fábrica</span></span><span class="age" data-desde="2026-01-19"></span></a>
-          <a class="tik a" href="https://leaseir.atlassian.net/browse/LEAS-4908" target="_blank" rel="noopener"><span><span class="k">4908</span><span class="st">Elha Felo Monzón</span></span><span class="age" data-desde="2026-05-26"></span></a>
-        </div>
-        <div class="more">+69 · 22 estancados</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec">
-    <h2>Sustituciones fuera de rango</h2>
-    <div class="card" style="padding:6px 20px 10px">
-      <table class="tbl">
-        <thead><tr><th>Ticket</th><th>Cliente</th><th>Consola</th><th>Manípulo</th><th class="n">Fuera</th><th>Estado</th></tr></thead>
-        <tbody>
-          <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-5697" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12px;color:var(--ink)">5697</a></td><td>Smart Duck Paris</td><td class="num">C03143</td><td class="num">H03143</td><td class="n" style="color:var(--crit);font-weight:600">168 d</td><td><span class="pill c">Localizar</span></td></tr>
-          <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-6716" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12px;color:var(--ink)">6716</a></td><td>Elha Santa Coloma</td><td class="num">C00503</td><td class="num">H01033</td><td class="n" style="color:var(--crit);font-weight:600">79 d</td><td><span class="pill c">Recoger</span></td></tr>
-          <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-6780" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12px;color:var(--ink)">6780</a></td><td>Centri Unico Campania</td><td class="num">BS00019</td><td class="num">—</td><td class="n" style="color:var(--crit);font-weight:600">72 d</td><td><span class="pill w">¿Devuelto?</span></td></tr>
-          <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7028" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12px;color:var(--ink)">7028</a></td><td>SinVello Tomares</td><td class="num">—</td><td class="num">H00340</td><td class="n" style="color:var(--warn);font-weight:600">51 d</td><td><span class="pill w">¿Devuelto?</span></td></tr>
-          <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7054" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12px;color:var(--ink)">7054</a></td><td>Centro Unico Boccea</td><td class="num">c00677</td><td class="num">—</td><td class="n" style="color:var(--warn);font-weight:600">49 d</td><td><span class="pill w">Recoger</span></td></tr>
-          <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7112" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12px;color:var(--ink)">7112</a></td><td style="color:var(--muted-2)">sin cliente informado</td><td class="num">—</td><td class="num">H01061</td><td class="n" style="color:var(--warn);font-weight:600">43 d</td><td><span class="pill w">Identificar</span></td></tr>
-          <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7148" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12px;color:var(--ink)">7148</a></td><td>Laser Factory Hospitalet</td><td class="num">C00410</td><td class="num">h00410</td><td class="n" style="color:var(--warn);font-weight:600">41 d</td><td><span class="pill w">Recoger</span></td></tr>
-          <tr><td><a href="https://leaseir.atlassian.net/browse/LEAS-7140" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12px;color:var(--ink)">7140</a></td><td>Smart Duck Paris 15</td><td class="num">C003258</td><td class="num">H003258</td><td class="n" style="color:var(--warn);font-weight:600">41 d</td><td><span class="pill w">Recoger</span></td></tr>
-          <tr class="tot"><td colspan="4" data-c="flota">34 sustituciones activas · mediana normal 27 d</td><td class="n">—</td><td><span class="pill n">26 en rango</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="sec">
-    <h2>Telegram vs Jira <span class="hint">— lo que se habló por chat y el ticket no recoge</span></h2>
-    <div class="card" style="padding:6px 20px 10px">
-      <table class="tbl">
-        <thead><tr><th>Ticket</th><th>Cliente</th><th>Jira dice</th><th>Telegram dice</th><th class="n">Importe</th><th>Acción</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><a href="https://leaseir.atlassian.net/browse/LEAS-3827" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12px;color:var(--ink)">3827</a></td>
-            <td>Clínica Cibeles CC Holea</td>
-            <td style="color:var(--crit)">Devuelto a fábrica · 226 d</td>
-            <td style="color:var(--good)">Operativo en el centro desde julio</td>
-            <td class="n" style="font-weight:600">7.333 €</td>
-            <td><span class="pill c">Cerrar y facturar</span></td>
-          </tr>
-          <tr>
-            <td><span style="font-family:var(--mono);font-size:12px;color:var(--muted-2)">sin ticket</span></td>
-            <td>Mel Clinics Castellón</td>
-            <td style="color:var(--muted-2)">No hay incidencia abierta</td>
-            <td style="color:var(--crit)">Consola lista para recoger desde el 8 ago</td>
-            <td class="n">—</td>
-            <td><span class="pill c">Agendar recogida</span></td>
-          </tr>
-          <tr>
-            <td><span style="font-family:var(--mono);font-size:12px;color:var(--muted-2)">—</span></td>
-            <td>Mel Clinics Castellón</td>
-            <td style="color:var(--muted-2)">—</td>
-            <td style="color:var(--warn)">El cliente escribe también por WhatsApp</td>
-            <td class="n">—</td>
-            <td><span class="pill w">Canal fuera de control</span></td>
-          </tr>
-          <tr class="tot">
-            <td colspan="4" data-c="telegram">3 grupos revisados de 15 · integración pendiente de Isaac</td>
-            <td class="n">—</td>
-            <td><span class="pill n">Bot creado</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-</div>
-
-
-
-    </div>
-  </details>
-
-<!-- ═════════ REPORT INTERNO ═════════ -->
-<div id="p-interno" class="pane">
-
-  <section class="statebar" style="border-left-color:var(--accent)">
-    <div class="lead"><i style="background:var(--accent);box-shadow:0 0 0 4px rgba(176,67,31,.15)"></i><b>Revisión de las 104 incidencias principales abiertas</b></div>
-    <div style="font-size:13px;color:var(--ink-soft);line-height:1.5">Solo se auditan los LEAS principales: las subtareas heredan ubicación y datos del padre. Hay 95 subtareas más que no cuentan como fallo.</div>
-    <div class="aside" onclick="calc('jerarquia')"><b>99 + 95</b>principales y subtareas</div>
-  </section>
-
-  <div class="rep-tools">
-    <button class="main" onclick="cpRes(this)">Copiar resumen · 1 mensaje</button>
-    <button class="main alt" onclick="cpAll(this)">Copiar todo · se parte solo</button>
-    <span class="note">para el grupo <b>SAT Leaseir (Interno)</b>. El resumen cabe en un mensaje; el completo son unos 10 y va numerado. También puedes copiar bloque a bloque.</span>
-  </div>
-
-
-  <div id="quiensoy" class="qbar"></div>
-  <div class="avbar"><span id="avresumen">Primera vez que se dicen todos estos puntos. A partir de mañana, lo que siga igual se marca solo.</span></div>
-  <div id="blks"></div>
-</div>
 
 
 <!-- ═════════ FLOTA ═════════ -->
@@ -1068,6 +825,41 @@ dialog.wide{max-width:860px}
 </div>
 
 <!-- ═════════ COBROS ═════════ -->
+<!-- ═════════ ABIERTAS ═════════ -->
+<div id="p-abiertas" class="pane on">
+
+  <div class="khero">
+    <button class="kh1" onclick="abcalc('todo')"><b>202</b><span>Abiertas ahora</span>
+      <em>106 incidencias y 96 subtareas</em></button>
+    <button class="kh1" onclick="abcalc('duenyo')"><b style="color:var(--crit)">77</b><span>Sin dueño</span>
+      <em>de las 106 incidencias · el 73 %</em></button>
+    <button class="kh1" onclick="abcalc('parado')"><b style="color:var(--crit)">14</b><span>Sin moverse +15 d</span>
+      <em>ninguna avanza sola</em></button>
+  </div>
+
+  <section class="sec">
+    <h2>Dónde está cada una <span class="hint">— las 106 incidencias, por el punto del ciclo donde se han quedado</span></h2>
+    <div class="card" style="padding:18px 20px 16px;max-width:900px">
+      <div class="abtira" id="ab-tira"></div>
+      <div class="ablista" id="ab-lista"></div>
+      <div class="knota" style="margin-top:14px">Las <b>96 subtareas</b> van aparte a propósito: la mayoría son
+        comprobaciones de cobro y máquinas de sustitución, y contarlas como incidencias abiertas hincha la cifra
+        sin que haya nada averiado detrás.</div>
+    </div>
+  </section>
+</div>
+
+<!-- ═════════ AIRTABLE ═════════ -->
+<div id="p-airtable" class="pane">
+  <section class="sec" style="margin-top:14px">
+    <h2>Airtable · para revisar tú <span class="hint">— el Inmovilizado no cuadra con lo que hay en la calle. Esto no va al panel del equipo: es tuyo.</span></h2>
+    <div class="card" style="padding:6px 22px 14px">
+      <div class="atl"><div class="ati c"><span class="as">C00410<em>LEAS-7148 · Laser Factory Hospitalet</em></span><span class="ad">En el Inmovilizado C00410 figura como «Renting S&amp;L», o sea del propio cliente, y h00410 no consta. Alguien la metió como consola prestada, así que ese préstamo no existe. Hoy no se ha podido abrir el Inmovilizado: esto es el cruce del 05/09, y el campo del ticket sí está comprobado hoy en Jira.<span class="aa"><b>Qué hacer:</b> Quitar las series del ticket, o poner la SUST que salió de verdad.</span></span></div><div class="ati c"><span class="as">91119<em>LEAS-7475 · Dermasana Albufera</em></span><span class="ad"><b>Nuevo hoy.</b> Se puso 91119 como consola prestada y en el Inmovilizado 91119 figura como «Traditional Renting»: es del propio cliente. El envío se publicó en ENVIOS SAT LEASEIR el 04/09 a las 16:56 («Sustitución completa MHR a Dermasana Albufera»).<span class="aa"><b>Qué hacer:</b> Pedir la serie de la sustitución que salió de verdad y corregir el campo 10199 del ticket.</span></span></div><div class="ati w"><span class="as">SUSTAHRD005<em>LEAS-7401</em></span><span class="ad">No consta en el Inmovilizado. Gonzalo confirmó el 04/09 con fotos que salió el 27 de agosto y están en el grupo de fotos de equipos. Sigue sin constar hoy.<span class="aa"><b>Qué hacer:</b> La máquina existe: lo que falta es la ficha. Darla de alta en Airtable.</span></span></div><div class="ati w"><span class="as">SUSTMHR025<em>LEAS-7366 · SinVello Ibiza</em></span><span class="ad">No consta en el Inmovilizado. Gonzalo confirmó el 04/09 que existe y que está en el grupo de fotos de equipos. Sigue sin constar hoy.<span class="aa"><b>Qué hacer:</b> Igual que la anterior: alta o corrección de la ficha.</span></span></div><div class="ati w"><span class="as">SUSTMHR033<em>LEAS-7388 · CVL Distribuidor</em></span><span class="ad">Sigue sin constar: en Airtable la familia MHR llega hasta la 031. Gonzalo dijo el 04/09 a las 18:18 que la pieza existe y está en el grupo de fotos, así que esto es ficha, no máquina.<span class="aa"><b>Qué hacer:</b> Darla de alta en Airtable con la serie que Gonzalo confirmó.</span></span></div><div class="ati w"><span class="as">SUSTQUAD025<em>LEAS-7191 · Harmonie Salamanca</em></span><span class="ad">Sigue sin constar: en Airtable existen la 024, la 032 y la 035, no la 025. Gonzalo dijo el 04/09 a las 18:18 que la pieza existe y está en el grupo de fotos.<span class="aa"><b>Qué hacer:</b> Darla de alta en Airtable. No es un fallo del ticket.</span></span></div><div class="ati w"><span class="as">BS SUST008<em>LEAS-6780 · Centri Unico Campania</em></span><span class="ad">La familia BS solo tiene 002, 003, 004 y 005, y además convive «BS - SUST005» con «BS SUST005».<span class="aa"><b>Qué hacer:</b> Averiguar de cuál procede antes de darla por buena, y unificar el formato de la familia BS.</span></span></div><div class="ati w"><span class="as">C03143 / H03143<em>LEAS-5697 · Smart Duck Paris</em></span><span class="ad">Gonzalo escribió «Corregido» el 04/09 a las 18:10, pero hoy siguen sin constar en el Inmovilizado: la que figura como backup de Smart Duck es la C03164/H03164.<span class="aa"><b>Qué hacer:</b> Comprobar con qué serie quedó el ticket y dar de alta la que falte.</span></span></div><div class="ati g"><span class="as">C03258 / H03258<em>LEAS-7140 · Smart Duck Paris 15</em></span><span class="ad">Llevaban un cero de más. Gonzalo lo corrigió el 04/09 y hoy el cruce ya sale limpio: las dos constan en el Inmovilizado.<span class="aa"><b>Qué hacer:</b> Nada. Solo comprobado.</span></span></div><div class="ati g"><span class="as">SUSTMHR030 · 41003<em>LEAS-7415 · LEAS-7158</em></span><span class="ad">SUSTMHR030 ya cuadra tras la corrección de Gonzalo. Queda «H41003» en LEAS-7158: en Airtable la serie es 41003, sin la H.<span class="aa"><b>Qué hacer:</b> Corregir el campo de LEAS-7158 en Jira. En Airtable está bien.</span></span></div><div class="ati c"><span class="as">Duplicados y espacios<em>Inmovilizado, tabla entera</em></span><span class="ad">1.119 registros y 1.115 claves distintas al normalizar: «SustMhr011» conviviendo con «SUSTMHR011», IDs con un espacio delante (« SUSTQUAD032»), «FC - SUST 005» junto a «FC - SUST005», y «FC - SUST003» duplicada en dos registros.<span class="aa"><b>Qué hacer:</b> Limpiarlo de una vez: mientras esté así, cualquier cruce automático da falsos positivos.</span></span></div></div>
+    </div>
+    <div class="pending" style="margin-top:11px"><b>10 cosas</b> — mientras el Inmovilizado esté así, el cruce automático de series seguirá dando falsos positivos y el equipo seguirá viendo puntos que no son suyos. Las tres primeras son de dato equivocado; las marcadas en verde ya las tocó el equipo hoy y solo hay que comprobarlas.</div>
+  </section>
+</div>
+
 <div id="p-actividad" class="pane">
   <section class="sec">
     <h2>Quién ha escrito hoy en Jira <span class="hint">— pincha una tarjeta para ver comentario a comentario</span></h2>
@@ -1414,8 +1206,6 @@ dialog.wide{max-width:860px}
       <span>Última actualización: 7 sep 15:30 · Europe/Madrid</span>
   </footer>
 
-</div>
-
 <!-- ═════════ KPIs ═════════ -->
 <div id="p-kpis" class="pane">
 
@@ -1459,6 +1249,9 @@ dialog.wide{max-width:860px}
     </section>
   </div>
 </div>
+</div>
+
+
 
 <dialog id="d-perdido"><div class="dlg">
   <div class="k">Posible pérdida de activo</div><h3>Consola C03143 · 168 días fuera</h3>
@@ -2510,6 +2303,79 @@ function opsx(id){
   b.innerHTML = h; linkTickets(b);
   document.getElementById('dlg-calc').showModal();
 }
+
+// ═══ Portada: las 202 abiertas y su reparto ═══
+// Contado en Jira el 07/09 a las 14:20, una consulta por tramo (statusCategory != Done).
+// Las subtareas van aparte: parent IS NOT EMPTY.
+const AB = {
+  fecha: "2026-09-07",
+  total: 202, principales: 106, subtareas: 96, sinDuenyo: 77, parado: 14,
+  tramos: [
+    {id:"triaje",   t:"Sin arrancar",           n:31, q:"nosotros", d:"abierta, sin técnico o sin definir el servicio"},
+    {id:"transp",   t:"En transporte",          n:22, q:"tercero",  d:"pendiente de recoger o ya en ruta"},
+    {id:"taller",   t:"En taller",              n:18, q:"nosotros", d:"en cola, reparándose o en inspección"},
+    {id:"externo",  t:"Con técnico externo",    n:18, q:"tercero",  d:"enviada fuera"},
+    {id:"cliente",  t:"Esperando al cliente",   n:7,  q:"cliente",  d:"presupuesto enviado, sin respuesta"},
+    {id:"presup",   t:"Preparando presupuesto", n:6,  q:"nosotros", d:"lo tenemos nosotros"},
+    {id:"otros",    t:"Otros estados",          n:4,  q:"otros",    d:"casos sueltos fuera del ciclo normal"}
+  ]
+};
+const ABCOL = {nosotros:'var(--k-nos)', tercero:'var(--k-ter)', cliente:'var(--k-cli)', otros:'var(--muted-2)'};
+const ABQ = {nosotros:'nosotros', tercero:'transportista o externo', cliente:'el cliente', otros:'—'};
+
+function pintarAbiertas(){
+  const tira = document.getElementById('ab-tira'); if(!tira) return;
+  const tot = AB.tramos.reduce((a,x)=>a+x.n,0);
+  tira.innerHTML = AB.tramos.map(x =>
+    '<button style="flex:'+x.n+';background:'+ABCOL[x.q]+'" title="'+x.t+': '+x.n+'" '
+    + 'onclick="abcalc(\''+x.id+'\')">' + (x.n/tot > .06 ? '<b>'+x.n+'</b>' : '') + '</button>').join('');
+  document.getElementById('ab-lista').innerHTML = AB.tramos.map(x =>
+    '<button class="abf" onclick="abcalc(\''+x.id+'\')">'
+    + '<i style="background:'+ABCOL[x.q]+'"></i>'
+    + '<span class="abt">'+x.t+'<em>'+x.d+'</em></span>'
+    + '<span class="abn">'+x.n+'</span>'
+    + '<span class="abp">'+Math.round(100*x.n/tot)+' %</span></button>').join('');
+}
+
+function abcalc(id){
+  const t = AB.tramos.find(x => x.id === id);
+  let h = '<div class="k">Cómo sale este número</div>';
+  if(t){
+    h += '<div class="big">'+t.n+'</div><div class="bigu">de 106 incidencias abiertas</div>'
+      + '<h3 style="margin:0 0 10px">'+t.t+'</h3>'
+      + '<p style="margin:0 0 12px;font-size:13px;color:var(--ink-soft)">'+t.d
+      + '. Depende de: <b>'+ABQ[t.q]+'</b>.</p>';
+  } else if(id === 'duenyo'){
+    h += '<div class="big">77</div><div class="bigu">incidencias sin nadie asignado</div>'
+      + '<h3 style="margin:0 0 10px">Casi tres de cada cuatro</h3>'
+      + '<p style="margin:0 0 12px;font-size:13px;color:var(--ink-soft)">Sin dueño nadie la cierra y no entra '
+      + 'en la medida de ningún técnico. Es la causa de que haya incidencias de meses: no es que nadie pueda, '
+      + 'es que no es de nadie. Las 96 subtareas quedan fuera de esta cuenta porque casi ninguna se asigna.</p>';
+  } else if(id === 'parado'){
+    h += '<div class="big">14</div><div class="bigu">incidencias sin un solo movimiento en 15 días</div>'
+      + '<h3 style="margin:0 0 10px">Y ninguna avanza sola</h3>'
+      + '<p style="margin:0 0 12px;font-size:13px;color:var(--ink-soft)">Se miden por la última modificación '
+      + 'del ticket, no por el cambio de estado: un comentario cuenta como movimiento.</p>';
+  } else {
+    h += '<div class="big">202</div><div class="bigu">abiertas ahora mismo</div>'
+      + '<h3 style="margin:0 0 10px">106 incidencias y 96 subtareas</h3>'
+      + '<div class="r"><span class="l">Incidencias (sin padre)</span><span class="v">106</span></div>'
+      + '<div class="r"><span class="l">Subtareas (con padre)</span><span class="v">96</span></div>'
+      + '<p style="margin:12px 0 0;font-size:13px;color:var(--ink-soft)">Se separan porque no son lo mismo: '
+      + 'una subtarea de «comprobación de cobro» abierta no es una máquina averiada. Mezclarlas duplica la '
+      + 'cifra de «abiertas» sin que haya más trabajo técnico detrás.</p>';
+  }
+  h += '<div class="src">Contado en Jira con consultas de conteo, una por tramo, sobre '
+    + '<code>project = LEAS AND statusCategory != Done</code>. Las incidencias son las que no tienen padre '
+    + '(<code>parent IS EMPTY</code>). Los tramos agrupan estados igual que la pestaña de KPIs, para que las '
+    + 'dos hablen el mismo idioma.'
+    + '<div class="fsrc">Origen: Jira · proyecto LEAS · contado el ' + AB.fecha + '</div></div>'
+    + '<button class="x" onclick="this.closest(\'dialog\').close()">Cerrar</button>';
+  const b = document.getElementById('calc-body');
+  b.innerHTML = h; linkTickets(b);
+  document.getElementById('dlg-calc').showModal();
+}
+try{ pintarAbiertas(); }catch(e){ console.error('abiertas', e); }
 
 function dlg(id){const d=document.getElementById(id); if(d&&d.showModal) d.showModal();}
 document.querySelectorAll('dialog').forEach(d=>{
