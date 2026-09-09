@@ -520,6 +520,54 @@ details.comova2 .cm-in{padding:0 18px 16px}
 .pcard .pr b{color:var(--ink-soft);font-weight:600}
 .pcard .pc{display:block;margin-top:4px;font-size:11px;font-weight:600;color:var(--good)}
 .blk .cnt small{font-family:var(--sans);font-size:11px;font-weight:500;color:var(--muted-2);margin-left:3px}
+/* ═══ Partes para técnico externo ═══ */
+.pt-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+.pt-top input{font:inherit;font-size:14px;padding:8px 12px;border:1px solid var(--divider);border-radius:10px;background:var(--surface);color:var(--ink);box-shadow:var(--shadow);min-width:260px}
+.pt-top .pn{font-size:12.5px;color:var(--muted)}
+.pt-lista{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.pt-chip{font:inherit;font-size:12px;padding:5px 10px;border-radius:20px;border:1px solid var(--divider);background:var(--surface);color:var(--ink-soft);cursor:pointer;display:inline-flex;gap:6px;align-items:center;box-shadow:var(--shadow)}
+.pt-chip b{font-family:var(--mono);font-weight:600;color:var(--ink)}
+.pt-chip i{font-style:normal;font-size:10.5px;color:var(--muted-2)}
+.pt-chip.on{background:var(--ink);border-color:var(--ink);color:var(--surface)} .pt-chip.on b,.pt-chip.on i{color:var(--surface)}
+.pt-chip.falta{border-color:var(--crit-line)} .pt-chip.falta i{color:var(--crit)}
+.pt-aviso{background:var(--crit-bg);border:1px solid var(--crit-line);border-left:5px solid var(--crit);border-radius:10px;padding:10px 14px;margin:0 0 12px;font-size:13px;color:var(--ink-soft);line-height:1.5}
+.pt-aviso b{color:var(--crit)}
+.pt-ok{background:var(--good-bg);border:1px solid var(--good-line);border-left:5px solid var(--good);border-radius:10px;padding:10px 14px;margin:0 0 12px;font-size:13px;color:var(--ink-soft)}
+.pt-btns{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px}
+.pt-btns button{font:inherit;font-size:13px;font-weight:500;padding:8px 14px;border-radius:10px;border:1px solid var(--divider);background:var(--surface);color:var(--ink);cursor:pointer;box-shadow:var(--shadow)}
+.pt-btns button.main{background:var(--accent);border-color:var(--accent);color:#fff}
+.pt-btns button:hover{border-color:var(--accent)} .pt-btns button.ok{background:var(--good);border-color:var(--good);color:#fff}
+.pt-btns .sep{flex:1}
+.pt-btns .idioma{font-size:12px;color:var(--muted)}
+/* la hoja */
+#hoja{background:#fff;color:#111;border:1px solid var(--divider);border-radius:var(--r);box-shadow:var(--shadow);padding:22px 26px;max-width:900px;font-family:Arial,Helvetica,sans-serif;font-size:12.5px}
+#hoja .cab{display:grid;grid-template-columns:1fr 1.4fr 1fr;border:2px solid #111;margin-bottom:12px}
+#hoja .cab>div{padding:9px 12px;border-right:2px solid #111} #hoja .cab>div:last-child{border-right:0}
+#hoja .cab .logo{font-size:22px;font-weight:300;letter-spacing:.02em;color:#5f6b7a}
+#hoja .cab .tit{font-size:18px;font-weight:700;text-align:center;background:#e6e6e6}
+#hoja .cab .num{font-family:var(--mono);font-size:14px;font-weight:600;text-align:right}
+#hoja table{width:100%;border-collapse:collapse;table-layout:fixed}
+#hoja td,#hoja th{border:1.5px solid #222;padding:5px 8px;vertical-align:top;text-align:left}
+#hoja th{background:#ededed;font-weight:700;font-size:11px;text-transform:uppercase;width:15%}
+#hoja th.w{width:15%}
+#hoja tr.sec td{background:#ededed;font-weight:700;text-align:center;font-size:11.5px;text-transform:uppercase}
+#hoja .v{width:100%;min-height:20px;font:inherit;font-size:12.5px;border:0;background:transparent;padding:0;resize:vertical;color:#111;outline:none}
+#hoja textarea.v{min-height:38px}
+#hoja .v.falta{background:#fde8e8;box-shadow:inset 0 0 0 1px #d9534f;border-radius:3px;padding:1px 5px}
+#hoja .v.duda{background:#fff4d6;box-shadow:inset 0 0 0 1px #d9a400;border-radius:3px;padding:1px 5px}
+#hoja .rep th{width:auto} #hoja .rep td{font-size:11px;padding:4px 6px} #hoja .rep td.c{width:34px;text-align:center}
+#hoja .chk{display:inline-block;width:11px;height:11px;border:1.5px solid #222;vertical-align:-1px;margin:0 4px 0 2px}
+#hoja .firma{height:44px}
+#hoja .pie{margin-top:8px;font-size:10.5px;color:#666}
+.pt-nota{font-size:12px;color:var(--muted);margin:8px 0 0;line-height:1.5}
+@media print{
+  body *{visibility:hidden} #hoja,#hoja *{visibility:visible}
+  #hoja{position:absolute;left:0;top:0;width:100%;max-width:none;border:0;box-shadow:none;border-radius:0;padding:0}
+  #hoja .v.falta,#hoja .v.duda{background:transparent;box-shadow:none}
+  #hoja .v::placeholder{color:transparent}
+  @page{size:A4;margin:12mm}
+}
+
 </style>
 </head><body>
 
@@ -539,6 +587,7 @@ details.comova2 .cm-in{padding:0 18px 16px}
 
   <nav class="tabbar" role="tablist">
     <button class="on" role="tab" onclick="tab(this,'p-interno')">Puntos abiertos<small>por persona</small></button>
+    <button role="tab" onclick="tab(this,'p-partes')">Partes<small>técnico externo</small></button>
     <span class="spacer"></span>
   </nav>
 
@@ -600,9 +649,158 @@ details.comova2 .cm-in{padding:0 18px 16px}
   <div id="blks"></div>
 </div>
 
+<div id="p-partes" class="pane">
+  <div class="pt-top">
+    <input id="pt-busca" type="search" placeholder="LEAS del parte… (p. ej. 7499)" autocomplete="off"
+      oninput="parteBusca(this.value)">
+    <span class="pn">Tickets en técnico externo o pendientes de definirlo. Se rellena con lo que hay en Jira; <b style="color:var(--crit)">en rojo</b> lo que falta o no está claro. Revisar, completar y mandar al técnico.</span>
+  </div>
+  <div id="pt-lista" class="pt-lista"></div>
+  <div id="pt-cuerpo"></div>
+</div>
+
 
 
 <script>
+// ═══ Partes para técnico externo ═══
+// PARTES lo rellena la pasada con los tickets abiertos en "Pendiente definir servicio externo" / "Enviado a técnico externo"
+// o con «Envío a técnico externo = Sí». Campos de Jira: 10211 centro · 10130 propietario · 10138 dirección · 11354 maps ·
+// 10171 consola · 10150 pistola · 10131 modelo · 10210 avería · 10140/10145 tipo · 10143 técnico externo · 10144 cita ·
+// 10224 localización (Nacional/Internacional) · 10182 garantía · 10183 contrato · 10184 requiere pago · 11255/11288 incidencias previas.
+const PARTES = {"LEAS-7531": {"estado": "Enviado a técnico externo", "creado": "2026-09-09 10:58", "centro": "Elha Sta teresa", "propietario": "Elha", "direccion": "Carrer Santa Teresa, 55, 08302 Mataró, Barcelona", "maps": "https://maps.app.goo.gl/3TjrGCRExAahnBqL8", "consola": "90367", "pistola": "-", "modelo": "MHR", "averia": "La pantalla está descalibrada", "tipo": "Pantalla", "tipoProv": "Cambio de táctil + controlador.", "tecnico": "Carlos Mora", "cita": "2026-09-10 11:43", "loc": "Nacional", "garantia": "No", "contrato": "No", "pago": "Sí", "prevC": 1, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo", "Sustitución"], "descripcion": "Incidencia creada desde el Portal Elha por pol.martinez@elhalaser.com.\n\nCentro: Elha Sta teresa\n\nDirección: Carrer Santa Teresa, 55, 08302 Mataró, Barcelona\n\nGoogle Maps: https://maps.app.goo.gl/3TjrGCRExAahnBqL8\n\nSerial consola: 90367\n\nSerial manípulo: -\n\nTipo de avería: Pantalla\n\nBloqueante: Sí\n\nD", "key": "LEAS-7531"}, "LEAS-7378": {"estado": "En reparación", "creado": "2026-08-27 08:56", "centro": "SinVello Badalona", "propietario": "Sin Vello por Laser Low Cost SL", "direccion": "Carrer de la Independència, 94, 08915 Badalona, Barcelona", "maps": "https://maps.app.goo.gl/KmzSexsAMKfLGMx56", "consola": "C03315", "pistola": "H03315", "modelo": null, "averia": "La pantalla tiene el tactil descalibrado y el buzzer del equipo parece ser que se atenua de vez en cuando, en el segundo video se puede apreciar.", "tipo": "Pantalla", "tipoProv": "Buzzer", "tecnico": "Carlos Mora", "cita": "2026-09-03 10:52", "loc": "Nacional", "garantia": "Sí", "contrato": "No", "pago": "No", "prevC": 0, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo", "Garantía"], "descripcion": "Incidencia creada desde el Portal Sin Vello por demo@sinvello.es.\n\nCentro: SinVello Badalona\n\nDirección: Carrer de la Independència, 94, 08915 Badalona, Barcelona\n\nGoogle Maps: https://maps.app.goo.gl/KmzSexsAMKfLGMx56\n\nSerial consola: C03315\n\nSerial manípulo: H03315\n\nTipo de avería: Pantalla\n\nBloqu", "key": "LEAS-7378"}, "LEAS-7467": {"estado": "Gestionado transporte", "creado": "2026-09-03 11:14", "centro": "Epil Point  Sesto Firenze", "propietario": "Epil Point Italia", "direccion": "Via A. Gramsci, 268, 50019 Sesto Fiorentino FI, Italia", "maps": "https://maps.app.goo.gl/9xPpgy362hVHFBnS7", "consola": null, "pistola": "40504", "modelo": "MHR", "averia": "El umbilical parece que no funciona corectamente, se envia a light solutions a cambiarlo", "tipo": "Umbilical", "tipoProv": null, "tecnico": null, "cita": "", "loc": "Nacional", "garantia": "Sí", "contrato": "No", "pago": "No", "prevC": 0, "prevH": 1, "disparos": null, "idioma": "en", "labels": ["Externo", "Garantía"], "descripcion": "", "key": "LEAS-7467"}, "LEAS-7282": {"estado": "Enviado a técnico externo", "creado": "2026-08-12 14:36", "centro": "Bekalon", "propietario": null, "direccion": "Rúa de Urzáiz, 55, Santiago de Vigo, 36201 Vigo, Pontevedra", "maps": "https://maps.app.goo.gl/iXjjBLwqy3TiQtWMA", "consola": null, "pistola": null, "modelo": null, "averia": "se ha vuelto a romper el casquillo", "tipo": "Casquillo nuevo", "tipoProv": "Cambio de umbilical", "tecnico": "GEE", "cita": "2026-08-17 14:53", "loc": "Nacional", "garantia": "Sí", "contrato": "No", "pago": "No", "prevC": 0, "prevH": 3, "disparos": null, "idioma": "en", "labels": ["Externo", "Garantía"], "descripcion": "", "key": "LEAS-7282"}, "LEAS-7486": {"estado": "Gestionado transporte", "creado": "2026-09-04 14:19", "centro": "Laser Factory Sabadell", "propietario": "Laser Factory", "direccion": "Sabadell", "maps": "https://maps.app.goo.gl/Sk3uxMBR2HvzwpdH6", "consola": "C00478", "pistola": "H00478", "modelo": "Xcell Cosmetic", "averia": "Durante las sesiones, a veces, escuchan un chasquido en la máquina, como un pequeño petardo, se aprovechara para hacer revisión y actualizacion si la hace falta", "tipo": "Otros", "tipoProv": null, "tecnico": null, "cita": "", "loc": "Nacional", "garantia": "No", "contrato": "No", "pago": "Sí", "prevC": 2, "prevH": 3, "disparos": null, "idioma": "en", "labels": ["Externo"], "descripcion": "", "key": "LEAS-7486"}, "LEAS-7343": {"estado": "Gestionado transporte", "creado": "2026-08-21 16:16", "centro": "Elha Sta teresa", "propietario": "Elha", "direccion": "Carrer Santa Teresa, 55, 08302 Mataró, Barcelona", "maps": "https://maps.app.goo.gl/udYXbrRK64LdMpYf9", "consola": "90245", "pistola": "-", "modelo": "MHR", "averia": "Falla la temperatura", "tipo": "Temperatura", "tipoProv": "Cambio de termostato, Otros", "tecnico": "Leaseir", "cita": "2026-08-21 16:28", "loc": "Nacional", "garantia": "No", "contrato": "No", "pago": "Sí", "prevC": 1, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo", "Sustitución"], "descripcion": "Incidencia creada desde el Portal Elha por pol.martinez@elhalaser.com.\n\nCentro: Elha Sta teresa\n\nDirección: Carrer Santa Teresa, 55, 08302 Mataró, Barcelona\n\nGoogle Maps: https://maps.app.goo.gl/udYXbrRK64LdMpYf9\n\nSerial consola: 90245\n\nSerial manípulo: -\n\nTipo de avería: Temperatura\n\nBloqueante: No", "key": "LEAS-7343"}, "LEAS-7523": {"estado": "Enviado a técnico externo", "creado": "2026-09-08 19:38", "centro": "Laser Factory Figueres Monturiol", "propietario": "Laser Factory", "direccion": "Carrer Monturiol, 4, 17600 Figueres, Girona", "maps": "https://maps.app.goo.gl/8cTePiVz1T2z8Lyj8", "consola": null, "pistola": "H00471", "modelo": "Xcell Cosmetic", "averia": "Umbilical nuevo se les ha roto", "tipo": "Casquillo nuevo", "tipoProv": "Cambio de umbilical", "tecnico": "Carlos Mora", "cita": "2026-09-16 19:40", "loc": "Nacional", "garantia": "No", "contrato": "No", "pago": "Sí", "prevC": 0, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo"], "descripcion": "", "key": "LEAS-7523"}, "LEAS-7521": {"estado": "Enviado a técnico externo", "creado": "2026-09-08 18:30", "centro": "Epil Point Lecce", "propietario": "Epil Point Italia", "direccion": "Via Salvatore Trinchese, 87, 73100 Lecce LE, Italia", "maps": "https://maps.app.goo.gl/cmr8rBQPLr9crMyo9", "consola": "91401", "pistola": null, "modelo": null, "averia": "El buzzer no funciona correctamente hay que cambiarlo", "tipo": "Buzzer", "tipoProv": "Buzzer", "tecnico": "Sincronis", "cita": "2026-09-15 18:34", "loc": "Internacional", "garantia": "Sí", "contrato": "No", "pago": "No", "prevC": 3, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo", "Garantía"], "descripcion": "", "key": "LEAS-7521"}, "LEAS-7518": {"estado": "Pendiente definir servicio externo", "creado": "2026-09-08 15:18", "centro": "Centro Unico Globo", "propietario": "Beauty Cool Italia S.R.L. Unico Italy", "direccion": "C.C. IL GLOBO, Via Italia, 197, 20874 Busnago MB, Italia", "maps": "https://maps.app.goo.gl/ALtceXXePCtDHNVu5", "consola": null, "pistola": "H00264", "modelo": "Xcell Cosmetic", "averia": "El umbilical se ha roto , dice que les ha salido algo de liquido", "tipo": "Umbilical", "tipoProv": null, "tecnico": null, "cita": "", "loc": "Nacional", "garantia": "No", "contrato": "No", "pago": "Sí", "prevC": 0, "prevH": 2, "disparos": null, "idioma": "en", "labels": ["Externo"], "descripcion": "", "key": "LEAS-7518"}, "LEAS-7516": {"estado": "Enviado a técnico externo", "creado": "2026-09-08 13:09", "centro": "Elha Castellón", "propietario": "Elha", "direccion": "Av. del Mar, 1, 12003 Castelló de la Plana, Castelló", "maps": "https://maps.app.goo.gl/mq3M64voK8t2Pn1X8", "consola": "-", "pistola": "40269", "modelo": "MHR", "averia": "Se ha roto el umbilical debajo del prensa estopa", "tipo": "Umbilical", "tipoProv": "Cambio de umbilical", "tecnico": "Konexa", "cita": "2026-09-08 14:03", "loc": "Nacional", "garantia": "Sí", "contrato": "No", "pago": "No", "prevC": 0, "prevH": 2, "disparos": null, "idioma": "en", "labels": ["Externo", "Garantía"], "descripcion": "Incidencia creada desde el Portal Elha por pol.martinez@elhalaser.com.\n\nCentro: Elha Castellón\n\nDirección: Av. del Mar, 1, 12003 Castelló de la Plana, Castelló\n\nGoogle Maps: https://maps.app.goo.gl/mq3M64voK8t2Pn1X8\n\nSerial consola: -\n\nSerial manípulo: 40269\n\nTipo de avería: Umbilical\n\nBloqueante: N", "key": "LEAS-7516"}, "LEAS-7499": {"estado": "Enviado a técnico externo", "creado": "2026-09-07 11:02", "centro": "Centros Unico Toledo", "propietario": "Beauty Cool Italia (Unico)", "direccion": "Via Toledo, 36, 80134 Napoli NA, Italia", "maps": "https://maps.app.goo.gl/aiaYzXkbu5vjwUAAA", "consola": "C00616", "pistola": null, "modelo": null, "averia": "El interlock no funciona, se les avisa al técnico", "tipo": "Otros", "tipoProv": "Otros", "tecnico": "Sincronis", "cita": "2026-09-09 14:02", "loc": "Internacional", "garantia": "Sí", "contrato": "No", "pago": "No", "prevC": 1, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo", "Garantía"], "descripcion": "", "key": "LEAS-7499"}, "LEAS-7445": {"estado": "Enviado a técnico externo", "creado": "2026-09-01 19:58", "centro": "Elha Caracol", "propietario": "Elha", "direccion": "P.º de la Independencia, 24-26, Casco Antiguo, 50004 Zaragoza", "maps": "https://maps.app.goo.gl/NC3yPqu3cm3EhHQv8", "consola": "-", "pistola": "40308", "modelo": "MHR", "averia": "Se sale el umbilical", "tipo": "Umbilical", "tipoProv": "Reparación umbilical", "tecnico": "GEE", "cita": "2026-09-08 13:48", "loc": "Nacional", "garantia": "No", "contrato": "No", "pago": "Sí", "prevC": 0, "prevH": 1, "disparos": null, "idioma": "en", "labels": ["Externo"], "descripcion": "Incidencia creada desde el Portal Elha por pol.martinez@elhalaser.com.\n\nCentro: Elha Caracol\n\nDirección: P.º de la Independencia, 24-26, Casco Antiguo, 50004 Zaragoza\n\nGoogle Maps: https://maps.app.goo.gl/NC3yPqu3cm3EhHQv8\n\nSerial consola: -\n\nSerial manípulo: 40308\n\nTipo de avería: Umbilical\n\nBloque", "key": "LEAS-7445"}, "LEAS-7492": {"estado": "Enviado a técnico externo", "creado": "2026-09-04 19:57", "centro": "Elha Villarroel", "propietario": "Elha", "direccion": "Carrer de Villarroel, 193, Eixample, 08036 Barcelona", "maps": "https://maps.app.goo.gl/GnB9EqK4zcBWGBBV6", "consola": "90451", "pistola": "-", "modelo": "MHR", "averia": "La máquina directamente no enciende", "tipo": "Otros", "tipoProv": "Otros", "tecnico": "Carlos Mora", "cita": "2026-09-07 19:31", "loc": "Nacional", "garantia": "No", "contrato": "No", "pago": "Sí", "prevC": 1, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo"], "descripcion": "Incidencia creada desde el Portal Elha por pol.martinez@elhalaser.com.\n\nCentro: Elha Villarroel\n\nDirección: Carrer de Villarroel, 193, Eixample, 08036 Barcelona\n\nGoogle Maps: https://maps.app.goo.gl/GnB9EqK4zcBWGBBV6\n\nSerial consola: 90451\n\nSerial manípulo: -\n\nTipo de avería: Otros\n\nBloqueante: Sí\n\n", "key": "LEAS-7492"}, "LEAS-7510": {"estado": "Pendiente recogida", "creado": "2026-09-07 17:03", "centro": "Elha Boltaña", "propietario": "Elha", "direccion": "C/ de Boltaña, 78, San Blas-Canillejas, 28022 Madrid", "maps": "https://www.google.es/maps/place/Elha+Laser+Center+Bolta%C3%B1a/@40.4462917,-3.6140135,17z/data=!3m1!4b1!4m6!3m5!1s0xd422f1123bd4bc1:0xca933dbcac3863ed!8m2!3d40.4462876!4d-3.6114386!16s%2Fg%2F11t9rhmg5w", "consola": "90954", "pistola": "-", "modelo": "MHR", "averia": "La máquina no avanza, no deja calibrar, pone que está en temperatura alta el diodo, hemos probado con otro manípulo y tampoco", "tipo": "Temperatura", "tipoProv": "Interruptor de encendido cambiado", "tecnico": "Innet", "cita": "2026-09-07 19:45", "loc": "Nacional", "garantia": "No", "contrato": "No", "pago": "Sí", "prevC": 2, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo"], "descripcion": "Incidencia creada desde el Portal Elha por pol.martinez@elhalaser.com.\n\nCentro: Elha Boltaña\n\nDirección: C/ de Boltaña, 78, San Blas-Canillejas, 28022 Madrid\n\nGoogle Maps: https://www.google.es/maps/place/Elha+Laser+Center+Bolta%C3%B1a/@40.4462917,-3.6140135,17z/data=!3m1!4b1!4m6!3m5!1s0xd422f1123bd", "key": "LEAS-7510"}, "LEAS-7514": {"estado": "Enviado a técnico externo", "creado": "2026-09-07 19:37", "centro": "Elha Alcorcón", "propietario": "Elha", "direccion": "C. Mayor, 10, 28921 Alcorcón, Madrid", "maps": "https://www.google.es/maps/place/Elha+Laser+Center+Alcorc%C3%B3n+C%2F+Mayor/@40.3482,-3.8327729,17z/data=!3m1!4b1!4m6!3m5!1s0xd418f3cd990c2c1:0x95a42436d69548a2!8m2!3d40.348196!4d-3.827902!16s%2Fg%2F11rs2pk8bk", "consola": "90315", "pistola": "-", "modelo": "MHR", "averia": "El botón de arranque se ha quedado pillado y se queda la máquina encendida", "tipo": "Otros", "tipoProv": "Interruptor de encendido cambiado", "tecnico": "Innet", "cita": "2026-09-07 19:54", "loc": "Nacional", "garantia": "No", "contrato": "No", "pago": "Sí", "prevC": 0, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo"], "descripcion": "Incidencia creada desde el Portal Elha por pol.martinez@elhalaser.com.\n\nCentro: Elha Alcorcón\n\nDirección: C. Mayor, 10, 28921 Alcorcón, Madrid\n\nGoogle Maps: https://www.google.es/maps/place/Elha+Laser+Center+Alcorc%C3%B3n+C%2F+Mayor/@40.3482,-3.8327729,17z/data=!3m1!4b1!4m6!3m5!1s0xd418f3cd990c2c1:0", "key": "LEAS-7514"}, "LEAS-7495": {"estado": "Enviado a técnico externo", "creado": "2026-09-07 09:03", "centro": "Elha Caracol", "propietario": "Elha", "direccion": "P.º de la Independencia, 24-26, Casco Antiguo, 50004 Zaragoza", "maps": "https://maps.app.goo.gl/UKpxNQubx3poaahA6", "consola": "-", "pistola": "40684", "modelo": null, "averia": "Tiene el prensa estopa y el umbilical rotos", "tipo": "Umbilical", "tipoProv": "Cambio de umbilical", "tecnico": "GEE", "cita": "2026-09-07 19:37", "loc": "Nacional", "garantia": "Sí", "contrato": "No", "pago": "No", "prevC": 0, "prevH": 1, "disparos": null, "idioma": "en", "labels": ["Externo", "Garantía"], "descripcion": "Incidencia creada desde el Portal Elha por pol.martinez@elhalaser.com.\n\nCentro: Elha Caracol\n\nDirección: P.º de la Independencia, 24-26, Casco Antiguo, 50004 Zaragoza\n\nGoogle Maps: https://maps.app.goo.gl/UKpxNQubx3poaahA6\n\nSerial consola: -\n\nSerial manípulo: 40684\n\nTipo de avería: Umbilical\n\nBloque", "key": "LEAS-7495"}, "LEAS-7500": {"estado": "Enviado a técnico externo", "creado": "2026-09-07 11:21", "centro": "Centro Médico Estético Deleite", "propietario": "Deleite me sale en qualio  Laserfiel ESP J", "direccion": "Paseo del deleite s/n 28300 Aranjuez", "maps": "https://maps.app.goo.gl/D91EHedCuTDrv4DF9", "consola": "C00239", "pistola": "H00239", "modelo": "Xcell Cosmetic", "averia": "stop 6 ( connection out), caliport no presset, segun cliente tambien el tactil le cuesta.", "tipo": "Stop", "tipoProv": "Otros", "tecnico": "Innet", "cita": "2026-09-07 18:50", "loc": "Nacional", "garantia": "Sí", "contrato": "No", "pago": "No", "prevC": 4, "prevH": 4, "disparos": null, "idioma": "en", "labels": ["Externo", "Garantía"], "descripcion": "", "key": "LEAS-7500"}, "LEAS-7507": {"estado": "Enviado a técnico externo", "creado": "2026-09-07 12:39", "centro": "Cavitbell Centro Médico Estético", "propietario": "Eva Amatrian Jimenez", "direccion": "C. Izalzu, 8, Bajo, 31014 Pamplona, Navarra", "maps": "https://maps.app.goo.gl/TrxgNmoM3rAKhZQE9", "consola": "90276", "pistola": null, "modelo": "MHR", "averia": "umbilical suelto por la parte de la pistola", "tipo": "Umbilical", "tipoProv": "Reparación umbilical", "tecnico": "GEE", "cita": "2026-09-07 18:48", "loc": "Nacional", "garantia": "No", "contrato": "No", "pago": "Sí", "prevC": 1, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo"], "descripcion": "", "key": "LEAS-7507"}, "LEAS-7501": {"estado": "Enviado a técnico externo", "creado": "2026-09-07 11:25", "centro": "Depil Planet Las Rosas ( C03350 )", "propietario": null, "direccion": "Av. de Niza, 53, San Blas-Canillejas, 28022 Madrid", "maps": "https://maps.app.goo.gl/CduAs644PecM8Tob7", "consola": "No aparece", "pistola": null, "modelo": null, "averia": "se le suelta la pletina donde va el soporte del pmanipulo", "tipo": "Otros", "tipoProv": "Otros", "tecnico": "Innet", "cita": "2026-09-07 18:33", "loc": "Nacional", "garantia": "Sí", "contrato": "No", "pago": "No", "prevC": 100, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo", "Garantía"], "descripcion": "", "key": "LEAS-7501"}, "LEAS-7249": {"estado": "Pendiente definir servicio externo", "creado": "2026-08-07 09:08", "centro": "BiNatural", "propietario": "BiNatural Krystosial Sp", "direccion": "Polonia", "maps": "https://maps.app.goo.gl/qLMYAYeSR7Q6Fy9X6", "consola": "91136", "pistola": "30748", "modelo": null, "averia": "La máquina presenta Stop 6 y un mensaje de excepción de Windows", "tipo": "Stop", "tipoProv": null, "tecnico": null, "cita": "", "loc": "Nacional", "garantia": "No", "contrato": "No", "pago": "Sí", "prevC": 0, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo"], "descripcion": "", "key": "LEAS-7249"}, "LEAS-7444": {"estado": "Pendiente definir servicio externo", "creado": "2026-09-01 17:55", "centro": "Miguel Parra (ex-brull)", "propietario": "Rent & Tech Alquiler y Servicios Tecnológicos S.L.", "direccion": "Barcelona", "maps": null, "consola": "90851", "pistola": null, "modelo": "MHR", "averia": "Consola fuera de fecha", "tipo": "Otros", "tipoProv": null, "tecnico": null, "cita": "", "loc": "Nacional", "garantia": "No", "contrato": "No", "pago": "Sí", "prevC": 1, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo"], "descripcion": "", "key": "LEAS-7444"}, "LEAS-7419": {"estado": "Enviado a técnico externo", "creado": "2026-08-31 13:01", "centro": "Elha Ramón y Cajal", "propietario": "Elha", "direccion": "Gran Via de Ramón y Cajal, 53, Extramurs, 46007 València, Valencia", "maps": "https://www.google.es/maps/place/Elha+Laser+Center+Ram%C3%B3n+y+Cajal/@39.4679871,-0.3863049,17z/data=!3m1!4b1!4m6!3m5!1s0xd604f78ca1e75d1:0xd182295cff92a85e!8m2!3d39.467983!4d-0.38373!16s%2Fg%2F11q2s2th4c", "consola": "90712", "pistola": "-", "modelo": "MHR", "averia": "La máquina no baja de temperatura, la han probado con otro manípulo por si a caso y sigue igual", "tipo": "Temperatura", "tipoProv": "Cambio de termostato", "tecnico": "Konexa", "cita": "2026-09-01 18:43", "loc": "Nacional", "garantia": "No", "contrato": "No", "pago": "Sí", "prevC": 2, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo"], "descripcion": "Incidencia creada desde el Portal Elha por pol.martinez@elhalaser.com.\n\nCentro: Elha Ramón y Cajal\n\nDirección: Gran Via de Ramón y Cajal, 53, Extramurs, 46007 València, Valencia\n\nGoogle Maps: https://www.google.es/maps/place/Elha+Laser+Center+Ram%C3%B3n+y+Cajal/@39.4679871,-0.3863049,17z/data=!3m1!4", "key": "LEAS-7419"}, "LEAS-7452": {"estado": "Pendiente definir servicio externo", "creado": "2026-09-02 14:35", "centro": "Sinvello Estepona", "propietario": "Sin Vello por Laser Low Cost SL", "direccion": "C. Pilar Bardem, 8, 29680 Estepona, Málaga", "maps": "https://maps.app.goo.gl/P5EShMCspcKDUP7w7", "consola": "C00600", "pistola": "H00600", "modelo": "Xcell Cosmetic", "averia": "Rueda del equipo suelta.", "tipo": "Otros", "tipoProv": null, "tecnico": null, "cita": "", "loc": "Nacional", "garantia": "No", "contrato": "Sí", "pago": "No", "prevC": 0, "prevH": 1, "disparos": null, "idioma": "en", "labels": ["Externo"], "descripcion": "Incidencia creada desde el Portal Sin Vello por demo@sinvello.es.\n\nCentro: Sinvello Estepona\n\nDirección: C. Pilar Bardem, 8, 29680 Estepona, Málaga\n\nGoogle Maps: https://maps.app.goo.gl/P5EShMCspcKDUP7w7\n\nSerial consola: C00600\n\nSerial manípulo: H00600\n\nTipo de avería: Otros\n\nBloqueante: No\n\nDescrip", "key": "LEAS-7452"}, "LEAS-7494": {"estado": "Enviado a técnico externo", "creado": "2026-09-07 08:51", "centro": "Epil Point Pomezia", "propietario": "Epil Point Italia", "direccion": "Via Roma, 82, 00071 Pomezia RM, Italia", "maps": "https://maps.app.goo.gl/9RtrnSzWDJQvXPnP6", "consola": null, "pistola": "40446", "modelo": "MHR", "averia": "umbilical rajado por la parte de la pistola", "tipo": "Umbilical", "tipoProv": "Reparación umbilical", "tecnico": "Epil Point", "cita": "2026-09-07 08:58", "loc": "Nacional", "garantia": "No", "contrato": "No", "pago": "Sí", "prevC": 0, "prevH": 4, "disparos": null, "idioma": "en", "labels": ["Externo"], "descripcion": "", "key": "LEAS-7494"}, "LEAS-6891": {"estado": "Enviado a técnico externo", "creado": "2026-07-01 13:31", "centro": "Mercedes Gamaza Laser y Spa ( 30754 / 91080 )", "propietario": "LA GAVIA ASESORES, S.L.U.", "direccion": "Pl. de San Antón, 6, Local 1, 41410 Carmona, Sevilla", "maps": "https://maps.app.goo.gl/pTVMegejP84wFBkc6", "consola": "91080", "pistola": "No aparece", "modelo": "MHR", "averia": "le pide el codigo definitivo al poco tiempo.", "tipo": "Otros", "tipoProv": "Actualización", "tecnico": "GEE", "cita": "2026-09-03 12:47", "loc": "Nacional", "garantia": "Sí", "contrato": "No", "pago": "No", "prevC": 0, "prevH": 100, "disparos": null, "idioma": "en", "labels": ["Externo", "Garantía"], "descripcion": "", "key": "LEAS-6891"}, "LEAS-7476": {"estado": "Enviado a técnico externo", "creado": "2026-09-04 11:38", "centro": "Sinvello Alcala de Henares", "propietario": "Sin Vello por Laser Low Cost SL", "direccion": "C. Flores, 5, Loc 1, 28807 Alcalá de Henares, Madrid", "maps": "https://maps.app.goo.gl/hnmpk6jHzG6K7BMG7", "consola": "90976", "pistola": "30460", "modelo": "MHR", "averia": "Se le ha soltado el tornillo del umbilical y el tecnico fuera a repararlo la semana pasada.", "tipo": "Umbilical", "tipoProv": "Reparación umbilical", "tecnico": "Innet", "cita": "2026-09-04 11:43", "loc": "Nacional", "garantia": "Sí", "contrato": "Sí", "pago": "No", "prevC": 1, "prevH": 3, "disparos": null, "idioma": "en", "labels": ["Externo", "Garantía"], "descripcion": "Incidencia creada desde el Portal Sin Vello por demo@sinvello.es.\n\nCentro: Sinvello Alcala de Henares\n\nDirección: C. Flores, 5, Loc 1, 28807 Alcalá de Henares, Madrid\n\nGoogle Maps: https://maps.app.goo.gl/hnmpk6jHzG6K7BMG7\n\nSerial consola: 90976\n\nSerial manípulo: 30460\n\nTipo de avería: Umbilical\n\nBl", "key": "LEAS-7476"}, "LEAS-7213": {"estado": "Enviado a técnico externo", "creado": "2026-08-03 10:31", "centro": "Epil Point Pavia", "propietario": "Epil Point Italia", "direccion": "S.da Nuova, 54, 27100 Pavia PV, Italia", "maps": "https://maps.app.goo.gl/Ux1iunkWQxT1Y3719", "consola": null, "pistola": "40641", "modelo": "MHR", "averia": "El umbilical nuevo se ha roto por el casquillo", "tipo": "Umbilical", "tipoProv": "Cambio de umbilical", "tecnico": "Sincronis", "cita": "2026-08-10 13:36", "loc": "Internacional", "garantia": "Sí", "contrato": "No", "pago": "No", "prevC": 0, "prevH": 1, "disparos": null, "idioma": "en", "labels": ["Externo", "Garantía"], "descripcion": "", "key": "LEAS-7213"}, "LEAS-7268": {"estado": "Enviado a técnico externo", "creado": "2026-08-10 14:10", "centro": "Clínica de Estétitca Dileima", "propietario": "Elha", "direccion": "Madrid", "maps": "https://maps.app.goo.gl/nn744NnpskvwgLmm7", "consola": "90450", "pistola": null, "modelo": "MHR", "averia": "El elevador para el soporte de la pistola está colocado en el lado contrario (sólo tienen uno) y les resulta muy incómodo", "tipo": "Otros", "tipoProv": "Otros", "tecnico": "Innet", "cita": "2026-08-18 14:13", "loc": "Nacional", "garantia": "No", "contrato": "Sí", "pago": "No", "prevC": 4, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo"], "descripcion": "", "key": "LEAS-7268"}, "LEAS-7299": {"estado": "En cola taller", "creado": "2026-08-17 07:54", "centro": "SinVello Granada Constitucion", "propietario": "Sin Vello", "direccion": "Av. de la Constitución, 27, Beiro, 18014 Granada", "maps": "https://maps.app.goo.gl/5Zwyg89uHUVD9PBz6", "consola": "c00989", "pistola": "h00989", "modelo": null, "averia": "Umbilical suelto con casquillo nuevo", "tipo": "Casquillo nuevo", "tipoProv": "Cambio de umbilical", "tecnico": "GEE", "cita": "2026-08-18 14:25", "loc": "Nacional", "garantia": "Sí", "contrato": "No", "pago": "No", "prevC": 0, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo", "Garantía", "Sustitución"], "descripcion": "Incidencia creada desde el Portal Sin Vello por demo@sinvello.es.\n\nCentro: SinVello Granada Constitucion\n\nDirección: Av. de la Constitución, 27, Beiro, 18014 Granada\n\nGoogle Maps: https://maps.app.goo.gl/5Zwyg89uHUVD9PBz6\n\nSerial consola: c00989\n\nSerial manípulo: h00989\n\nTipo de avería: Casquillo nu", "key": "LEAS-7299"}, "LEAS-7458": {"estado": "Pendiente definir servicio externo", "creado": "2026-09-02 16:11", "centro": "Elha Laser Center Milano - Carducci", "propietario": "Elha", "direccion": "V. Giosuè Carducci, 12, 20123 Milano MI, Italia", "maps": "https://share.google/jaEbpK81tyfIjR9iF", "consola": "00474", "pistola": "-", "modelo": null, "averia": "Es un STOP 7, no pueden intercambiar manípulos ya que no tienen otra máquina, es urgente que mandéis a alguien.", "tipo": "Stop", "tipoProv": null, "tecnico": null, "cita": "", "loc": "Nacional", "garantia": "Sí", "contrato": "No", "pago": "No", "prevC": 0, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo", "Garantía"], "descripcion": "Incidencia creada desde el Portal Elha por pol.martinez@elhalaser.com.\n\nCentro: Elha Laser Center Milano - Carducci\n\nDirección: V. Giosuè Carducci, 12, 20123 Milano MI, Italia\n\nGoogle Maps: https://share.google/jaEbpK81tyfIjR9iF\n\nSerial consola: 00474\n\nSerial manípulo: -\n\nTipo de avería: Stop\n\nBloqu", "key": "LEAS-7458"}, "LEAS-7118": {"estado": "En reparación", "creado": "2026-07-23 09:52", "centro": "Corpoderm", "propietario": "Corpoderm", "direccion": "Francia", "maps": "https://maps.app.goo.gl/36vpSeRHy6g32rp47", "consola": "20030", "pistola": null, "modelo": "MHR", "averia": "caliport un poco quemado", "tipo": "Otros", "tipoProv": "Cambio de teflón de bahía.", "tecnico": "Distribuidor", "cita": "2026-07-31 09:55", "loc": "Internacional", "garantia": "No", "contrato": "No", "pago": "Sí", "prevC": 0, "prevH": 0, "disparos": null, "idioma": "en", "labels": ["Externo"], "descripcion": "", "key": "LEAS-7118"}};
+const PT_PAISES = ["italia","francia","france","portugal","alemania","germany","bulgaria","polonia","chile","panama","surinam","marruecos","india","lituania","belgica","turquia","reino unido","suiza","austria","mexico","colombia","argentina","peru","italy"];
+let PT_LEAS = null, PT_ES = true;
+function ptNorm(x){ return String(x||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase(); }
+function ptCiudad(dir){
+  const m = String(dir||'').match(/\b\d{5}\s+([^,]+)/); if(m) return m[1].trim();
+  const partes = String(dir||'').split(',').map(x=>x.trim()).filter(Boolean);
+  return partes.length>=2 ? partes[partes.length-1].replace(/\b(espana|españa|italia|francia)\b/i,'').trim() : '';
+}
+function ptEsIntl(p){
+  const d = ptNorm(p.direccion||''), c = ptNorm(p.centro||'');
+  return p.loc === 'Internacional' || PT_PAISES.some(x => d.indexOf(x)!==-1) || /epil point|centr[oi] unico|smart ?duck|milano|pisa|lecce|pavia|paris/.test(c);
+}
+function ptGuardado(k){ try{ return JSON.parse(localStorage.getItem('sat.parte.'+k)||'{}'); }catch(e){ return {}; } }
+function ptGuarda(k, campo, val){ const g = ptGuardado(k); g[campo] = val; try{ localStorage.setItem('sat.parte.'+k, JSON.stringify(g)); }catch(e){} }
+function ptCampos(p){
+  // valor, y si falta (rojo) o es dudoso (ámbar)
+  const dir = p.direccion||'';
+  const dirOk = /\d/.test(dir) && dir.length > 12;
+  const sn = x => x && !/no aparece|^-$|^n\/?a$/i.test(x) ? x : '';
+  const notas = [
+    p.tecnico ? 'Técnico: '+p.tecnico : '',
+    p.cita ? 'Cita prevista: '+p.cita.slice(8,10)+'/'+p.cita.slice(5,7)+' '+p.cita.slice(11,16) : '',
+    p.garantia ? 'Garantía: '+p.garantia : '', p.contrato ? 'Contrato mant.: '+p.contrato : '', p.pago ? 'Requiere pago: '+p.pago : '',
+    (p.prevC||p.prevH) ? 'Incidencias previas · consola '+(p.prevC||0)+' · pistola '+(p.prevH||0) : '',
+    p.tipo && p.tipo!=='Otros' ? 'Tipo avería: '+p.tipo : ''
+  ].filter(Boolean).join(' · ');
+  return {
+    centro:   {v:p.centro||'', f:!p.centro},
+    contacto: {v:'', f:true},
+    ciudad:   {v:ptCiudad(dir), f:!ptCiudad(dir)},
+    direccion:{v:dir, f:!dir, d:dir && !dirOk},
+    telefono: {v:'', f:true},
+    caso:     {v:p.key},
+    consola:  {v:sn(p.consola), f:!sn(p.consola)},
+    pistola:  {v:sn(p.pistola), f:!sn(p.pistola)},
+    descr:    {v:(p.averia||'') + (p.descripcion && p.descripcion!==p.averia ? ' — '+p.descripcion : ''), f:!p.averia},
+    fecha:    {v:p.creado ? p.creado.slice(8,10)+'/'+p.creado.slice(5,7)+'/'+p.creado.slice(0,4) : '', f:!p.creado},
+    notas:    {v:notas}
+  };
+}
+const PT_L = {
+  es:{tit:'HOJA DE TRABAJO',centro:'Centro',contacto:'Contacto',ciudad:'Ciudad',direccion:'Dirección',telefono:'Teléfono',caso:'Nº caso',consola:'Consola SN',pistola:'Pistola SN',descr:'Descripción cliente',fecha:'Fecha',int:'Intervención técnica',caso2:'Descripción del caso',diag:'Diagnóstico',sol:'Solución',res:'Resolución',pos:'Positiva',neg:'Negativa',disp:'Disparos',notas:'Notas',hl:'Horas labor',hv:'Horas viaje',tec:'Técnico',ft:'Firma técnico',cli:'Cliente',fc:'Firma cliente',rep:'Repuesto',cant:'Cant.'},
+  en:{tit:'SERVICE REPORT',centro:'Workplace',contacto:'Contact',ciudad:'City',direccion:'Address',telefono:'Phone number',caso:'Case number',consola:'Console SN',pistola:'Handpiece SN',descr:"Customer's report",fecha:'Date',int:'Technical intervention',caso2:'Initial assessment',diag:'Diagnostic',sol:'Action taken',res:'Outcome',pos:'Successful',neg:'Unresolved',disp:'Shoots',notas:'Notes',hl:'Work time',hv:'Transit time',tec:'Technician',ft:'Technician signature',cli:'Customer',fc:'Customer signature',rep:'Spare part',cant:'Qty.'}
+};
+const PT_REP = {es:[['Lanyard','Electroválvula','Mosfet','Interruptor/Puls. MHR','Pedal'],['Gatillo (plástico)','Sonda temp.','Junta','Interlock','Otros:'],['Gatillo (switch)','Cabl. LVDS+Retroill.','Pega. Laser Aperture','Batería CMOS',''],['Tornillo nylon','Zumbador','Botón emergencia','Bahía calib. MHR',''],['Termostato','Placa de carga','Fusible 10A lento','Soporte de pistola','']],
+  en:[['Lanyard','Solenoid valve','Mosfet','MHR On/Off button/switch','Pedal'],['Plastic trigger','Temperature probe','O-ring','Interlock','Other:'],['Trigger (switch)','LVDS+Backlight wires','Laser Aperture sticker','CMOS battery',''],['Nylon screw','Buzzer','E-Stop button','MHR Cal. port',''],['Thermostat','CapCharger board','10A slow-blow fuse','Handpiece holder','']]};
+function ptEsc(x){ return String(x||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+function ptIn(k, campo, c, area){
+  const g = ptGuardado(k); const val = (g[campo] !== undefined) ? g[campo] : (c.v||'');
+  const cls = 'v' + ((!val && c.f) ? ' falta' : (c.d && g[campo]===undefined ? ' duda' : ''));
+  const ph = (!val && c.f) ? 'FALTA' : '';
+  const on = 'oninput="ptGuarda(\''+k+'\',\''+campo+'\',this.value);this.classList.remove(\'falta\',\'duda\');ptResumen(\''+k+'\')"';
+  return area ? '<textarea class="'+cls+'" placeholder="'+ph+'" '+on+'>'+ptEsc(val)+'</textarea>'
+              : '<input class="'+cls+'" placeholder="'+ph+'" value="'+ptEsc(val)+'" '+on+'>';
+}
+function ptResumen(k){
+  const p = PARTES[k]; if(!p) return; const c = ptCampos(p), g = ptGuardado(k), L = PT_ES ? PT_L.es : PT_L.en;
+  const faltan = Object.keys(c).filter(x => c[x].f && !(g[x] || c[x].v)).map(x => L[x]);
+  const dudas  = Object.keys(c).filter(x => c[x].d && g[x]===undefined).map(x => L[x]);
+  const el = document.getElementById('pt-resumen'); if(!el) return;
+  el.innerHTML = faltan.length || dudas.length
+    ? '<div class="pt-aviso">'+(faltan.length ? '<b>Falta:</b> '+faltan.join(', ')+'. ' : '')+(dudas.length ? '<b>Revisar:</b> '+dudas.join(', ')+' (el ticket solo trae parte del dato). ' : '')+'Lo que escribas aquí se queda guardado en este navegador; en Jira no cambia nada.</div>'
+    : '<div class="pt-ok">Todos los datos del cliente están. Revisa y manda.</div>';
+}
+function ptChip(k){
+  const p = PARTES[k], c = ptCampos(p), g = ptGuardado(k);
+  const nf = Object.keys(c).filter(x => c[x].f && !(g[x] || c[x].v)).length;
+  return '<button class="pt-chip'+(k===PT_LEAS?' on':'')+(nf?' falta':'')+'" onclick="parteVer(\''+k+'\')"><b>'+k+'</b>'+ptEsc(p.centro||'')
+    + '<i>'+(p.tecnico ? p.tecnico : 'sin técnico')+(nf ? ' · '+nf+' por rellenar' : '')+'</i></button>';
+}
+function parteBusca(v){
+  v = ptNorm(v).trim(); if(/^\d{3,5}$/.test(v)) v = 'leas-'+v;
+  const ks = Object.keys(PARTES).filter(k => !v || ptNorm(k+' '+PARTES[k].centro+' '+(PARTES[k].tecnico||'')).indexOf(v)!==-1);
+  document.getElementById('pt-lista').innerHTML = ks.length ? ks.map(ptChip).join('')
+    : '<span class="pn">Ningún parte con «'+ptEsc(v.toUpperCase())+'». Solo están los tickets en técnico externo; si es otro, se añade en la siguiente pasada.</span>';
+  if(ks.length===1 && v) parteVer(ks[0]);
+}
+function parteVer(k){
+  PT_LEAS = k; const p = PARTES[k]; if(!p) return;
+  PT_ES = !ptEsIntl(p);
+  ptPinta();
+  document.getElementById('pt-lista').innerHTML = Object.keys(PARTES).map(ptChip).join('');
+}
+function parteIdioma(){ PT_ES = !PT_ES; ptPinta(); }
+function ptPinta(){
+  const k = PT_LEAS, p = PARTES[k]; const cu = document.getElementById('pt-cuerpo'); if(!p){ cu.innerHTML=''; return; }
+  const L = PT_ES ? PT_L.es : PT_L.en, R = PT_ES ? PT_REP.es : PT_REP.en, c = ptCampos(p);
+  const I = (campo, area) => ptIn(k, campo, c[campo], area);
+  let h = '<div class="pt-btns">'
+    + '<button class="main" onclick="window.print()">Imprimir / guardar PDF</button>'
+    + '<button onclick="parteCopiar(this)">Copiar texto (WhatsApp / correo)</button>'
+    + '<button onclick="parteIdioma()">Cambiar a '+(PT_ES?'inglés':'español')+'</button>'
+    + '<a class="pt-chip" target="_blank" rel="noopener" href="https://leaseir.atlassian.net/browse/'+k+'"><b>'+k+'</b> en Jira</a>'
+    + (p.maps ? '<a class="pt-chip" target="_blank" rel="noopener" href="'+ptEsc(p.maps)+'">Maps</a>' : '')
+    + '<span class="sep"></span><span class="idioma">'+(PT_ES?'Hoja de trabajo (España)':'Service report (internacional)')+' · '+ptEsc(p.estado)+(p.tecnico?' · '+ptEsc(p.tecnico):'')+'</span></div>'
+    + '<div id="pt-resumen"></div>'
+    + '<div id="hoja">'
+    + '<div class="cab"><div class="logo">Leaseir</div><div class="tit">'+L.tit+'</div><div class="num">'+k+'</div></div>'
+    + '<table>'
+    + '<tr><th>'+L.centro+'</th><td>'+I('centro')+'</td><th class="w">'+L.contacto+'</th><td>'+I('contacto')+'</td></tr>'
+    + '<tr><th>'+L.ciudad+'</th><td>'+I('ciudad')+'</td><th>'+L.direccion+'</th><td>'+I('direccion',true)+'</td></tr>'
+    + '<tr><th>'+L.telefono+'</th><td>'+I('telefono')+'</td><th>'+L.caso+'</th><td>'+I('caso')+'</td></tr>'
+    + '<tr><th>'+L.consola+'</th><td>'+I('consola')+'</td><th>'+L.pistola+'</th><td>'+I('pistola')+'</td></tr>'
+    + '<tr><th>'+L.descr+'</th><td colspan="2">'+I('descr',true)+'</td><td><b style="font-size:11px">'+L.fecha.toUpperCase()+'</b> '+I('fecha')+'</td></tr>'
+    + '<tr class="sec"><td colspan="4">'+L.int+'</td></tr>'
+    + '<tr><th>'+L.caso2+'</th><td colspan="3"><div class="v" style="min-height:34px"></div></td></tr>'
+    + '<tr><th>'+L.diag+'</th><td colspan="3"><div class="v" style="min-height:34px"></div></td></tr>'
+    + '<tr><th>'+L.sol+'</th><td colspan="3"><div class="v" style="min-height:52px"></div></td></tr>'
+    + '<tr><th>'+L.res+'</th><td><span class="chk"></span>'+L.pos+' &nbsp; <span class="chk"></span>'+L.neg+'</td><th>'+L.disp+'</th><td><div class="v"></div> <b style="font-size:11px">'+L.fecha.toUpperCase()+'</b></td></tr>'
+    + '<tr><th>'+L.notas+'</th><td colspan="3">'+I('notas',true)+'</td></tr>'
+    + '<tr><th>'+L.hl+'</th><td><div class="v"></div></td><th>'+L.hv+' / KM</th><td><div class="v"></div></td></tr>'
+    + '<tr><th>'+L.tec+'</th><td><div class="v">'+ptEsc(p.tecnico||'')+'</div></td><th>'+L.ft+'</th><td class="firma"></td></tr>'
+    + '<tr><th>'+L.cli+'</th><td><div class="v">'+ptEsc(p.centro||'')+'</div></td><th>'+L.fc+'</th><td class="firma"></td></tr>'
+    + '</table>'
+    + '<table class="rep" style="margin-top:12px"><tr>'+('<th>'+L.rep+'</th><th>'+L.cant+'</th>').repeat(5)+'</tr>'
+    + R.map(f => '<tr>'+f.map(x => '<td>'+x+'</td><td class="c"></td>').join('')+'</tr>').join('')
+    + '</table>'
+    + '<div class="pie">'+k+' · '+ptEsc(p.propietario||'')+' · generado desde el panel del SAT el '+new Date().toLocaleDateString('es-ES')+'</div>'
+    + '</div>'
+    + '<p class="pt-nota">Los campos en rojo no están en Jira (contacto y teléfono nunca lo están: hay que preguntarlos al centro o mirarlos en el grupo). Lo que rellenes aquí se guarda en este navegador para este LEAS.</p>';
+  cu.innerHTML = h;
+  ptResumen(k);
+}
+function parteCopiar(btn){
+  const k = PT_LEAS, p = PARTES[k]; if(!p) return; const L = PT_ES ? PT_L.es : PT_L.en, c = ptCampos(p), g = ptGuardado(k);
+  const val = x => (g[x] !== undefined ? g[x] : c[x].v) || '(falta)';
+  const t = [L.tit+' · '+k, L.centro+': '+val('centro'), L.contacto+': '+val('contacto'), L.telefono+': '+val('telefono'),
+    L.direccion+': '+val('direccion')+(p.maps ? ' · '+p.maps : ''), L.consola+': '+val('consola'), L.pistola+': '+val('pistola'),
+    L.descr+': '+val('descr'), L.fecha+': '+val('fecha'), L.notas+': '+val('notas'), 'https://leaseir.atlassian.net/browse/'+k].join('\n');
+  cp(btn, t);
+}
+document.addEventListener('DOMContentLoaded', () => { try{ parteBusca(''); }catch(e){ console.error('partes', e); } });
+
 function tab(btn,id){
   document.querySelectorAll('.tabbar button[role="tab"]').forEach(b=>b.classList.remove('on'));
   document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
