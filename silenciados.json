@@ -1,6 +1,6 @@
 {
  "version": 1,
- "actualizado": "2026-09-09T14:40+02:00",
+ "actualizado": "2026-09-09T14:55+02:00",
  "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
  "como_se_usa": [
   "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -847,6 +847,20 @@
    "cuando": "2026-09-09",
    "anotado": "2026-09-09",
    "revive_si": "El mensaje de ENVIOS cita un LEAS, o el mismo centro abre una incidencia en los 7 días siguientes al envío (entonces sí: el material era de esa avería y el ticket tiene que llevarlo)."
+  },
+  {
+   "id": "regla-cita-tecnico-externo-en-historial",
+   "que": "LEAS-7531 · el panel dijo «la cita con el técnico externo es mañana y no está escrita en el ticket» — y sí lo estaba",
+   "ambito": {
+    "leas": "LEAS-7531",
+    "centro": "Elha Sta Teresa",
+    "tipo": "regla-del-bloque"
+   },
+   "porque": "Borja contestó por el panel a las 13:33: «está en Jira historial la información». Y tiene razón: a las 11:43 puso en el ticket «Fecha y hora estimada técnico externo» = 10/09 11:43, «Nombre técnico externo» = Carlos Mora y «Tipo de avería enviada a proveedor» = cambio de táctil + controlador. Todo eso está en el HISTORIAL del ticket (changelog), no en los comentarios, y el panel solo miró los comentarios. Dicho por Alejandro el 09/09 a las 14:50: «léete el historial de Jira de cada caso, porque ahí ponen la hora y el día que va el técnico externo». REGLA: antes de decir que falta la fecha del técnico, mirar (1) el campo 10144 y su historial, (2) el campo 10141 «Fecha y hora agendada», (3) los comentarios con fecha/hora («va hoy a las 15:30», «el lunes 7», «finales de agosto»). Solo si no hay nada en los tres, el punto existe. Y en los bloques de técnico externo y en la pestaña Partes, la cita se enseña siempre: campo 10144 si lo ha puesto una persona, si no la del comentario.",
+   "quien": "Borja",
+   "cuando": "2026-09-09",
+   "anotado": "2026-09-09",
+   "revive_si": "Pasa la cita (10144 o la del comentario) y el ticket sigue en «Enviado a técnico externo» sin nota del técnico: entonces el punto es «el técnico no ha ido / no ha escrito», no «falta la fecha»."
   }
  ],
  "enlaces": [
