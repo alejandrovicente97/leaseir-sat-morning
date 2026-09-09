@@ -861,6 +861,7 @@ dialog.wide{max-width:860px}
     <button role="tab" onclick="tab(this,'p-cobros')">Cobros<small>110 k€ vencido</small></button>
     <button role="tab" onclick="tab(this,'p-report')">Report<small>Cierre mensual</small></button>
     <button role="tab" onclick="tab(this,'p-buscar')">Expediente<small>todo sobre un LEAS</small></button>
+    <button role="tab" onclick="tab(this,'p-explica')">Explica<small>qué pasa, en vivo</small></button>
     <button role="tab" onclick="tab(this,'p-epil')">Epil Point<small>el cliente que más suena</small></button>
     <button role="tab" onclick="tab(this,'p-airtable')">Airtable<small>el inventario no cuadra</small></button>
     <span class="spacer"></span>
@@ -1143,6 +1144,18 @@ dialog.wide{max-width:860px}
   <div class="knota" style="margin:0 0 12px" id="bus-fecha"></div>
   <div class="busres" id="bus-res"></div>
   <div id="bus-ficha"></div>
+</div>
+
+<div id="p-explica" class="pane">
+  <div class="busbar">
+    <input id="ex-q" type="search" placeholder="LEAS-7499 o 7499 · Enter" autocomplete="off"
+      onkeydown="if(event.key==='Enter')explicar(this.value)">
+    <button class="recarga" style="margin:0 0 0 8px" onclick="explicar(document.getElementById('ex-q').value)">Explicar</button>
+    <button class="recarga" style="margin:0 0 0 6px" onclick="explicar(document.getElementById('ex-q').value, true)" title="Vuelve a leer Jira y a generar la explicación, sin caché">Fresco</button>
+    <span class="bn" id="ex-n"></span>
+  </div>
+  <div class="knota" style="margin:0 0 12px">Lee el ticket en Jira ahora mismo (historial, comentarios, tickets del mismo centro y de la misma consola) y lo explica con las reglas de la casa. Los chats no están salvo lo volcado a Jira. Es un texto generado: contrástalo con el expediente de debajo antes de actuar.</div>
+  <div id="ex-out"></div>
 </div>
 
 <!-- ═════════ EPIL POINT ═════════ -->
@@ -3375,4 +3388,59 @@ function cp(btn,text){
   if (isNaN(d)) return;
   el.textContent = DIAS[d.getDay()] + ', ' + dia + ' de ' + MESES[mes] + ' ' + año;
 })();
+</script>
+<script>
+// ═══ Explica: /explica/LEAS-x del worker (expediente en vivo + explicación) ═══
+const EX_URL = "https://leaseir-sat-not.alejandrovicentesanchez4.workers.dev";
+const EX_CLAVE = "clave-sat-2026";
+function exEsc(x){ return String(x==null?'':x).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+function exFecha(x){ return x ? String(x).slice(8,10)+'/'+String(x).slice(5,7)+' '+String(x).slice(11,16) : ''; }
+async function explicar(v, fresco){
+  v = String(v||'').trim().toUpperCase(); if(/^\d{3,5}$/.test(v)) v = 'LEAS-'+v;
+  const out = document.getElementById('ex-out'), n = document.getElementById('ex-n');
+  if(!/^LEAS-\d{3,5}$/.test(v)){ n.textContent = 'Escribe un LEAS'; return; }
+  n.textContent = 'Leyendo Jira y pensando…'; out.innerHTML = '';
+  try{
+    const r = await fetch(EX_URL + '/explica/' + v + '?clave=' + encodeURIComponent(EX_CLAVE) + (fresco ? '&fresco=1' : ''));
+    const j = await r.json().catch(()=>({}));
+    if(!r.ok || !j.ok){
+      n.textContent = '';
+      out.innerHTML = '<div class="blk"><div class="por">' + (j.error === 'no_existe' ? 'Ese ticket no existe en Jira.'
+        : j.error === 'metodo' ? 'El worker desplegado todavía no sabe explicar: falta desplegar la versión nueva.'
+        : 'No se ha podido leer (' + exEsc(j.error || r.status) + ').') + '</div></div>';
+      return;
+    }
+    const e = j.expediente || {};
+    n.textContent = (j.modelo ? 'explicado por ' + j.modelo : '') + (j.hora ? ' · ' + exFecha(j.hora) : '');
+    let h = '';
+    if(j.explicacion){
+      h += '<div class="blk" style="border-left-color:var(--accent)"><header><span class="ico">🧭</span><span class="t">Qué pasa con ' + v + '</span></header>'
+        + '<div class="por" style="font-size:14px;color:var(--ink);line-height:1.6;padding-bottom:14px;white-space:pre-line">' + exEsc(j.explicacion) + '</div></div>';
+    } else {
+      h += '<div class="blk"><div class="por">' + (j.aviso === 'sin_modelo' ? 'El worker no tiene clave de modelo (ANTHROPIC_API_KEY): abajo va el expediente, sin explicación.'
+        : 'El modelo no ha respondido (' + exEsc(j.detalle||'') + '). Abajo va el expediente.') + '</div></div>';
+    }
+    h += '<div class="blk"><header><span class="ico">📄</span><span class="t">Expediente en vivo</span><span class="cnt">' + exEsc(e.estado) + '</span></header><div class="por" style="padding-bottom:12px">'
+      + '<b>' + exEsc(e.centro) + '</b>' + (e.propietario ? ' · ' + exEsc(e.propietario) : '') + (e.direccion ? ' · ' + exEsc(e.direccion) : '')
+      + '<br>' + exEsc(e.tipo) + (e.padre ? ' · subtarea de ' + e.padre : '') + ' · abierto ' + exEsc(e.creado) + (e.cerrado ? ' · cerrado ' + exEsc(e.cerrado) : '') + ' · ' + (e.resp ? 'responsable ' + exEsc(e.resp) : '<span style="color:var(--crit)">sin responsable</span>')
+      + '<br>Consola ' + exEsc(e.consola||'—') + ' · pistola ' + exEsc(e.pistola||'—') + (e.prestada_consola||e.prestada_pistola ? ' · prestada ' + exEsc(e.prestada_consola||'—') + ' / ' + exEsc(e.prestada_pistola||'—') : '')
+      + '<br>Avería: ' + exEsc(e.averia||'—') + (e.tipo_averia ? ' (' + exEsc(e.tipo_averia) + ')' : '')
+      + (e.tecnico_externo ? '<br>Técnico externo: ' + exEsc(e.tecnico_externo) + (e.cita_estimada ? ' · cita estimada ' + exFecha(e.cita_estimada) : '') + (e.cita_agendada ? ' · agendada ' + exFecha(e.cita_agendada) : '') : '')
+      + '<br>Garantía ' + exEsc(e.garantia||'—') + ' · contrato ' + exEsc(e.contrato||'—') + ' · requiere pago ' + exEsc(e.requiere_pago||'—') + (e.importe ? ' · importe ' + exEsc(e.importe) : '')
+      + (e.incidencias_previas_consola!=null ? ' · incidencias previas consola ' + e.incidencias_previas_consola + ' · pistola ' + (e.incidencias_previas_pistola||0) : '')
+      + (e.subtareas && e.subtareas.length ? '<br>Subtareas: ' + e.subtareas.map(exEsc).join(' · ') : '')
+      + '</div>'
+      + '<div class="por" style="padding-top:0"><b>Historial</b></div><ul>'
+      + (e.historial||[]).map(x => '<li>' + exEsc(x.h) + ' · ' + exEsc(x.quien) + ' · ' + exEsc(x.campo) + ': ' + (x.de ? exEsc(x.de) + ' → ' : '') + exEsc(x.a) + '</li>').join('')
+      + '</ul>'
+      + '<div class="por" style="padding-top:0"><b>Comentarios</b></div><ul>'
+      + ((e.notas||[]).length ? (e.notas||[]).map(x => '<li>' + exEsc(x.h) + ' · <b>' + exEsc(x.quien) + '</b> · ' + exEsc(x.txt) + '</li>').join('') : '<li>Sin comentarios.</li>')
+      + '</ul>'
+      + '<div class="por" style="padding-top:0"><b>Mismo centro o misma consola</b></div><ul>'
+      + ((e.relacionados||[]).length ? (e.relacionados||[]).map(x => x.error ? '<li>No se pudo cruzar: ' + exEsc(x.error) + '</li>' : '<li>' + x.key + ' · ' + exEsc(x.centro) + ' · ' + exEsc(x.estado) + ' · ' + exEsc(x.creado) + (x.cerrado ? ' → ' + exEsc(x.cerrado) : '') + (x.consola ? ' · ' + exEsc(x.consola) : '') + (x.tecnico ? ' · ' + exEsc(x.tecnico) : '') + ' · ' + exEsc(x.averia) + '</li>').join('') : '<li>Ninguno.</li>')
+      + '</ul></div>';
+    out.innerHTML = h;
+    if(typeof linkTickets === 'function') linkTickets(out);
+  }catch(err){ n.textContent = ''; out.innerHTML = '<div class="blk"><div class="por">No se ha podido leer el worker (' + exEsc(err && err.message) + ').</div></div>'; }
+}
 </script>
