@@ -1114,12 +1114,12 @@ dialog.wide{max-width:860px}
 <div id="p-abiertas" class="pane on">
 
   <div class="khero">
-    <button class="kh1" onclick="abcalc('todo')"><b>106</b><span>Abiertas ahora</span>
+    <button class="kh1" onclick="abcalc('todo')"><b id="ab-n1">—</b><span>Abiertas ahora</span>
       <em>solo incidencias · las subtareas no cuentan</em></button>
-    <button class="kh1" onclick="abcalc('duenyo')"><b style="color:var(--crit)">77</b><span>Sin dueño</span>
-      <em>73 % de ellas · nadie las va a cerrar</em></button>
-    <button class="kh1" onclick="abcalc('parado')"><b style="color:var(--crit)">14</b><span>Sin moverse +15 d</span>
-      <em>ninguna avanza sola</em></button>
+    <button class="kh1" onclick="abcalc('duenyo')"><b id="ab-n2" style="color:var(--crit)">—</b><span>Sin dueño</span>
+      <em id="ab-e2">—</em></button>
+    <button class="kh1" onclick="abcalc('parado')"><b id="ab-n3" style="color:var(--crit)">—</b><span>Sin moverse +15 d</span>
+      <em id="ab-e3">—</em></button>
   </div>
 
   <section class="sec">
@@ -1127,9 +1127,7 @@ dialog.wide{max-width:860px}
     <div class="card" style="padding:18px 20px 16px;max-width:900px">
       <div class="abtira" id="ab-tira"></div>
       <div class="ablista" id="ab-lista"></div>
-      <div class="knota" style="margin-top:14px">Aquí <b>solo cuentan incidencias</b>. Hay además 96 subtareas
-        abiertas —comprobaciones de cobro y máquinas de sustitución sobre todo— y quedan fuera a propósito: no son
-        averías, y sumarlas daría 202 «abiertas» sin que haya un solo equipo más parado.</div>
+      <div class="knota" style="margin-top:14px"><span id="ab-nota"></span></div>
     </div>
   </section>
 </div>
@@ -2638,7 +2636,7 @@ function pintarEdades(root){
 
 // Cada bloque dice de que dia son sus datos. La pasada tiene que actualizar estas fechas
 // cuando recalcula; si se le olvida, sale el aviso solo.
-const FRESCURA = {"tablero Hoy": "2026-09-07", "cola de taller": "2026-09-09", "actividad del dia": "2026-09-09", "KPIs del ciclo": "2026-09-07", "ritmo de presupuestos": "2026-09-07", "tasa de utilidad": "2026-09-07", "whatsapp de Epil Point": "2026-09-09"};
+const FRESCURA = {"tablero Hoy": "2026-09-09", "cola de taller": "2026-09-09", "actividad del dia": "2026-09-09", "KPIs del ciclo": "2026-09-07", "ritmo de presupuestos": "2026-09-07", "tasa de utilidad": "2026-09-07", "whatsapp de Epil Point": "2026-09-09"};
 function avisarViejos(){
   const viejos = Object.keys(FRESCURA).filter(k => (diasDesde(FRESCURA[k]) || 0) >= 1);
   const c = document.getElementById('frescura'); if(!c) return;
@@ -2704,27 +2702,43 @@ function opsx(id){
 // Contado en Jira el 07/09 a las 14:20, una consulta por tramo (statusCategory != Done).
 // Las subtareas van aparte: parent IS NOT EMPTY.
 const AB = {
-  fecha: "2026-09-07",
-  principales: 106, subtareas: 96, sinDuenyo: 77, parado: 14,
+  fecha: "2026-09-09", hora: "13:55",
+  principales: 94, subtareas: 101, sinDuenyo: 67, parado: 1, paradoReal: 5,
+  // «parado» es la definición de siempre: 15 días sin que el ticket se modifique (updated).
+  // Hoy da 1 y NO es una buena noticia: el reparto de las 13:20 escribió una nota en 43
+  // tickets y eso les tocó el updated. «paradoReal» mira la última nota DE CONTENIDO,
+  // descartando las notas «se lo paso a X (reparto…)», y ahí siguen 5 paradas.
+  paradoLista: [["LEAS-4908","Elha Pintor Felo Monzón",225],["LEAS-6779","Centri Unico Campania",47],
+                ["LEAS-7188","Centro Unico Boccea",41],["LEAS-6906","Daniel Jaramillo Holea",27],
+                ["LEAS-7360","SinVello Ibiza",15]],
   tramos: [
-    {id:"triaje",   t:"Sin arrancar",           n:31, q:"nosotros", d:"abierta, sin técnico o sin definir el servicio"},
-    {id:"transp",   t:"En transporte",          n:22, q:"tercero",  d:"pendiente de recoger o ya en ruta"},
-    {id:"taller",   t:"En taller",              n:18, q:"nosotros", d:"en cola, reparándose o en inspección"},
+    {id:"triaje",   t:"Sin arrancar",           n:18, q:"nosotros", d:"abierta, sin técnico o sin definir el servicio"},
+    {id:"transp",   t:"En transporte",          n:23, q:"tercero",  d:"pendiente de recoger o ya en ruta"},
+    {id:"taller",   t:"En taller",              n:23, q:"nosotros", d:"en cola, reparándose o en inspección"},
     {id:"externo",  t:"Con técnico externo",    n:18, q:"tercero",  d:"enviada fuera"},
-    {id:"cliente",  t:"Esperando al cliente",   n:7,  q:"cliente",  d:"presupuesto enviado, sin respuesta"},
+    {id:"cliente",  t:"Esperando al cliente",   n:5,  q:"cliente",  d:"presupuesto enviado, sin respuesta"},
     {id:"presup",   t:"Preparando presupuesto", n:6,  q:"nosotros", d:"lo tenemos nosotros"},
-    {id:"otros",    t:"Otros estados",          n:4,  q:"otros",    d:"casos sueltos fuera del ciclo normal"}
+    {id:"otros",    t:"Otros estados",          n:1,  q:"otros",    d:"casos sueltos fuera del ciclo normal"}
   ]
 };
-const ABCOL = {nosotros:'var(--k-nos)', tercero:'var(--k-ter)', cliente:'var(--k-cli)', otros:'var(--muted-2)'};
-const ABQ = {nosotros:'nosotros', tercero:'transportista o externo', cliente:'el cliente', otros:'—'};
-
 function pintarAbiertas(){
   const tira = document.getElementById('ab-tira'); if(!tira) return;
   const tot = AB.tramos.reduce((a,x)=>a+x.n,0);
   tira.innerHTML = AB.tramos.map(x =>
     '<button class="pat-'+x.q+'" style="flex:'+x.n+';background-color:'+ABCOL[x.q]+'" title="'+x.t+': '+x.n+'" '
     + 'onclick="abcalc(\''+x.id+'\')">' + (x.n/tot > .06 ? '<b>'+x.n+'</b>' : '') + '</button>').join('');
+  var _t = function(id,v){ var e=document.getElementById(id); if(e) e.innerHTML=v; };
+  _t('ab-n1', AB.principales);
+  _t('ab-n2', AB.sinDuenyo);
+  _t('ab-e2', Math.round(100*AB.sinDuenyo/AB.principales) + ' % de ellas · nadie las va a cerrar');
+  _t('ab-n3', AB.parado);
+  _t('ab-e3', AB.paradoReal > AB.parado
+      ? ('pero ' + AB.paradoReal + ' sin nota de contenido: el reparto les tocó el reloj')
+      : 'ninguna avanza sola');
+  _t('ab-nota', 'Aquí <b>solo cuentan incidencias</b>. Hay además ' + AB.subtareas + ' subtareas abiertas '
+    + '—comprobaciones de cobro y máquinas de sustitución sobre todo— y quedan fuera a propósito: no son '
+    + 'averías, y sumarlas daría ' + (AB.principales + AB.subtareas) + ' «abiertas» sin que haya un solo '
+    + 'equipo más parado.');
   document.getElementById('ab-lista').innerHTML = AB.tramos.map(x =>
     '<button class="abf" onclick="abcalc(\''+x.id+'\')">'
     + '<i class="pat-'+x.q+'" style="background-color:'+ABCOL[x.q]+'"></i>'
@@ -2737,27 +2751,30 @@ function abcalc(id){
   const t = AB.tramos.find(x => x.id === id);
   let h = '<div class="k">Cómo sale este número</div>';
   if(t){
-    h += '<div class="big">'+t.n+'</div><div class="bigu">de 106 incidencias abiertas</div>'
+    h += '<div class="big">'+t.n+'</div><div class="bigu">de '+AB.principales+' incidencias abiertas</div>'
       + '<h3 style="margin:0 0 10px">'+t.t+'</h3>'
       + '<p style="margin:0 0 12px;font-size:13px;color:var(--ink-soft)">'+t.d
       + '. Depende de: <b>'+ABQ[t.q]+'</b>.</p>';
   } else if(id === 'duenyo'){
-    h += '<div class="big">77</div><div class="bigu">incidencias sin nadie asignado</div>'
-      + '<h3 style="margin:0 0 10px">Casi tres de cada cuatro</h3>'
+    h += '<div class="big">'+AB.sinDuenyo+'</div><div class="bigu">incidencias sin nadie asignado</div>'
+      + '<h3 style="margin:0 0 10px">'+Math.round(100*AB.sinDuenyo/AB.principales)+' % de las abiertas</h3>'
       + '<p style="margin:0 0 12px;font-size:13px;color:var(--ink-soft)">Sin dueño nadie la cierra y no entra '
       + 'en la medida de ningún técnico. Es la causa de que haya incidencias de meses: no es que nadie pueda, '
-      + 'es que no es de nadie. Sobre las 106 incidencias; las subtareas no entran porque casi ninguna se asigna.</p>';
+      + 'es que no es de nadie. Sobre las '+AB.principales+' incidencias; las subtareas no entran porque casi ninguna se asigna.</p>';
   } else if(id === 'parado'){
-    h += '<div class="big">14</div><div class="bigu">incidencias sin un solo movimiento en 15 días</div>'
-      + '<h3 style="margin:0 0 10px">Y ninguna avanza sola</h3>'
-      + '<p style="margin:0 0 12px;font-size:13px;color:var(--ink-soft)">Se miden por la última modificación '
-      + 'del ticket, no por el cambio de estado: un comentario cuenta como movimiento.</p>';
+    h += '<div class="big">'+AB.parado+'</div><div class="bigu">incidencias sin un solo movimiento en 15 días</div>'
+      + '<h3 style="margin:0 0 10px">Pero el contador está contaminado</h3>'
+      + '<p style="margin:0 0 12px;font-size:13px;color:var(--ink-soft)">Se mide por la última modificación '
+      + 'del ticket (<code>updated</code>), y <b>cualquier</b> comentario cuenta como movimiento — también la nota '
+      + 'automática de un reparto. El de hoy escribió en 43 tickets a la vez y les puso el contador a cero. '
+      + 'Mirando solo notas de contenido siguen paradas <b>'+AB.paradoReal+'</b>:</p>'
+      + AB.paradoLista.map(function(p){ return '<div class="r"><span class="l">'+p[0]+' · '+p[1]+'</span><span class="v">'+p[2]+' d</span></div>'; }).join('');
   } else {
-    h += '<div class="big">106</div><div class="bigu">incidencias abiertas</div>'
+    h += '<div class="big">'+AB.principales+'</div><div class="bigu">incidencias abiertas</div>'
       + '<h3 style="margin:0 0 10px">Las subtareas no cuentan</h3>'
-      + '<div class="r"><span class="l">Incidencias (sin padre)</span><span class="v">106</span></div>'
-      + '<div class="r"><span class="l">Subtareas, fuera de la cuenta</span><span class="v">96</span></div>'
-      + '<div class="r"><span class="l">Lo que diría Jira si se mezclasen</span><span class="v">202</span></div>'
+      + '<div class="r"><span class="l">Incidencias (sin padre)</span><span class="v">'+AB.principales+'</span></div>'
+      + '<div class="r"><span class="l">Subtareas, fuera de la cuenta</span><span class="v">'+AB.subtareas+'</span></div>'
+      + '<div class="r"><span class="l">Lo que diría Jira si se mezclasen</span><span class="v">'+(AB.principales+AB.subtareas)+'</span></div>'
       + '<p style="margin:12px 0 0;font-size:13px;color:var(--ink-soft)">No son lo mismo: una subtarea de '
       + '«comprobación de cobro» abierta no es una máquina averiada. Contarlas juntas casi duplica la cifra '
       + 'de abiertas sin que haya un solo equipo más parado, y esa es la cifra que se acaba repitiendo en '
@@ -2767,7 +2784,7 @@ function abcalc(id){
     + '<code>project = LEAS AND statusCategory != Done</code>. Las incidencias son las que no tienen padre '
     + '(<code>parent IS EMPTY</code>). Los tramos agrupan estados igual que la pestaña de KPIs, para que las '
     + 'dos hablen el mismo idioma.'
-    + '<div class="fsrc">Origen: Jira · proyecto LEAS · contado el ' + AB.fecha + '</div></div>'
+    + '<div class="fsrc">Origen: Jira · proyecto LEAS · contado el ' + AB.fecha + ' a las ' + AB.hora + '</div></div>'
     + '<button class="x" onclick="this.closest(\'dialog\').close()">Cerrar</button>';
   const b = document.getElementById('calc-body');
   b.innerHTML = h; linkTickets(b);
