@@ -944,6 +944,7 @@ function vivoDe(t){
   const l = leasDe(t); if(!l || !JV[l]) return null;
   const v = JV[l], g = GEN();
   if(v.cat === 'done') return { por: 'cerrado', txt: 'cerrado en Jira · '+(v.e||'') };
+  if(v.nota && pasoDe(v.nota.txt)) return null;           // «se lo paso a X»: es un traspaso, no un cierre
   if(v.nota && g && new Date(v.nota.h) > g) return { por: 'nota', txt: 'nota de '+(v.nota.quien||'alguien')+' a las '+String(v.nota.h).slice(11,16)+(v.nota.txt ? ' · «'+v.nota.txt.slice(0,80)+'»' : '') };
   return null;
 }
@@ -993,14 +994,24 @@ async function fichaVivo(k){
 function tramitado(k, t){
   const id = idPunto(k, t);
   const l = LOCAL[id];
-  if(l && (l.cuando||'').slice(0,10) === HOY()) return true;
+  if(l && (l.cuando||'').slice(0,10) === HOY() && !(l.para && !l.texto && !l.noaplica)) return true;
   const r = RESP[id];
   if(r && (r.texto || r.estado) && (r.cuando||'').slice(0,10) === HOY()) return true;
   return !!vivoDe(t);
 }
+// «se lo paso a X» en una nota (del desplegable, del reparto o escrito a mano) → X es el dueño.
+function pasoDe(txt){
+  const m = String(txt||'').match(/se lo paso a ([A-Za-zÁÉÍÓÚÑáéíóúñ]+)/i); if(!m) return null;
+  const n = m[1].charAt(0).toUpperCase() + m[1].slice(1).toLowerCase();
+  return ["Isaac","Chus","Gonzalo","Borja","Cristina","Alejandro"].indexOf(n) !== -1 ? n : null;
+}
 function titularEf(k, t){
-  const r = RESP[idPunto(k, t)];
-  return (r && r.paraQuien) ? r.paraQuien : titularBase(k, t);
+  const id = idPunto(k, t), r = RESP[id], l = LOCAL[id];
+  if(r && r.paraQuien) return r.paraQuien;
+  if(l && l.para && (l.cuando||'').slice(0,10) === HOY()) return l.para;   // traspaso hecho desde este navegador
+  const leas = leasDe(t), v = leas && JV[leas], g = GEN();
+  if(v && v.nota && g && new Date(v.nota.h) > g){ const p = pasoDe(v.nota.txt); if(p) return p; }  // traspaso visto en Jira
+  return titularBase(k, t);
 }
 
 const BMETA = {"wapp": ["a", "📱", "7"], "ruta": ["a", "🔴", "4"], "maps": ["b", "📍", "2"], "track": ["b", "🚚", "16"], "nadie": ["a", "🚩", "2"], "huerf": ["a", "🧟", "36"], "epil": ["a", "🇮🇹", "3"], "parado": ["a", "⏸", "6"], "repara": ["b", "🔧", "76"], "prestamo": ["b", "🔁", "28"], "cerrar": ["c", "✅", "2"], "externo": ["a", "🛠", "19"], "medias": ["a", "📝", "0"], "telegram": ["a", "💬", "11"], "equipo": ["d", "👏", "—"], "envio": ["a", "📦", "0"], "serie": ["a", "🏷", "0"], "miercoles": ["a", "📅", "0"], "transporte": ["b", "📦", "6"], "privado": ["a", "🔒", "—"]};
