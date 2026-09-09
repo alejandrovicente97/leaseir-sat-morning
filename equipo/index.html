@@ -519,6 +519,12 @@ details.comova2 .cm-in{padding:0 18px 16px}
 .pcard .pr{display:block;margin-top:5px;font-size:11px;color:var(--muted);line-height:1.35}
 .pcard .pr b{color:var(--ink-soft);font-weight:600}
 .pcard .pc{display:block;margin-top:4px;font-size:11px;font-weight:600;color:var(--good)}
+.rep{display:inline-block;margin-top:7px;font:inherit;font-size:10.5px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em;color:var(--accent);background:transparent;
+  border:1px solid var(--accent);border-radius:20px;padding:3px 11px;cursor:pointer}
+.rep:hover{background:rgba(176,67,31,.10)}
+.rep.arm{background:var(--crit);border-color:var(--crit);color:#fff}
+.rep[disabled]{opacity:.55;cursor:default}
 .blk .cnt small{font-family:var(--sans);font-size:11px;font-weight:500;color:var(--muted-2);margin-left:3px}
 /* ═══ Partes para técnico externo ═══ */
 .pt-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
@@ -1418,6 +1424,52 @@ function renderCli(){
         + n + ' <i>'+cuenta[n]+'</i></button>').join('');
 }
 
+
+// ── Repartir lo de una persona entre los que estén (solo Alejandro) ──
+// Reparte por turnos y en orden de peso de cliente: el punto más gordo al que menos tenga.
+// Cada traspaso escribe la MISMA nota interna que el desplegable «pasárselo a…», así que
+// queda registrado en el ticket y con firma. Dos pulsaciones: la primera arma, la segunda va.
+function pendientesDe(n){
+  const out = [];
+  ORDEN.forEach(k => (MSG[k].l || []).forEach(t => {
+    if(titularEf(k,t) !== n || tramitado(k,t)) return;
+    if(!leasDe(t)) return;                       // sin ticket no hay dónde escribir el traspaso
+    out.push({k:k, t:t});
+  }));
+  return out.sort((a,b) => pesoDe(b.t) - pesoDe(a.t));
+}
+async function repartir(n, ev, btn){
+  if(ev && ev.stopPropagation) ev.stopPropagation();
+  if(YO !== 'Alejandro') return;
+  const lista = pendientesDe(n);
+  const destinos = ["Isaac","Chus","Gonzalo","Borja","Cristina"].filter(disp).filter(x => x !== n);
+  if(!lista.length || !destinos.length){ btn.textContent = 'nada que repartir'; return; }
+  if(!btn.classList.contains('arm')){
+    btn.classList.add('arm');
+    btn.textContent = 'repartir ' + lista.length + ' entre ' + destinos.join(', ') + ' · pulsa otra vez';
+    setTimeout(() => { if(btn.classList.contains('arm')){ btn.classList.remove('arm'); btn.textContent = 'repartir lo de ' + n; } }, 8000);
+    return;
+  }
+  btn.disabled = true; btn.classList.remove('arm');
+  let ok = 0, mal = 0;
+  for(let i = 0; i < lista.length; i++){
+    const para = destinos[i % destinos.length];
+    const it = lista[i], leas = leasDe(it.t);
+    btn.textContent = 'repartiendo ' + (i+1) + ' de ' + lista.length + '…';
+    try{
+      const r = await fetch(JIRA_URL, { method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ leas: leas, quien: YO, texto: 'se lo paso a ' + para + ' (reparto de la carga de ' + n + ')', clave: JIRA_CLAVE }) });
+      const j = await r.json().catch(()=>({}));
+      if(!r.ok || !j.ok){ mal++; continue; }
+      LOCAL[idPunto(it.k, it.t)] = { texto:'', para: para, quien: YO, cuando: new Date().toISOString(), leas: leas };
+      ok++;
+    }catch(e){ mal++; }
+  }
+  guardaLocal();
+  btn.disabled = false;
+  btn.textContent = ok + ' repartidos' + (mal ? ' · ' + mal + ' fallaron' : '');
+  renderInterno();
+}
 function renderCargas(){
   const c = document.getElementById('cargas'); if(!c) return;
   const GRUPO = ["Isaac","Chus","Gonzalo","Borja","Cristina"].filter(disp);
@@ -1466,7 +1518,11 @@ function renderCargas(){
         })()
       + ((CERRADO[n] || []).length ? '<span class="pc">✔ '+CERRADO[n].length+' cerrado'
           + (CERRADO[n].length===1?'':'s')+' hoy</span>' : '')
-      + resumenChips(n) + '</button>';
+      + resumenChips(n)
+      + ((YO === 'Alejandro' && (a.n - a.resp) > 0)
+          ? '<span class="rep" role="button" onclick="repartir(\''+n+'\',event,this)">repartir lo de '+n+'</span>'
+          : '')
+      + '</button>';
   }).join('');
   c.innerHTML = h;
 }
