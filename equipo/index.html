@@ -1160,9 +1160,14 @@ async function noAplica(k, t, btn){
   }
   const leas = leasDe(t), id = idPunto(k, t);
   if(!leas){
+    // Sin ticket no hay dónde escribirlo: el panel NO lo manda a ningún sitio. Copia la línea y hay que pegarla
+    // en el grupo «SAT Leaseir - Herramienta Control Diario»; la pasada la lee de ahí. Si no se pega, mañana vuelve.
+    const linea = "no aplica · " + cuerpoDe(t).replace(/\s+/g," ").slice(0,120) + " · " + motivo + " · " + (YO || "");
     LOCAL[id] = { texto: "no aplica: " + motivo, quien: YO, cuando: new Date().toISOString(),
-                  leas: "", noaplica: true };
-    guardaLocal(); renderInterno();
+                  leas: "", noaplica: true, pegar: linea };
+    guardaLocal();
+    try{ navigator.clipboard.writeText(linea); }catch(e){}
+    renderInterno();
     return;
   }
   btn.disabled = true; if(inp) inp.disabled = true;
@@ -1238,7 +1243,10 @@ function respHtml(k, t){
     const leas = leasDe(t), cand = candDe(t);
     if(loc){
       h += '<div class="rr '+(loc.noaplica?'nap-ok':'ok')+'"><b>'+(loc.quien||'')+'</b> · '
-        +  (loc.noaplica ? (loc.leas ? 'cerrado y explicado en <b>'+loc.leas+'</b>' : 'cerrado aquí')
+        +  (loc.noaplica ? (loc.leas ? 'cerrado y explicado en <b>'+loc.leas+'</b>'
+             : 'quitado de tu pantalla. <b style="color:var(--crit)">No está guardado en ningún sitio:</b> la línea está copiada, pégala en '
+               + '<a class="jira" target="_blank" rel="noopener" href="https://web.telegram.org/a/#-5461993276">Herramienta Control Diario</a> o mañana vuelve '
+               + '<button class="cop" onclick="cp(this,this.closest(\'li\').dataset.pegar||\'\')">copiar otra vez</button>')
                          : 'escrito en <b>'+(loc.leas||'')+'</b>')
         +  (loc.para ? ' · <span class="paso">pasado a '+loc.para+'</span>' : '')
         +  (loc.texto ? ' · '+loc.texto : '')
@@ -1269,7 +1277,7 @@ function respHtml(k, t){
         +  'onclick="copiarNoAplica(\''+k+'\',this.closest(\'li\').dataset.t,this)">copiar para el grupo</button>'
         +  '<div class="rr" hidden></div>';
       h += '<span class="rf" style="flex-basis:100%">Este punto no tiene ticket'
-        +  (cand.length ? ': si es uno de esos, elígelo y la nota entra ahí.' : '. Al cerrarlo, pega la línea en el grupo de la herramienta para que no vuelva mañana.')
+        +  (cand.length ? ': si es uno de esos, elígelo y la nota entra ahí.' : '. Lo que escribas aquí no va a Jira ni a Telegram: al cerrarlo se te copia una línea y tienes que pegarla tú en el grupo «Herramienta Control Diario». Si no, mañana vuelve.')
         +  '</span>';
     }
     return h + '</div>';
@@ -1511,16 +1519,27 @@ function renderInterno(){
       +  '<div class="por">'+b.p+'</div><ul>';
     lineas.forEach(t => { const q = quien(t), cd = quienCorto(k,t);
       const tg = tgDe(t);
-      h += '<li class="'+(tramitado(k,t)?'ok':'')+'" data-t="'+t.replace(/"/g,'&quot;')+'">'+marcaHtml(k,t)+t+(cd ? ' <span class="qui'+((!q||q.nadie)?' qui0':'')+'">'+cd+'</span>' : '')
+      const lp = LOCAL[idPunto(k,t)];
+      h += '<li class="'+(tramitado(k,t)?'ok':'')+'" data-t="'+t.replace(/"/g,'&quot;')+'"'+(lp && lp.pegar ? ' data-pegar="'+lp.pegar.replace(/"/g,'&quot;')+'"' : '')+'>'+marcaHtml(k,t)+t+(cd ? ' <span class="qui'+((!q||q.nadie)?' qui0':'')+'">'+cd+'</span>' : '')
         + (tg ? '<div class="tg"><span class="tgg">'+tg.g+'</span> '+tg.q+': '+tg.t+' <span class="tgh">'+tg.h+'</span></div>' : '')
         + respHtml(k,t)+'</li>'; });
     h += '</ul></div>';
   });
-  const cab = hechos
+  // Puntos cerrados hoy SIN ticket: no están guardados en ningún sitio hasta que se pegue la línea en el grupo.
+  const sinT = Object.values(LOCAL).filter(l => l && l.noaplica && !l.leas && l.pegar && (l.cuando||'').slice(0,10) === HOY());
+  const pegar = sinT.length
+    ? '<div class="pt-aviso"><b>'+sinT.length+(sinT.length===1?' punto cerrado sin ticket':' puntos cerrados sin ticket')+'.</b> '
+      + 'El panel no puede guardarlos: pega cada línea en '
+      + '<a class="jira" target="_blank" rel="noopener" href="https://web.telegram.org/a/#-5461993276">SAT Leaseir - Herramienta Control Diario</a>'
+      + ' o mañana vuelven a salir.'
+      + sinT.map(l => '<div style="margin-top:6px;font-size:12px"><button class="cop" onclick="cp(this,this.nextSibling.textContent)">copiar</button><span> '+l.pegar.replace(/</g,'&lt;')+'</span></div>').join('')
+      + '</div>'
+    : '';
+  const cab = pegar + (hechos
     ? '<div class="hechos'+(VERHECHOS?' ab':'')+'"><b>'+hechos+'</b> '+(hechos===1?'punto tramitado':'puntos tramitados')+' hoy'
       + (VERHECHOS ? ' · abajo solo salen estos' : ' · ya no aparecen abajo')
       + ' <button onclick="verHechos()">'+(VERHECHOS?'volver a lo pendiente':'verlos')+'</button></div>'
-    : '';
+    : '');
   if(h) h = '<div class="plegar"><span>Bloques cerrados: pincha el título para abrir el que vayas a trabajar.</span>'
     + '<button onclick="plegarTodos(true)">abrir todos</button><button onclick="plegarTodos(false)">cerrar todos</button></div>' + h;
   if(BUSCA){
