@@ -849,7 +849,7 @@ dialog.wide{max-width:860px}
     </div>
     <div class="when">
       <b id="fechagrande">Miércoles, 9 de septiembre 2026</b>
-      Última actualización: 9 sep 18:45 · Europe/Madrid
+      Última actualización: 9 sep 20:10 · Europe/Madrid
     </div>
   </header>
 
@@ -1603,7 +1603,7 @@ dialog.wide{max-width:860px}
     <span class="d">·</span>
     <span>Facturas deduplicadas por número (4 tickets compartían la de Brull)</span>
     <span class="d">·</span>
-      <span>Última actualización: 9 sep 18:45 · Europe/Madrid</span>
+      <span>Última actualización: 9 sep 20:10 · Europe/Madrid</span>
   </footer>
 
 <!-- ═════════ KPIs ═════════ -->
@@ -1801,8 +1801,8 @@ const CAD = {"telegram": ["Chus", "Gonzalo", "Isaac"], "wapp": ["Chus", "Gonzalo
 
 // Cadena de responsabilidad. Siempre tres nombres: quien lo tiene, a quién se lo pide
 // si no llega, y a quién se lo pide ese segundo. Siempre por el grupo, para que quede constancia.
-const FUERA = {"Chus": "vacaciones (Sesame, Who's in, 18:10)", "Cristina": "vacaciones (Sesame, Who's in, 18:10)", "Borja": "turno terminado (fichó salida a las 16:18, 7h 40min)"};
-const NOTA_HOY = {"Isaac": "volvió a fichar entrada a las 18:01 · lleva 5h 21min acumuladas", "Gonzalo": "en remoto, dentro a las 18:10"};
+const FUERA = {"Chus": "vacaciones (Sesame, Who's in, 20:10)", "Cristina": "vacaciones (Sesame, Who's in, 20:10)", "Borja": "turno terminado (fichó salida a las 16:18, 7h 40min)", "Gonzalo": "turno terminado (fichó salida a las 18:58, 6h 53min)", "Isaac": "turno terminado (fichó salida a las 20:07, 7h 27min)"};
+const NOTA_HOY = {"Isaac": "cerró el día a las 20:07 con 7h 27min · siguió escribiendo en Jira hasta las 19:47", "Gonzalo": "salió a las 18:58 con 6h 53min", "Borja": "salió a las 16:18 con 7h 40min"};
 function disp(n){ return !FUERA[n]; }
 function cadena(k, t){
   const base = (CAD[k] || ["Isaac","Gonzalo","Borja"]).filter(disp);

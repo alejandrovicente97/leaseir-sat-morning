@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-09-09T18:30+02:00",
+  "actualizado": "2026-09-09T20:10+02:00",
   "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
   "como_se_usa": [
     "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -1163,6 +1163,45 @@
       "quien": "Borja",
       "cuando": "2026-09-09",
       "revive_si": "Nunca: están cerradas. Solo si alguna se reabre."
+    },
+    {
+      "id": "7525-tracking-dhl-subido",
+      "que": "LEAS-7525 Powerlaser Portugal · gestionado transporte y el campo de tracking vacío",
+      "ambito": {
+        "leas": "LEAS-7525",
+        "centro": "Powerlaser Portugal",
+        "tipo": "sin-tracking"
+      },
+      "porque": "Isaac lo cerró el 09/09 a las 18:53: «tambien se pide por DHL porque nos estan dando muchos problemas Enora», y desde el panel a las 18:53 «ya esta subido el tracking». El campo 11420 lleva ya el DHL (JJD014600012821338901), comprobado a las 20:10.",
+      "quien": "Isaac",
+      "cuando": "2026-09-09",
+      "revive_si": "El campo de tracking vuelve a quedarse vacío, o pasan 3 días laborables sin que la recogida se materialice."
+    },
+    {
+      "id": "4908-isaac-panel-1854",
+      "que": "LEAS-4908 Elha Pintor Felo Monzón · abierto desde el 27/01 y sin una sola nota de gestión",
+      "ambito": {
+        "leas": "LEAS-4908",
+        "centro": "Elha Pintor Felo Monzón",
+        "tipo": "sin-movimiento"
+      },
+      "porque": "Isaac contestó desde el panel el 09/09 a las 18:54 («las incidencias»). Es una respuesta escueta, pero es respuesta: el punto no se repite hoy.",
+      "quien": "Isaac",
+      "cuando": "2026-09-09",
+      "revive_si": "Pasan 3 días laborables sin una nota de gestión de verdad (no un traspaso), comprobado releyendo el ticket en esa pasada. Al revivir, pedir qué se hace con un ticket abierto desde enero."
+    },
+    {
+      "id": "7540-material-y-carlos-mora",
+      "que": "LEAS-7540 Sinvello Sant Cugat · la cita con el técnico externo no está escrita en el ticket",
+      "ambito": {
+        "leas": "LEAS-7540",
+        "centro": "Sinvello Sant Cugat",
+        "tipo": "externo-sin-nota"
+      },
+      "porque": "Isaac lo escribió en el ticket el 09/09 a las 18:44 («se envia material y aviso a Carlos Mora») y lo pasó a «Enviado a técnico externo» a las 18:54. SOLO se silencia la parte del técnico: la de la dirección de entrega sigue viva y sale en el bloque wapp.",
+      "quien": "Isaac",
+      "cuando": "2026-09-09",
+      "revive_si": "Pasan 3 días laborables sin nota nueva del técnico externo. La dirección de entrega NO entra aquí: ese punto sigue abierto hasta que el centro conteste."
     }
   ],
   "enlaces": [
@@ -1453,6 +1492,55 @@
       "quien": "Alejandro",
       "cuando": "2026-09-09T13:21+02:00",
       "porque": "reparto de la carga de Gonzalo"
+    },
+    {
+      "idPunto": "telegram__telegram_Palermo_pide_una_segunda_recogida___el_08_09",
+      "para": "Gonzalo",
+      "porque": "Palermo pide una segunda recogida (C00676/H00676). Lo lleva Gonzalo: es quien escribe en «Centri Unico Italia - Leaseir».",
+      "quien": "Alejandro (pasada 20:10)",
+      "cuando": "2026-09-09"
+    },
+    {
+      "idPunto": "telegram__telegram_Centri_Unico_I_Gigli__Firenze____escribieron",
+      "para": "Gonzalo",
+      "porque": "I Gigli (C00334/H00334) sin ticket. Gonzalo pidió llamarles el 07/09 a las 17:33.",
+      "quien": "Alejandro (pasada 20:10)",
+      "cuando": "2026-09-09"
+    },
+    {
+      "idPunto": "telegram__telegram_Clinics_One_Canarias___hoy_a_las_10_25_Gonza",
+      "para": "Isaac",
+      "porque": "Presupuesto de gafas de Clinics One Canarias. Isaac dijo el 09/09 a las 10:43 «ahora te lo hago».",
+      "quien": "Alejandro (pasada 20:10)",
+      "cuando": "2026-09-09"
+    },
+    {
+      "idPunto": "telegram__telegram_Naturaless__Medell_n__Colombia____el_08_09_a",
+      "para": "Isaac",
+      "porque": "Envío de pedal a Medellín sin LEAS. Lo publicó Isaac y su propia nota dice «hablar con Isaac para hacer factura».",
+      "quien": "Alejandro (pasada 20:10)",
+      "cuando": "2026-09-09"
+    },
+    {
+      "idPunto": "wapp__wapp_Sinvello_Sant_Cugat___adem_s_hay_una_pantall",
+      "para": "Gonzalo",
+      "porque": "Pantalla descalibrada en Sant Cugat. Gonzalo lleva esa conversación en INCIDENCIAS (FOTOS Y VIDEOS).",
+      "quien": "Alejandro (pasada 20:10)",
+      "cuando": "2026-09-09"
+    },
+    {
+      "idPunto": "wapp__wapp_Smart_Duck_Asni_res___consola_C03292___hoy_a",
+      "para": "Gonzalo",
+      "porque": "Smart Duck Asnières C03292 sin ticket. Gonzalo contestó a Hervé el 09/09 a las 10:11.",
+      "quien": "Alejandro (pasada 20:10)",
+      "cuando": "2026-09-09"
+    },
+    {
+      "idPunto": "wapp__wapp_SinVello___dos_piezas_de_mano_volvieron_a_pe",
+      "para": "Borja",
+      "porque": "Las dos piezas de mano que volvieron a pedir código (30559-91241 y 30224-90677). Borja es quien pregunta en SEGUIMIENTO EQUIPOS SINVELLO.",
+      "quien": "Alejandro (pasada 20:10)",
+      "cuando": "2026-09-09"
     }
   ],
   "que_es_esto_traspasos": "Traspasos de puntos SIN ticket. No hay Jira donde escribirlos, así que se guardan aquí y cada pasada los vuelca al objeto TRASPASOS del panel del equipo con la clave del punto (idPunto = bloque__bloque|primeros 44 caracteres). Así el reparto se aplica solo y nadie tiene que pegar líneas en el grupo de la herramienta. Si el destino está en FUERA, el panel lo vuelve a repartir por la cadena."
