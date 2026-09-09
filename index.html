@@ -845,7 +845,7 @@ dialog.wide{max-width:860px}
       <h1>Cierre de la mañana</h1>
     </div>
     <div class="when">
-      <b>Lunes, 7 de septiembre 2026</b>
+      <b id="fechagrande">Miércoles, 9 de septiembre 2026</b>
       Última actualización: 9 sep 13:40 · Europe/Madrid
     </div>
   </header>
@@ -3349,4 +3349,30 @@ function cp(btn,text){
     setTimeout(()=>{btn.textContent=o; btn.classList.remove('ok');},1600);
   }).catch(()=>{btn.textContent='Selecciona';});
 }
+</script>
+<script>
+/* La fecha grande de la cabecera se calcula de la propia «Última actualización» que
+   reescribe cada pasada. Antes iba a capón y se quedó dos días diciendo «Lunes, 7 de
+   septiembre» con la cabecera ya en el 9. Con esto no pueden discrepar nunca. */
+(function(){
+  var el = document.getElementById('fechagrande'); if(!el) return;
+  var MES3 = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto',
+               'septiembre','octubre','noviembre','diciembre'];
+  var DIAS  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  var txt = '', all = document.querySelectorAll('.head .when, .foot');
+  for (var i = 0; i < all.length && !txt; i++){
+    var m = (all[i].textContent || '').match(/Última actualización:\s*(\d{1,2})\s+([a-záéíóú]{3})/i);
+    if (m) txt = m[1] + '|' + m[2].toLowerCase();
+  }
+  if (!txt) return;
+  var p = txt.split('|'), dia = parseInt(p[0], 10), mes = MES3.indexOf(p[1]);
+  if (!dia || mes < 0) return;
+  var hoy = new Date(), año = hoy.getFullYear();
+  /* Si la pasada es de diciembre y hoy es enero, el año es el anterior. */
+  if (mes === 11 && hoy.getMonth() === 0) año = año - 1;
+  var d = new Date(año, mes, dia);
+  if (isNaN(d)) return;
+  el.textContent = DIAS[d.getDay()] + ', ' + dia + ' de ' + MESES[mes] + ' ' + año;
+})();
 </script>
