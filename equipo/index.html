@@ -442,6 +442,7 @@ dialog.wide{max-width:860px}
   border-radius:7px;padding:4px 11px;cursor:pointer}
 .recarga:hover{color:var(--accent);border-color:var(--accent)}
 .when .prox{display:block;font-size:11px;color:var(--muted-2);margin-top:2px}
+.when .prox.mal{color:var(--crit)}
 
 /* ── Cómo funciona ── */
 .comova{background:var(--surface);border:1px solid var(--divider);border-radius:var(--r);
@@ -603,6 +604,7 @@ details.comova2 .cm-in{padding:0 18px 16px}
     <div class="when">
       <b id="fecha">Sábado, 5 de septiembre 2026</b>
       <span id="corte" data-gen="2026-09-09T13:40">Última actualización: 5 sept 13:35</span>
+      <span id="jira-vivo" class="prox"></span>
       <button class="recarga" onclick="location.reload()" title="Solo recarga la página. Los datos se regeneran a las 9:30, 12:30, 15:10, 16:10, 18:10 y 20:10.">Recargar</button>
     </div>
   </header>
@@ -934,12 +936,67 @@ function titularBase(k, t){
   return GRUPO.indexOf(n) === -1 ? base[0] : n;
 }
 function HOY(){ return new Date().toISOString().slice(0,10); }
+// ── Jira en vivo: el worker devuelve el estado de cada ticket y su última nota (GET /cola, cacheado 60 s) ──
+// Un punto se apaga solo si su ticket se ha cerrado, o si tiene una nota posterior a la pasada que lo generó.
+let JV = {}, JV_HORA = null, JV_ERR = null;
+function GEN(){ const el = document.getElementById('corte'); const d = new Date((el && el.dataset.gen) || ''); return isNaN(d) ? null : d; }
+function vivoDe(t){
+  const l = leasDe(t); if(!l || !JV[l]) return null;
+  const v = JV[l], g = GEN();
+  if(v.cat === 'done') return { por: 'cerrado', txt: 'cerrado en Jira · '+(v.e||'') };
+  if(v.nota && g && new Date(v.nota.h) > g) return { por: 'nota', txt: 'nota de '+(v.nota.quien||'alguien')+' a las '+String(v.nota.h).slice(11,16)+(v.nota.txt ? ' · «'+v.nota.txt.slice(0,80)+'»' : '') };
+  return null;
+}
+async function vivo(){
+  try{
+    const r = await fetch(JIRA_URL + '/cola?clave=' + encodeURIComponent(JIRA_CLAVE));
+    const j = await r.json().catch(()=>({}));
+    if(!r.ok || !j.ok) throw new Error(j.error || r.status);
+    JV = j.t || {}; JV_HORA = new Date(); JV_ERR = null;
+    renderInterno();
+  }catch(e){
+    JV_ERR = String(e && e.message || e);
+  }
+  pintaVivo();
+}
+function pintaVivo(){
+  const el = document.getElementById('jira-vivo'); if(!el) return;
+  if(JV_HORA){
+    const m = Math.round((Date.now() - JV_HORA) / 60000);
+    el.textContent = 'Jira en vivo: ' + (m < 1 ? 'ahora mismo' : 'hace '+m+' min') + (JV_ERR ? ' · sin respuesta desde entonces' : '');
+  } else {
+    el.textContent = JV_ERR === 'metodo' ? 'Jira en vivo: pendiente de desplegar el worker · solo la foto de la pasada'
+                   : (JV_ERR ? 'Jira en vivo: no disponible (el worker no responde). Solo la foto de la pasada.' : '');
+  }
+  el.className = 'prox' + (JV_ERR && JV_ERR !== 'metodo' ? ' mal' : '');
+}
+setInterval(pintaVivo, 30000);
+setInterval(vivo, 5*60*1000);
+document.addEventListener('visibilitychange', () => { if(!document.hidden && JV_HORA && Date.now() - JV_HORA > 60000) vivo(); });
+async function fichaVivo(k){
+  const el = () => document.getElementById('ficha-vivo');
+  try{
+    const r = await fetch(JIRA_URL + '/ticket/' + k + '?clave=' + encodeURIComponent(JIRA_CLAVE));
+    const j = await r.json().catch(()=>({}));
+    if(!el()) return;
+    if(!r.ok || !j.ok){ el().textContent = j.error === 'no_existe' ? 'Ese ticket no existe en Jira.' : 'Jira no responde ahora mismo.'; return; }
+    const e = x => String(x||'').replace(/</g,'&lt;');
+    el().innerHTML = '<b>'+e(j.estado)+'</b>'+(j.resp ? ' · '+e(j.resp) : ' · sin responsable')+(j.centro ? ' · '+e(j.centro) : '')
+      + (j.tecnico ? ' · técnico externo: '+e(j.tecnico) : '')+(j.padre ? ' · subtarea de '+j.padre : '')
+      + (j.consola||j.pistola ? '<br>Consola '+e(j.consola||'—')+' · pistola '+e(j.pistola||'—') : '')
+      + (j.averia ? '<br>Avería: '+e(j.averia) : '')
+      + (j.subtareas && j.subtareas.length ? '<br>Subtareas: '+j.subtareas.map(e).join(' · ') : '')
+      + (j.notas && j.notas.length ? '<div style="margin-top:6px">'+j.notas.map(n => '<div class="tg"><span class="tgg">'+e(n.quien)+'</span> <span class="tgh">'+String(n.h).slice(0,16).replace('T',' ')+'</span> '+e(n.txt)+'</div>').join('')+'</div>' : '<br>Sin comentarios.');
+    linkTickets(el());
+  }catch(err){ if(el()) el().textContent = 'Jira no responde ahora mismo.'; }
+}
 function tramitado(k, t){
   const id = idPunto(k, t);
   const l = LOCAL[id];
   if(l && (l.cuando||'').slice(0,10) === HOY()) return true;
   const r = RESP[id];
-  return !!(r && (r.texto || r.estado) && (r.cuando||'').slice(0,10) === HOY());
+  if(r && (r.texto || r.estado) && (r.cuando||'').slice(0,10) === HOY()) return true;
+  return !!vivoDe(t);
 }
 function titularEf(k, t){
   const r = RESP[idPunto(k, t)];
@@ -1258,7 +1315,10 @@ function respHtml(k, t){
   const loc = LOCAL[id];
   if(!DB && JIRA_URL){
     const leas = leasDe(t), cand = candDe(t);
-    if(loc){
+    const jv = (!loc && !r) ? vivoDe(t) : null;
+    if(jv){
+      h += '<div class="rr ok"><b>Jira</b> · '+jv.txt.replace(/</g,'&lt;')+' <span class="rf">apagado solo</span></div>';
+    } else if(loc){
       h += '<div class="rr '+(loc.noaplica?'nap-ok':'ok')+'"><b>'+(loc.quien||'')+'</b> · '
         +  (loc.noaplica ? (loc.leas ? 'cerrado y explicado en <b>'+loc.leas+'</b>'
              : (loc.grupo ? 'cerrado y publicado por el bot en <b>Herramienta Control Diario</b>'
@@ -1615,9 +1675,10 @@ function renderInterno(){
     const bn = document.getElementById('busca-n');
     if(bn) bn.innerHTML = nb ? '<b>'+nb+'</b> '+(nb===1?'punto':'puntos')+' con «'+BUSCA.toUpperCase()+'»' : 'ningún punto con «'+BUSCA.toUpperCase()+'»';
     h = marcaBusca(h);
-    if(!h) h = '<div class="blk c"><header><span class="ico">🔍</span><span class="t">No hay ningún punto con «'+BUSCA.toUpperCase()+'»'
+    if(!h){ h = '<div class="blk c"><header><span class="ico">🔍</span><span class="t">No hay ningún punto con «'+BUSCA.toUpperCase()+'»'
       + (esLeas ? ' · <a class="jira" target="_blank" rel="noopener" href="https://leaseir.atlassian.net/browse/'+BUSCA.toUpperCase()+'">abrirlo en Jira</a>' : '')
-      + '</span></header></div>';
+      + '</span></header>' + (esLeas ? '<div class="por" id="ficha-vivo">Buscando en Jira…</div>' : '') + '</div>';
+      if(esLeas) setTimeout(() => fichaVivo(BUSCA.toUpperCase()), 0); }
   } else { const bn = document.getElementById('busca-n'); if(bn) bn.textContent = ''; }
   c.innerHTML = cab + (h || '<div class="blk c"><header><span class="ico">🎉</span><span class="t">'
     + (FCLI ? 'Nada pendiente de '+FCLI+(FILTRO ? ' para '+FILTRO : '')
@@ -1700,6 +1761,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   linkTickets(document.body);
 try{ renderInterno(); }catch(e){ console.error(e); }
 try{ initDB(); }catch(e){ console.error(e); }
+try{ vivo(); }catch(e){ console.error('vivo', e); }
 // «Cómo funciona» abierto solo la primera vez que alguien abre el panel en este navegador.
 try{
   const d = document.getElementById('comova');
