@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-09-09T13:40+02:00",
+  "actualizado": "2026-09-09T14:25+02:00",
   "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
   "como_se_usa": [
     "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -806,6 +806,32 @@
       "cuando": "2026-09-08",
       "anotado": "2026-09-09",
       "revive_si": "Nunca por esto."
+    },
+    {
+      "id": "6765-bellaforme-aduanas",
+      "que": "LEAS-6765 Bella Forme · SLA de reparación reventado en 1.890 h",
+      "ambito": {
+        "leas": "LEAS-6765",
+        "centro": "Bella Forme",
+        "tipo": "reparacion-fuera-de-plazo"
+      },
+      "porque": "Está parada en ADUANAS, no en taller. Chus lo dejó escrito el 19/06 («aún están en trámites con aduanas para la autorización del envío y parece que llevará bastante más tiempo del esperado»), Borja lo confirmó el 28/07 a las 14:52 («lleva dias parado en aduanas») e Isaac escribió el 08/09 a las 13:07 «IMPORTANTE METER EL MATERIAL QUE HAN SOLICITADO. HABLAR CON ISAAC». El SLA seguirá reventado mientras el equipo esté retenido y eso no es un fallo del equipo. Va vinculada a LEAS-5510.",
+      "quien": "Borja",
+      "cuando": "2026-07-28",
+      "anotado": "2026-09-09",
+      "revive_si": "El equipo sale de aduanas y entra en taller, o pasan 15 días sin nota nueva sobre el trámite."
+    },
+    {
+      "id": "regla-repara-tres-dias",
+      "que": "El bloque «reparación fuera de plazo» sacaba las 77 incidencias con el SLA pasado, atendidas o no",
+      "ambito": {
+        "leas": null,
+        "tipo": "regla-del-bloque"
+      },
+      "porque": "Cambiado el 09/09 a las 14:20 a petición de Alejandro, a raíz de LEAS-6765: el SLA de 80 h se revienta en cuanto un caso depende de aduanas, de un presupuesto sin firmar o del cliente, y volver a sacarlo cada pasada cuando alguien acaba de escribir en el ticket es ruido. Ahora el bloque exige lo mismo que el de técnico externo: SLA pasado Y tres días laborables sin nota nueva. Además cada punto lleva la fecha y la cita de su última nota.",
+      "quien": "Alejandro",
+      "cuando": "2026-09-09",
+      "revive_si": "Nunca. Es la regla del bloque, no un punto."
     }
   ],
   "enlaces": [
