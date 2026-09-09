@@ -975,6 +975,23 @@ function pintaVivo(){
   el.className = 'prox' + (JV_ERR && JV_ERR !== 'metodo' ? ' mal' : '');
 }
 setInterval(pintaVivo, 30000);
+// ── Versión nueva del panel: si hay pasada nueva, avisar (la página no se recarga sola para no perder lo escrito) ──
+async function hayVersionNueva(){
+  try{
+    const r = await fetch(location.pathname + '?v=' + Date.now(), { cache: 'no-store' });
+    if(!r.ok) return;
+    const txt = await r.text();
+    const m = txt.match(/id="corte" data-gen="([^"]+)"/);
+    const el = document.getElementById('corte');
+    if(m && el && m[1] !== el.dataset.gen && !document.getElementById('nueva')){
+      const b = document.createElement('div'); b.id = 'nueva'; b.className = 'viejo';
+      b.innerHTML = '<b>Hay una pasada nueva (' + m[1].slice(11,16) + ').</b> Lo que ves es de las ' + el.dataset.gen.slice(11,16) + '. '
+        + '<button class="recarga" onclick="location.reload()">Recargar</button>';
+      const pg = document.querySelector('.page'); if(pg) pg.insertBefore(b, pg.children[1]);
+    }
+  }catch(e){}
+}
+setInterval(hayVersionNueva, 5*60*1000);
 setInterval(vivo, 5*60*1000);
 document.addEventListener('visibilitychange', () => { if(!document.hidden && JV_HORA && Date.now() - JV_HORA > 60000) vivo(); });
 async function fichaVivo(k){
@@ -1201,8 +1218,12 @@ async function pasarWeb(k, t, sel){
   const inp  = caja ? caja.querySelector(".ri") : null;
   const eco  = caja ? caja.querySelector(".rr") : null;
   if(!YO){ sel.value=""; pintarYo(); return; }
-  if(!leas){ sel.value=""; if(eco){ eco.hidden=false; eco.className="rr mal";
-    eco.textContent = "Este punto no tiene un LEAS, así que no hay ticket que traspasar. Dilo por el grupo."; } return; }
+  if(!leas){
+    sel.disabled = true; if(inp) inp.disabled = true;
+    if(eco){ eco.hidden=false; eco.className="rr"; eco.textContent = "Pasando a " + para + " por el grupo de la herramienta…"; }
+    await pasarSinTicket(k, t, para, inp ? (inp.value || "").trim() : "");
+    guardaLocal(); renderInterno(); return;
+  }
   const suyo = inp ? (inp.value || "").trim() : "";
   const texto = "se lo paso a " + para + (suyo ? ". " + suyo : "");
   sel.disabled = true; if(inp) inp.disabled = true;
@@ -1360,6 +1381,10 @@ function respHtml(k, t){
         +  'onclick="noAplica(\''+k+'\',this.closest(\'li\').dataset.t,this)">no aplica / ya está</button>'
         +  '<div class="rr" hidden></div>';
     } else if(YO && !leas){
+      h += '<select class="selp" onchange="pasarWeb(\''+k+'\',this.closest(\'li\').dataset.t,this)">'
+        +  '<option value="">pasárselo a…</option>'
+        +  GRUPO.filter(n => n !== YO).map(n => '<option value="'+n+'">'+n+'</option>').join('')
+        +  '</select>';
       if(cand.length){
         h += '<select class="candi" onchange="elegirCandidato(\''+k+'\',this.closest(\'li\').dataset.t,this)">'
           +  '<option value="">¿cuál es? elige el ticket…</option>'
@@ -1512,12 +1537,25 @@ function pendientesDe(n){
   const out = [];
   ORDEN.forEach(k => (MSG[k].l || []).forEach(t => {
     if(titularEf(k,t) !== n || tramitado(k,t)) return;
-    if(!leasDe(t)) return;                       // sin ticket no hay dónde escribir el traspaso
-    out.push({k:k, t:t});
+    out.push({k:k, t:t});                        // los sin ticket también: el traspaso va por el grupo (bot) y por TRASPASOS
   }));
   return out.sort((a,b) => pesoDe(b.t) - pesoDe(a.t));
 }
 let REPARTIENDO = false;
+// Traspaso de un punto SIN ticket: no hay nota de Jira que escribir. Se manda al grupo de la herramienta por el bot
+// (worker sin_ticket) para que la pasada lo lea y cambie el dueño; y en este navegador se mueve al momento.
+async function pasarSinTicket(k, t, para, motivo){
+  const linea = "se lo paso a " + para + " · " + cuerpoDe(t).replace(/\s+/g," ").slice(0,140) + (motivo ? " · " + motivo : "") + " · " + (YO || "");
+  let publicado = false;
+  try{
+    const r = await fetch(JIRA_URL, { method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ sin_ticket: true, linea: linea, quien: YO, clave: JIRA_CLAVE }) });
+    const j = await r.json().catch(()=>({})); publicado = !!(r.ok && j.ok);
+  }catch(e){}
+  LOCAL[idPunto(k,t)] = { texto: motivo || "", para: para, quien: YO, cuando: new Date().toISOString(), leas: "", grupo: publicado, pegar: publicado ? "" : linea };
+  if(!publicado){ try{ navigator.clipboard.writeText(linea); }catch(e){} }
+  return publicado;
+}
 async function repartir(n, ev, btn){
   if(ev){ if(ev.stopPropagation) ev.stopPropagation(); if(ev.preventDefault) ev.preventDefault(); }
   if(REPARTIENDO) return;                 // cerrojo: dos clics seguidos escribian la nota dos veces
@@ -1538,6 +1576,12 @@ async function repartir(n, ev, btn){
   for(let i = 0; i < lista.length; i++){
     const para = destinos[i % destinos.length];
     const it = lista[i], leas = leasDe(it.t);
+    if(!leas){
+      btn.textContent = 'repartiendo ' + (i+1) + ' de ' + lista.length + '…';
+      const pub = await pasarSinTicket(it.k, it.t, para, 'reparto de la carga de ' + n);
+      if(pub) ok++; else mal++;
+      continue;
+    }
     if(yaHechos[leas]){ LOCAL[idPunto(it.k, it.t)] = { texto:'', para: yaHechos[leas], quien: YO, cuando: new Date().toISOString(), leas: leas }; continue; }
     btn.textContent = 'repartiendo ' + (i+1) + ' de ' + lista.length + '…';
     try{
@@ -1689,10 +1733,10 @@ function renderInterno(){
     h += '</ul></div>';
   });
   // Puntos cerrados hoy SIN ticket: no están guardados en ningún sitio hasta que se pegue la línea en el grupo.
-  const sinT = Object.values(LOCAL).filter(l => l && l.noaplica && !l.leas && l.pegar && (l.cuando||'').slice(0,10) === HOY());
+  const sinT = Object.values(LOCAL).filter(l => l && !l.leas && l.pegar && (l.noaplica || l.para) && (l.cuando||'').slice(0,10) === HOY());
   const pegar = sinT.length
-    ? '<div class="pt-aviso"><b>'+sinT.length+(sinT.length===1?' punto cerrado sin ticket':' puntos cerrados sin ticket')+'.</b> '
-      + 'El panel no puede guardarlos: pega cada línea en '
+    ? '<div class="pt-aviso"><b>'+sinT.length+(sinT.length===1?' punto sin ticket cerrado o traspasado':' puntos sin ticket cerrados o traspasados')+'.</b> '
+      + 'El panel no puede guardarlos hasta que el worker publique en el grupo: pega cada línea en '
       + '<a class="jira" target="_blank" rel="noopener" href="https://web.telegram.org/a/#-5461993276">SAT Leaseir - Herramienta Control Diario</a>'
       + ' o mañana vuelven a salir.'
       + sinT.map(l => '<div style="margin-top:6px;font-size:12px"><button class="cop" onclick="cp(this,this.nextSibling.textContent)">copiar</button><span> '+l.pegar.replace(/</g,'&lt;')+'</span></div>').join('')
