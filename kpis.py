@@ -6,11 +6,15 @@ import json
 from datetime import datetime, timezone
 from collections import defaultdict
 
-SRC = '/tmp/claude-0/ig/cache/jira_status_timeline.json'
+import os
+# Descargar antes:  curl -sL -o $HOME/tl.json https://raw.githubusercontent.com/iortizfigueroa/leaseir-sat-dashboard/main/cache/jira_status_timeline.json
+SRC = os.environ.get('TL', os.path.expanduser('~/tl.json'))
 raw = json.load(open(SRC))
 D, META = raw['tickets'], raw['_meta']
 AHORA = datetime.now(timezone.utc)
-def p(s): return datetime.fromisoformat(s)
+import re as _re
+# Python < 3.11 no traga '+0200' sin dos puntos
+def p(s): return datetime.fromisoformat(_re.sub(r'([+-]\d{2})(\d{2})$', r'\1:\2', s))
 
 # Entrar y salir de un estado en menos de 2 minutos es un dedazo corrigiéndose,
 # no tiempo real. Verificado en LEAS-7343 (Gonzalo, 04/09, dos rebotes en 2 segundos).
@@ -126,7 +130,7 @@ for cl, tit, quien, estados in TRAMOS:
     out["abiertos"][cl] = sorted(tramo_abierto[cl], reverse=True)[:12]
 out["ciclo_cad"] = {c: resumen(x, 30) for c, x in ciclo_cad.items() if len(x) >= 10}
 
-json.dump(out, open('/tmp/claude-0/kpis.json','w'), ensure_ascii=False, indent=1)
+json.dump(out, open(os.path.expanduser('~/kpis_new.json'),'w'), ensure_ascii=False, indent=1)
 
 print("datos de:", out["_fecha_datos"], "| tickets:", out["_tickets"])
 print("\nCICLO COMPLETO  n=%(n)d  mediana %(med)s d  p90 %(p90)s d  max %(max)s d" % out["ciclo"])
