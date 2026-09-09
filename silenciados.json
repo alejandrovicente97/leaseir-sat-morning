@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-09-09T18:15+02:00",
+  "actualizado": "2026-09-09T18:30+02:00",
   "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
   "como_se_usa": [
     "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -1068,19 +1068,17 @@
       "ambito": {
         "leas": [
           "LEAS-4265",
-          "LEAS-5211",
           "LEAS-5219",
           "LEAS-5830",
           "LEAS-5908",
-          "LEAS-6754",
           "LEAS-6835"
         ],
         "tipo": "huerfana-administracion"
       },
-      "porque": "Borja las cerró una a una desde el panel el 09/09 entre las 15:44 y las 15:51 con «esto no aplica: listo». En LEAS-5908 dejó además el motivo: «nunca contestaron. Se cierra».",
+      "porque": "Borja las marcó «listo» una a una desde el panel el 09/09 entre las 15:44 y las 15:51 con «esto no aplica: listo». En LEAS-5908 dejó además el motivo: «nunca contestaron. Se cierra». COMPROBADO en Jira a las 18:30: cinco de las siete (LEAS-4265, LEAS-5219, LEAS-5830, LEAS-5908 y LEAS-6835) están en Resuelto; LEAS-5211 y LEAS-6754 siguen en «Solicitado».",
       "quien": "Borja",
       "cuando": "2026-09-09",
-      "revive_si": "Nunca por esto. Solo si alguna vuelve a abrirse con actividad nueva."
+      "revive_si": "Nunca por esto. LEAS-5211 y LEAS-6754 quedan FUERA de este silenciado hasta que pasen a Resuelto: no para volver a preguntar, sino para avisar de que el cierre no llegó a Jira."
     },
     {
       "id": "nr-clinics-discos",
@@ -1136,6 +1134,35 @@
       "quien": "Borja",
       "cuando": "2026-09-09",
       "revive_si": "Pasan 3 días laborables desde el 09/09 sin que Deseja confirme el envío, o sin nota nueva en el ticket."
+    },
+    {
+      "id": "7188-cola-taller",
+      "que": "LEAS-7188 Centro Unico Boccea SRF00014 · 903 h de SLA de reparación y sin nota desde el 30/07",
+      "ambito": {
+        "leas": "LEAS-7188",
+        "centro": "Centro Unico Boccea",
+        "tipo": "reparacion-fuera-de-plazo"
+      },
+      "porque": "Se movió hoy 09/09 a las 14:34 de «En preparación presupuesto» a «En cola taller» y se le puso el tracking de DHL. Ya no es un ticket parado.",
+      "quien": "movimiento en Jira, comprobado por la pasada de las 18:30",
+      "cuando": "2026-09-09",
+      "revive_si": "Pasan 3 días laborables desde el 09/09 sin presupuesto ni nota nueva."
+    },
+    {
+      "id": "huerfanas-cerradas-0909",
+      "que": "LEAS-5198, LEAS-6225 y LEAS-6890 · subtareas de administración huérfanas",
+      "ambito": {
+        "leas": [
+          "LEAS-5198",
+          "LEAS-6225",
+          "LEAS-6890"
+        ],
+        "tipo": "huerfana-administracion"
+      },
+      "porque": "Pasaron a Resuelto el 09/09 entre las 15:44 y las 15:51. Salieron publicadas por error en las pasadas de las 17:55 y las 18:15, cuando ya estaban cerradas.",
+      "quien": "Borja",
+      "cuando": "2026-09-09",
+      "revive_si": "Nunca: están cerradas. Solo si alguna se reabre."
     }
   ],
   "enlaces": [
@@ -1369,5 +1396,64 @@
       "nota": "Sustitución completa MHR91096 / MHP40498 enviada por DHL a las 16:53 y escrita en el ticket a las 17:23."
     }
   ],
-  "que_es_esto_enlaces": "Enlaces aprendidos: centro -> ticket. Cuando un mensaje del chat nombra el centro pero no el LEAS ni la serie, se mira aqui ANTES de darlo por huerfano. Se anade uno cada vez que un tecnico elige un candidato o corrige un enlace. Aqui no se guardan conversaciones de clientes, solo el enlace."
+  "que_es_esto_enlaces": "Enlaces aprendidos: centro -> ticket. Cuando un mensaje del chat nombra el centro pero no el LEAS ni la serie, se mira aqui ANTES de darlo por huerfano. Se anade uno cada vez que un tecnico elige un candidato o corrige un enlace. Aqui no se guardan conversaciones de clientes, solo el enlace.",
+  "traspasos": [
+    {
+      "punto": "telegram__telegram_Palermo_pide_una_segunda_recogida___el_08_09",
+      "a": "Isaac",
+      "de": "Gonzalo",
+      "quien": "Alejandro",
+      "cuando": "2026-09-09T13:21+02:00",
+      "porque": "reparto de la carga de Gonzalo"
+    },
+    {
+      "punto": "telegram__telegram_Centri_Unico_I_Gigli__Firenze____escribieron",
+      "a": "Borja",
+      "de": "Gonzalo",
+      "quien": "Alejandro",
+      "cuando": "2026-09-09T13:21+02:00",
+      "porque": "reparto de la carga de Gonzalo"
+    },
+    {
+      "punto": "telegram__telegram_Clinics_One_Canarias___hoy_a_las_10_25_Gonza",
+      "a": "Borja",
+      "de": "Gonzalo",
+      "quien": "Alejandro",
+      "cuando": "2026-09-09T13:21+02:00",
+      "porque": "reparto de la carga de Gonzalo"
+    },
+    {
+      "punto": "telegram__telegram_Naturaless__Medell_n__Colombia____el_08_09_a",
+      "a": "Isaac",
+      "de": "Gonzalo",
+      "quien": "Alejandro",
+      "cuando": "2026-09-09T13:21+02:00",
+      "porque": "reparto de la carga de Gonzalo"
+    },
+    {
+      "punto": "wapp__wapp_Smart_Duck_Asni_res___consola_C03292___hoy_a",
+      "a": "Isaac",
+      "de": "Gonzalo",
+      "quien": "Alejandro",
+      "cuando": "2026-09-09T13:21+02:00",
+      "porque": "reparto de la carga de Gonzalo"
+    },
+    {
+      "punto": "wapp__wapp_SinVello___dos_piezas_de_mano_volvieron_a_pe",
+      "a": "Isaac",
+      "de": "Gonzalo",
+      "quien": "Alejandro",
+      "cuando": "2026-09-09T13:21+02:00",
+      "porque": "reparto de la carga de Gonzalo"
+    },
+    {
+      "punto": "wapp__wapp_Epil_Point_Firenze___el_umbilical_no_ha_sali",
+      "a": "Borja",
+      "de": "Gonzalo",
+      "quien": "Alejandro",
+      "cuando": "2026-09-09T13:21+02:00",
+      "porque": "reparto de la carga de Gonzalo"
+    }
+  ],
+  "que_es_esto_traspasos": "Traspasos de puntos SIN ticket. No hay Jira donde escribirlos, así que se guardan aquí y cada pasada los vuelca al objeto TRASPASOS del panel del equipo con la clave del punto (idPunto = bloque__bloque|primeros 44 caracteres). Así el reparto se aplica solo y nadie tiene que pegar líneas en el grupo de la herramienta. Si el destino está en FUERA, el panel lo vuelve a repartir por la cadena."
 }
