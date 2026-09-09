@@ -1007,11 +1007,16 @@ function pasoDe(txt){
   const n = m[1].charAt(0).toUpperCase() + m[1].slice(1).toLowerCase();
   return ["Isaac","Chus","Gonzalo","Borja","Cristina","Alejandro"].indexOf(n) !== -1 ? n : null;
 }
+// Traspasos leídos de las notas «se lo paso a X» de Jira. Los escribe la pasada (o Alejandro a mano) para que el
+// nuevo dueño vea el punto en cualquier navegador aunque Jira en vivo no esté. Se vacía cuando la pasada ya ha
+// cambiado el responsable en Jira y ULT lo refleja.
+const TRASPASOS = {"LEAS-4265": "Borja", "LEAS-4908": "Isaac", "LEAS-5198": "Isaac", "LEAS-5211": "Borja", "LEAS-5219": "Isaac", "LEAS-5830": "Borja", "LEAS-5908": "Isaac", "LEAS-6225": "Borja", "LEAS-6754": "Isaac", "LEAS-6779": "Isaac", "LEAS-6835": "Borja", "LEAS-6890": "Isaac", "LEAS-7054": "Isaac", "LEAS-7112": "Isaac", "LEAS-7162": "Borja", "LEAS-7188": "Borja", "LEAS-7213": "Borja", "LEAS-7214": "Borja", "LEAS-7237": "Isaac", "LEAS-7268": "Isaac", "LEAS-7270": "Borja", "LEAS-7271": "Borja", "LEAS-7356": "Isaac", "LEAS-7358": "Borja", "LEAS-7359": "Borja", "LEAS-7375": "Isaac", "LEAS-7385": "Borja", "LEAS-7386": "Borja", "LEAS-7408": "Borja", "LEAS-7415": "Isaac", "LEAS-7416": "Isaac", "LEAS-7421": "Isaac", "LEAS-7438": "Borja", "LEAS-7465": "Isaac", "LEAS-7472": "Borja", "LEAS-7474": "Borja", "LEAS-7490": "Borja", "LEAS-7501": "Isaac", "LEAS-7503": "Borja", "LEAS-7521": "Isaac", "LEAS-7525": "Isaac", "LEAS-7526": "Borja", "LEAS-7530": "Isaac"};
 function titularEf(k, t){
   const id = idPunto(k, t), r = RESP[id], l = LOCAL[id];
   if(r && r.paraQuien) return r.paraQuien;
   if(l && l.para && (l.cuando||'').slice(0,10) === HOY()) return l.para;   // traspaso hecho desde este navegador
   const leas = leasDe(t), v = leas && JV[leas], g = GEN();
+  if(leas && TRASPASOS[leas] && disp(TRASPASOS[leas])) return TRASPASOS[leas];
   if(v && v.nota && g && new Date(v.nota.h) > g){ const p = pasoDe(v.nota.txt); if(p) return p; }  // traspaso visto en Jira
   return titularBase(k, t);
 }
