@@ -1,6 +1,6 @@
 {
  "version": 1,
- "actualizado": "2026-09-08T09:30+02:00",
+ "actualizado": "2026-09-09T11:45+02:00",
  "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
  "como_se_usa": [
   "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -541,6 +541,59 @@
    "cuando": "2026-09-07",
    "anotado": "2026-09-08",
    "revive_si": "Pasa el miércoles 9 sin que la caja salga de Gijón, o el ticket sigue sin dueño el jueves."
+  },
+  {
+   "id": "7158-serie-41003",
+   "que": "LEAS-7158 · el campo de manípulo prestado pone H41003 y hay que quitarle la H",
+   "ambito": {
+    "leas": "LEAS-7158",
+    "tipo": "serie-desconocida",
+    "serie": [
+     "H41003",
+     "41003"
+    ]
+   },
+   "porque": "Ya está corregido. Gonzalo lo dejó escrito desde el panel el 08/09 a las 18:16: «Corregido el numero de pieza de mano, que es la 41003», e Isaac lo había confirmado el 07/09 a las 13:02. El campo del ticket pone hoy 41003, releído el 09/09 a las 11:00.",
+   "quien": "Gonzalo",
+   "cuando": "2026-09-08",
+   "anotado": "2026-09-09",
+   "revive_si": "El campo vuelve a cambiar a una serie que no cuadre con el Inmovilizado."
+  },
+  {
+   "id": "6780-bssust008-existe",
+   "que": "LEAS-6780 Centri Unico Campania · la serie prestada BS SUST008 no consta en el Inmovilizado",
+   "ambito": {
+    "leas": "LEAS-6780",
+    "centro": "Centri Unico Campania",
+    "tipo": "serie-desconocida",
+    "serie": [
+     "BS SUST008",
+     "BSSUST008"
+    ]
+   },
+   "porque": "Existe y está fotografiada. Chus lo dijo el 04/09 a las 19:46 («La pistola existe. Buscar en el grupo de fotos como #BSSUST008») y Gonzalo lo repitió el 08/09 a las 18:15: «Está bien la consola que se presta, y existe, está en grupo de telegram FOTOS DE EQUIPO». Lo que falla es la ficha de Airtable, no el ticket.",
+   "quien": "Gonzalo",
+   "cuando": "2026-09-08",
+   "anotado": "2026-09-09",
+   "revive_si": "Nunca como «no existe». Solo si alguien del equipo dice que esa serie no salió a Campania."
+  },
+  {
+   "id": "7475-91119-albufera",
+   "que": "LEAS-7475 Dermasana Albufera · la consola prestada 91119 no es de sustitución",
+   "ambito": {
+    "leas": "LEAS-7475",
+    "centro": "Dermasana Albufera",
+    "tipo": "serie-desconocida",
+    "serie": [
+     "91119",
+     "90582"
+    ]
+   },
+   "porque": "Gonzalo lo explicó desde el panel el 08/09 a las 18:14: «LEAS-6934 está cerrado, se envió su consola correcta pero en el nuevo leas, se envia la 90582 con la pieza de mano 40498 como sustitución para recoger su equipo que falla». El caso está entendido y contado.",
+   "quien": "Gonzalo",
+   "cuando": "2026-09-08",
+   "anotado": "2026-09-09",
+   "revive_si": "Nunca en el panel del equipo. Que el campo 10199 siga poniendo 91119 y no 90582 va al panel de Alejandro como cosa de Airtable / dato del ticket."
   }
  ],
  "enlaces": [
@@ -689,6 +742,14 @@
    "quien": "Isaac",
    "cuando": "2026-09-07",
    "nota": "Envio de tornillos de umbilical publicado en ENVIOS SAT LEASEIR el 07/09 a las 20:11 sin citar LEAS; el ticket LEAS-7496 se resolvio esa misma noche a las 20:11."
+  },
+  {
+   "centro": "Elha Castellón",
+   "cliente": "Elha",
+   "leas": "LEAS-7516",
+   "quien": "pasada 09/09",
+   "cuando": "2026-09-09",
+   "nota": "Atado por nombre de centro, no elegido por un técnico: el envío de umbilical con casquillo quad publicado en ENVIOS SAT LEASEIR el 08/09 a las 14:04 no cita LEAS y LEAS-7516 es el único abierto de ese centro. Confirmadlo o corregidlo."
   }
  ],
  "que_es_esto_enlaces": "Enlaces aprendidos: centro -> ticket. Cuando un mensaje del chat nombra el centro pero no el LEAS ni la serie, se mira aqui ANTES de darlo por huerfano. Se anade uno cada vez que un tecnico elige un candidato o corrige un enlace. Aqui no se guardan conversaciones de clientes, solo el enlace."
