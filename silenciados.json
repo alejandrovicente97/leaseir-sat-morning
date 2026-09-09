@@ -1,756 +1,1009 @@
 {
- "version": 1,
- "actualizado": "2026-09-09T11:45+02:00",
- "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
- "como_se_usa": [
-  "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
-  "2. Si encaja: no se saca el punto. Ni reformulado, ni 'por si acaso', ni como recordatorio.",
-  "3. Solo se saca si se cumple lo que dice 'revive_si'. Y entonces se saca citando lo nuevo, no lo viejo.",
-  "4. Cuando alguien explique un punto nuevo, se añade aquí en la misma pasada. Con quién lo explicó y cuándo: es la prueba de que no me lo he inventado.",
-  "5. Este fichero es también la medida de calidad de la herramienta. Cada entrada es una vez que me equivoqué o que fui redundante. Si crece rápido, el problema soy yo."
- ],
- "silenciados": [
-  {
-   "id": "vomero-epilpoint",
-   "que": "Reclamación de una máquina a Andrea en el centro Vomero",
-   "ambito": {
-    "leas": null,
-    "centro": "Vomero",
-    "cliente": "Epil Point",
-    "tipo": "sin-ticket"
-   },
-   "porque": "Es un ticket interno de Epil Point. No tiene nada que ver con Leaseir y no hay nada que hacer por nuestra parte.",
-   "quien": "Chus",
-   "cuando": "2026-09-04",
-   "revive_si": "Epil Point nos escribe pidiendo algo a Leaseir sobre ese equipo."
-  },
-  {
-   "id": "manacor-cable",
-   "que": "Manacor dice que no ha recibido el cable",
-   "ambito": {
-    "leas": null,
-    "centro": "Manacor",
-    "tipo": "sin-ticket"
-   },
-   "porque": "Ya contestado: se les compartió la foto del registro de salida enseñando que el cable va dentro del maletín de la pistola.",
-   "quien": "Chus",
-   "cuando": "2026-09-04",
-   "revive_si": "El centro vuelve a reclamarlo después de haber visto la foto."
-  },
-  {
-   "id": "presupuesto-E261729",
-   "que": "Duda del cliente sobre el importe del presupuesto E261729",
-   "ambito": {
-    "leas": null,
-    "presupuesto": "E261729",
-    "tipo": "sin-ticket"
-   },
-   "porque": "Se le aclaró en el mismo momento, dentro de la propia conversación.",
-   "quien": "Chus",
-   "cuando": "2026-09-04",
-   "revive_si": "Vuelve a preguntar por el importe o rechaza el presupuesto."
-  },
-  {
-   "id": "jerez-recogida",
-   "que": "Recogida pedida por WhatsApp en Jerez que parece no tener ticket",
-   "ambito": {
-    "leas": "LEAS-7330",
-    "centro": "Jerez",
-    "tipo": "recogida-sustitucion",
-    "vinculado_a": "LEAS-7324"
-   },
-   "porque": "Sí tiene ticket: LEAS-7330, en 'Gestionada recogida'. Es la recogida de una máquina de SUSTITUCIÓN, no de una avería, por eso no hay ticket nuevo. Isaac ya la programó para el lunes. En el chat solo aparece el nombre del centro a medias, sin LEAS ni serie: ese es el motivo de que no supiera atarlo. Chus dejó comentario en el ticket el 04/09 a las 19:37 informando de que se recoge el lunes, y lo vinculó al caso LEAS-7324.",
-   "quien": "Chus",
-   "cuando": "2026-09-04",
-   "revive_si": "La recogida no se hace el lunes 07/09 o el estado del ticket retrocede."
-  },
-  {
-   "id": "elpalo-recogida",
-   "que": "Recogida pedida por WhatsApp en El Palo que parece no tener ticket",
-   "ambito": {
-    "leas": "LEAS-7372",
-    "centro": "El Palo",
-    "tipo": "recogida-sustitucion",
-    "vinculado_a": "LEAS-7371"
-   },
-   "porque": "Sí tiene ticket: LEAS-7372, en 'Gestionada recogida'. Recogida de sustitución, mismo caso que Jerez. Chus dejó comentario en el ticket el 04/09 a las 19:37 informando de que se recoge por CTT, y lo vinculó al caso LEAS-7371.",
-   "quien": "Chus",
-   "cuando": "2026-09-04",
-   "revive_si": "Pasa una semana sin que la recogida se materialice."
-  },
-  {
-   "id": "miraflores-prestamo",
-   "que": "Miraflores sin ticket aparente",
-   "ambito": {
-    "leas": "LEAS-7258",
-    "centro": "Miraflores",
-    "cliente": "SinVello",
-    "tipo": "recogida-sustitucion"
-   },
-   "porque": "Sí tiene ticket: LEAS-7258, en 'En préstamo'. Aquí el aviso era CORRECTO —SinVello no ha contestado todavía en el chat—; lo único falso era decir que no estaba en Jira. El punto se puede volver a sacar, pero por el silencio del cliente, nunca por 'no está en Jira'. Chus dejó comentario en el ticket el 04/09 a las 19:37 informando de que se está a la espera de respuesta para efectuar la recogida.",
-   "quien": "Chus",
-   "cuando": "2026-09-04",
-   "revive_si": "Sigue sin respuesta de SinVello pasados varios días: entonces se saca como 'préstamo sin confirmar', citando la fecha del último mensaje."
-  },
-  {
-   "id": "7478-7477-hermanas",
-   "que": "LEAS-7478 y LEAS-7477 colgadas del ticket que no es",
-   "ambito": {
-    "leas": [
-     "LEAS-7478",
-     "LEAS-7477",
-     "LEAS-7456"
-    ],
-    "tipo": "jerarquia"
-   },
-   "porque": "Están bien: las dos son subtareas hermanas del caso raíz LEAS-7456 y así aparece en el árbol de dependencias. Yo miré mal.",
-   "quien": "Chus",
-   "cuando": "2026-09-04",
-   "revive_si": "Nunca por esto. Solo si el árbol de dependencias cambia de verdad."
-  },
-  {
-   "id": "7456-recogida-antes-de-susti",
-   "que": "LEAS-7456 lleva días sin que se recoja la máquina averiada",
-   "ambito": {
-    "leas": "LEAS-7456",
-    "tipo": "recogida-pendiente"
-   },
-   "porque": "No se puede recoger la averiada hasta que el cliente reciba la de sustitución. Hay un hueco de tiempo entre entrega de la susti y recogida de la averiada, y es lo normal, no un retraso.",
-   "quien": "Chus",
-   "cuando": "2026-09-04",
-   "revive_si": "La sustitución ya está entregada y confirmada y aun así pasan más de 5 días sin gestionar la recogida."
-  },
-  {
-   "id": "7177-7357-devoluciones",
-   "que": "Duplicación de inventario en LEAS-7177 y LEAS-7357",
-   "ambito": {
-    "leas": [
-     "LEAS-7177",
-     "LEAS-7357"
-    ],
-    "tipo": "duplicacion-inventario"
-   },
-   "porque": "NO hay duplicación. Las máquinas fueron devueltas, recibidas en taller y revisadas, y desde ahí se volvieron a prestar. Que el cliente anterior no haya pagado todavía no impide volver a prestarlas: es un activo paralizado hasta que se confirme el pago de la sustitución, y eso es un tema de facturación, no de inventario.",
-   "quien": "Chus",
-   "cuando": "2026-09-04",
-   "revive_si": "Nunca como conflicto de inventario. El seguimiento del cobro va por el bloque de cobros, no por aquí."
-  },
-  {
-   "id": "sustahrd005",
-   "que": "SUSTAHRD005 no existe / no consta",
-   "ambito": {
-    "leas": "LEAS-7401",
-    "serie": "SUSTAHRD005",
-    "tipo": "serie-desconocida"
-   },
-   "porque": "La máquina existe. Gonzalo lo confirmó con fotos: salió el 27 de agosto y están subidas al grupo de fotos de equipos. Lo que falta es la ficha en el Inmovilizado, y eso es tarea de Alejandro, no del equipo.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-04",
-   "revive_si": "Nunca contra el equipo. Vive solo en el bloque de Airtable del panel de Alejandro."
-  },
-  {
-   "id": "sustmhr025",
-   "que": "SUSTMHR025 no existe / no consta",
-   "ambito": {
-    "leas": "LEAS-7366",
-    "serie": "SUSTMHR025",
-    "tipo": "serie-desconocida"
-   },
-   "porque": "Existe y está en el grupo de fotos de equipos. Confirmado por Gonzalo. Falta la ficha, no la máquina.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-04",
-   "revive_si": "Nunca contra el equipo. Solo en el bloque de Airtable de Alejandro."
-  },
-  {
-   "id": "c03143",
-   "que": "C03143 / H03143 no constan en el Inmovilizado",
-   "ambito": {
-    "leas": "LEAS-5697",
-    "serie": [
-     "C03143",
-     "H03143"
-    ],
-    "tipo": "serie-desconocida"
-   },
-   "porque": "Gonzalo ya lo corrigió el 04/09. Queda comprobar en Airtable que cuadra, y eso es de Alejandro.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-04",
-   "revive_si": "Nunca contra el equipo."
-  },
-  {
-   "id": "c003258",
-   "que": "C003258 / H003258 con un cero de más",
-   "ambito": {
-    "leas": "LEAS-7140",
-    "serie": [
-     "C003258",
-     "H003258",
-     "H03258"
-    ],
-    "tipo": "serie-desconocida"
-   },
-   "porque": "Gonzalo lo corrigió a H03258 el 04/09.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-04",
-   "revive_si": "Nunca contra el equipo."
-  },
-  {
-   "id": "7268-nota-nueva",
-   "que": "LEAS-7268 sin nota nueva",
-   "ambito": {
-    "leas": "LEAS-7268",
-    "tipo": "sin-movimiento"
-   },
-   "porque": "Falso: Chus escribió a las 16:24 del 04/09. La pasada copió el texto de la pasada anterior en vez de releer el ticket.",
-   "quien": "Chus",
-   "cuando": "2026-09-04",
-   "revive_si": "Pasan 3 días laborables sin comentario nuevo de verdad, comprobado releyendo el ticket en esa misma pasada."
-  },
-  {
-   "id": "7316-7476-tornillo",
-   "que": "LEAS-7476 tratado como caso nuevo sin relación con nada",
-   "ambito": {
-    "leas": [
-     "LEAS-7476",
-     "LEAS-7316"
-    ],
-    "tipo": "caso-repetido"
-   },
-   "porque": "Ya está explicado y acordado: es el mismo centro y la misma pistola. Se reparó el tornillo (LEAS-7316, finalizado el 01/09), se volvió a caer a los dos días y se abrió LEAS-7476 sin citar el anterior. Se acordó dejarlo escrito en comentario.",
-   "quien": "Chus",
-   "cuando": "2026-09-04",
-   "revive_si": "Se vuelve a caer una tercera vez: entonces deja de ser un caso repetido y es una reparación que no funciona."
-  },
-  {
-   "id": "sustmhr033",
-   "que": "SUSTMHR033 no consta en el Inmovilizado",
-   "ambito": {
-    "leas": "LEAS-7388",
-    "serie": "SUSTMHR033",
-    "tipo": "serie-desconocida"
-   },
-   "porque": "Gonzalo lo explicó en LEAS-7388 el 04/09 a las 18:18 desde el panel: «La consola SUSTMHR033 existe y está en el telegram de fotos de equipo como prueba». Falta la ficha en Airtable, no la máquina. Se anota hoy porque el 04/09 se explicó y no llegó a escribirse aquí.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-04",
-   "anotado": "2026-09-05",
-   "revive_si": "Nunca contra el equipo. Vive solo en el bloque de Airtable del panel de Alejandro."
-  },
-  {
-   "id": "sustquad025",
-   "que": "SUSTQUAD025 no consta en el Inmovilizado",
-   "ambito": {
-    "leas": "LEAS-7191",
-    "serie": "SUSTQUAD025",
-    "tipo": "serie-desconocida"
-   },
-   "porque": "Gonzalo lo explicó en LEAS-7191 el 04/09 a las 18:18 desde el panel: «La pieza de sustitución SUSTQUAD025 existe y está en el grupo de telegram de fotos de equipo como prueba». Falta la ficha en Airtable. Se anota hoy porque el 04/09 se explicó y no llegó a escribirse aquí.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-04",
-   "anotado": "2026-09-05",
-   "revive_si": "Nunca contra el equipo. Vive solo en el bloque de Airtable del panel de Alejandro."
-  },
-  {
-   "id": "7230-tracking-sin-susti",
-   "que": "LEAS-7230 sin tracking / recogida pendiente",
-   "ambito": {
-    "leas": "LEAS-7230",
-    "centro": "SinVello Albacete",
-    "tipo": "sin-tracking"
-   },
-   "porque": "Isaac lo explicó desde el panel el 05/09 a las 11:13 y a las 11:21: «aun no se ha enviado sustitución por eso no hay tracking de recogida ni de envio» y «aun no se ha recogido porque no se ha enviado la sustitución». Sin sustitución enviada no hay ni recogida ni tracking que poner.",
-   "quien": "Isaac",
-   "cuando": "2026-09-05",
-   "revive_si": "La sustitución LEAS-7251 sale del taller y LEAS-7230 sigue sin tracking en el campo 11420."
-  },
-  {
-   "id": "7466-tracking-sin-susti",
-   "que": "LEAS-7466 sin tracking / recogida pendiente",
-   "ambito": {
-    "leas": "LEAS-7466",
-    "centro": "Sinvello Teatinos",
-    "tipo": "sin-tracking"
-   },
-   "porque": "Isaac lo explicó desde el panel el 05/09 a las 11:14: «aun no se ha mandado sustitución por eso no hay tracking de recogida ni de envio». La pistola se publicó en ENVIOS SAT LEASEIR a las 11:15 (LEAS-7489), todavía sin salir.",
-   "quien": "Isaac",
-   "cuando": "2026-09-05",
-   "revive_si": "LEAS-7489 pasa a «Equipo enviado» y LEAS-7466 sigue sin tracking."
-  },
-  {
-   "id": "7028-entregado-transporte",
-   "que": "LEAS-7028 como préstamo abierto y subtarea huérfana",
-   "ambito": {
-    "leas": "LEAS-7028",
-    "serie": "H00340",
-    "tipo": "prestamo-huerfano"
-   },
-   "porque": "Isaac lo explicó desde el panel el 05/09 a las 11:19: «ya la entrego el transporte en nuestras instalaciones», y cerró el ticket a las 11:19. El equipo está en casa.",
-   "quien": "Isaac",
-   "cuando": "2026-09-05",
-   "revive_si": "Nunca por esto: el ticket está en «Finalizada»."
-  },
-  {
-   "id": "7493-subtarea-caso-vivo",
-   "que": "LEAS-7493 cuelga de LEAS-7284, que está en «Resuelto»",
-   "ambito": {
-    "leas": "LEAS-7493",
-    "centro": "SinVello Cádiz",
-    "tipo": "jerarquia"
-   },
-   "porque": "Isaac lo explicó desde el panel el 05/09 a las 10:31: «la subtarea se mueve al caso vivo porque el manipulo suyo no da enrgia por la configuración de la consola». El caso vivo es LEAS-7490.",
-   "quien": "Isaac",
-   "cuando": "2026-09-05",
-   "revive_si": "El lunes 07/09 LEAS-7493 sigue colgando de LEAS-7284 y no del caso vivo LEAS-7490.",
-   "revivido": "2026-09-07: revivio a las 09:45 porque seguia colgando de LEAS-7284. A las 12:45 Isaac ha CANCELADO LEAS-7493, asi que el ticket esta cerrado y el punto sale del panel. No vuelve a salir por esto."
-  },
-  {
-   "id": "7499-sincronis-llamada",
-   "que": "LEAS-7499 Centri Unico Toledo sin comentario y sin fecha para el centro",
-   "ambito": {
-    "leas": "LEAS-7499",
-    "centro": "Centri Unico Toledo",
-    "tipo": "sin-movimiento"
-   },
-   "porque": "Gonzalo lo contestó desde el panel el 07/09 a las 16:16: «Se le ha dicho a Sincronis, que por favor llamen cuanto antes». Ya hay nota en el ticket y la gestión está hecha con el proveedor.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-07",
-   "revive_si": "Pasa un día laborable más y el centro sigue sin fecha, o Sincronis no ha llamado."
-  },
-  {
-   "id": "7419-material-entregado",
-   "que": "LEAS-7419 Elha Ramón y Cajal · 6 días sin nota del técnico externo",
-   "ambito": {
-    "leas": "LEAS-7419",
-    "tipo": "externo-sin-nota"
-   },
-   "porque": "Gonzalo escribió desde el panel el 07/09 a las 16:05: «Material entregado y recordado al técnico». Ya hay nota de hoy.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-07",
-   "revive_si": "Pasan 3 días laborables sin nota nueva, comprobado releyendo el ticket en esa pasada."
-  },
-  {
-   "id": "7469-material-recibido",
-   "que": "LEAS-7469 Elha Cerdanyola · 3 días sin nota del técnico externo",
-   "ambito": {
-    "leas": "LEAS-7469",
-    "tipo": "externo-sin-nota"
-   },
-   "porque": "Gonzalo escribió desde el panel el 07/09 a las 16:02: «Material recibido, se avisa al técnico».",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-07",
-   "revive_si": "Pasan 3 días laborables sin nota nueva, comprobado releyendo el ticket."
-  },
-  {
-   "id": "7455-maps-agendar-llamada",
-   "que": "LEAS-7455 BiNatural · falta el link de ubicación",
-   "ambito": {
-    "leas": "LEAS-7455",
-    "centro": "BiNatural",
-    "tipo": "sin-maps"
-   },
-   "porque": "Gonzalo lo explicó desde el panel el 07/09 a las 16:09: «Se pone la direción pero en agendar llamada no te deja poner el link de google maps». No es que no lo pongan: el formulario del estado «Pendiente agendar llamada» no ofrece el campo 11354. Es un fallo de configuración de Jira, no del equipo.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-07",
-   "revive_si": "Nunca contra el equipo mientras el ticket esté en «Pendiente agendar llamada». Si pasa a otro estado y sigue sin link, entonces sí. El arreglo del formulario va al panel de Alejandro."
-  },
-  {
-   "id": "7444-tecnico-de-baja",
-   "que": "LEAS-7444 Miguel Parra (ex-Brull) · falta el link de ubicación / servicio externo sin definir",
-   "ambito": {
-    "leas": "LEAS-7444",
-    "centro": "Miguel Parra",
-    "tipo": "sin-maps"
-   },
-   "porque": "Gonzalo lo contestó desde el panel el 07/09 a las 16:10: «El técnico está de baja, y el cliente quiere ese técnico por lo que estamos esperando». El ticket está parado a propósito.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-07",
-   "revive_si": "Se define el servicio externo o el técnico vuelve, y el ticket sigue sin link de ubicación en el campo 11354."
-  },
-  {
-   "id": "7343-7472-recogida-enora",
-   "que": "LEAS-7343 y LEAS-7472 (Elha Sta Teresa) salieron del cliente y no llegan a taller",
-   "ambito": {
-    "leas": [
-     "LEAS-7343",
-     "LEAS-7472"
-    ],
-    "centro": "Elha Sta Teresa",
-    "tipo": "no-llega-taller"
-   },
-   "porque": "Gonzalo dio el número de recogida desde el panel el 07/09 a las 16:13 y 16:14: «Numero de recogida por enora: 1036143». Las dos van en el mismo porte y la recogida está gestionada.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-07",
-   "revive_si": "Pasan 3 días laborables desde el 07/09 y el equipo sigue sin entrar en taller. Lo del campo de tracking vacío de LEAS-7472 sí sigue saliendo, que es otra cosa."
-  },
-  {
-   "id": "7249-pieza-de-mano-30748",
-   "que": "LEAS-7249 BiNatural · 715 h de reparación fuera de plazo y abierto",
-   "ambito": {
-    "leas": "LEAS-7249",
-    "centro": "BiNatural",
-    "tipo": "reparacion-fuera-de-plazo"
-   },
-   "porque": "Gonzalo lo explicó desde el panel el 07/09 a las 16:35: «El problema erradica en la pieza de mano 30748, como lo ha comprobado el técnico el 19/08/2026, vamos a preguntar de nuevo sobre el asunto por si podemos recoger la pieza de mano». Está identificado y a la espera del cliente.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-07",
-   "revive_si": "Pasa una semana sin que se consiga recoger la pieza de mano 30748 ni haya nota nueva."
-  },
-  {
-   "id": "6768-buzzer-miercoles",
-   "que": "LEAS-6768 CVL Distribuidor · 1.838 h de reparación fuera de plazo, «pendiente asignar técnico»",
-   "ambito": {
-    "leas": "LEAS-6768",
-    "tipo": "reparacion-fuera-de-plazo"
-   },
-   "porque": "Ya no está sin técnico: está «En reparación» con Fran, que escribió el 07/09 a las 15:38 «Falla el buzzer durante las pruebas de temperatura, dado que ya pasa ampliamente de la hora de salida, queda pendiente para el miércoles 9». Gonzalo añadió a las 16:07 que se envía material. El equipo está en el banco.",
-   "quien": "Fran",
-   "cuando": "2026-09-07",
-   "revive_si": "Pasa el miércoles 9 sin que se retome, o el ticket vuelve a quedarse sin técnico. Lo de qué dirección de Mallorca es la buena sigue vivo en el bloque de envíos."
-  },
-  {
-   "id": "7509-7505-cadiz-dos-sustis",
-   "que": "LEAS-7505 y LEAS-7509 como sustituciones duplicadas de SinVello Cádiz",
-   "ambito": {
-    "leas": [
-     "LEAS-7505",
-     "LEAS-7509",
-     "LEAS-7490"
-    ],
-    "centro": "SinVello Cádiz",
-    "tipo": "duplicacion-inventario"
-   },
-   "porque": "No hay duplicación. Ernesto lo dejó dicho en «ENVIOS SAT LEASEIR» el 07/09 a las 16:18: «Se abre LEAS nuevo 7509 para no reescribir el 7505 que ya tenia tiempo». Las dos cuelgan del mismo padre LEAS-7490 y llevan piezas distintas: consola C00552 en LEAS-7505 y manípulo H03204 en LEAS-7509.",
-   "quien": "Ernesto",
-   "cuando": "2026-09-07",
-   "revive_si": "Nunca como duplicación. Solo si las dos quedaran en préstamo abierto pasado el cierre del caso."
-  },
-  {
-   "id": "7227-prestamo-en-uso",
-   "que": "LEAS-7227 Elha Limoneros como préstamo fuera de plazo y subtarea huérfana",
-   "ambito": {
-    "leas": "LEAS-7227",
-    "centro": "Elha Limoneros",
-    "tipo": "prestamo-huerfano"
-   },
-   "porque": "Gonzalo lo contestó desde el panel el 07/09 a las 16:48: «Sigue en prestamo ya que el cliente lo está usando». El préstamo está vivo a propósito; que el padre LEAS-7224 esté en «Resuelto» no lo convierte en huérfano.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-07",
-   "revive_si": "El cliente devuelve el equipo y el ticket sigue abierto, o pasan más de 30 días sin nota nueva sobre ese préstamo."
-  },
-  {
-   "id": "7285-prestamo-en-uso",
-   "que": "LEAS-7285 SinVello Cádiz como préstamo fuera de plazo y subtarea huérfana",
-   "ambito": {
-    "leas": "LEAS-7285",
-    "centro": "SinVello Cadiz",
-    "tipo": "prestamo-huerfano"
-   },
-   "porque": "Gonzalo lo contestó desde el panel el 07/09 a las 16:49: «Sigue de prestamo con el cliente». Isaac ya lo había explicado a las 12:27 en LEAS-7505: la consola C00552 está allí porque fue la primera sustitución que se mandó.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-07",
-   "revive_si": "Se cierra el caso raíz LEAS-7490 y la consola sigue en el centro sin ticket que la sostenga."
-  },
-  {
-   "id": "7486-laser-a-taller",
-   "que": "LEAS-7486 Laser Factory Sabadell · nadie contesta lo de Manresa y sigue con un solo comentario",
-   "ambito": {
-    "leas": "LEAS-7486",
-    "centro": "Laser Factory Sabadell",
-    "tipo": "sin-movimiento"
-   },
-   "porque": "Isaac lo contestó en el ticket el 07/09 a las 19:14: «como no sabemos muy bien cual es la averia vamos a traer a taller el laser completo, se movera cuando nos avisen mañana una sustitución de ellos que esta en Manresa». La decisión está tomada y escrita.",
-   "quien": "Isaac",
-   "cuando": "2026-09-07",
-   "revive_si": "Pasan 3 días laborables sin que la recogida se materialice o sin nota nueva, comprobado releyendo el ticket."
-  },
-  {
-   "id": "cerdanyola-umbilical",
-   "que": "Elha Cerdanyola · el técnico externo dice que el umbilical no se puede sanear y hace falta uno nuevo",
-   "ambito": {
-    "leas": [
-     "LEAS-7447",
-     "LEAS-7469"
-    ],
-    "centro": "Elha Cerdanyola",
-    "tipo": "reparacion-externo"
-   },
-   "porque": "Resuelto el mismo día. El externo Jesús (Caypri) lo dijo en «Caypri Láser - Leaseir» a las 17:44 y a las 19:13 Isaac escribió en LEAS-7447 «al final el técnico a cambiado el umbilical» y a las 19:39 en LEAS-7469 «se cambia tambien umbilical avisando al cliente». Los dos tickets quedaron en «Finalizado técnico externo».",
-   "quien": "Isaac",
-   "cuando": "2026-09-07",
-   "revive_si": "El centro vuelve a reportar el mismo fallo del umbilical después del cambio."
-  },
-  {
-   "id": "7492-villarroel-carlos",
-   "que": "LEAS-7492 Elha Villarroel · sigue en «Abierto» y sin nadie asignado desde el viernes",
-   "ambito": {
-    "leas": "LEAS-7492",
-    "centro": "Elha Villarroel",
-    "tipo": "sin-movimiento"
-   },
-   "porque": "Isaac lo cerró en falso no: lo gestionó. El 07/09 a las 19:32 escribió en el ticket «se habla con Carlos y cuando vaya a Villarroel por la LEAS-7488 aprovechara y revisara esta consola que no enciende. Se le envia parte de trabajo», y el ticket pasó a «Enviado a técnico externo».",
-   "quien": "Isaac",
-   "cuando": "2026-09-07",
-   "revive_si": "Carlos hace la visita de LEAS-7488 y LEAS-7492 sigue sin nota del resultado."
-  },
-  {
-   "id": "7406-livorno-taranto",
-   "que": "LEAS-7406 Epil Point Livorno · el material se entregó en Taranto y nadie contestó al técnico lo del 14/09",
-   "ambito": {
-    "leas": "LEAS-7406",
-    "centro": "Epil Point Livorno",
-    "tipo": "externo-sin-nota"
-   },
-   "porque": "Cerrado el mismo día con el motivo escrito. Isaac a las 18:18: «tras reparar el técnico el umbilical dicen que da otra vez fallo pero nos avisan al poco tiempo que vuelve a funcionar. Se envia material por si acaso y cuando llegue se le avisara al tecnico», y Gonzalo subió a las 18:19 el parte de trabajo de Light Solutions. El ticket quedó en «Finalizado técnico externo».",
-   "quien": "Isaac",
-   "cuando": "2026-09-07",
-   "revive_si": "Livorno vuelve a reportar el fallo y hay que reabrir o abrir ticket nuevo."
-  },
-  {
-   "id": "6768-direccion-costitx",
-   "que": "LEAS-6768 CVL Distribuidor · no se sabe qué dirección de Mallorca es la buena",
-   "ambito": {
-    "leas": "LEAS-6768",
-    "tipo": "direccion-envio"
-   },
-   "porque": "Isaac lo contestó desde el panel el 08/09 a las 09:20: «la direccion correcta es Carrer Major 24, planta baja, 07144 Costitx». Ya está dicha.",
-   "quien": "Isaac",
-   "cuando": "2026-09-08",
-   "revive_si": "Sale un envío de ese cliente a una dirección distinta de Costitx, o el ticket recibe otra dirección que la contradiga."
-  },
-  {
-   "id": "7349-falta-primer-pago",
-   "que": "LEAS-7349 Cris Peña Beauty Center · en «Inspección de salida» y sin pasar a Finalizada",
-   "ambito": {
-    "leas": "LEAS-7349",
-    "tipo": "terminado-sin-finalizar"
-   },
-   "porque": "Isaac lo contestó desde el panel el 08/09 a las 09:20: «no ha salido porque falta de abonar el primer pago la clienta, hasta que no se abona la factura no se envia a cliente». El ticket está abierto a propósito.",
-   "quien": "Isaac",
-   "cuando": "2026-09-08",
-   "revive_si": "Consta el pago de la clienta y el equipo sigue sin salir, o pasan más de 15 días sin nota nueva sobre el cobro."
-  },
-  {
-   "id": "7510-caja-miercoles",
-   "que": "LEAS-7510 Elha Boltaña · alta bloqueante sin un solo comentario",
-   "ambito": {
-    "leas": "LEAS-7510",
-    "centro": "Elha Boltaña",
-    "tipo": "sin-movimiento"
-   },
-   "porque": "Falso desde las 19:56 del 07/09: Isaac escribió en el ticket «Gonzalo hace pruebas y con el cliente y parace ser la nevera, se les envia caja de madera el miercoles que saldra de Gijon». El punto se publicó a las 19:50 y quedó caducado seis minutos después. Tampoco procede pedirle tracking de recogida: la caja no sale hasta el miércoles.",
-   "quien": "Isaac",
-   "cuando": "2026-09-07",
-   "anotado": "2026-09-08",
-   "revive_si": "Pasa el miércoles 9 sin que la caja salga de Gijón, o el ticket sigue sin dueño el jueves."
-  },
-  {
-   "id": "7158-serie-41003",
-   "que": "LEAS-7158 · el campo de manípulo prestado pone H41003 y hay que quitarle la H",
-   "ambito": {
-    "leas": "LEAS-7158",
-    "tipo": "serie-desconocida",
-    "serie": [
-     "H41003",
-     "41003"
-    ]
-   },
-   "porque": "Ya está corregido. Gonzalo lo dejó escrito desde el panel el 08/09 a las 18:16: «Corregido el numero de pieza de mano, que es la 41003», e Isaac lo había confirmado el 07/09 a las 13:02. El campo del ticket pone hoy 41003, releído el 09/09 a las 11:00.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-08",
-   "anotado": "2026-09-09",
-   "revive_si": "El campo vuelve a cambiar a una serie que no cuadre con el Inmovilizado."
-  },
-  {
-   "id": "6780-bssust008-existe",
-   "que": "LEAS-6780 Centri Unico Campania · la serie prestada BS SUST008 no consta en el Inmovilizado",
-   "ambito": {
-    "leas": "LEAS-6780",
-    "centro": "Centri Unico Campania",
-    "tipo": "serie-desconocida",
-    "serie": [
-     "BS SUST008",
-     "BSSUST008"
-    ]
-   },
-   "porque": "Existe y está fotografiada. Chus lo dijo el 04/09 a las 19:46 («La pistola existe. Buscar en el grupo de fotos como #BSSUST008») y Gonzalo lo repitió el 08/09 a las 18:15: «Está bien la consola que se presta, y existe, está en grupo de telegram FOTOS DE EQUIPO». Lo que falla es la ficha de Airtable, no el ticket.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-08",
-   "anotado": "2026-09-09",
-   "revive_si": "Nunca como «no existe». Solo si alguien del equipo dice que esa serie no salió a Campania."
-  },
-  {
-   "id": "7475-91119-albufera",
-   "que": "LEAS-7475 Dermasana Albufera · la consola prestada 91119 no es de sustitución",
-   "ambito": {
-    "leas": "LEAS-7475",
-    "centro": "Dermasana Albufera",
-    "tipo": "serie-desconocida",
-    "serie": [
-     "91119",
-     "90582"
-    ]
-   },
-   "porque": "Gonzalo lo explicó desde el panel el 08/09 a las 18:14: «LEAS-6934 está cerrado, se envió su consola correcta pero en el nuevo leas, se envia la 90582 con la pieza de mano 40498 como sustitución para recoger su equipo que falla». El caso está entendido y contado.",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-08",
-   "anotado": "2026-09-09",
-   "revive_si": "Nunca en el panel del equipo. Que el campo 10199 siga poniendo 91119 y no 90582 va al panel de Alejandro como cosa de Airtable / dato del ticket."
-  }
- ],
- "enlaces": [
-  {
-   "centro": "Jerez",
-   "cliente": "SinVello",
-   "leas": "LEAS-7330",
-   "vinculado_a": "LEAS-7324",
-   "quien": "Chus",
-   "cuando": "2026-09-04"
-  },
-  {
-   "centro": "El Palo",
-   "cliente": "SinVello",
-   "leas": "LEAS-7372",
-   "vinculado_a": "LEAS-7371",
-   "quien": "Chus",
-   "cuando": "2026-09-04"
-  },
-  {
-   "centro": "Miraflores",
-   "cliente": "SinVello",
-   "leas": "LEAS-7258",
-   "quien": "Chus",
-   "cuando": "2026-09-04"
-  },
-  {
-   "centro": "Alcalá de Henares",
-   "cliente": "SinVello",
-   "leas": "LEAS-7476",
-   "vinculado_a": "LEAS-7316",
-   "quien": "Chus",
-   "cuando": "2026-09-04"
-  },
-  {
-   "centro": "Cádiz",
-   "cliente": "SinVello",
-   "leas": "LEAS-7490",
-   "vinculado_a": "LEAS-7493",
-   "quien": "Isaac",
-   "cuando": "2026-09-05"
-  },
-  {
-   "centro": "Elha Villarroel",
-   "cliente": "Elha",
-   "leas": "LEAS-7492",
-   "quien": "Chus",
-   "cuando": "2026-09-07"
-  },
-  {
-   "centro": "Centri Unico Toledo",
-   "cliente": "Centri Unico",
-   "leas": "LEAS-7499",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-07",
-   "nota": "Gonzalo abrio el ticket a las 11:25 tras atender el chat de 10:21 a 10:44; el caso se paso a Sincronis a las 12:08."
-  },
-  {
-   "centro": "Clinica Cibeles CC Holea",
-   "cliente": "Directo",
-   "leas": "LEAS-7503",
-   "vinculado_a": "LEAS-7504",
-   "quien": "Isaac",
-   "cuando": "2026-09-07",
-   "nota": "Isaac abrio LEAS-7503 a las 12:10 y su sustitucion LEAS-7504 a las 12:11 (series 91129 / 40481, publicadas en ENVIOS a las 12:12)."
-  },
-  {
-   "centro": "Sin Vello Cadiz",
-   "cliente": "SinVello",
-   "leas": "LEAS-7505",
-   "vinculado_a": "LEAS-7490",
-   "quien": "Isaac",
-   "cuando": "2026-09-07",
-   "nota": "Isaac corrigio el enlace en ENVIOS SAT LEASEIR a las 15:14: la sustitucion de Cadiz no es LEAS-7493 (cancelado) sino LEAS-7505, serie H03204."
-  },
-  {
-   "centro": "Centri Unico Globo",
-   "cliente": "Centri Unico",
-   "leas": "LEAS-7438",
-   "quien": "pasada 15:30",
-   "cuando": "2026-09-07",
-   "nota": "Atado por nombre de centro, no elegido por un tecnico: el ticket LEAS-7438 es el unico abierto de Centri Unico Globo y el centro escribe en el grupo de Centri Unico Italia. Confirmadlo o corregidlo."
-  },
-  {
-   "centro": "Sin Vello Cadiz",
-   "cliente": "SinVello",
-   "leas": "LEAS-7509",
-   "vinculado_a": "LEAS-7490",
-   "quien": "Ernesto",
-   "cuando": "2026-09-07",
-   "nota": "Segunda sustitucion de Cadiz, abierta a las 16:18 para no reescribir LEAS-7505. Manipulo H03204; la consola C00552 va en LEAS-7505."
-  },
-  {
-   "centro": "Elha Caracol",
-   "cliente": "Elha",
-   "leas": "LEAS-7495",
-   "quien": "Isaac",
-   "cuando": "2026-09-07",
-   "nota": "Isaac publicó el umbilical con casquillo QUAD para Elha Caracol en ENVIOS SAT LEASEIR a las 19:36 y lo escribió en LEAS-7495 a las 19:37: «se envia material y se avisa a Gee»."
-  },
-  {
-   "centro": "Cavitbell Centro Médico Estético",
-   "cliente": "Directo",
-   "leas": "LEAS-7507",
-   "quien": "Isaac",
-   "cuando": "2026-09-07",
-   "nota": "Envío de tornillos de nylon y tuercas publicado en ENVIOS SAT LEASEIR a las 18:49 (Pamplona); Isaac lo escribió en LEAS-7507 a las 18:48."
-  },
-  {
-   "centro": "Centro Médico Estético Deleite",
-   "cliente": "Directo",
-   "leas": "LEAS-7500",
-   "quien": "Isaac",
-   "cuando": "2026-09-07",
-   "nota": "Isaac escribió «se avisa a innet» en LEAS-7500 a las 18:34. Ese centro tiene además la queja de calidad LEAS-7513, que no es del SAT."
-  },
-  {
-   "centro": "Depil Planet Las Rosas",
-   "cliente": "Directo",
-   "leas": "LEAS-7501",
-   "quien": "Isaac",
-   "cuando": "2026-09-07",
-   "nota": "Isaac escribió «se ha mando material y avisado a innet» en LEAS-7501 a las 18:34. OJO: NO es el mismo centro que Depil Planet Avda. de Niza, cuyo envío quedó cancelado a las 15:02 por falta de dirección."
-  },
-  {
-   "centro": "Elha Boltaña",
-   "cliente": "Elha",
-   "leas": "LEAS-7510",
-   "quien": "Gonzalo",
-   "cuando": "2026-09-07",
-   "nota": "Gonzalo publicó en ENVIOS SAT LEASEIR a las 18:34 «LEAS-7510 Enviar caja a Elha Boltaña, C/ de Boltaña, 78, San Blas-Canillejas, 28022 Madrid»."
-  },
-  {
-   "centro": "Elha Vilanova",
-   "cliente": "Elha",
-   "leas": "LEAS-7515",
-   "vinculado_a": "LEAS-7443",
-   "quien": "Isaac",
-   "cuando": "2026-09-07",
-   "nota": "Sustitucion completa LT QUAD publicada en ENVIOS SAT LEASEIR el 07/09 a las 20:04 (Carrer de la Llibertat, 66, Vilanova i la Geltru). Por eso LEAS-7443 no sale como recogida sin tracking."
-  },
-  {
-   "centro": "Elha Reus",
-   "cliente": "Elha",
-   "leas": "LEAS-7496",
-   "quien": "Isaac",
-   "cuando": "2026-09-07",
-   "nota": "Envio de tornillos de umbilical publicado en ENVIOS SAT LEASEIR el 07/09 a las 20:11 sin citar LEAS; el ticket LEAS-7496 se resolvio esa misma noche a las 20:11."
-  },
-  {
-   "centro": "Elha Castellón",
-   "cliente": "Elha",
-   "leas": "LEAS-7516",
-   "quien": "pasada 09/09",
-   "cuando": "2026-09-09",
-   "nota": "Atado por nombre de centro, no elegido por un técnico: el envío de umbilical con casquillo quad publicado en ENVIOS SAT LEASEIR el 08/09 a las 14:04 no cita LEAS y LEAS-7516 es el único abierto de ese centro. Confirmadlo o corregidlo."
-  }
- ],
- "que_es_esto_enlaces": "Enlaces aprendidos: centro -> ticket. Cuando un mensaje del chat nombra el centro pero no el LEAS ni la serie, se mira aqui ANTES de darlo por huerfano. Se anade uno cada vez que un tecnico elige un candidato o corrige un enlace. Aqui no se guardan conversaciones de clientes, solo el enlace."
+  "version": 1,
+  "actualizado": "2026-09-09T13:40+02:00",
+  "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
+  "como_se_usa": [
+    "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
+    "2. Si encaja: no se saca el punto. Ni reformulado, ni 'por si acaso', ni como recordatorio.",
+    "3. Solo se saca si se cumple lo que dice 'revive_si'. Y entonces se saca citando lo nuevo, no lo viejo.",
+    "4. Cuando alguien explique un punto nuevo, se añade aquí en la misma pasada. Con quién lo explicó y cuándo: es la prueba de que no me lo he inventado.",
+    "5. Este fichero es también la medida de calidad de la herramienta. Cada entrada es una vez que me equivoqué o que fui redundante. Si crece rápido, el problema soy yo."
+  ],
+  "silenciados": [
+    {
+      "id": "vomero-epilpoint",
+      "que": "Reclamación de una máquina a Andrea en el centro Vomero",
+      "ambito": {
+        "leas": null,
+        "centro": "Vomero",
+        "cliente": "Epil Point",
+        "tipo": "sin-ticket"
+      },
+      "porque": "Es un ticket interno de Epil Point. No tiene nada que ver con Leaseir y no hay nada que hacer por nuestra parte.",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
+      "revive_si": "Epil Point nos escribe pidiendo algo a Leaseir sobre ese equipo."
+    },
+    {
+      "id": "manacor-cable",
+      "que": "Manacor dice que no ha recibido el cable",
+      "ambito": {
+        "leas": null,
+        "centro": "Manacor",
+        "tipo": "sin-ticket"
+      },
+      "porque": "Ya contestado: se les compartió la foto del registro de salida enseñando que el cable va dentro del maletín de la pistola.",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
+      "revive_si": "El centro vuelve a reclamarlo después de haber visto la foto."
+    },
+    {
+      "id": "presupuesto-E261729",
+      "que": "Duda del cliente sobre el importe del presupuesto E261729",
+      "ambito": {
+        "leas": null,
+        "presupuesto": "E261729",
+        "tipo": "sin-ticket"
+      },
+      "porque": "Se le aclaró en el mismo momento, dentro de la propia conversación.",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
+      "revive_si": "Vuelve a preguntar por el importe o rechaza el presupuesto."
+    },
+    {
+      "id": "jerez-recogida",
+      "que": "Recogida pedida por WhatsApp en Jerez que parece no tener ticket",
+      "ambito": {
+        "leas": "LEAS-7330",
+        "centro": "Jerez",
+        "tipo": "recogida-sustitucion",
+        "vinculado_a": "LEAS-7324"
+      },
+      "porque": "Sí tiene ticket: LEAS-7330, en 'Gestionada recogida'. Es la recogida de una máquina de SUSTITUCIÓN, no de una avería, por eso no hay ticket nuevo. Isaac ya la programó para el lunes. En el chat solo aparece el nombre del centro a medias, sin LEAS ni serie: ese es el motivo de que no supiera atarlo. Chus dejó comentario en el ticket el 04/09 a las 19:37 informando de que se recoge el lunes, y lo vinculó al caso LEAS-7324.",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
+      "revive_si": "La recogida no se hace el lunes 07/09 o el estado del ticket retrocede."
+    },
+    {
+      "id": "elpalo-recogida",
+      "que": "Recogida pedida por WhatsApp en El Palo que parece no tener ticket",
+      "ambito": {
+        "leas": "LEAS-7372",
+        "centro": "El Palo",
+        "tipo": "recogida-sustitucion",
+        "vinculado_a": "LEAS-7371"
+      },
+      "porque": "Sí tiene ticket: LEAS-7372, en 'Gestionada recogida'. Recogida de sustitución, mismo caso que Jerez. Chus dejó comentario en el ticket el 04/09 a las 19:37 informando de que se recoge por CTT, y lo vinculó al caso LEAS-7371.",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
+      "revive_si": "Pasa una semana sin que la recogida se materialice."
+    },
+    {
+      "id": "miraflores-prestamo",
+      "que": "Miraflores sin ticket aparente",
+      "ambito": {
+        "leas": "LEAS-7258",
+        "centro": "Miraflores",
+        "cliente": "SinVello",
+        "tipo": "recogida-sustitucion"
+      },
+      "porque": "Sí tiene ticket: LEAS-7258, en 'En préstamo'. Aquí el aviso era CORRECTO —SinVello no ha contestado todavía en el chat—; lo único falso era decir que no estaba en Jira. El punto se puede volver a sacar, pero por el silencio del cliente, nunca por 'no está en Jira'. Chus dejó comentario en el ticket el 04/09 a las 19:37 informando de que se está a la espera de respuesta para efectuar la recogida.",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
+      "revive_si": "Sigue sin respuesta de SinVello pasados varios días: entonces se saca como 'préstamo sin confirmar', citando la fecha del último mensaje."
+    },
+    {
+      "id": "7478-7477-hermanas",
+      "que": "LEAS-7478 y LEAS-7477 colgadas del ticket que no es",
+      "ambito": {
+        "leas": [
+          "LEAS-7478",
+          "LEAS-7477",
+          "LEAS-7456"
+        ],
+        "tipo": "jerarquia"
+      },
+      "porque": "Están bien: las dos son subtareas hermanas del caso raíz LEAS-7456 y así aparece en el árbol de dependencias. Yo miré mal.",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
+      "revive_si": "Nunca por esto. Solo si el árbol de dependencias cambia de verdad."
+    },
+    {
+      "id": "7456-recogida-antes-de-susti",
+      "que": "LEAS-7456 lleva días sin que se recoja la máquina averiada",
+      "ambito": {
+        "leas": "LEAS-7456",
+        "tipo": "recogida-pendiente"
+      },
+      "porque": "No se puede recoger la averiada hasta que el cliente reciba la de sustitución. Hay un hueco de tiempo entre entrega de la susti y recogida de la averiada, y es lo normal, no un retraso.",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
+      "revive_si": "La sustitución ya está entregada y confirmada y aun así pasan más de 5 días sin gestionar la recogida."
+    },
+    {
+      "id": "7177-7357-devoluciones",
+      "que": "Duplicación de inventario en LEAS-7177 y LEAS-7357",
+      "ambito": {
+        "leas": [
+          "LEAS-7177",
+          "LEAS-7357"
+        ],
+        "tipo": "duplicacion-inventario"
+      },
+      "porque": "NO hay duplicación. Las máquinas fueron devueltas, recibidas en taller y revisadas, y desde ahí se volvieron a prestar. Que el cliente anterior no haya pagado todavía no impide volver a prestarlas: es un activo paralizado hasta que se confirme el pago de la sustitución, y eso es un tema de facturación, no de inventario.",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
+      "revive_si": "Nunca como conflicto de inventario. El seguimiento del cobro va por el bloque de cobros, no por aquí."
+    },
+    {
+      "id": "sustahrd005",
+      "que": "SUSTAHRD005 no existe / no consta",
+      "ambito": {
+        "leas": "LEAS-7401",
+        "serie": "SUSTAHRD005",
+        "tipo": "serie-desconocida"
+      },
+      "porque": "La máquina existe. Gonzalo lo confirmó con fotos: salió el 27 de agosto y están subidas al grupo de fotos de equipos. Lo que falta es la ficha en el Inmovilizado, y eso es tarea de Alejandro, no del equipo.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
+      "revive_si": "Nunca contra el equipo. Vive solo en el bloque de Airtable del panel de Alejandro."
+    },
+    {
+      "id": "sustmhr025",
+      "que": "SUSTMHR025 no existe / no consta",
+      "ambito": {
+        "leas": "LEAS-7366",
+        "serie": "SUSTMHR025",
+        "tipo": "serie-desconocida"
+      },
+      "porque": "Existe y está en el grupo de fotos de equipos. Confirmado por Gonzalo. Falta la ficha, no la máquina.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
+      "revive_si": "Nunca contra el equipo. Solo en el bloque de Airtable de Alejandro."
+    },
+    {
+      "id": "c03143",
+      "que": "C03143 / H03143 no constan en el Inmovilizado",
+      "ambito": {
+        "leas": "LEAS-5697",
+        "serie": [
+          "C03143",
+          "H03143"
+        ],
+        "tipo": "serie-desconocida"
+      },
+      "porque": "Gonzalo ya lo corrigió el 04/09. Queda comprobar en Airtable que cuadra, y eso es de Alejandro.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
+      "revive_si": "Nunca contra el equipo."
+    },
+    {
+      "id": "c003258",
+      "que": "C003258 / H003258 con un cero de más",
+      "ambito": {
+        "leas": "LEAS-7140",
+        "serie": [
+          "C003258",
+          "H003258",
+          "H03258"
+        ],
+        "tipo": "serie-desconocida"
+      },
+      "porque": "Gonzalo lo corrigió a H03258 el 04/09.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
+      "revive_si": "Nunca contra el equipo."
+    },
+    {
+      "id": "7268-nota-nueva",
+      "que": "LEAS-7268 sin nota nueva",
+      "ambito": {
+        "leas": "LEAS-7268",
+        "tipo": "sin-movimiento"
+      },
+      "porque": "Falso: Chus escribió a las 16:24 del 04/09. La pasada copió el texto de la pasada anterior en vez de releer el ticket.",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
+      "revive_si": "Pasan 3 días laborables sin comentario nuevo de verdad, comprobado releyendo el ticket en esa misma pasada."
+    },
+    {
+      "id": "7316-7476-tornillo",
+      "que": "LEAS-7476 tratado como caso nuevo sin relación con nada",
+      "ambito": {
+        "leas": [
+          "LEAS-7476",
+          "LEAS-7316"
+        ],
+        "tipo": "caso-repetido"
+      },
+      "porque": "Ya está explicado y acordado: es el mismo centro y la misma pistola. Se reparó el tornillo (LEAS-7316, finalizado el 01/09), se volvió a caer a los dos días y se abrió LEAS-7476 sin citar el anterior. Se acordó dejarlo escrito en comentario.",
+      "quien": "Chus",
+      "cuando": "2026-09-04",
+      "revive_si": "Se vuelve a caer una tercera vez: entonces deja de ser un caso repetido y es una reparación que no funciona."
+    },
+    {
+      "id": "sustmhr033",
+      "que": "SUSTMHR033 no consta en el Inmovilizado",
+      "ambito": {
+        "leas": "LEAS-7388",
+        "serie": "SUSTMHR033",
+        "tipo": "serie-desconocida"
+      },
+      "porque": "Gonzalo lo explicó en LEAS-7388 el 04/09 a las 18:18 desde el panel: «La consola SUSTMHR033 existe y está en el telegram de fotos de equipo como prueba». Falta la ficha en Airtable, no la máquina. Se anota hoy porque el 04/09 se explicó y no llegó a escribirse aquí.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
+      "anotado": "2026-09-05",
+      "revive_si": "Nunca contra el equipo. Vive solo en el bloque de Airtable del panel de Alejandro."
+    },
+    {
+      "id": "sustquad025",
+      "que": "SUSTQUAD025 no consta en el Inmovilizado",
+      "ambito": {
+        "leas": "LEAS-7191",
+        "serie": "SUSTQUAD025",
+        "tipo": "serie-desconocida"
+      },
+      "porque": "Gonzalo lo explicó en LEAS-7191 el 04/09 a las 18:18 desde el panel: «La pieza de sustitución SUSTQUAD025 existe y está en el grupo de telegram de fotos de equipo como prueba». Falta la ficha en Airtable. Se anota hoy porque el 04/09 se explicó y no llegó a escribirse aquí.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-04",
+      "anotado": "2026-09-05",
+      "revive_si": "Nunca contra el equipo. Vive solo en el bloque de Airtable del panel de Alejandro."
+    },
+    {
+      "id": "7230-tracking-sin-susti",
+      "que": "LEAS-7230 sin tracking / recogida pendiente",
+      "ambito": {
+        "leas": "LEAS-7230",
+        "centro": "SinVello Albacete",
+        "tipo": "sin-tracking"
+      },
+      "porque": "Isaac lo explicó desde el panel el 05/09 a las 11:13 y a las 11:21: «aun no se ha enviado sustitución por eso no hay tracking de recogida ni de envio» y «aun no se ha recogido porque no se ha enviado la sustitución». Sin sustitución enviada no hay ni recogida ni tracking que poner.",
+      "quien": "Isaac",
+      "cuando": "2026-09-05",
+      "revive_si": "La sustitución LEAS-7251 sale del taller y LEAS-7230 sigue sin tracking en el campo 11420."
+    },
+    {
+      "id": "7466-tracking-sin-susti",
+      "que": "LEAS-7466 sin tracking / recogida pendiente",
+      "ambito": {
+        "leas": "LEAS-7466",
+        "centro": "Sinvello Teatinos",
+        "tipo": "sin-tracking"
+      },
+      "porque": "Isaac lo explicó desde el panel el 05/09 a las 11:14: «aun no se ha mandado sustitución por eso no hay tracking de recogida ni de envio». La pistola se publicó en ENVIOS SAT LEASEIR a las 11:15 (LEAS-7489), todavía sin salir.",
+      "quien": "Isaac",
+      "cuando": "2026-09-05",
+      "revive_si": "LEAS-7489 pasa a «Equipo enviado» y LEAS-7466 sigue sin tracking."
+    },
+    {
+      "id": "7028-entregado-transporte",
+      "que": "LEAS-7028 como préstamo abierto y subtarea huérfana",
+      "ambito": {
+        "leas": "LEAS-7028",
+        "serie": "H00340",
+        "tipo": "prestamo-huerfano"
+      },
+      "porque": "Isaac lo explicó desde el panel el 05/09 a las 11:19: «ya la entrego el transporte en nuestras instalaciones», y cerró el ticket a las 11:19. El equipo está en casa.",
+      "quien": "Isaac",
+      "cuando": "2026-09-05",
+      "revive_si": "Nunca por esto: el ticket está en «Finalizada»."
+    },
+    {
+      "id": "7493-subtarea-caso-vivo",
+      "que": "LEAS-7493 cuelga de LEAS-7284, que está en «Resuelto»",
+      "ambito": {
+        "leas": "LEAS-7493",
+        "centro": "SinVello Cádiz",
+        "tipo": "jerarquia"
+      },
+      "porque": "Isaac lo explicó desde el panel el 05/09 a las 10:31: «la subtarea se mueve al caso vivo porque el manipulo suyo no da enrgia por la configuración de la consola». El caso vivo es LEAS-7490.",
+      "quien": "Isaac",
+      "cuando": "2026-09-05",
+      "revive_si": "El lunes 07/09 LEAS-7493 sigue colgando de LEAS-7284 y no del caso vivo LEAS-7490.",
+      "revivido": "2026-09-07: revivio a las 09:45 porque seguia colgando de LEAS-7284. A las 12:45 Isaac ha CANCELADO LEAS-7493, asi que el ticket esta cerrado y el punto sale del panel. No vuelve a salir por esto."
+    },
+    {
+      "id": "7499-sincronis-llamada",
+      "que": "LEAS-7499 Centri Unico Toledo sin comentario y sin fecha para el centro",
+      "ambito": {
+        "leas": "LEAS-7499",
+        "centro": "Centri Unico Toledo",
+        "tipo": "sin-movimiento"
+      },
+      "porque": "Gonzalo lo contestó desde el panel el 07/09 a las 16:16: «Se le ha dicho a Sincronis, que por favor llamen cuanto antes». Ya hay nota en el ticket y la gestión está hecha con el proveedor.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Pasa un día laborable más y el centro sigue sin fecha, o Sincronis no ha llamado."
+    },
+    {
+      "id": "7419-material-entregado",
+      "que": "LEAS-7419 Elha Ramón y Cajal · 6 días sin nota del técnico externo",
+      "ambito": {
+        "leas": "LEAS-7419",
+        "tipo": "externo-sin-nota"
+      },
+      "porque": "Gonzalo escribió desde el panel el 07/09 a las 16:05: «Material entregado y recordado al técnico». Ya hay nota de hoy.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Pasan 3 días laborables sin nota nueva, comprobado releyendo el ticket en esa pasada."
+    },
+    {
+      "id": "7469-material-recibido",
+      "que": "LEAS-7469 Elha Cerdanyola · 3 días sin nota del técnico externo",
+      "ambito": {
+        "leas": "LEAS-7469",
+        "tipo": "externo-sin-nota"
+      },
+      "porque": "Gonzalo escribió desde el panel el 07/09 a las 16:02: «Material recibido, se avisa al técnico».",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Pasan 3 días laborables sin nota nueva, comprobado releyendo el ticket."
+    },
+    {
+      "id": "7455-maps-agendar-llamada",
+      "que": "LEAS-7455 BiNatural · falta el link de ubicación",
+      "ambito": {
+        "leas": "LEAS-7455",
+        "centro": "BiNatural",
+        "tipo": "sin-maps"
+      },
+      "porque": "Gonzalo lo explicó desde el panel el 07/09 a las 16:09: «Se pone la direción pero en agendar llamada no te deja poner el link de google maps». No es que no lo pongan: el formulario del estado «Pendiente agendar llamada» no ofrece el campo 11354. Es un fallo de configuración de Jira, no del equipo.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Nunca contra el equipo mientras el ticket esté en «Pendiente agendar llamada». Si pasa a otro estado y sigue sin link, entonces sí. El arreglo del formulario va al panel de Alejandro."
+    },
+    {
+      "id": "7444-tecnico-de-baja",
+      "que": "LEAS-7444 Miguel Parra (ex-Brull) · falta el link de ubicación / servicio externo sin definir",
+      "ambito": {
+        "leas": "LEAS-7444",
+        "centro": "Miguel Parra",
+        "tipo": "sin-maps"
+      },
+      "porque": "Gonzalo lo contestó desde el panel el 07/09 a las 16:10: «El técnico está de baja, y el cliente quiere ese técnico por lo que estamos esperando». El ticket está parado a propósito.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Se define el servicio externo o el técnico vuelve, y el ticket sigue sin link de ubicación en el campo 11354."
+    },
+    {
+      "id": "7343-7472-recogida-enora",
+      "que": "LEAS-7343 y LEAS-7472 (Elha Sta Teresa) salieron del cliente y no llegan a taller",
+      "ambito": {
+        "leas": [
+          "LEAS-7343",
+          "LEAS-7472"
+        ],
+        "centro": "Elha Sta Teresa",
+        "tipo": "no-llega-taller"
+      },
+      "porque": "Gonzalo dio el número de recogida desde el panel el 07/09 a las 16:13 y 16:14: «Numero de recogida por enora: 1036143». Las dos van en el mismo porte y la recogida está gestionada.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Pasan 3 días laborables desde el 07/09 y el equipo sigue sin entrar en taller. Lo del campo de tracking vacío de LEAS-7472 sí sigue saliendo, que es otra cosa."
+    },
+    {
+      "id": "7249-pieza-de-mano-30748",
+      "que": "LEAS-7249 BiNatural · 715 h de reparación fuera de plazo y abierto",
+      "ambito": {
+        "leas": "LEAS-7249",
+        "centro": "BiNatural",
+        "tipo": "reparacion-fuera-de-plazo"
+      },
+      "porque": "Gonzalo lo explicó desde el panel el 07/09 a las 16:35: «El problema erradica en la pieza de mano 30748, como lo ha comprobado el técnico el 19/08/2026, vamos a preguntar de nuevo sobre el asunto por si podemos recoger la pieza de mano». Está identificado y a la espera del cliente.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Pasa una semana sin que se consiga recoger la pieza de mano 30748 ni haya nota nueva."
+    },
+    {
+      "id": "6768-buzzer-miercoles",
+      "que": "LEAS-6768 CVL Distribuidor · 1.838 h de reparación fuera de plazo, «pendiente asignar técnico»",
+      "ambito": {
+        "leas": "LEAS-6768",
+        "tipo": "reparacion-fuera-de-plazo"
+      },
+      "porque": "Ya no está sin técnico: está «En reparación» con Fran, que escribió el 07/09 a las 15:38 «Falla el buzzer durante las pruebas de temperatura, dado que ya pasa ampliamente de la hora de salida, queda pendiente para el miércoles 9». Gonzalo añadió a las 16:07 que se envía material. El equipo está en el banco.",
+      "quien": "Fran",
+      "cuando": "2026-09-07",
+      "revive_si": "Pasa el miércoles 9 sin que se retome, o el ticket vuelve a quedarse sin técnico. Lo de qué dirección de Mallorca es la buena sigue vivo en el bloque de envíos."
+    },
+    {
+      "id": "7509-7505-cadiz-dos-sustis",
+      "que": "LEAS-7505 y LEAS-7509 como sustituciones duplicadas de SinVello Cádiz",
+      "ambito": {
+        "leas": [
+          "LEAS-7505",
+          "LEAS-7509",
+          "LEAS-7490"
+        ],
+        "centro": "SinVello Cádiz",
+        "tipo": "duplicacion-inventario"
+      },
+      "porque": "No hay duplicación. Ernesto lo dejó dicho en «ENVIOS SAT LEASEIR» el 07/09 a las 16:18: «Se abre LEAS nuevo 7509 para no reescribir el 7505 que ya tenia tiempo». Las dos cuelgan del mismo padre LEAS-7490 y llevan piezas distintas: consola C00552 en LEAS-7505 y manípulo H03204 en LEAS-7509.",
+      "quien": "Ernesto",
+      "cuando": "2026-09-07",
+      "revive_si": "Nunca como duplicación. Solo si las dos quedaran en préstamo abierto pasado el cierre del caso."
+    },
+    {
+      "id": "7227-prestamo-en-uso",
+      "que": "LEAS-7227 Elha Limoneros como préstamo fuera de plazo y subtarea huérfana",
+      "ambito": {
+        "leas": "LEAS-7227",
+        "centro": "Elha Limoneros",
+        "tipo": "prestamo-huerfano"
+      },
+      "porque": "Gonzalo lo contestó desde el panel el 07/09 a las 16:48: «Sigue en prestamo ya que el cliente lo está usando». El préstamo está vivo a propósito; que el padre LEAS-7224 esté en «Resuelto» no lo convierte en huérfano.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "El cliente devuelve el equipo y el ticket sigue abierto, o pasan más de 30 días sin nota nueva sobre ese préstamo."
+    },
+    {
+      "id": "7285-prestamo-en-uso",
+      "que": "LEAS-7285 SinVello Cádiz como préstamo fuera de plazo y subtarea huérfana",
+      "ambito": {
+        "leas": "LEAS-7285",
+        "centro": "SinVello Cadiz",
+        "tipo": "prestamo-huerfano"
+      },
+      "porque": "Gonzalo lo contestó desde el panel el 07/09 a las 16:49: «Sigue de prestamo con el cliente». Isaac ya lo había explicado a las 12:27 en LEAS-7505: la consola C00552 está allí porque fue la primera sustitución que se mandó.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "revive_si": "Se cierra el caso raíz LEAS-7490 y la consola sigue en el centro sin ticket que la sostenga."
+    },
+    {
+      "id": "7486-laser-a-taller",
+      "que": "LEAS-7486 Laser Factory Sabadell · nadie contesta lo de Manresa y sigue con un solo comentario",
+      "ambito": {
+        "leas": "LEAS-7486",
+        "centro": "Laser Factory Sabadell",
+        "tipo": "sin-movimiento"
+      },
+      "porque": "Isaac lo contestó en el ticket el 07/09 a las 19:14: «como no sabemos muy bien cual es la averia vamos a traer a taller el laser completo, se movera cuando nos avisen mañana una sustitución de ellos que esta en Manresa». La decisión está tomada y escrita.",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "revive_si": "Pasan 3 días laborables sin que la recogida se materialice o sin nota nueva, comprobado releyendo el ticket."
+    },
+    {
+      "id": "cerdanyola-umbilical",
+      "que": "Elha Cerdanyola · el técnico externo dice que el umbilical no se puede sanear y hace falta uno nuevo",
+      "ambito": {
+        "leas": [
+          "LEAS-7447",
+          "LEAS-7469"
+        ],
+        "centro": "Elha Cerdanyola",
+        "tipo": "reparacion-externo"
+      },
+      "porque": "Resuelto el mismo día. El externo Jesús (Caypri) lo dijo en «Caypri Láser - Leaseir» a las 17:44 y a las 19:13 Isaac escribió en LEAS-7447 «al final el técnico a cambiado el umbilical» y a las 19:39 en LEAS-7469 «se cambia tambien umbilical avisando al cliente». Los dos tickets quedaron en «Finalizado técnico externo».",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "revive_si": "El centro vuelve a reportar el mismo fallo del umbilical después del cambio."
+    },
+    {
+      "id": "7492-villarroel-carlos",
+      "que": "LEAS-7492 Elha Villarroel · sigue en «Abierto» y sin nadie asignado desde el viernes",
+      "ambito": {
+        "leas": "LEAS-7492",
+        "centro": "Elha Villarroel",
+        "tipo": "sin-movimiento"
+      },
+      "porque": "Isaac lo cerró en falso no: lo gestionó. El 07/09 a las 19:32 escribió en el ticket «se habla con Carlos y cuando vaya a Villarroel por la LEAS-7488 aprovechara y revisara esta consola que no enciende. Se le envia parte de trabajo», y el ticket pasó a «Enviado a técnico externo».",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "revive_si": "Carlos hace la visita de LEAS-7488 y LEAS-7492 sigue sin nota del resultado."
+    },
+    {
+      "id": "7406-livorno-taranto",
+      "que": "LEAS-7406 Epil Point Livorno · el material se entregó en Taranto y nadie contestó al técnico lo del 14/09",
+      "ambito": {
+        "leas": "LEAS-7406",
+        "centro": "Epil Point Livorno",
+        "tipo": "externo-sin-nota"
+      },
+      "porque": "Cerrado el mismo día con el motivo escrito. Isaac a las 18:18: «tras reparar el técnico el umbilical dicen que da otra vez fallo pero nos avisan al poco tiempo que vuelve a funcionar. Se envia material por si acaso y cuando llegue se le avisara al tecnico», y Gonzalo subió a las 18:19 el parte de trabajo de Light Solutions. El ticket quedó en «Finalizado técnico externo».",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "revive_si": "Livorno vuelve a reportar el fallo y hay que reabrir o abrir ticket nuevo."
+    },
+    {
+      "id": "6768-direccion-costitx",
+      "que": "LEAS-6768 CVL Distribuidor · no se sabe qué dirección de Mallorca es la buena",
+      "ambito": {
+        "leas": "LEAS-6768",
+        "tipo": "direccion-envio"
+      },
+      "porque": "Isaac lo contestó desde el panel el 08/09 a las 09:20: «la direccion correcta es Carrer Major 24, planta baja, 07144 Costitx». Ya está dicha.",
+      "quien": "Isaac",
+      "cuando": "2026-09-08",
+      "revive_si": "Sale un envío de ese cliente a una dirección distinta de Costitx, o el ticket recibe otra dirección que la contradiga."
+    },
+    {
+      "id": "7349-falta-primer-pago",
+      "que": "LEAS-7349 Cris Peña Beauty Center · en «Inspección de salida» y sin pasar a Finalizada",
+      "ambito": {
+        "leas": "LEAS-7349",
+        "tipo": "terminado-sin-finalizar"
+      },
+      "porque": "Isaac lo contestó desde el panel el 08/09 a las 09:20: «no ha salido porque falta de abonar el primer pago la clienta, hasta que no se abona la factura no se envia a cliente». El ticket está abierto a propósito.",
+      "quien": "Isaac",
+      "cuando": "2026-09-08",
+      "revive_si": "Consta el pago de la clienta y el equipo sigue sin salir, o pasan más de 15 días sin nota nueva sobre el cobro."
+    },
+    {
+      "id": "7510-caja-miercoles",
+      "que": "LEAS-7510 Elha Boltaña · alta bloqueante sin un solo comentario",
+      "ambito": {
+        "leas": "LEAS-7510",
+        "centro": "Elha Boltaña",
+        "tipo": "sin-movimiento"
+      },
+      "porque": "Falso desde las 19:56 del 07/09: Isaac escribió en el ticket «Gonzalo hace pruebas y con el cliente y parace ser la nevera, se les envia caja de madera el miercoles que saldra de Gijon». El punto se publicó a las 19:50 y quedó caducado seis minutos después. Tampoco procede pedirle tracking de recogida: la caja no sale hasta el miércoles.",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "anotado": "2026-09-08",
+      "revive_si": "Pasa el miércoles 9 sin que la caja salga de Gijón, o el ticket sigue sin dueño el jueves."
+    },
+    {
+      "id": "7158-serie-41003",
+      "que": "LEAS-7158 · el campo de manípulo prestado pone H41003 y hay que quitarle la H",
+      "ambito": {
+        "leas": "LEAS-7158",
+        "tipo": "serie-desconocida",
+        "serie": [
+          "H41003",
+          "41003"
+        ]
+      },
+      "porque": "Ya está corregido. Gonzalo lo dejó escrito desde el panel el 08/09 a las 18:16: «Corregido el numero de pieza de mano, que es la 41003», e Isaac lo había confirmado el 07/09 a las 13:02. El campo del ticket pone hoy 41003, releído el 09/09 a las 11:00.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-08",
+      "anotado": "2026-09-09",
+      "revive_si": "El campo vuelve a cambiar a una serie que no cuadre con el Inmovilizado."
+    },
+    {
+      "id": "6780-bssust008-existe",
+      "que": "LEAS-6780 Centri Unico Campania · la serie prestada BS SUST008 no consta en el Inmovilizado",
+      "ambito": {
+        "leas": "LEAS-6780",
+        "centro": "Centri Unico Campania",
+        "tipo": "serie-desconocida",
+        "serie": [
+          "BS SUST008",
+          "BSSUST008"
+        ]
+      },
+      "porque": "Existe y está fotografiada. Chus lo dijo el 04/09 a las 19:46 («La pistola existe. Buscar en el grupo de fotos como #BSSUST008») y Gonzalo lo repitió el 08/09 a las 18:15: «Está bien la consola que se presta, y existe, está en grupo de telegram FOTOS DE EQUIPO». Lo que falla es la ficha de Airtable, no el ticket.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-08",
+      "anotado": "2026-09-09",
+      "revive_si": "Nunca como «no existe». Solo si alguien del equipo dice que esa serie no salió a Campania."
+    },
+    {
+      "id": "7475-91119-albufera",
+      "que": "LEAS-7475 Dermasana Albufera · la consola prestada 91119 no es de sustitución",
+      "ambito": {
+        "leas": "LEAS-7475",
+        "centro": "Dermasana Albufera",
+        "tipo": "serie-desconocida",
+        "serie": [
+          "91119",
+          "90582"
+        ]
+      },
+      "porque": "Gonzalo lo explicó desde el panel el 08/09 a las 18:14: «LEAS-6934 está cerrado, se envió su consola correcta pero en el nuevo leas, se envia la 90582 con la pieza de mano 40498 como sustitución para recoger su equipo que falla». El caso está entendido y contado.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-08",
+      "anotado": "2026-09-09",
+      "revive_si": "Nunca en el panel del equipo. Que el campo 10199 siga poniendo 91119 y no 90582 va al panel de Alejandro como cosa de Airtable / dato del ticket."
+    },
+    {
+      "id": "7320-recogida-enora-dhl",
+      "que": "LEAS-7320 Belleza Begoña Tapia · salió del cliente y no llega a taller / sin tracking",
+      "ambito": {
+        "leas": "LEAS-7320",
+        "tipo": "no-llega-taller"
+      },
+      "porque": "Isaac lo contestó desde el panel el 09/09 a las 11:07: «esta pedida la recogida para hoy por Enora y Dhl». A las 12:31 añadió que hay que pedirle a Ernesto por Telegram que meta un spray de prueba.",
+      "quien": "Isaac",
+      "cuando": "2026-09-09",
+      "revive_si": "Pasan 3 días laborables desde el 09/09 y el equipo sigue sin entrar en taller."
+    },
+    {
+      "id": "7334-metido-con-dhl",
+      "que": "LEAS-7334 BEAUTY Centre d'estètica · sin recoger, sin tracking, sin asignar y parado 20 días",
+      "ambito": {
+        "leas": "LEAS-7334",
+        "tipo": "no-llega-taller"
+      },
+      "porque": "Isaac lo contestó desde el panel el 09/09 a las 12:08 y 12:09: «aun no se ha recogido el laser» y «ya esta metido con DHL».",
+      "quien": "Isaac",
+      "cuando": "2026-09-09",
+      "revive_si": "Pasan 3 días laborables y sigue sin recogerse, o el campo de tracking sigue vacío el 11/09."
+    },
+    {
+      "id": "7361-sigue-en-transito",
+      "que": "LEAS-7361 Elha Martín el Humano · salió del cliente y no llega a taller",
+      "ambito": {
+        "leas": "LEAS-7361",
+        "tipo": "no-llega-taller"
+      },
+      "porque": "Isaac lo contestó desde el panel el 09/09 a las 11:56: «sigue en transito».",
+      "quien": "Isaac",
+      "cuando": "2026-09-09",
+      "revive_si": "Pasan 3 días laborables más y sigue sin entrar en taller."
+    },
+    {
+      "id": "7374-bplogistic-sin-link",
+      "que": "LEAS-7374 Cleanbody CC La Villa · sin tracking en el campo y sin llegar a taller",
+      "ambito": {
+        "leas": "LEAS-7374",
+        "tipo": "sin-tracking"
+      },
+      "porque": "Isaac lo explicó desde el panel el 09/09 a las 11:09 y 11:25: «se pide información a BP logistic porque aun no ha llegado a taller» y «BP Logistic no facilita link de transporte». No hay número que poner porque el transportista no lo da.",
+      "quien": "Isaac",
+      "cuando": "2026-09-09",
+      "revive_si": "Nunca por el campo de tracking mientras el porte sea de BP Logistic. Sí si pasa una semana sin que el equipo llegue a taller."
+    },
+    {
+      "id": "7118-parte-corpoderm",
+      "que": "LEAS-7118 Corpoderm · en reparación, sin asignar y parada 27 días",
+      "ambito": {
+        "leas": "LEAS-7118",
+        "tipo": "sin-movimiento"
+      },
+      "porque": "Borja lo cerró desde el panel el 09/09 a las 12:19 con «esto no aplica: pedido parte a corpoderm», después de escribir a las 12:10 «solicitado un parte de que han hecho el cambio. Es equipo medico y debe quedar todo debidamente registrado».",
+      "quien": "Borja",
+      "cuando": "2026-09-09",
+      "revive_si": "Corpoderm manda el parte y el ticket sigue sin moverse, o pasan 15 días sin nota nueva."
+    },
+    {
+      "id": "7048-envio-material-cerrado",
+      "que": "LEAS-7048 Dermoscan · presupuesto aceptado desde julio, sin asignar y sin comentarios",
+      "ambito": {
+        "leas": "LEAS-7048",
+        "tipo": "sin-movimiento"
+      },
+      "porque": "Borja lo cerró desde el panel el 09/09 a las 12:06: «era un envio de material de julio - cerrado» y «esto no aplica: resuelto». El ticket está en «Resuelto».",
+      "quien": "Borja",
+      "cuando": "2026-09-09",
+      "revive_si": "Nunca por esto: el ticket está cerrado."
+    },
+    {
+      "id": "4443-dermoscan-oliver",
+      "que": "LEAS-4443 Dermoscan · 107 días parada y el SLA de reparación reventado",
+      "ambito": {
+        "leas": "LEAS-4443",
+        "tipo": "sin-movimiento"
+      },
+      "porque": "Borja lo contestó desde el panel el 09/09 a las 11:37: «no hay novedades. Se lo vamos a recordar a Oliver para decidir si cerramos el caso definitivamente o esperamos».",
+      "quien": "Borja",
+      "cuando": "2026-09-09",
+      "revive_si": "Pasa una semana sin que se decida si se cierra el caso."
+    },
+    {
+      "id": "7190-harmonie-recordado",
+      "que": "LEAS-7190 Harmonie Salamanca · 28 días parada, sin decisión escrita sobre el diodo",
+      "ambito": {
+        "leas": "LEAS-7190",
+        "tipo": "sin-movimiento"
+      },
+      "porque": "Borja lo contestó desde el panel el 09/09 a las 11:33: «Hemos recordado por mail que no tenemos contestación y nos digan algo cuanto antes. de no tener contestación mañana pasaremos al wahtsapp de manera mas directa».",
+      "quien": "Borja",
+      "cuando": "2026-09-09",
+      "revive_si": "Pasa el 10/09 sin que se les escriba por WhatsApp o sin respuesta del cliente."
+    },
+    {
+      "id": "6198-luxlaser-oliver-arturo",
+      "que": "LEAS-6198 Luxlaser André Bélgica · 27 días parada y sin saber si ocurrió la conversación con Arturo",
+      "ambito": {
+        "leas": "LEAS-6198",
+        "tipo": "sin-movimiento"
+      },
+      "porque": "Borja lo contestó desde el panel el 09/09 a las 12:18 y 12:29: «actualizado», «sigue pendiente esa conversación con Arturo. Le comento a Oliver tb» y «sigue pdte que nos diga que hacer».",
+      "quien": "Borja",
+      "cuando": "2026-09-09",
+      "revive_si": "Pasa una semana sin que se sepa qué se decide. Lo del campo de link de ubicación vacío sí sigue saliendo, que es otra cosa."
+    },
+    {
+      "id": "6891-gee-reclamado",
+      "que": "LEAS-6891 Mercedes Gamaza · técnico externo sin nota nueva",
+      "ambito": {
+        "leas": "LEAS-6891",
+        "tipo": "externo-sin-nota"
+      },
+      "porque": "Isaac lo contestó desde el panel el 09/09 a las 12:11: «le reclamo a GEE que agilice esta intervencion».",
+      "quien": "Isaac",
+      "cuando": "2026-09-09",
+      "revive_si": "Pasan 3 días laborables sin nota nueva, comprobado releyendo el ticket."
+    },
+    {
+      "id": "7420-recoge-el-cliente",
+      "que": "LEAS-7420 Medical & Aesthetics Solutions · terminado y sin finalizar",
+      "ambito": {
+        "leas": "LEAS-7420",
+        "tipo": "terminado-sin-finalizar"
+      },
+      "porque": "Isaac lo contestó desde el panel el 09/09 a las 12:09: «recoge el cliente, ya esta avisado». El ticket sigue abierto a propósito hasta que el cliente pase.",
+      "quien": "Isaac",
+      "cuando": "2026-09-09",
+      "revive_si": "Pasan 10 días y el cliente no ha recogido la pieza de mano."
+    },
+    {
+      "id": "7247-recogida-dhl",
+      "que": "LEAS-7247 · préstamo fuera de plazo y subtarea con el padre cerrado",
+      "ambito": {
+        "leas": "LEAS-7247",
+        "tipo": "prestamo-huerfano"
+      },
+      "porque": "Isaac lo contestó desde el panel el 09/09 a las 12:25: «solicitada recogida por dhl».",
+      "quien": "Isaac",
+      "cuando": "2026-09-09",
+      "revive_si": "Pasan 10 días sin que la recogida se materialice."
+    },
+    {
+      "id": "7468-serie-40306",
+      "que": "LEAS-7468 Epil Point Sesto Fiorentino · sustitución en «Solicitado» y sin serie en el campo de manípulo prestado",
+      "ambito": {
+        "leas": "LEAS-7468",
+        "centro": "Epil Point Sesto Firenze",
+        "tipo": "serie-desconocida"
+      },
+      "porque": "Resuelto el mismo día. Isaac explicó a las 11:05 «lo mueve Epil point y por eso no hay recogida» y a las 12:24 el campo de manípulo prestado ya pone 40306, la serie que dio Andrea por WhatsApp a las 10:20. El ticket está en «Gestionada recogida».",
+      "quien": "Isaac",
+      "cuando": "2026-09-09",
+      "revive_si": "El campo vuelve a quedarse vacío o Epil Point da otra serie."
+    },
+    {
+      "id": "brull-material-sin-leas",
+      "que": "El material que pide Brull no se puede enlazar con ningún LEAS",
+      "ambito": {
+        "centro": "Brull",
+        "leas": null,
+        "tipo": "sin-ticket"
+      },
+      "porque": "Gonzalo lo explicó en «SAT Leaseir - Herramienta Control Diario» el 09/09 a las 10:35: «Hay que hacerle entender que el material que pide brull, no lleva leas porque son sus gestiones», y a las 10:36 «Se lo dije, pero no lo pilla, en esta misma incidencia». No hay ticket al que enlazarlo porque no debe haberlo.",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-09",
+      "revive_si": "Nunca. El material de Brull no lleva LEAS."
+    },
+    {
+      "id": "7332-7333-epilpoint-cancelados",
+      "que": "LEAS-7332 y LEAS-7333 · recogida pendiente con el SLA reventado y préstamo de la SUSTQUAD012",
+      "ambito": {
+        "leas": [
+          "LEAS-7332",
+          "LEAS-7333"
+        ],
+        "tipo": "recogida-pendiente"
+      },
+      "porque": "Isaac los canceló el 09/09 a las 11:24 y 12:26 con el motivo escrito: «se le aviso varias veces que teníamos que recoger pero se ha negado… Cerramos incidencia» y «se cancela leas ya que epil point no quiere la solucion que le damos, la sustquad012 se queda alli». Los dos están en «Cancelado».",
+      "quien": "Isaac",
+      "cuando": "2026-09-09",
+      "revive_si": "Nunca por esto. Que la SUSTQUAD012 se quede en el centro es un tema de inventario y de facturación, no del SAT."
+    },
+    {
+      "id": "dermasana-alcala-ya-tiene-ticket",
+      "que": "Dermasana Calle Alcalá (consola C00166) sin ticket abierto",
+      "ambito": {
+        "centro": "Dermasana Calle alcala",
+        "cliente": "Dermasana",
+        "tipo": "sin-ticket"
+      },
+      "porque": "Ya tiene ticket: LEAS-7527, abierto el 09/09 a las 10:38, con su queja de calidad LEAS-7528 y su sustitución LEAS-7529. Isaac publicó la petición en «ENVIOS SAT LEASEIR» a las 10:43: «sustitución consola LT que sea compatible con la H00244 · dermasana calle alcala · leas—7529».",
+      "quien": "Isaac",
+      "cuando": "2026-09-09",
+      "revive_si": "Nunca como «no está en Jira». El seguimiento del caso va por LEAS-7527."
+    },
+    {
+      "id": "7516-castellon-confirmado",
+      "que": "El envío de umbilical a Elha Castellón del 08/09 no cita LEAS",
+      "ambito": {
+        "leas": "LEAS-7516",
+        "centro": "Elha Castellón",
+        "tipo": "sin-ticket"
+      },
+      "porque": "Confirmado: Isaac escribió en LEAS-7516 el 08/09 a las 13:43 «se envia umbilical y se avisa a Konexa», media hora antes de publicarlo en ENVIOS a las 14:04. El enlace era correcto.",
+      "quien": "Isaac",
+      "cuando": "2026-09-08",
+      "anotado": "2026-09-09",
+      "revive_si": "Nunca por esto."
+    }
+  ],
+  "enlaces": [
+    {
+      "centro": "Jerez",
+      "cliente": "SinVello",
+      "leas": "LEAS-7330",
+      "vinculado_a": "LEAS-7324",
+      "quien": "Chus",
+      "cuando": "2026-09-04"
+    },
+    {
+      "centro": "El Palo",
+      "cliente": "SinVello",
+      "leas": "LEAS-7372",
+      "vinculado_a": "LEAS-7371",
+      "quien": "Chus",
+      "cuando": "2026-09-04"
+    },
+    {
+      "centro": "Miraflores",
+      "cliente": "SinVello",
+      "leas": "LEAS-7258",
+      "quien": "Chus",
+      "cuando": "2026-09-04"
+    },
+    {
+      "centro": "Alcalá de Henares",
+      "cliente": "SinVello",
+      "leas": "LEAS-7476",
+      "vinculado_a": "LEAS-7316",
+      "quien": "Chus",
+      "cuando": "2026-09-04"
+    },
+    {
+      "centro": "Cádiz",
+      "cliente": "SinVello",
+      "leas": "LEAS-7490",
+      "vinculado_a": "LEAS-7493",
+      "quien": "Isaac",
+      "cuando": "2026-09-05"
+    },
+    {
+      "centro": "Elha Villarroel",
+      "cliente": "Elha",
+      "leas": "LEAS-7492",
+      "quien": "Chus",
+      "cuando": "2026-09-07"
+    },
+    {
+      "centro": "Centri Unico Toledo",
+      "cliente": "Centri Unico",
+      "leas": "LEAS-7499",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "nota": "Gonzalo abrio el ticket a las 11:25 tras atender el chat de 10:21 a 10:44; el caso se paso a Sincronis a las 12:08."
+    },
+    {
+      "centro": "Clinica Cibeles CC Holea",
+      "cliente": "Directo",
+      "leas": "LEAS-7503",
+      "vinculado_a": "LEAS-7504",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "nota": "Isaac abrio LEAS-7503 a las 12:10 y su sustitucion LEAS-7504 a las 12:11 (series 91129 / 40481, publicadas en ENVIOS a las 12:12)."
+    },
+    {
+      "centro": "Sin Vello Cadiz",
+      "cliente": "SinVello",
+      "leas": "LEAS-7505",
+      "vinculado_a": "LEAS-7490",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "nota": "Isaac corrigio el enlace en ENVIOS SAT LEASEIR a las 15:14: la sustitucion de Cadiz no es LEAS-7493 (cancelado) sino LEAS-7505, serie H03204."
+    },
+    {
+      "centro": "Centri Unico Globo",
+      "cliente": "Centri Unico",
+      "leas": "LEAS-7438",
+      "quien": "pasada 15:30",
+      "cuando": "2026-09-07",
+      "nota": "Atado por nombre de centro, no elegido por un tecnico: el ticket LEAS-7438 es el unico abierto de Centri Unico Globo y el centro escribe en el grupo de Centri Unico Italia. Confirmadlo o corregidlo."
+    },
+    {
+      "centro": "Sin Vello Cadiz",
+      "cliente": "SinVello",
+      "leas": "LEAS-7509",
+      "vinculado_a": "LEAS-7490",
+      "quien": "Ernesto",
+      "cuando": "2026-09-07",
+      "nota": "Segunda sustitucion de Cadiz, abierta a las 16:18 para no reescribir LEAS-7505. Manipulo H03204; la consola C00552 va en LEAS-7505."
+    },
+    {
+      "centro": "Elha Caracol",
+      "cliente": "Elha",
+      "leas": "LEAS-7495",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "nota": "Isaac publicó el umbilical con casquillo QUAD para Elha Caracol en ENVIOS SAT LEASEIR a las 19:36 y lo escribió en LEAS-7495 a las 19:37: «se envia material y se avisa a Gee»."
+    },
+    {
+      "centro": "Cavitbell Centro Médico Estético",
+      "cliente": "Directo",
+      "leas": "LEAS-7507",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "nota": "Envío de tornillos de nylon y tuercas publicado en ENVIOS SAT LEASEIR a las 18:49 (Pamplona); Isaac lo escribió en LEAS-7507 a las 18:48."
+    },
+    {
+      "centro": "Centro Médico Estético Deleite",
+      "cliente": "Directo",
+      "leas": "LEAS-7500",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "nota": "Isaac escribió «se avisa a innet» en LEAS-7500 a las 18:34. Ese centro tiene además la queja de calidad LEAS-7513, que no es del SAT."
+    },
+    {
+      "centro": "Depil Planet Las Rosas",
+      "cliente": "Directo",
+      "leas": "LEAS-7501",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "nota": "Isaac escribió «se ha mando material y avisado a innet» en LEAS-7501 a las 18:34. OJO: NO es el mismo centro que Depil Planet Avda. de Niza, cuyo envío quedó cancelado a las 15:02 por falta de dirección."
+    },
+    {
+      "centro": "Elha Boltaña",
+      "cliente": "Elha",
+      "leas": "LEAS-7510",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-07",
+      "nota": "Gonzalo publicó en ENVIOS SAT LEASEIR a las 18:34 «LEAS-7510 Enviar caja a Elha Boltaña, C/ de Boltaña, 78, San Blas-Canillejas, 28022 Madrid»."
+    },
+    {
+      "centro": "Elha Vilanova",
+      "cliente": "Elha",
+      "leas": "LEAS-7515",
+      "vinculado_a": "LEAS-7443",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "nota": "Sustitucion completa LT QUAD publicada en ENVIOS SAT LEASEIR el 07/09 a las 20:04 (Carrer de la Llibertat, 66, Vilanova i la Geltru). Por eso LEAS-7443 no sale como recogida sin tracking."
+    },
+    {
+      "centro": "Elha Reus",
+      "cliente": "Elha",
+      "leas": "LEAS-7496",
+      "quien": "Isaac",
+      "cuando": "2026-09-07",
+      "nota": "Envio de tornillos de umbilical publicado en ENVIOS SAT LEASEIR el 07/09 a las 20:11 sin citar LEAS; el ticket LEAS-7496 se resolvio esa misma noche a las 20:11."
+    },
+    {
+      "centro": "Elha Castellón",
+      "cliente": "Elha",
+      "leas": "LEAS-7516",
+      "quien": "pasada 09/09",
+      "cuando": "2026-09-09",
+      "nota": "Atado por nombre de centro, no elegido por un técnico: el envío de umbilical con casquillo quad publicado en ENVIOS SAT LEASEIR el 08/09 a las 14:04 no cita LEAS y LEAS-7516 es el único abierto de ese centro. Confirmadlo o corregidlo."
+    },
+    {
+      "centro": "Dermasana Calle Alcalá",
+      "cliente": "Dermasana",
+      "leas": "LEAS-7527",
+      "vinculado_a": "LEAS-7529",
+      "quien": "Isaac",
+      "cuando": "2026-09-09",
+      "nota": "Abierto el 09/09 a las 10:38 tras el WhatsApp del centro del 07/09 sobre la consola C00166; sustitución LEAS-7529 pedida en ENVIOS a las 10:43 (compatible con la H00244)."
+    },
+    {
+      "centro": "Elha Sta Teresa (pantalla)",
+      "cliente": "Elha",
+      "leas": "LEAS-7531",
+      "quien": "Borja",
+      "cuando": "2026-09-09",
+      "nota": "Alta del portal a las 10:58. Borja lo publicó en ENVIOS a las 11:50 y mandó el correo al técnico externo Carlos Mora a las 11:57 con el equipo en copia: visita mañana."
+    },
+    {
+      "centro": "Sinvello Zamora",
+      "cliente": "SinVello",
+      "leas": "LEAS-7526",
+      "quien": "pasada 12:30",
+      "cuando": "2026-09-09",
+      "nota": "Alta del portal a las 10:35 (umbilical). En WhatsApp «INCIDENCIAS (FOTOS Y VIDEOS)» a las 11:05 se cita el LEAS y la pieza de mano H00708. Falta abrir la sustitución."
+    },
+    {
+      "centro": "Sinvello Fuengirola",
+      "cliente": "SinVello",
+      "leas": "LEAS-7530",
+      "quien": "pasada 12:30",
+      "cuando": "2026-09-09",
+      "nota": "Alta del portal a las 10:50, tipo Stop, no bloqueante. Sin asignar y sin comentarios a las 12:45."
+    },
+    {
+      "centro": "Powerlaser Portugal",
+      "cliente": "Directo",
+      "leas": "LEAS-7525",
+      "quien": "Gonzalo",
+      "cuando": "2026-09-09",
+      "nota": "Abierto a las 10:01; Gonzalo dio el número de recogida por PBX (1037854 Enora) a las 10:02."
+    }
+  ],
+  "que_es_esto_enlaces": "Enlaces aprendidos: centro -> ticket. Cuando un mensaje del chat nombra el centro pero no el LEAS ni la serie, se mira aqui ANTES de darlo por huerfano. Se anade uno cada vez que un tecnico elige un candidato o corrige un enlace. Aqui no se guardan conversaciones de clientes, solo el enlace."
 }
