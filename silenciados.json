@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-09-09T17:55+02:00",
+  "actualizado": "2026-09-09T18:15+02:00",
   "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
   "como_se_usa": [
     "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -1123,6 +1123,19 @@
       "quien": "pasada 09/09 18:10",
       "cuando": "2026-09-09",
       "revive_si": "Consta que la sustitución llegó al centro y pasan 3 días laborables sin recogida ni tracking en LEAS-7474."
+    },
+    {
+      "id": "7325-deseja-reclamado",
+      "que": "LEAS-7325 Deseja (Lituania) · 498 h de SLA de llegada a taller pasadas y 6 días sin moverse",
+      "ambito": {
+        "leas": "LEAS-7325",
+        "centro": "Deseja",
+        "tipo": "no-llega-taller"
+      },
+      "porque": "Borja lo reclamó al cliente el 09/09 a las 15:26 en el grupo de WhatsApp «Deseja Support Group»: «hi all, I have a Question, we were supposed to receive devie serial 700257. Can you confirm us if it was already sent?». A las 16:20 contestaron «Hi, please give us some time to check. Thank you.»",
+      "quien": "Borja",
+      "cuando": "2026-09-09",
+      "revive_si": "Pasan 3 días laborables desde el 09/09 sin que Deseja confirme el envío, o sin nota nueva en el ticket."
     }
   ],
   "enlaces": [
