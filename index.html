@@ -835,6 +835,9 @@ dialog.wide{max-width:860px}
 .rr{width:100%;font-size:12px;color:var(--ink-soft);background:var(--surface-2);border-left:3px solid var(--accent);padding:5px 10px;border-radius:0 7px 7px 0;margin-top:3px;line-height:1.45}
 .re{font-weight:600;color:var(--warn)} .re.ok{color:var(--good)}
 .rf{color:var(--muted-2);font-size:11px;margin-left:4px}
+.un{font:inherit;text-align:left;color:inherit;background:none;border:0;border-left:1px solid var(--divider-soft);cursor:pointer}
+.un:hover{background:var(--surface-2)}
+.un:first-child{border-left:0}
 </style>
 
 <div class="page">
@@ -2636,7 +2639,7 @@ function pintarEdades(root){
 
 // Cada bloque dice de que dia son sus datos. La pasada tiene que actualizar estas fechas
 // cuando recalcula; si se le olvida, sale el aviso solo.
-const FRESCURA = {"tablero Hoy": "2026-09-09", "cola de taller": "2026-09-09", "actividad del dia": "2026-09-09", "KPIs del ciclo": "2026-09-07", "ritmo de presupuestos": "2026-09-07", "tasa de utilidad": "2026-09-07", "whatsapp de Epil Point": "2026-09-09"};
+const FRESCURA = {"tablero Hoy": "2026-09-09", "cola de taller": "2026-09-09", "actividad del dia": "2026-09-09", "KPIs del ciclo": "2026-09-07", "ritmo de presupuestos": "2026-09-07", "tasa de utilidad": "2026-09-09", "whatsapp de Epil Point": "2026-09-09"};
 function avisarViejos(){
   const viejos = Object.keys(FRESCURA).filter(k => (diasDesde(FRESCURA[k]) || 0) >= 1);
   const c = document.getElementById('frescura'); if(!c) return;
@@ -3207,42 +3210,81 @@ function pintarBusFecha(){
 // Tres medidas separadas a propósito. La primera es trabajo que pasó por la herramienta y
 // no admite discusión. La segunda es seguimiento y puede confundir causa con coincidencia.
 // La tercera es el contraste honesto, y cuando el grupo de control es pequeño lo dice.
-const UTIL = {
-  "_f": "2026-09-07",
-  "vent": "del viernes 04/09 a las 09:20 al lunes 07/09 a las 11:22",
-  "notas": 12, "notas_tk": 12, "notas_quien": "Gonzalo", "notas_tot": 13,
-  "noaplica": 0,
-  "pub": 94, "movio": 23, "cerro": 6,
-  "ctrl": 14, "ctrl_movio": 0
-};
+const UTIL = {"_f":"2026-09-09","hora":"14:20","vent":"de la pasada de las 11:45 de hoy a las 14:20 de hoy","notas":40,"notas_tk":35,"noaplica":3,"jira_directo":14,"quien":{"Isaac":26,"Borja":13,"Gonzalo":1},"pub":67,"movio":21,"movio_panel":20,"cerro":4,"solo_reparto":34,"ctrl":16,"ctrl_movio":8,"L_notas":["LEAS-4443","LEAS-5833","LEAS-6198","LEAS-6879","LEAS-6891","LEAS-6907","LEAS-7048","LEAS-7103","LEAS-7104","LEAS-7118","LEAS-7190","LEAS-7214","LEAS-7247","LEAS-7299","LEAS-7320","LEAS-7332","LEAS-7333","LEAS-7334","LEAS-7357","LEAS-7361","LEAS-7374","LEAS-7378","LEAS-7393","LEAS-7416","LEAS-7420","LEAS-7427","LEAS-7430","LEAS-7437","LEAS-7453","LEAS-7465","LEAS-7467","LEAS-7516","LEAS-7521","LEAS-7530","LEAS-7531"],"L_movio":["LEAS-5833","LEAS-6198","LEAS-6879","LEAS-6891","LEAS-6907","LEAS-7048","LEAS-7103","LEAS-7104","LEAS-7118","LEAS-7214","LEAS-7247","LEAS-7320","LEAS-7333","LEAS-7334","LEAS-7361","LEAS-7416","LEAS-7420","LEAS-7430","LEAS-7453","LEAS-7465","LEAS-7516"],"L_cerro":["LEAS-5833","LEAS-7048","LEAS-7214","LEAS-7333"],"L_solo":["LEAS-4265","LEAS-4908","LEAS-5198","LEAS-5211","LEAS-5219","LEAS-5830","LEAS-5908","LEAS-6225","LEAS-6754","LEAS-6779","LEAS-6835","LEAS-7054","LEAS-7112","LEAS-7162","LEAS-7188","LEAS-7213","LEAS-7237","LEAS-7271","LEAS-7356","LEAS-7358","LEAS-7359","LEAS-7375","LEAS-7385","LEAS-7386","LEAS-7408","LEAS-7415","LEAS-7421","LEAS-7438","LEAS-7472","LEAS-7474","LEAS-7490","LEAS-7501","LEAS-7503","LEAS-7525"],"L_ctrl":["LEAS-5492","LEAS-7228","LEAS-7268","LEAS-7299","LEAS-7357","LEAS-7521","LEAS-7530","LEAS-7531"],"L_pub":["LEAS-4265","LEAS-4443","LEAS-4908","LEAS-5198","LEAS-5211","LEAS-5219","LEAS-5830","LEAS-5833","LEAS-5908","LEAS-6198","LEAS-6225","LEAS-6754","LEAS-6765","LEAS-6779","LEAS-6835","LEAS-6879","LEAS-6891","LEAS-6906","LEAS-6907","LEAS-7048","LEAS-7054","LEAS-7103","LEAS-7104","LEAS-7112","LEAS-7118","LEAS-7162","LEAS-7188","LEAS-7190","LEAS-7213","LEAS-7214","LEAS-7237","LEAS-7247","LEAS-7271","LEAS-7320","LEAS-7325","LEAS-7332","LEAS-7333","LEAS-7334","LEAS-7356","LEAS-7358","LEAS-7359","LEAS-7361","LEAS-7374","LEAS-7375","LEAS-7385","LEAS-7386","LEAS-7394","LEAS-7408","LEAS-7415","LEAS-7416","LEAS-7420","LEAS-7421","LEAS-7430","LEAS-7436","LEAS-7438","LEAS-7445","LEAS-7453","LEAS-7465","LEAS-7468","LEAS-7472","LEAS-7474","LEAS-7490","LEAS-7501","LEAS-7503","LEAS-7516","LEAS-7520","LEAS-7525"]};
 function pintarUtil(){
   const c = document.getElementById('uti'); if(!c) return;
-  const U = UTIL, pm = Math.round(100*U.movio/U.pub), pc = Math.round(100*U.cerro/U.pub);
+  const U = UTIL;
+  const pm = Math.round(100*U.movio/U.pub), pc = Math.round(100*U.cerro/U.pub);
+  const quien = Object.keys(U.quien).map(function(k){ return k+' '+U.quien[k]; }).join(' · ');
   c.innerHTML =
-      '<header><h3>Tasa de utilidad</h3><p>Ni una sola de estas tres cifras dice por sí sola que la '
-    + 'herramienta funcione. Van en orden: la primera es trabajo que pasó materialmente por ella, la '
-    + 'segunda es lo que se movió después de sacarlo, y la tercera es lo único que se parece a una prueba '
-    + '— y hoy es floja. Ventana medida: '+U.vent+'.</p></header>'
+      '<header><h3>Tasa de utilidad <span class="hint">— pincha cualquier cifra y salen los LEAS que la componen</span></h3>'
+    + '<p>Ni una sola de estas tres cifras dice por sí sola que la herramienta funcione. Van en orden: la '
+    + 'primera es trabajo que pasó materialmente por ella, la segunda es lo que se movió después de sacarlo, '
+    + 'y la tercera es lo único que se parece a una prueba — y hoy es floja. Ventana medida: '+U.vent+'.</p></header>'
     + '<div class="unv">'
-    + '<div class="un fuerte"><div class="ug">1 · pasó por la herramienta</div><b>'+U.notas+'</b>'
+    + '<button class="un fuerte" onclick="utilcalc(\'notas\')"><div class="ug">1 · pasó por la herramienta</div><b>'+U.notas+'</b>'
     +   '<div class="ut">notas escritas desde el panel</div><span class="uf">prueba directa</span>'
-    +   '<div class="us">en '+U.notas_tk+' tickets, de las '+U.notas_tot+' que escribió '+U.notas_quien
-    +   ' hoy. Sin el panel, esas notas se escriben en Jira una a una o no se escriben.</div></div>'
-    + '<div class="un medio"><div class="ug">2 · se movió después de salir</div><b>'+pm+' %</b>'
+    +   '<div class="us">en '+U.notas_tk+' tickets ('+quien+'), más '+U.noaplica+' puntos cerrados con «no aplica». '
+    +   'En el mismo rato se escribieron '+U.jira_directo+' comentarios directos en Jira: la mayor parte del '
+    +   'registro de hoy entra por aquí.</div></button>'
+    + '<button class="un medio" onclick="utilcalc(\'movio\')"><div class="ug">2 · se movió después de salir</div><b>'+pm+' %</b>'
     +   '<div class="ut">'+U.movio+' de '+U.pub+' puntos publicados</div><span class="uf">indicio</span>'
-    +   '<div class="us">y '+U.cerro+' se cerraron ('+pc+' %). Que se muevan después de salir en el panel '
-    +   'no demuestra que sea por el panel: son los mismos tickets que el equipo ya estaba mirando.</div></div>'
-    + '<div class="un debil"><div class="ug">3 · contraste</div><b>'+U.ctrl_movio+' de '+U.ctrl+'</b>'
+    +   '<div class="us">y '+U.cerro+' se cerraron ('+pc+' %). Solo cuenta el movimiento REAL: nota de contenido o '
+    +   'cierre. Otros '+U.solo_reparto+' se «movieron» únicamente porque el reparto les escribió una nota, y esos '
+    +   'no cuentan.</div></button>'
+    + '<button class="un debil" onclick="utilcalc(\'ctrl\')"><div class="ug">3 · contraste</div><b>'+U.ctrl_movio+' de '+U.ctrl+'</b>'
     +   '<div class="ut">abiertos que NO salieron y se movieron</div><span class="uf">no concluyente</span>'
-    +   '<div class="us">Ninguno. Sería la comparación buena si el grupo fuera grande, pero son '+U.ctrl
-    +   ' tickets: con esa muestra no se sostiene nada.</div>'
-    +   '<div class="uw">⚠ Muestra insuficiente. Se vuelve fiable con dos o tres semanas de pasadas.</div></div>'
+    +   '<div class="us">Sería la comparación buena si el grupo fuera grande, pero son '+U.ctrl+' tickets: con esa '
+    +   'muestra no se sostiene nada, y por eso no se convierte en porcentaje.</div>'
+    +   '<div class="uw">⚠ Muestra insuficiente (menos de 30). Se vuelve fiable con dos o tres semanas de pasadas.</div></button>'
     + '</div>'
-    + '<div class="upie"><b>Cómo leerlo.</b> El panel saca precisamente los tickets atascados, así que '
-    + 'juega en contra: si un grupo elegido por estar parado se mueve más que el resto, la señal es buena. '
-    + 'Aun así, la única cifra que no se puede discutir es la primera, y es la que hay que hacer crecer: '
-    + 'cuanto más se escriba desde el panel, menos hace falta creerse las otras dos. '
-    + 'Los datos son de la caché de Jira de las 11:22; lo hecho esta tarde entra en la pasada siguiente.</div>';
+    + '<div class="upie"><b>Cómo leerlo.</b> El panel saca precisamente los tickets atascados, así que juega en '
+    + 'contra: si un grupo elegido por estar parado se mueve más que el resto, la señal es buena. Aun así, la '
+    + 'única cifra que no se puede discutir es la primera, y es la que hay que hacer crecer. '
+    + 'Medido el '+U._f+' a las '+U.hora+'.</div>';
+}
+function utilLista(t, arr){
+  if(!arr || !arr.length) return '';
+  return '<div class="sec2">'+t+' ('+arr.length+')</div>'
+       + '<p style="margin:0 0 12px;font-size:12.5px;line-height:1.9;color:var(--ink-soft)">'+arr.join(' · ')+'</p>';
+}
+function utilcalc(id){
+  const U = UTIL; let h = '<div class="k">Qué hay detrás de este número</div>';
+  if(id === 'notas'){
+    h += '<div class="big">'+U.notas+'</div><div class="bigu">notas escritas desde la casilla del panel</div>'
+      + '<h3 style="margin:0 0 10px">La única cifra que no admite discusión</h3>'
+      + '<p style="margin:0 0 12px;font-size:13px;color:var(--ink-soft)">Son comentarios que existen en Jira '
+      + 'porque alguien los escribió en el panel: llevan el prefijo «(vía panel, HH:MM)». <b>No cuentan</b> las '
+      + 'notas automáticas del reparto, que las escribe la herramienta sola y no son trabajo de nadie.</p>'
+      + utilLista('Tickets con nota escrita desde el panel', U.L_notas);
+  } else if(id === 'movio'){
+    h += '<div class="big">'+U.movio+' de '+U.pub+'</div><div class="bigu">publicados que se movieron de verdad</div>'
+      + '<h3 style="margin:0 0 10px">Indicio, no causa</h3>'
+      + '<p style="margin:0 0 12px;font-size:13px;color:var(--ink-soft)">Son los que salieron en la pasada de las '
+      + '11:45 y después tuvieron una nota de contenido o se cerraron. Que se muevan tras salir en el panel no '
+      + 'demuestra que sea <i>por</i> el panel: son los mismos tickets que el equipo ya estaba mirando.</p>'
+      + utilLista('Se movieron de verdad', U.L_movio)
+      + utilLista('Y de esos, se cerraron', U.L_cerro)
+      + '<div class="sec2">No cuentan: movidos solo por la nota del reparto ('+U.solo_reparto+')</div>'
+      + '<p style="margin:0 0 12px;font-size:12.5px;line-height:1.9;color:var(--muted)">'+U.L_solo.join(' · ')+'</p>'
+      + '<p style="margin:0 0 12px;font-size:12.5px;color:var(--muted)">Si estos contaran, la cifra diría '
+      + (U.movio+U.solo_reparto)+' de '+U.pub+' y sería falsa.</p>'
+      + utilLista('Todo lo publicado a las 11:45', U.L_pub);
+  } else {
+    h += '<div class="big">'+U.ctrl_movio+' de '+U.ctrl+'</div><div class="bigu">grupo de control</div>'
+      + '<h3 style="margin:0 0 10px">Muestra insuficiente</h3>'
+      + '<p style="margin:0 0 12px;font-size:13px;color:var(--ink-soft)">Incidencias abiertas que <b>no</b> salieron '
+      + 'en el panel y aun así se movieron en la misma ventana. Con menos de 30 no se convierte en porcentaje.</p>'
+      + utilLista('Se movieron sin salir en el panel', U.L_ctrl);
+  }
+  h += '<div class="src">Ventana: '+U.vent+'. Las notas del panel se reconocen por el prefijo '
+    + '«(vía panel, HH:MM)»; se descartan las que dicen «se lo paso a X (reparto…)». «Movimiento real» es un '
+    + 'comentario de contenido o un cierre, nunca solo el <code>updated</code>.'
+    + '<div class="fsrc">Origen: Jira · proyecto LEAS · medido el '+U._f+' a las '+U.hora+'</div></div>'
+    + '<button class="x" onclick="this.closest(\'dialog\').close()">Cerrar</button>';
+  const b = document.getElementById('calc-body');
+  b.innerHTML = h; linkTickets(b);
+  document.getElementById('dlg-calc').showModal();
 }
 
 // ═══ Epil Point ═══
