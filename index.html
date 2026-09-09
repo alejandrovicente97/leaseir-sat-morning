@@ -2721,6 +2721,9 @@ const AB = {
     {id:"otros",    t:"Otros estados",          n:1,  q:"otros",    d:"casos sueltos fuera del ciclo normal"}
   ]
 };
+const ABCOL = {nosotros:'var(--k-nos)', tercero:'var(--k-ter)', cliente:'var(--k-cli)', otros:'var(--muted-2)'};
+const ABQ = {nosotros:'nosotros', tercero:'transportista o externo', cliente:'el cliente', otros:'—'};
+
 function pintarAbiertas(){
   const tira = document.getElementById('ab-tira'); if(!tira) return;
   const tot = AB.tramos.reduce((a,x)=>a+x.n,0);
