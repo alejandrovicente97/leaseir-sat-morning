@@ -597,7 +597,7 @@ details.comova2 .cm-in{padding:0 18px 16px}
     <div class="when">
       <b id="fecha">Sábado, 5 de septiembre 2026</b>
       <span id="corte" data-gen="2026-09-09T11:45">Última actualización: 5 sept 13:35</span>
-      <button class="recarga" onclick="location.reload()" title="Solo recarga la página. Los datos se regeneran a las 9:30, 12:30, 15:30, 17:30 y 19:30.">Recargar</button>
+      <button class="recarga" onclick="location.reload()" title="Solo recarga la página. Los datos se regeneran a las 9:30, 12:30, 15:10, 16:10, 18:10 y 20:10.">Recargar</button>
     </div>
   </header>
 
@@ -649,7 +649,7 @@ details.comova2 .cm-in{padding:0 18px 16px}
       <div class="cm-p">
         <span class="cm-n">4</span>
         <b>Desaparece</b>
-        <span>El punto se va de tu lista al momento. Y si el punto no es trabajo —no es de Leaseir, o ya lo contestaste tú—, pon el motivo en la casilla y pulsa <b>«no aplica / ya está»</b>: se cierra, el motivo queda escrito en el ticket y no vuelve a salir mañana. Si lo has escrito sin querer, el botón «deshacer» lo devuelve a la lista. El panel vuelve a mirar Jira solo a las 9:30, 12:30, 15:30, 17:30 y 19:30; «Recargar» solo refresca la pantalla.</span>
+        <span>El punto se va de tu lista al momento. Y si el punto no es trabajo —no es de Leaseir, o ya lo contestaste tú—, pon el motivo en la casilla y pulsa <b>«no aplica / ya está»</b>: se cierra, el motivo queda escrito en el ticket y no vuelve a salir mañana. Si lo has escrito sin querer, el botón «deshacer» lo devuelve a la lista. El panel vuelve a mirar Jira solo a las 9:30, 12:30, 15:10, 16:10, 18:10 y 20:10; «Recargar» solo refresca la pantalla.</span>
       </div>
     </div>
     <div class="cm-ej">
@@ -1624,7 +1624,7 @@ try{
 // ── Cuándo se generó esto y cuándo toca la siguiente pasada ──
 (function(){
   const el = document.getElementById('corte'); if(!el) return;
-  const PASADAS = [[9,30],[12,30],[15,30],[17,30],[19,30]];
+  const PASADAS = [[9,30],[12,30],[15,10],[16,10],[18,10],[20,10]];
   const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
   const dos = n => String(n).padStart(2,'0');
   const ahora = new Date();
