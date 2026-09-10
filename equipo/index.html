@@ -1347,7 +1347,8 @@ async function noAplica(k, t, btn){
     if(inp) inp.focus();
     return;
   }
-  const leas = leasDe(t), id = idPunto(k, t);
+  const leas = leasDe(t) || leasEnMotivo(motivo), id = idPunto(k, t);
+  const enMotivo = !leasDe(t) && !!leas;   // el ticket lo ha puesto el técnico en el motivo (p. ej. lo acaba de abrir)
   if(!leas){
     // Sin ticket no hay dónde escribirlo: el panel NO lo manda a ningún sitio. Copia la línea y hay que pegarla
     // en el grupo «SAT Leaseir - Herramienta Control Diario»; la pasada la lee de ahí. Si no se pega, mañana vuelve.
@@ -1356,15 +1357,10 @@ async function noAplica(k, t, btn){
     // desplegado aún no lo sabe hacer, se copia la línea y queda el aviso para pegarla a mano.
     btn.disabled = true; if(inp) inp.disabled = true;
     if(eco){ eco.hidden = false; eco.className = "rr"; eco.textContent = "Publicando en el grupo de la herramienta…"; }
-    let publicado = false;
-    try{
-      const r = await fetch(JIRA_URL, { method:"POST", headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({ sin_ticket: true, linea: linea, quien: YO, clave: JIRA_CLAVE }) });
-      const j = await r.json().catch(()=>({}));
-      publicado = !!(r.ok && j.ok);
-    }catch(e){}
+    const pub = await publicaSinTicket(linea);
     LOCAL[id] = { texto: "no aplica: " + motivo, quien: YO, cuando: new Date().toISOString(),
-                  leas: "", noaplica: true, pegar: publicado ? "" : linea, grupo: publicado };
+                  leas: "", noaplica: true, pegar: pub.ok ? "" : linea, grupo: pub.ok, porque: pub.ok ? "" : pub.porque };
+    const publicado = pub.ok;
     guardaLocal();
     if(!publicado){ try{ navigator.clipboard.writeText(linea); }catch(e){} }
     renderInterno();
@@ -1372,9 +1368,12 @@ async function noAplica(k, t, btn){
   }
   btn.disabled = true; if(inp) inp.disabled = true;
   if(eco){ eco.hidden = false; eco.className = "rr"; eco.textContent = "Cerrando el punto en " + leas + "…"; }
+  // Si el LEAS venía en el motivo, la nota lleva el punto entero: es lo que ata el mensaje del chat con el ticket.
+  const textoNota = enMotivo ? "punto del panel sin ticket, va con este: " + cuerpoDe(t).replace(/\s+/g," ").slice(0,160) + " · " + motivo
+                             : "esto no aplica: " + motivo;
   try{
     const r = await fetch(JIRA_URL, { method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({ leas: leas, quien: YO, texto: "esto no aplica: " + motivo, clave: JIRA_CLAVE }) });
+      body: JSON.stringify({ leas: leas, quien: YO, texto: textoNota, clave: JIRA_CLAVE }) });
     const j = await r.json().catch(()=>({}));
     if(!r.ok || !j.ok){
       btn.disabled = false; if(inp) inp.disabled = false;
@@ -1389,6 +1388,48 @@ async function noAplica(k, t, btn){
     btn.disabled = false; if(inp) inp.disabled = false;
     if(eco){ eco.className = "rr mal"; eco.textContent = "Sin conexión con Jira. No se ha cerrado nada."; }
   }
+}
+function leasEnMotivo(m){ const x = (String(m || "").match(/\bLEAS-\d{3,5}\b/i) || [])[0]; return x ? x.toUpperCase() : null; }
+// Publica una línea en el grupo de la herramienta por el bot (worker sin_ticket). Devuelve {ok, porque}:
+// porque = 'sin_bot' (el worker no tiene TELEGRAM_TOKEN), 'worker' (otro error) o 'red'.
+async function publicaSinTicket(linea){
+  try{
+    const r = await fetch(JIRA_URL, { method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ sin_ticket: true, linea: linea, quien: YO, clave: JIRA_CLAVE }) });
+    const j = await r.json().catch(()=>({}));
+    if(r.ok && j.ok) return { ok: true, porque: "" };
+    return { ok: false, porque: (j && j.error === "sin_bot") ? "sin_bot" : "worker" };
+  }catch(e){ return { ok: false, porque: "red" }; }
+}
+// Lo que se cerró sin ticket y no llegó a publicarse se reintenta solo al abrir el panel (una vez por carga):
+// si el motivo trae un LEAS, la nota va a ese ticket; si no, se vuelve a pedir al bot. Así, cuando Alejandro
+// ponga el token, el aviso rojo desaparece sin que nadie tenga que pegar nada.
+let REINTENTANDO = false;
+async function reintentaPendientes(){
+  if(REINTENTANDO || !YO || !JIRA_URL || DB) return;
+  const hoy = HOY();
+  const pend = Object.entries(LOCAL).filter(([id,l]) => l && !l.leas && l.pegar && !l.grupo && (l.cuando||'').slice(0,10) === hoy
+                 && !TRASPASOS[id] && !(l.reintento && Date.now() - new Date(l.reintento) < 10*60*1000));
+  if(!pend.length) return;
+  REINTENTANDO = true; let cambio = false;
+  try{
+    for(const [id, l] of pend){
+      l.reintento = new Date().toISOString();
+      const leas = leasEnMotivo(l.texto);
+      if(leas && l.noaplica){
+        try{
+          const r = await fetch(JIRA_URL, { method:"POST", headers:{"Content-Type":"application/json"},
+            body: JSON.stringify({ leas: leas, quien: l.quien || YO, texto: "punto del panel sin ticket, va con este: " + String(l.pegar).replace(/^no aplica · /,"").slice(0,220), clave: JIRA_CLAVE }) });
+          const j = await r.json().catch(()=>({}));
+          if(r.ok && j.ok){ l.leas = leas; l.pegar = ""; l.porque = ""; cambio = true; continue; }
+        }catch(e){}
+      }
+      const pub = await publicaSinTicket(l.pegar);
+      if(pub.ok){ l.grupo = true; l.pegar = ""; l.porque = ""; cambio = true; }
+      else if(l.porque !== pub.porque){ l.porque = pub.porque; cambio = true; }
+    }
+  } finally { REINTENTANDO = false; }
+  guardaLocal(); if(cambio) renderInterno();
 }
 // El punto no traía ticket y la pasada ofrece candidatos: se elige uno y ahí va la nota.
 function elegirCandidato(k, t, sel){
@@ -1632,13 +1673,8 @@ let REPARTIENDO = false;
 // (worker sin_ticket) para que la pasada lo lea y cambie el dueño; y en este navegador se mueve al momento.
 async function pasarSinTicket(k, t, para, motivo){
   const linea = "se lo paso a " + para + " · " + cuerpoDe(t).replace(/\s+/g," ").slice(0,140) + (motivo ? " · " + motivo : "") + " · " + (YO || "");
-  let publicado = false;
-  try{
-    const r = await fetch(JIRA_URL, { method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({ sin_ticket: true, linea: linea, quien: YO, clave: JIRA_CLAVE }) });
-    const j = await r.json().catch(()=>({})); publicado = !!(r.ok && j.ok);
-  }catch(e){}
-  LOCAL[idPunto(k,t)] = { texto: motivo || "", para: para, quien: YO, cuando: new Date().toISOString(), leas: "", grupo: publicado, pegar: publicado ? "" : linea };
+  const pub = await publicaSinTicket(linea), publicado = pub.ok;
+  LOCAL[idPunto(k,t)] = { texto: motivo || "", para: para, quien: YO, cuando: new Date().toISOString(), leas: "", grupo: publicado, pegar: publicado ? "" : linea, porque: publicado ? "" : pub.porque };
   if(!publicado){ try{ navigator.clipboard.writeText(linea); }catch(e){} }
   return publicado;
 }
@@ -1832,7 +1868,9 @@ function renderInterno(){
         && (l.cuando||'').slice(0,10) === HOY() && !TRASPASOS[id]).map(([id,l]) => l);
   const pegar = sinT.length
     ? '<div class="pt-aviso"><b>'+sinT.length+(sinT.length===1?' punto sin ticket cerrado o traspasado':' puntos sin ticket cerrados o traspasados')+'.</b> '
-      + 'El panel no puede guardarlos hasta que el worker publique en el grupo: pega cada línea en '
+      + (sinT.some(l => l.porque === 'sin_bot')
+          ? 'El bot no puede publicarlos: <b>falta el token de Telegram en Cloudflare</b> (lo pone Alejandro; en cuanto esté, esto se publica solo al abrir el panel). Si no quieres esperar, pega cada línea en '
+          : 'No se han podido publicar en el grupo (el worker no responde); se reintenta solo al abrir el panel. Si no quieres esperar, pega cada línea en ')
       + '<a class="jira" target="_blank" rel="noopener" href="https://web.telegram.org/a/#-5461993276">SAT Leaseir - Herramienta Control Diario</a>'
       + ' o mañana vuelven a salir.'
       + sinT.map(l => '<div style="margin-top:6px;font-size:12px"><button class="cop" onclick="cp(this,this.nextSibling.textContent)">copiar</button><span> '+l.pegar.replace(/</g,'&lt;')+'</span></div>').join('')
@@ -1937,6 +1975,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
 try{ renderInterno(); }catch(e){ console.error(e); }
 try{ initDB(); }catch(e){ console.error(e); }
 try{ vivo(); }catch(e){ console.error('vivo', e); }
+try{ setTimeout(reintentaPendientes, 1500); }catch(e){ console.error('reintenta', e); }
+document.addEventListener('visibilitychange', () => { if(!document.hidden) reintentaPendientes(); });
 // «Cómo funciona» abierto solo la primera vez que alguien abre el panel en este navegador.
 try{
   const d = document.getElementById('comova');
