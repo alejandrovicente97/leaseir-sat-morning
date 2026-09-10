@@ -3213,33 +3213,49 @@ const UTIL = {"_f":"2026-09-09","hora":"18:30","vent":"de la pasada de las 11:45
 function pintarUtil(){
   const c = document.getElementById('uti'); if(!c) return;
   const U = UTIL;
-  const pm = Math.round(100*U.movio/U.pub), pc = Math.round(100*U.cerro/U.pub);
-  const quien = Object.keys(U.quien).map(function(k){ return k+' '+U.quien[k]; }).join(' · ');
+  const total = U.notas + U.jira_directo;                       // anotaciones del SAT en la ventana, por donde sea
+  const adop  = total ? Math.round(100*U.notas/total) : 0;      // parte que entró por el panel
+  const pm = U.pub ? Math.round(100*U.movio/U.pub) : 0, pc = U.pub ? Math.round(100*U.cerro/U.pub) : 0;
+  const pctrl = U.ctrl ? Math.round(100*U.ctrl_movio/U.ctrl) : 0;
+  const okCtrl = U.ctrl >= 30;
+  const veces = (okCtrl && U.ctrl_movio) ? (U.movio/U.pub) / (U.ctrl_movio/U.ctrl) : null;
+  const quien = Object.keys(U.quien).sort(function(x,y){ return U.quien[y]-U.quien[x]; }).map(function(k){ return k+' '+U.quien[k]; }).join(' · ');
+  const conPanel = U.movio ? Math.round(100*U.movio_panel/U.movio) : 0;
   c.innerHTML =
       '<header><h3>Tasa de utilidad <span class="hint">— pincha cualquier cifra y salen los LEAS que la componen</span></h3>'
-    + '<p>Ni una sola de estas tres cifras dice por sí sola que la herramienta funcione. Van en orden: la '
-    + 'primera es trabajo que pasó materialmente por ella, la segunda es lo que se movió después de sacarlo, '
-    + 'y la tercera es lo único que se parece a una prueba — y hoy es floja. Ventana medida: '+U.vent+'.</p></header>'
+    + '<p>Tres cifras que miden cosas distintas: si el equipo la usa, si lo que saca se mueve, y si se mueve más que lo '
+    + 'que no saca. La primera es un hecho; la segunda, un indicio; la tercera, la única que compara. '
+    + 'Ventana: '+U.vent+'.</p></header>'
     + '<div class="unv">'
-    + '<button class="un fuerte" onclick="utilcalc(\'notas\')"><div class="ug">1 · pasó por la herramienta</div><b>'+U.notas+'</b>'
-    +   '<div class="ut">notas escritas desde el panel</div><span class="uf">prueba directa</span>'
-    +   '<div class="us">en '+U.notas_tk+' tickets ('+quien+'), más '+U.noaplica+' puntos cerrados con «no aplica». '
-    +   'En el mismo rato se escribieron '+U.jira_directo+' comentarios directos en Jira: la mayor parte del '
-    +   'registro de hoy entra por aquí.</div></button>'
-    + '<button class="un medio" onclick="utilcalc(\'movio\')"><div class="ug">2 · se movió después de salir</div><b>'+pm+' %</b>'
-    +   '<div class="ut">'+U.movio+' de '+U.pub+' puntos publicados</div><span class="uf">indicio</span>'
-    +   '<div class="us">y '+U.cerro+' se cerraron ('+pc+' %). Solo cuenta el movimiento REAL: nota de contenido o '
-    +   'cierre. Otros '+U.solo_reparto+' se «movieron» únicamente porque el reparto les escribió una nota, y esos '
-    +   'no cuentan.</div></button>'
-    + '<button class="un debil" onclick="utilcalc(\'ctrl\')"><div class="ug">3 · contraste</div><b>'+U.ctrl_movio+' de '+U.ctrl+'</b>'
-    +   '<div class="ut">abiertos que NO salieron y se movieron</div><span class="uf">no concluyente</span>'
-    +   '<div class="us">Sería la comparación buena si el grupo fuera grande, pero son '+U.ctrl+' tickets: con esa '
-    +   'muestra no se sostiene nada, y por eso no se convierte en porcentaje.</div>'
-    +   '<div class="uw">⚠ Muestra insuficiente (menos de 30). Se vuelve fiable con dos o tres semanas de pasadas.</div></button>'
+    // 1 · uso: qué parte de las anotaciones del SAT entró por el panel
+    + '<button class="un fuerte" onclick="utilcalc(\'notas\')"><div class="ug">1 · la usan</div><b>'+adop+' %</b>'
+    +   '<div class="ut">de las anotaciones del SAT entraron por el panel</div><span class="uf">hecho</span>'
+    +   '<div class="us">'+U.notas+' notas desde el panel ('+quien+') en '+U.notas_tk+' tickets, frente a '+U.jira_directo
+    +   ' escritas directamente en Jira. Aparte, '+U.noaplica+' puntos cerrados con «no aplica». '
+    +   'No cuentan las notas automáticas del reparto.</div></button>'
+    // 2 · efecto: lo publicado se movió de verdad
+    + '<button class="un medio" onclick="utilcalc(\'movio\')"><div class="ug">2 · lo que saca se mueve</div><b>'+pm+' %</b>'
+    +   '<div class="ut">'+U.movio+' de '+U.pub+' puntos publicados tuvieron movimiento real</div><span class="uf">indicio</span>'
+    +   '<div class="us">'+U.cerro+' se cerraron ('+pc+' %) y '+conPanel+' % de los movidos lo hicieron con una nota '
+    +   'escrita desde el panel. Movimiento real = nota de contenido o cierre; los '+U.solo_reparto+' que solo '
+    +   'recibieron la nota del reparto no cuentan.</div></button>'
+    // 3 · contraste con lo que no salió
+    + (okCtrl
+      ? '<button class="un debil" onclick="utilcalc(\'ctrl\')"><div class="ug">3 · lo que no saca, no se mueve</div><b>'+pctrl+' %</b>'
+        + '<div class="ut">'+U.ctrl_movio+' de '+U.ctrl+' abiertos que NO salieron se movieron</div>'
+        + '<span class="uf">comparación</span>'
+        + '<div class="us">'+(veces ? 'Lo publicado se movió '+(veces >= 10 ? Math.round(veces) : veces.toFixed(1)).replace('.',',')+' veces más que lo no publicado. '
+                                     : 'Nada de lo no publicado se movió. ')
+        + 'Muestra suficiente ('+U.ctrl+'); la pega ya no es el tamaño sino que los grupos no son iguales: el panel '
+        + 'elige lo que toca tocar y deja fuera lo que espera a un tercero.</div></button>'
+      : '<button class="un debil" onclick="utilcalc(\'ctrl\')"><div class="ug">3 · lo que no saca, ¿se mueve?</div><b>'+U.ctrl_movio+' de '+U.ctrl+'</b>'
+        + '<div class="ut">abiertos que NO salieron y se movieron</div><span class="uf">no concluyente</span>'
+        + '<div class="us">Con '+U.ctrl+' tickets no se sostiene un porcentaje; hace falta llegar a 30.</div>'
+        + '<div class="uw">⚠ Muestra insuficiente (menos de 30). Se vuelve fiable con dos o tres semanas de pasadas.</div></button>')
     + '</div>'
-    + '<div class="upie"><b>Cómo leerlo.</b> El panel saca precisamente los tickets atascados, así que juega en '
-    + 'contra: si un grupo elegido por estar parado se mueve más que el resto, la señal es buena. Aun así, la '
-    + 'única cifra que no se puede discutir es la primera, y es la que hay que hacer crecer. '
+    + '<div class="upie"><b>Cómo leerlo.</b> Ninguna de las tres demuestra causa. La 1 dice si el registro del SAT pasa por '
+    + 'aquí (si baja, lo demás da igual). La 2 juega en contra del panel: saca precisamente lo atascado. La 3 juega a favor: '
+    + 'lo que no saca suele estar esperando a alguien de fuera. Si la 2 se mantiene por encima de la 3 semana tras semana, la señal es buena. '
     + 'Medido el '+U._f+' a las '+U.hora+'.</div>';
 }
 function utilLista(t, arr){
@@ -3270,10 +3286,16 @@ function utilcalc(id){
       + (U.movio+U.solo_reparto)+' de '+U.pub+' y sería falsa.</p>'
       + utilLista('Todo lo publicado a las 11:45', U.L_pub);
   } else {
-    h += '<div class="big">'+U.ctrl_movio+' de '+U.ctrl+'</div><div class="bigu">grupo de control</div>'
-      + '<h3 style="margin:0 0 10px">Muestra insuficiente</h3>'
-      + '<p style="margin:0 0 12px;font-size:13px;color:var(--ink-soft)">Incidencias abiertas que <b>no</b> salieron '
-      + 'en el panel y aun así se movieron en la misma ventana. Con menos de 30 no se convierte en porcentaje.</p>'
+    const okC = U.ctrl >= 30, pC = U.ctrl ? Math.round(100*U.ctrl_movio/U.ctrl) : 0, pM = U.pub ? Math.round(100*U.movio/U.pub) : 0;
+    h += '<div class="big">'+U.ctrl_movio+' de '+U.ctrl+'</div><div class="bigu">abiertos que no salieron en el panel y se movieron</div>'
+      + '<h3 style="margin:0 0 10px">'+(okC ? pC+' % frente al '+pM+' % de lo publicado' : 'Muestra insuficiente')+'</h3>'
+      + '<p style="margin:0 0 12px;font-size:13px;color:var(--ink-soft)">Incidencias abiertas en la ventana que <b>no</b> salieron '
+      + 'en la pasada y aun así tuvieron movimiento real (nota de contenido o cierre). '
+      + (okC ? 'La muestra ya es suficiente; lo que no es igual son los grupos: el panel elige lo que hay que tocar y deja '
+             + 'fuera lo que está esperando a un tercero (transporte, presupuesto, técnico externo), que se mueve poco por '
+             + 'naturaleza. Por eso esta cifra dice «lo publicado se mueve más», no «se mueve porque se publicó».'
+             : 'Con menos de 30 no se convierte en porcentaje.')
+      + '</p>'
       + utilLista('Se movieron sin salir en el panel', U.L_ctrl);
   }
   h += '<div class="src">Ventana: '+U.vent+'. Las notas del panel se reconocen por el prefijo '
