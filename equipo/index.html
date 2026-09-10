@@ -1064,7 +1064,7 @@ async function hayVersionNueva(){
     const r = await fetch(location.pathname + '?v=' + Date.now(), { cache: 'no-store' });
     if(!r.ok) return;
     const txt = await r.text();
-    const m = txt.match(/id="corte" data-gen="2026-09-10T09:30"]+)"/);
+    const m = txt.match(/id="corte" data-gen="([^"]+)"/);
     const el = document.getElementById('corte');
     if(m && el && m[1] !== el.dataset.gen && !document.getElementById('nueva')){
       const b = document.createElement('div'); b.id = 'nueva'; b.className = 'viejo';
