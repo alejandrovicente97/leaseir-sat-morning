@@ -1,6 +1,6 @@
 {
  "version": 1,
- "actualizado": "2026-09-10 16:20",
+ "actualizado": "2026-09-10 17:25",
  "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
  "como_se_usa": [
   "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -1624,6 +1624,32 @@
    "quien": "Borja",
    "cuando": "2026-09-10",
    "revive_si": "LEAS-7555 se queda sin movimiento 3 días laborables."
+  },
+  {
+   "id": "7359-olbia-llego-ayer",
+   "que": "LEAS-7359 Centri Unico Olbia · préstamo de 16 días (H01025), el padre LEAS-7358 en «Pendiente asignar técnico»",
+   "ambito": {
+    "leas": "LEAS-7359",
+    "centro": "Centri Unico Olbia",
+    "tipo": "prestamo-huerfano"
+   },
+   "porque": "Borja lo cerró desde el panel el 10/09 a las 12:32: «esto no aplica: pdrte de reparar en taller, llegó ayer». El equipo averiado ya volvió; el préstamo sigue abierto porque falta reparar.",
+   "quien": "Borja",
+   "cuando": "2026-09-10",
+   "revive_si": "Pasan 5 días laborables desde el 10/09 sin que se repare ni se cierre el préstamo."
+  },
+  {
+   "id": "7408-sta-teresa-llego-hoy",
+   "que": "LEAS-7408 Elha Sta Teresa · préstamo de 13 días (SUSTMHR013), el padre LEAS-7343 en «Gestionado transporte»",
+   "ambito": {
+    "leas": "LEAS-7408",
+    "centro": "Elha Sta teresa",
+    "tipo": "prestamo-huerfano"
+   },
+   "porque": "Borja lo cerró desde el panel el 10/09 a las 12:38: «esto no aplica: ha llegado hoy». El equipo averiado llegó a taller hoy.",
+   "quien": "Borja",
+   "cuando": "2026-09-10",
+   "revive_si": "Pasan 5 días laborables desde el 10/09 sin que se repare ni se cierre el préstamo."
   }
  ],
  "enlaces": [
