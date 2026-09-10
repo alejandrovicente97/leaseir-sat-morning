@@ -1270,17 +1270,32 @@ async function deshacer(k, t){
 // Escribe la nota en Jira a través del worker. Solo en la web estática (sin DB).
 async function anotar(k, t, inp, forzarLeas){
   const texto = (inp.value || "").trim(); if(!texto) return;
-  const leas = forzarLeas || leasDe(t);
+  const leas = forzarLeas || leasDe(t) || leasEnMotivo(texto);
   const caja = inp.closest(".resp");
   const eco  = caja ? caja.querySelector(".rr") : null;
-  if(!leas){ if(eco){ eco.hidden = false; eco.className="rr mal"; eco.textContent = "Este punto no tiene un LEAS, así que no hay ticket donde escribirlo. Dilo por el grupo."; } return; }
   if(!YO){ pintarYo(); return; }
+  if(!leas){
+    // Sin ticket: la nota va al grupo de la herramienta por el bot y el punto queda atendido hoy (mañana puede volver
+    // si nada cambia; para cerrarlo del todo está «no aplica / ya está»).
+    const id = idPunto(k, t);
+    const linea = "nota · " + cuerpoDe(t).replace(/\s+/g," ").slice(0,120) + " · " + texto + " · " + (YO || "");
+    inp.disabled = true;
+    if(eco){ eco.hidden = false; eco.className = "rr"; eco.textContent = "Publicando en el grupo de la herramienta…"; }
+    const pub = await publicaSinTicket(linea);
+    LOCAL[id] = { texto: texto, quien: YO, cuando: new Date().toISOString(), leas: "", nota: true,
+                  grupo: pub.ok, pegar: pub.ok ? "" : linea, porque: pub.ok ? "" : pub.porque };
+    guardaLocal();
+    if(!pub.ok){ try{ navigator.clipboard.writeText(linea); }catch(e){} }
+    renderInterno();
+    return;
+  }
+  const textoFinal = (!forzarLeas && !leasDe(t)) ? "punto del panel sin ticket, va con este: " + cuerpoDe(t).replace(/\s+/g," ").slice(0,160) + " · " + texto : texto;
   inp.disabled = true;
   if(eco){ eco.hidden = false; eco.className = "rr"; eco.textContent = "Escribiendo en " + leas + "…"; }
   try{
     const r = await fetch(JIRA_URL, {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ leas: leas, quien: YO, texto: texto, clave: JIRA_CLAVE })
+      body: JSON.stringify({ leas: leas, quien: YO, texto: textoFinal, clave: JIRA_CLAVE })
     });
     const j = await r.json().catch(()=>({}));
     if(!r.ok || !j.ok){
@@ -1416,10 +1431,10 @@ async function reintentaPendientes(){
     for(const [id, l] of pend){
       l.reintento = new Date().toISOString();
       const leas = leasEnMotivo(l.texto);
-      if(leas && l.noaplica){
+      if(leas && (l.noaplica || l.nota)){
         try{
           const r = await fetch(JIRA_URL, { method:"POST", headers:{"Content-Type":"application/json"},
-            body: JSON.stringify({ leas: leas, quien: l.quien || YO, texto: "punto del panel sin ticket, va con este: " + String(l.pegar).replace(/^no aplica · /,"").slice(0,220), clave: JIRA_CLAVE }) });
+            body: JSON.stringify({ leas: leas, quien: l.quien || YO, texto: "punto del panel sin ticket, va con este: " + String(l.pegar).replace(/^(no aplica|nota|se lo paso a [^·]+) · /,"").slice(0,220), clave: JIRA_CLAVE }) });
           const j = await r.json().catch(()=>({}));
           if(r.ok && j.ok){ l.leas = leas; l.pegar = ""; l.porque = ""; cambio = true; continue; }
         }catch(e){}
@@ -1492,7 +1507,11 @@ function respHtml(k, t){
                : 'quitado de tu pantalla. <b style="color:var(--crit)">No está guardado en ningún sitio:</b> la línea está copiada, pégala en '
                + '<a class="jira" target="_blank" rel="noopener" href="https://web.telegram.org/a/#-5461993276">Herramienta Control Diario</a> o mañana vuelve '
                + '<button class="cop" onclick="cp(this,this.closest(\'li\').dataset.pegar||\'\')">copiar otra vez</button>'))
-                         : 'escrito en <b>'+(loc.leas||'')+'</b>')
+                         : (loc.leas ? 'escrito en <b>'+loc.leas+'</b>'
+                           : (loc.grupo ? 'anotado y publicado por el bot en <b>Herramienta Control Diario</b>'
+                             : 'anotado solo en tu pantalla. <b style="color:var(--crit)">No está guardado en ningún sitio:</b> la línea está copiada, pégala en '
+                               + '<a class="jira" target="_blank" rel="noopener" href="https://web.telegram.org/a/#-5461993276">Herramienta Control Diario</a> '
+                               + '<button class="cop" onclick="cp(this,this.closest(\'li\').dataset.pegar||\'\')">copiar otra vez</button>')))
         +  (loc.para ? ' · <span class="paso">pasado a '+loc.para+'</span>' : '')
         +  (loc.texto ? ' · '+loc.texto : '')
         +  ' <span class="rf">'+(loc.cuando||'').slice(11,16)+'</span>'
@@ -1518,15 +1537,15 @@ function respHtml(k, t){
           +  cand.map(x => '<option value="'+x+'">'+x+'</option>').join('')
           +  '</select>';
       }
-      h += '<input class="ri" placeholder="'+(cand.length ? 'elige el ticket y escribe qué pasa' : 'por qué no aplica, en una línea')+'" '
+      h += '<input class="ri" placeholder="'+(cand.length ? 'elige el ticket y escribe qué pasa' : 'qué has hecho · Enter y va al grupo (cita el LEAS si ya lo hay)')+'" '
         +  'onkeydown="if(event.key===\'Enter\'){var s=this.closest(\'.resp\').querySelector(\'.candi\'); '
-        +  'if(s&&s.value)anotar(\''+k+'\',this.closest(\'li\').dataset.t,this,s.value);}">'
+        +  'anotar(\''+k+'\',this.closest(\'li\').dataset.t,this,(s&&s.value)||null);}">'
         +  '<button class="nap" onclick="noAplica(\''+k+'\',this.closest(\'li\').dataset.t,this)">no aplica / ya está</button>'
         +  '<button class="cop" title="Copia una línea lista para pegar en el grupo de la herramienta" '
         +  'onclick="copiarNoAplica(\''+k+'\',this.closest(\'li\').dataset.t,this)">copiar para el grupo</button>'
         +  '<div class="rr" hidden></div>';
       h += '<span class="rf" style="flex-basis:100%">Este punto no tiene ticket'
-        +  (cand.length ? ': si es uno de esos, elígelo y la nota entra ahí.' : '. Lo que escribas aquí no va a Jira ni a Telegram: al cerrarlo, el bot lo publica en el grupo «Herramienta Control Diario» (y si el bot no puede, se te copia la línea para que la pegues tú). Si no llega al grupo, mañana vuelve.')
+        +  (cand.length ? ': si es uno de esos, elígelo y la nota entra ahí.' : '. Lo que escribas aquí + Enter lo publica el bot en el grupo «Herramienta Control Diario» con tu nombre y el punto queda atendido hoy; si citas un LEAS, va a ese ticket. «No aplica / ya está» lo cierra del todo (con motivo). Si el bot no puede, se te copia la línea para que la pegues tú.')
         +  '</span>';
     }
     return h + '</div>';
@@ -1864,10 +1883,10 @@ function renderInterno(){
   });
   // Puntos cerrados hoy SIN ticket: no están guardados en ningún sitio hasta que se pegue la línea en el grupo.
   // Los que la pasada ya guardo en TRASPASOS no hay que pegarlos: el dueno nuevo viaja en el panel.
-  const sinT = Object.entries(LOCAL).filter(([id,l]) => l && !l.leas && l.pegar && (l.noaplica || l.para)
+  const sinT = Object.entries(LOCAL).filter(([id,l]) => l && !l.leas && l.pegar && (l.noaplica || l.para || l.nota)
         && (l.cuando||'').slice(0,10) === HOY() && !TRASPASOS[id]).map(([id,l]) => l);
   const pegar = sinT.length
-    ? '<div class="pt-aviso"><b>'+sinT.length+(sinT.length===1?' punto sin ticket cerrado o traspasado':' puntos sin ticket cerrados o traspasados')+'.</b> '
+    ? '<div class="pt-aviso"><b>'+sinT.length+(sinT.length===1?' punto sin ticket anotado, cerrado o traspasado':' puntos sin ticket anotados, cerrados o traspasados')+'.</b> '
       + (sinT.some(l => l.porque === 'sin_bot')
           ? 'El bot no puede publicarlos: <b>falta el token de Telegram en Cloudflare</b> (lo pone Alejandro; en cuanto esté, esto se publica solo al abrir el panel). Si no quieres esperar, pega cada línea en '
           : 'No se han podido publicar en el grupo (el worker no responde); se reintenta solo al abrir el panel. Si no quieres esperar, pega cada línea en ')
