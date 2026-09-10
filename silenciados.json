@@ -1,6 +1,6 @@
 {
  "version": 1,
- "actualizado": "2026-09-10 13:40",
+ "actualizado": "2026-09-10 16:20",
  "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
  "como_se_usa": [
   "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -1556,6 +1556,74 @@
    "quien": "Alejandro",
    "cuando": "2026-09-10",
    "revive_si": "El mensaje de ENVIOS cita un LEAS, o el mismo centro abre incidencia en los 7 días siguientes al envío."
+  },
+  {
+   "id": "7438-7518-dos-casos-globo",
+   "que": "LEAS-7438 Centri Unico Globo · sigue en «Abierto» con la última nota del 01/09, y se preguntaba si LEAS-7518 es el mismo caso",
+   "ambito": {
+    "leas": [
+     "LEAS-7438",
+     "LEAS-7518"
+    ],
+    "centro": "Centri Unico Globo",
+    "tipo": "sin-movimiento"
+   },
+   "porque": "Borja lo contestó desde el panel el 10/09 a las 13:52: «se lo paso a Gonzalo. son dos casos diferentes- hay que esperar». El assignee de LEAS-7438 se cambió a Gonzalo en esa misma pasada.",
+   "quien": "Borja",
+   "cuando": "2026-09-10",
+   "revive_si": "Pasan 3 días laborables desde el 10/09 sin nota nueva en LEAS-7438, o el técnico externo de LEAS-7518 contesta y no se escribe."
+  },
+  {
+   "id": "7540-tracking-ya-comentado",
+   "que": "LEAS-7540 Sinvello Sant Cugat · el Correos Express se publicó en ENVIOS a las 09:44 y el campo de tracking del ticket seguía vacío",
+   "ambito": {
+    "leas": "LEAS-7540",
+    "centro": "Sinvello Sant Cugat",
+    "tipo": "sin-tracking"
+   },
+   "porque": "Isaac lo contestó desde el panel el 10/09 a las 13:47: «ya se ha comentado esta misma mañana». El número está en el comentario aunque el campo siga vacío.",
+   "quien": "Isaac",
+   "cuando": "2026-09-10",
+   "revive_si": "El envío se pierde o el centro reclama y el campo sigue vacío. El problema de fondo (que no dejan subir el tracking al campo) va al panel de Alejandro, no aquí."
+  },
+  {
+   "id": "7468-sesto-aun-sin-recoger",
+   "que": "LEAS-7468 Epil Point Sesto Fiorentino · lo hablado por WhatsApp de 10:32 a 10:56 (segundo manípulo, recogida parada, SUSTMHR019 de Viareggio) no estaba en el ticket",
+   "ambito": {
+    "leas": "LEAS-7468",
+    "centro": "Epil Point Sesto Firenze",
+    "tipo": "recogida-pendiente"
+   },
+   "porque": "Isaac lo escribió en el ticket desde el panel el 10/09 a las 13:46: «aun no se ha recogido». El cliente había dicho a las 10:55 «I made them change the pedal, now it seems ok».",
+   "quien": "Isaac",
+   "cuando": "2026-09-10",
+   "revive_si": "Epil Point pide mover la SUSTMHR019 de Viareggio, o el segundo manípulo vuelve a fallar, o pasan 3 días sin recoger."
+  },
+  {
+   "id": "7102-borja-no-aplica",
+   "que": "LEAS-7102 · subtarea de comprobación de cobro con el padre LEAS-6853 ya cerrado",
+   "ambito": {
+    "leas": "LEAS-7102",
+    "tipo": "huerfana-administracion"
+   },
+   "porque": "Isaac se lo pasó a Borja a las 12:38 desde el panel y Borja lo cerró a las 14:03 con «esto no aplica: listo». El ticket está en «Resuelto».",
+   "quien": "Borja",
+   "cuando": "2026-09-10",
+   "revive_si": "Se reabre el ticket."
+  },
+  {
+   "id": "clinics-one-canarias-leas-7555",
+   "que": "Clinics One Canarias · presupuesto de gafas sin IVA por ser Canarias, sin ticket abierto",
+   "ambito": {
+    "centro": "Clinics One Canarias",
+    "cliente": "Clinic One",
+    "tipo": "sin-ticket",
+    "leas": "LEAS-7555"
+   },
+   "porque": "Gonzalo dijo en «SAT Leaseir (Interno)» a las 11:49 «Lo meto en un leas» y Borja confirmó a las 13:58 en ese mismo grupo: «ya esta metido en este: LEAS-7555». El ticket se creó a las 13:55 como «Petición de material» y está en «Presupuesto enviado».",
+   "quien": "Borja",
+   "cuando": "2026-09-10",
+   "revive_si": "LEAS-7555 se queda sin movimiento 3 días laborables."
   }
  ],
  "enlaces": [
@@ -1812,6 +1880,38 @@
    "quien": "pasada 12:30",
    "cuando": "2026-09-10",
    "nota": "Atado por nombre de centro, no elegido por un tecnico: el centro pidio en SEGUIMIENTO SUSTITUCIONES a las 12:26 que se recoja la sustitucion de Torremolinos y LEAS-7065/LEAS-7068 son lo unico de ese centro; los dos estan cerrados. Confirmadlo o corregidlo."
+  },
+  {
+   "centro": "Clinics One Canarias",
+   "cliente": "Clinic One",
+   "leas": "LEAS-7555",
+   "quien": "Borja",
+   "cuando": "2026-09-10",
+   "nota": "Confirmado por Borja en «SAT Leaseir (Interno)» a las 13:58. Presupuesto E261753 subido por Isaac a las 11:48."
+  },
+  {
+   "centro": "JOULE MEDICAL",
+   "cliente": "Directo",
+   "leas": "LEAS-7556",
+   "quien": "pasada 15:10",
+   "cuando": "2026-09-10",
+   "nota": "Borja publicó la lista de material para JOULE en ENVIOS SAT LEASEIR a las 14:51 y el ticket de Material se abrió a las 14:56. Atado por hora y contenido, confirmadlo."
+  },
+  {
+   "centro": "Laser Factory La Marina",
+   "cliente": "Laser Factory",
+   "leas": "LEAS-7545",
+   "quien": "pasada 15:10",
+   "cuando": "2026-09-10",
+   "nota": "Atado por nombre de centro, no elegido por un técnico: Isaac publicó el frontal LT en ENVIOS a las 10:03 sin LEAS y su CTT a las 11:02, y LEAS-7545 es lo único abierto de ese centro. Confirmadlo o corregidlo."
+  },
+  {
+   "centro": "Dermasana Calle Alcalá (caja de madera)",
+   "cliente": "Dermasana",
+   "leas": "LEAS-7553",
+   "quien": "pasada 15:10",
+   "cuando": "2026-09-10",
+   "nota": "Isaac publicó «caja de madera LT · dermasana calle alcala» en ENVIOS a las 13:44 y escribió en LEAS-7553 a las 13:44 «se envia caja de madera para recoger el laser». El ticket se abrió a las 13:42 con su queja de calidad LEAS-7554, que no es del SAT."
   }
  ],
  "que_es_esto_enlaces": "Enlaces aprendidos: centro -> ticket. Cuando un mensaje del chat nombra el centro pero no el LEAS ni la serie, se mira aqui ANTES de darlo por huerfano. Se anade uno cada vez que un tecnico elige un candidato o corrige un enlace. Aqui no se guardan conversaciones de clientes, solo el enlace.",
@@ -1920,6 +2020,14 @@
    "porque": "Las dos piezas de mano que volvieron a pedir código (30559-91241 y 30224-90677). Borja es quien pregunta en SEGUIMIENTO EQUIPOS SINVELLO.",
    "quien": "Alejandro (pasada 20:10)",
    "cuando": "2026-09-09"
+  },
+  {
+   "idPunto": "telegram__LEAS-7438",
+   "para": "Gonzalo",
+   "porque": "Borja lo pasó desde el panel a las 13:52: «se lo paso a Gonzalo. son dos casos diferentes- hay que esperar».",
+   "quien": "Borja (vía panel)",
+   "cuando": "2026-09-10",
+   "nota": "assignee de LEAS-7438 cambiado de Borja a Gonzalo en la pasada de las 15:10"
   }
  ],
  "que_es_esto_traspasos": "Traspasos de puntos SIN ticket. No hay Jira donde escribirlos, así que se guardan aquí y cada pasada los vuelca al objeto TRASPASOS del panel del equipo con la clave del punto (idPunto = bloque__bloque|primeros 44 caracteres). Así el reparto se aplica solo y nadie tiene que pegar líneas en el grupo de la herramienta. Si el destino está en FUERA, el panel lo vuelve a repartir por la cadena."
