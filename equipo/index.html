@@ -1040,6 +1040,7 @@ async function vivo(){
     const j = await r.json().catch(()=>({}));
     if(!r.ok || !j.ok) throw new Error(j.error || r.status);
     JV = j.t || {}; JV_HORA = new Date(); JV_ERR = null;
+    await notasVivo();
     renderInterno();
   }catch(e){
     JV_ERR = String(e && e.message || e);
@@ -1100,6 +1101,8 @@ function tramitado(k, t){
   if(l && (l.cuando||'').slice(0,10) === HOY() && !(l.para && !l.texto && !l.noaplica)) return true;
   const r = RESP[id];
   if(r && (r.texto || r.estado) && (r.cuando||'').slice(0,10) === HOY()) return true;
+  const n = NOTAS_HOY[id];
+  if(n && n.tipo !== 'paso') return true;                    // nota o «no aplica» de alguien del equipo, hoy
   return !!vivoDe(t);
 }
 // «se lo paso a X» en una nota (del desplegable, del reparto o escrito a mano) → X es el dueño.
@@ -1116,6 +1119,8 @@ function titularEf(k, t){
   const id = idPunto(k, t), r = RESP[id], l = LOCAL[id];
   if(r && r.paraQuien) return r.paraQuien;
   if(l && l.para && (l.cuando||'').slice(0,10) === HOY()) return l.para;   // traspaso hecho desde este navegador
+  const nh = NOTAS_HOY[id];
+  if(nh && nh.tipo === 'paso'){ const p = pasoDe(nh.linea); if(p && asignable(p)) return p; }   // traspaso guardado en el worker hoy
   // Traspaso de un punto SIN ticket ya recogido por la pasada: va en TRASPASOS con la clave del punto,
   // no con un LEAS. Asi el reparto se aplica solo y nadie tiene que pegar lineas en el grupo.
   if(TRASPASOS[id] && asignable(TRASPASOS[id])) return TRASPASOS[id];
@@ -1281,9 +1286,9 @@ async function anotar(k, t, inp, forzarLeas){
     const linea = "nota · " + cuerpoDe(t).replace(/\s+/g," ").slice(0,120) + " · " + texto + " · " + (YO || "");
     inp.disabled = true;
     if(eco){ eco.hidden = false; eco.className = "rr"; eco.textContent = "Publicando en el grupo de la herramienta…"; }
-    const pub = await publicaSinTicket(linea);
+    const pub = await publicaSinTicket(linea, id, "nota");
     LOCAL[id] = { texto: texto, quien: YO, cuando: new Date().toISOString(), leas: "", nota: true,
-                  grupo: pub.ok, pegar: pub.ok ? "" : linea, porque: pub.ok ? "" : pub.porque };
+                  grupo: pub.telegram, kv: pub.guardado, pegar: pub.ok ? "" : linea, porque: pub.ok ? "" : pub.porque };
     guardaLocal();
     if(!pub.ok){ try{ navigator.clipboard.writeText(linea); }catch(e){} }
     renderInterno();
@@ -1372,9 +1377,9 @@ async function noAplica(k, t, btn){
     // desplegado aún no lo sabe hacer, se copia la línea y queda el aviso para pegarla a mano.
     btn.disabled = true; if(inp) inp.disabled = true;
     if(eco){ eco.hidden = false; eco.className = "rr"; eco.textContent = "Publicando en el grupo de la herramienta…"; }
-    const pub = await publicaSinTicket(linea);
+    const pub = await publicaSinTicket(linea, id, "noaplica");
     LOCAL[id] = { texto: "no aplica: " + motivo, quien: YO, cuando: new Date().toISOString(),
-                  leas: "", noaplica: true, pegar: pub.ok ? "" : linea, grupo: pub.ok, porque: pub.ok ? "" : pub.porque };
+                  leas: "", noaplica: true, pegar: pub.ok ? "" : linea, grupo: pub.telegram, kv: pub.guardado, porque: pub.ok ? "" : pub.porque };
     const publicado = pub.ok;
     guardaLocal();
     if(!publicado){ try{ navigator.clipboard.writeText(linea); }catch(e){} }
@@ -1407,14 +1412,29 @@ async function noAplica(k, t, btn){
 function leasEnMotivo(m){ const x = (String(m || "").match(/\bLEAS-\d{3,5}\b/i) || [])[0]; return x ? x.toUpperCase() : null; }
 // Publica una línea en el grupo de la herramienta por el bot (worker sin_ticket). Devuelve {ok, porque}:
 // porque = 'sin_bot' (el worker no tiene TELEGRAM_TOKEN), 'worker' (otro error) o 'red'.
-async function publicaSinTicket(linea){
+// ok = la línea está a salvo (guardada en el worker —KV— y/o publicada por el bot). guardado y telegram dicen dónde.
+async function publicaSinTicket(linea, id, tipo){
   try{
     const r = await fetch(JIRA_URL, { method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({ sin_ticket: true, linea: linea, quien: YO, clave: JIRA_CLAVE }) });
+      body: JSON.stringify({ sin_ticket: true, linea: linea, quien: YO, clave: JIRA_CLAVE, id: id || "", tipo: tipo || tipoDeLinea(linea) }) });
     const j = await r.json().catch(()=>({}));
-    if(r.ok && j.ok) return { ok: true, porque: "" };
-    return { ok: false, porque: (j && j.error === "sin_bot") ? "sin_bot" : "worker" };
-  }catch(e){ return { ok: false, porque: "red" }; }
+    if(r.ok && j.ok) return { ok: true, porque: "", guardado: j.guardado !== false, telegram: !!j.telegram || j.via === "telegram" };
+    return { ok: false, porque: (j && j.error === "sin_bot") ? "sin_bot" : "worker", guardado: false, telegram: false };
+  }catch(e){ return { ok: false, porque: "red", guardado: false, telegram: false }; }
+}
+function tipoDeLinea(l){ l = String(l||""); return /^no aplica ·/.test(l) ? "noaplica" : /^se lo paso a /.test(l) ? "paso" : /^nota ·/.test(l) ? "nota" : "otro"; }
+// Notas de hoy guardadas en el worker (GET /notas): lo que cualquiera del equipo haya anotado, cerrado o traspasado en un
+// punto sin ticket, visible para todos aunque el bot no esté. Clave: idPunto. Se recarga con vivo().
+let NOTAS_HOY = {};
+async function notasVivo(){
+  try{
+    const r = await fetch(JIRA_URL + '/notas?clave=' + encodeURIComponent(JIRA_CLAVE));
+    const j = await r.json().catch(()=>({}));
+    if(!r.ok || !j.ok) return;
+    const m = {};
+    (j.notas || []).forEach(n => { if(n && n.id && !/^prueba/.test(n.tipo||'')) m[n.id] = n; });   // la última de cada punto manda
+    NOTAS_HOY = m;
+  }catch(e){}
 }
 // Lo que se cerró sin ticket y no llegó a publicarse se reintenta solo al abrir el panel (una vez por carga):
 // si el motivo trae un LEAS, la nota va a ese ticket; si no, se vuelve a pedir al bot. Así, cuando Alejandro
@@ -1439,8 +1459,8 @@ async function reintentaPendientes(){
           if(r.ok && j.ok){ l.leas = leas; l.pegar = ""; l.porque = ""; cambio = true; continue; }
         }catch(e){}
       }
-      const pub = await publicaSinTicket(l.pegar);
-      if(pub.ok){ l.grupo = true; l.pegar = ""; l.porque = ""; cambio = true; }
+      const pub = await publicaSinTicket(l.pegar, id);
+      if(pub.ok){ l.grupo = pub.telegram; l.kv = pub.guardado; l.pegar = ""; l.porque = ""; cambio = true; }
       else if(l.porque !== pub.porque){ l.porque = pub.porque; cambio = true; }
     }
   } finally { REINTENTANDO = false; }
@@ -1498,17 +1518,23 @@ function respHtml(k, t){
   if(!DB && JIRA_URL){
     const leas = leasDe(t), cand = candDe(t);
     const jv = (!loc && !r) ? vivoDe(t) : null;
+    const nh = (!loc && !r && !jv) ? NOTAS_HOY[idPunto(k,t)] : null;
     if(jv){
       h += '<div class="rr ok"><b>Jira</b> · '+jv.txt.replace(/</g,'&lt;')+' <span class="rf">apagado solo</span></div>';
+    } else if(nh && nh.tipo !== 'paso'){
+      h += '<div class="rr ok"><b>'+String(nh.quien||'').replace(/</g,'&lt;')+'</b> · '+(nh.tipo === 'noaplica' ? 'cerrado' : 'anotado')+' a las '+(function(d){ d=new Date(d); return isNaN(d)?'':String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); })(nh.h)
+        + ' · «'+String(nh.linea||'').replace(/^(nota|no aplica) · /,'').replace(/</g,'&lt;').slice(0,140)+'» <span class="rf">guardado en el panel</span></div>';
     } else if(loc){
       h += '<div class="rr '+(loc.noaplica?'nap-ok':'ok')+'"><b>'+(loc.quien||'')+'</b> · '
         +  (loc.noaplica ? (loc.leas ? 'cerrado y explicado en <b>'+loc.leas+'</b>'
              : (loc.grupo ? 'cerrado y publicado por el bot en <b>Herramienta Control Diario</b>'
+               : loc.kv ? 'cerrado y <b>guardado</b> (la pasada lo lee del panel; al grupo no ha salido porque el bot no tiene token)'
                : 'quitado de tu pantalla. <b style="color:var(--crit)">No está guardado en ningún sitio:</b> la línea está copiada, pégala en '
                + '<a class="jira" target="_blank" rel="noopener" href="https://web.telegram.org/a/#-5461993276">Herramienta Control Diario</a> o mañana vuelve '
                + '<button class="cop" onclick="cp(this,this.closest(\'li\').dataset.pegar||\'\')">copiar otra vez</button>'))
                          : (loc.leas ? 'escrito en <b>'+loc.leas+'</b>'
                            : (loc.grupo ? 'anotado y publicado por el bot en <b>Herramienta Control Diario</b>'
+                             : loc.kv ? 'anotado y <b>guardado</b> (lo ve todo el equipo y lo lee la pasada; al grupo no ha salido porque el bot no tiene token)'
                              : 'anotado solo en tu pantalla. <b style="color:var(--crit)">No está guardado en ningún sitio:</b> la línea está copiada, pégala en '
                                + '<a class="jira" target="_blank" rel="noopener" href="https://web.telegram.org/a/#-5461993276">Herramienta Control Diario</a> '
                                + '<button class="cop" onclick="cp(this,this.closest(\'li\').dataset.pegar||\'\')">copiar otra vez</button>')))
@@ -1692,8 +1718,8 @@ let REPARTIENDO = false;
 // (worker sin_ticket) para que la pasada lo lea y cambie el dueño; y en este navegador se mueve al momento.
 async function pasarSinTicket(k, t, para, motivo){
   const linea = "se lo paso a " + para + " · " + cuerpoDe(t).replace(/\s+/g," ").slice(0,140) + (motivo ? " · " + motivo : "") + " · " + (YO || "");
-  const pub = await publicaSinTicket(linea), publicado = pub.ok;
-  LOCAL[idPunto(k,t)] = { texto: motivo || "", para: para, quien: YO, cuando: new Date().toISOString(), leas: "", grupo: publicado, pegar: publicado ? "" : linea, porque: publicado ? "" : pub.porque };
+  const pub = await publicaSinTicket(linea, idPunto(k,t), "paso"), publicado = pub.ok;
+  LOCAL[idPunto(k,t)] = { texto: motivo || "", para: para, quien: YO, cuando: new Date().toISOString(), leas: "", grupo: pub.telegram, kv: pub.guardado, pegar: publicado ? "" : linea, porque: publicado ? "" : pub.porque };
   if(!publicado){ try{ navigator.clipboard.writeText(linea); }catch(e){} }
   return publicado;
 }
