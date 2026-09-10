@@ -1,7 +1,7 @@
 {
   "_que_es": "Días LABORABLES en que cada punto ha salido en el panel. El aviso es len(dias): 1 = primera vez, 2 = campana, 3+ = rojo. Lo mantiene la pasada, no el navegador, para que todos vean el mismo número.",
   "_como_se_actualiza": "En la primera pasada de cada día laborable, añadir la fecha de hoy a cada punto que sigue saliendo, y borrar los puntos que ya no salen. Sábados, domingos y los días de 'festivos' NO se añaden.",
-  "actualizado": "2026-09-10 11:20",
+  "actualizado": "2026-09-10 09:30",
   "festivos": [
     "2026-01-01",
     "2026-01-06",
