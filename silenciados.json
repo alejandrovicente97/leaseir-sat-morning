@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-09-09T20:10+02:00",
+  "actualizado": "2026-09-10 11:20",
   "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
   "como_se_usa": [
     "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -1202,6 +1202,74 @@
       "quien": "Isaac",
       "cuando": "2026-09-09",
       "revive_si": "Pasan 3 días laborables sin nota nueva del técnico externo. La dirección de entrega NO entra aquí: ese punto sigue abierto hasta que el centro conteste."
+    },
+    {
+      "id": "6198-maps-listo",
+      "que": "LEAS-6198 Luxlaser André Bélgica · falta el link de ubicación en el campo",
+      "ambito": {
+        "leas": "LEAS-6198",
+        "tipo": "sin-maps"
+      },
+      "porque": "Borja lo contestó desde la casilla del panel: «esto no aplica: listo».",
+      "quien": "Borja",
+      "cuando": "2026-09-10",
+      "revive_si": "El campo de link de ubicación sigue vacío pasados 3 días laborables desde hoy, comprobado releyendo el campo 11354 en esa pasada."
+    },
+    {
+      "id": "7472-tracking-en-comentario",
+      "que": "LEAS-7472 Elha Sta Teresa · gestionado transporte con el campo de tracking vacío",
+      "ambito": {
+        "leas": "LEAS-7472",
+        "centro": "Elha Sta Teresa",
+        "tipo": "sin-tracking"
+      },
+      "porque": "Borja lo contestó desde el panel a las 09:02: «En envios de material para reparaciones no se suele poner. Añadido de todos modos», y dejó el MRW 0060603011F226896 en un comentario.",
+      "quien": "Borja",
+      "cuando": "2026-09-10",
+      "revive_si": "Nunca por el campo vacío en envíos de material de reparación. Sí si el equipo sale del cliente y no llega a taller pasados 3 días laborables."
+    },
+    {
+      "id": "7503-susti-no-ha-llegado",
+      "que": "LEAS-7503 Clínica Cibeles CC Holea · pendiente recogida sin tracking en el campo",
+      "ambito": {
+        "leas": "LEAS-7503",
+        "centro": "Clinica Cibeles Holea",
+        "tipo": "sin-tracking"
+      },
+      "porque": "Borja lo contestó desde el panel a las 09:12: «Aun no ha llegado la sutitución», con el Palibex 9999081600212B7T de LEAS-7504. Hasta que no llega la sustitución no se puede recoger.",
+      "quien": "Borja",
+      "cuando": "2026-09-10",
+      "revive_si": "La sustitución LEAS-7504 consta entregada y aun así pasan 3 días laborables sin que LEAS-7503 tenga tracking en el campo."
+    },
+    {
+      "id": "palermo-segunda-recogida-resuelta",
+      "que": "Palermo pedía una segunda recogida (láser C00676 y manípulo H00676) sin ticket",
+      "ambito": {
+        "leas": [
+          "LEAS-7416",
+          "LEAS-7418"
+        ],
+        "centro": "Palermo",
+        "cliente": "Centri Unico",
+        "tipo": "sin-ticket"
+      },
+      "porque": "Resuelto en «Centri Unico Italia - Leaseir» el 09/09: Borja aclaró a las 14:26 que la H00611 se había enviado por error y ya estaba retirada; Óscar Estrada explicó a las 14:51 que la H00611 era el manípulo de Buenos Aires puesto por error en el maletín del backup 00368; Gonzalo cerró a las 16:20 que el manípulo averiado se recoge aparte hacia España y la consola se manda a Italia, y a las 16:27 se publicó la etiqueta de recogida.",
+      "quien": "Borja y Gonzalo",
+      "cuando": "2026-09-10",
+      "revive_si": "Pasan 3 días laborables desde el 09/09 y la recogida de la H00676 no se ha materializado, o el centro vuelve a reclamarla."
+    },
+    {
+      "id": "sinvello-codigos-comprobacion",
+      "que": "SinVello · dos piezas de mano volvieron a pedir código y se preguntaba si el centro comprueba que lo mete",
+      "ambito": {
+        "cliente": "SinVello",
+        "tipo": "codigos-equipo",
+        "leas": null
+      },
+      "porque": "El centro contestó en «SEGUIMIENTO EQUIPOS SINVELLO» el 09/09 a las 15:55: «Comprobacion no, yo genero el codigo equipo por equipo y los voy pasando a todos los centros». La pregunta queda contestada.",
+      "quien": "Sin Vello (grupo de seguimiento)",
+      "cuando": "2026-09-10",
+      "revive_si": "Vuelve a pedir código una pieza de mano a la que ya se le dio este mes: entonces el punto es que el código no se está fijando, no que falte comprobación."
     }
   ],
   "enlaces": [
@@ -1433,6 +1501,22 @@
       "quien": "Ernesto",
       "cuando": "2026-09-09",
       "nota": "Sustitución completa MHR91096 / MHP40498 enviada por DHL a las 16:53 y escrita en el ticket a las 17:23."
+    },
+    {
+      "centro": "Sinvello Montilla",
+      "cliente": "SinVello",
+      "leas": "LEAS-7539",
+      "quien": "pasada 10/09",
+      "cuando": "2026-09-10",
+      "nota": "Alta del portal el 09/09 a las 16:42 (umbilical). Gonzalo publicó el envío de tornillo, sello y pegatina en ENVIOS SAT LEASEIR a las 18:50 citando el LEAS."
+    },
+    {
+      "centro": "Elha Rocafort",
+      "cliente": "Elha",
+      "leas": "LEAS-7544",
+      "quien": "pasada 10/09",
+      "cuando": "2026-09-10",
+      "nota": "Alta del portal el 09/09 a las 20:39 (diodo, no bloqueante), publicada en «Incidencias Portal SAT online»."
     }
   ],
   "que_es_esto_enlaces": "Enlaces aprendidos: centro -> ticket. Cuando un mensaje del chat nombra el centro pero no el LEAS ni la serie, se mira aqui ANTES de darlo por huerfano. Se anade uno cada vez que un tecnico elige un candidato o corrige un enlace. Aqui no se guardan conversaciones de clientes, solo el enlace.",
