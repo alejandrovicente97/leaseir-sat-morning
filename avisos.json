@@ -1,7 +1,7 @@
 {
   "_que_es": "Días LABORABLES en que cada punto ha salido en el panel. El aviso es len(dias): 1 = primera vez, 2 = campana, 3+ = rojo. Lo mantiene la pasada, no el navegador, para que todos vean el mismo número.",
   "_como_se_actualiza": "En la primera pasada de cada día laborable, añadir la fecha de hoy a cada punto que sigue saliendo, y borrar los puntos que ya no salen. Sábados, domingos y los días de 'festivos' NO se añaden.",
-  "actualizado": "2026-09-10 09:30",
+  "actualizado": "2026-09-11 11:55",
   "festivos": [
     "2026-01-01",
     "2026-01-06",
@@ -19,141 +19,29 @@
     "2026-12-25"
   ],
   "puntos": {
-    "LEAS-7385": [
-      "2026-09-09",
-      "2026-09-10"
+    "telegram|Centri Unico Rende · el equipo nuevo de SRF ": [
+      "2026-09-11"
     ],
-    "LEAS-7539": [
-      "2026-09-10"
+    "telegram|Centri Unico · la consola de backup C00368 h": [
+      "2026-09-11"
     ],
-    "LEAS-7112": [
-      "2026-09-04",
-      "2026-09-07",
-      "2026-09-09",
-      "2026-09-10"
+    "LEAS-7401": [
+      "2026-09-11"
     ],
-    "LEAS-7356": [
-      "2026-09-09",
-      "2026-09-10"
+    "LEAS-7285": [
+      "2026-09-11"
     ],
-    "LEAS-7045": [
-      "2026-09-10"
+    "LEAS-7227": [
+      "2026-09-11"
     ],
-    "LEAS-7375": [
-      "2026-09-09",
-      "2026-09-10"
+    "LEAS-7531": [
+      "2026-09-11"
     ],
-    "LEAS-7500": [
-      "2026-09-10"
+    "telegram|Unico Palermo · el mensajero pasó y no se ll": [
+      "2026-09-11"
     ],
-    "telegram|Clinics One Canarias · el 09/09 a las 10:25 ": [
-      "2026-09-10"
-    ],
-    "LEAS-6906": [
-      "2026-09-04",
-      "2026-09-07",
-      "2026-09-09",
-      "2026-09-10"
-    ],
-    "LEAS-7162": [
-      "2026-09-04",
-      "2026-09-07",
-      "2026-09-09",
-      "2026-09-10"
-    ],
-    "LEAS-7359": [
-      "2026-09-09",
-      "2026-09-10"
-    ],
-    "wapp|Smart Duck Asnières · consola C03292 · el 09": [
-      "2026-09-10"
-    ],
-    "LEAS-7510": [
-      "2026-09-10"
-    ],
-    "telegram|Naturaless (Medellín, Colombia) · el 08/09 a": [
-      "2026-09-09",
-      "2026-09-10"
-    ],
-    "LEAS-7438": [
-      "2026-09-09",
-      "2026-09-10"
-    ],
-    "LEAS-7520": [
-      "2026-09-09",
-      "2026-09-10"
-    ],
-    "LEAS-7421": [
-      "2026-09-09",
-      "2026-09-10"
-    ],
-    "LEAS-7312": [
-      "2026-09-10"
-    ],
-    "LEAS-6779": [
-      "2026-09-04",
-      "2026-09-07",
-      "2026-09-09",
-      "2026-09-10"
-    ],
-    "telegram|Medsystem · ayer a las 19:45 Isaac publicó e": [
-      "2026-09-10"
-    ],
-    "LEAS-7540": [
-      "2026-09-10"
-    ],
-    "LEAS-7436": [
-      "2026-09-04",
-      "2026-09-07",
-      "2026-09-09",
-      "2026-09-10"
-    ],
-    "telegram|Centri Unico I Gigli (Firenze) · escribieron": [
-      "2026-09-09",
-      "2026-09-10"
-    ],
-    "LEAS-7495": [
-      "2026-09-10"
-    ],
-    "LEAS-7271": [
-      "2026-09-07",
-      "2026-09-09",
-      "2026-09-10"
-    ],
-    "LEAS-7415": [
-      "2026-09-09",
-      "2026-09-10"
-    ],
-    "LEAS-7514": [
-      "2026-09-10"
-    ],
-    "LEAS-7419": [
-      "2026-09-10"
-    ],
-    "LEAS-7507": [
-      "2026-09-10"
-    ],
-    "LEAS-7102": [
-      "2026-09-10"
-    ],
-    "LEAS-7476": [
-      "2026-09-10"
-    ],
-    "LEAS-7494": [
-      "2026-09-10"
-    ],
-    "LEAS-7408": [
-      "2026-09-09",
-      "2026-09-10"
-    ],
-    "LEAS-7237": [
-      "2026-09-04",
-      "2026-09-07",
-      "2026-09-09",
-      "2026-09-10"
-    ],
-    "LEAS-7230": [
-      "2026-09-10"
+    "telegram|Clínica Cibeles CC Holea (Huelva) · el clien": [
+      "2026-09-11"
     ]
   }
 }
