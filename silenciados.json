@@ -1,6 +1,6 @@
 {
  "version": 1,
- "actualizado": "2026-09-11 13:38",
+ "actualizado": "2026-09-11 14:01",
  "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
  "como_se_usa": [
   "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -1852,6 +1852,20 @@
    "quien": "Isaac",
    "cuando": "2026-09-11",
    "revive_si": "LEAS-7401 sigue abierto y sin dueño pasados 5 días laborables sin nota nueva, o el transporte contesta y la recogida no se cierra."
+  },
+  {
+   "id": "c00368-tiburtina-recogida",
+   "que": "Centri Unico · la consola de backup C00368 hay que recogerla y enviarla a Tiburtina · sin ticket propio",
+   "ambito": {
+    "cliente": "Centri Unico",
+    "serie": "C00368",
+    "tipo": "sin-ticket",
+    "leas": "LEAS-7416"
+   },
+   "porque": "Gonzalo lo tiene en marcha por los dos lados el 11/09: a las 13:15 escribio en LEAS-7416 «Se ha movido sustitucion, estan usando la C00368» y a las 13:17 pidio la recogida al centro en «Centri Unico Italia - Leaseir»: «24943 Buongiorno, possiamo quindi ritirare la console C00368, dato che la tua console funziona correttamente; facci sapere per organizzare il ritiro». El punto llevaba saliendo desde el 10/09.",
+   "quien": "Gonzalo",
+   "cuando": "2026-09-11",
+   "revive_si": "Pasan 3 dias laborables sin que la recogida de la C00368 conste en ningun ticket, o el centro contesta y nadie lo recoge."
   }
  ],
  "enlaces": [
@@ -2164,6 +2178,14 @@
    "quien": "Isaac",
    "cuando": "2026-09-11",
    "nota": "Isaac contestó el punto de Palermo (manípulo H00676) sobre LEAS-7416: ese es su ticket; la sustitución es LEAS-7418."
+  },
+  {
+   "centro": "Centro Unico Globo",
+   "cliente": "Centri Unico",
+   "leas": "LEAS-7518",
+   "quien": "Claude (cruce de campos)",
+   "cuando": "2026-09-11",
+   "nota": "LEAS-7518 lleva centro «Centro Unico Globo» y manipulo H00264, que es el que el centro reclamo el 11/09 a las 12:55 en «Centri Unico Italia - Leaseir». El otro abierto del centro es LEAS-7438 (manipulo H00674)."
   }
  ],
  "que_es_esto_enlaces": "Enlaces aprendidos: centro -> ticket. Cuando un mensaje del chat nombra el centro pero no el LEAS ni la serie, se mira aqui ANTES de darlo por huerfano. Se anade uno cada vez que un tecnico elige un candidato o corrige un enlace. Aqui no se guardan conversaciones de clientes, solo el enlace.",

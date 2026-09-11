@@ -851,7 +851,7 @@ dialog.wide{max-width:860px}
     </div>
     <div class="when">
       <b id="fechagrande">Jueves, 10 de septiembre 2026</b>
-      Última actualización: 11 sep 13:23 · Europe/Madrid
+      Última actualización: 11 sep 14:02 · Europe/Madrid
     </div>
   </header>
 
@@ -1605,7 +1605,7 @@ dialog.wide{max-width:860px}
     <span class="d">·</span>
     <span>Facturas deduplicadas por número (4 tickets compartían la de Brull)</span>
     <span class="d">·</span>
-      <span>Última actualización: 11 sep 13:23 · Europe/Madrid</span>
+      <span>Última actualización: 11 sep 14:02 · Europe/Madrid</span>
   </footer>
 
 <!-- ═════════ KPIs ═════════ -->
@@ -1804,7 +1804,7 @@ const CAD = {"telegram": ["Chus", "Gonzalo", "Isaac"], "wapp": ["Chus", "Gonzalo
 // Cadena de responsabilidad. Siempre tres nombres: quien lo tiene, a quién se lo pide
 // si no llega, y a quién se lo pide ese segundo. Siempre por el grupo, para que quede constancia.
 const FUERA = {"Chus": "vacaciones (Sesame, Who's in, 14:59)", "Cristina": "vacaciones (Sesame, Who's in, 14:59)", "Gonzalo": "turno terminado (fichó salida a las 13:28, 3h 49min)"};
-const NOTA_HOY = {};
+const NOTA_HOY = {"_": "Pasada manual de las 14:02. Releidos Telegram (7 grupos) y WhatsApp (5 grupos de Archivadas). Seis puntos vivos en el panel del equipo: LEAS-7518 Globo (el tecnico externo reparo el manipulo H00264 y el centro dice que ahora dispara solo), piezas de mano para Globo (Oscar, 13:25: «En Roma no tenemos nada disponible»), LEAS-6765 Bella Forme (la encuesta de direccion de Ernesto de las 12:55 sigue sin votos y el equipo ya salio de taller), LEAS-7540 Sant Cugat (el tracking de Correos Express que dio Borja a las 09:29 no esta en el campo, y la pregunta del centro de las 09:41 sigue sin contestar), LEAS-7468 Sesto (el cliente paro la recogida: cree que es la consola, no el manipulo) y Centri Unico Busnago (el trigger se atasco tras la visita de hoy y no consta ningun ticket de ese centro). Cerrados hoy 27. Abiertas 174 = 99 principales + 75 subtareas. Sin Vello Badalona cambio el buzzer el propio operador y a las 12:45 escribio «FUNCIONA PERFECTO»: cierra la duda que quedaba de ayer sobre de que centro era. Sesame, Airtable y Holded no se han leido en esta pasada."};
 function disp(n){ return !FUERA[n]; }
 function cadena(k, t){
   const base = (CAD[k] || ["Isaac","Gonzalo","Borja"]).filter(disp);
@@ -2641,7 +2641,7 @@ function pintarEdades(root){
 
 // Cada bloque dice de que dia son sus datos. La pasada tiene que actualizar estas fechas
 // cuando recalcula; si se le olvida, sale el aviso solo.
-const FRESCURA ={"tablero Hoy": "2026-09-09", "cola de taller": "2026-09-10", "actividad del dia": "2026-09-10", "KPIs del ciclo": "2026-09-09", "ritmo de presupuestos": "2026-09-09", "tasa de utilidad": "2026-09-09", "whatsapp de Epil Point": "2026-09-10"};
+const FRESCURA ={"tablero Hoy": "2026-09-09", "cola de taller": "2026-09-10", "actividad del dia": "2026-09-10", "KPIs del ciclo": "2026-09-09", "ritmo de presupuestos": "2026-09-09", "tasa de utilidad": "2026-09-09", "whatsapp de Epil Point": "2026-09-11"};
 function avisarViejos(){
   const viejos = Object.keys(FRESCURA).filter(k => (diasDesde(FRESCURA[k]) || 0) >= 1);
   const c = document.getElementById('frescura'); if(!c) return;
