@@ -1,6 +1,6 @@
 {
  "version": 1,
- "actualizado": "2026-09-11 11:36",
+ "actualizado": "2026-09-11 13:23",
  "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
  "como_se_usa": [
   "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -1787,6 +1787,58 @@
    "quien": "Borja",
    "cuando": "2026-09-11",
    "revive_si": "I Gigli vuelve a escribir por el mismo problema y sigue sin haber ticket abierto del centro."
+  },
+  {
+   "id": "7504-susti-entregada-cibeles",
+   "que": "Clínica Cibeles CC Holea · el centro sin respuesta y la sustitución sin entregar",
+   "ambito": {
+    "leas": "LEAS-7504",
+    "centro": "Clinica Cibeles Holea",
+    "tipo": "sin-respuesta-al-centro"
+   },
+   "porque": "Isaac lo contestó desde la casilla del panel el 11/09 a las 12:40: «ha llegado hace una hora la sustitución, la van a probar y si esta todo correcto recogemos la suya». LEAS-7504 pasó a «En préstamo» a esa misma hora.",
+   "quien": "Isaac",
+   "cuando": "2026-09-11",
+   "revive_si": "La prueba falla, o el centro vuelve a escribir y pasan más de 2 horas sin que nadie del equipo conteste."
+  },
+  {
+   "id": "7416-palermo-susti-sin-mover",
+   "que": "Unico Palermo · el mensajero pasó y no se llevó el manípulo H00676",
+   "ambito": {
+    "leas": "LEAS-7416",
+    "centro": "Centro Unico Palermo",
+    "tipo": "recogida-no-hecha"
+   },
+   "porque": "Isaac lo contestó desde la casilla del panel el 11/09 a las 12:36: «lo mismo que ayer aun no se ha movido sustituición». El equipo ya lo tiene visto.",
+   "quien": "Isaac",
+   "cuando": "2026-09-11",
+   "revive_si": "Pasan 3 días laborables más sin que LEAS-7416 ni su sustitución LEAS-7418 cambien de estado."
+  },
+  {
+   "id": "7568-rende-videollamada",
+   "que": "Centri Unico Rende · el equipo nuevo de SRF no funciona y el centro lleva dos semanas parado",
+   "ambito": {
+    "leas": "LEAS-7568",
+    "centro": "Centro Unico Rende",
+    "tipo": "sin-ticket"
+   },
+   "porque": "Gonzalo abrió LEAS-7568 para este punto y lo dijo desde el panel el 11/09 a las 12:51: «punto del panel sin ticket, va con este». A las 12:57 lo cerró: «Se ha solucionado con videollamada». LEAS-7568 quedó en «Resuelto».",
+   "quien": "Gonzalo",
+   "cuando": "2026-09-11",
+   "revive_si": "Rende vuelve a escribir que el equipo de SRF sigue sin calentar."
+  },
+  {
+   "id": "7227-pol-elha-recoge",
+   "que": "LEAS-7227 Elha Limoneros · préstamo abierto con el padre cerrado",
+   "ambito": {
+    "leas": "LEAS-7227",
+    "centro": "Elha Limoneros",
+    "tipo": "prestamo-huerfano"
+   },
+   "porque": "Isaac lo contestó desde la casilla del panel el 11/09 a las 12:57: «le hemos pedido a Pol de Elha que nos ayude a recoger la sustitución ya que se la hemos reclamado varias veces por el chat». Refuerza lo que Gonzalo ya había explicado el 07/09.",
+   "quien": "Isaac",
+   "cuando": "2026-09-11",
+   "revive_si": "Pol confirma la recogida y la máquina llega a taller sin que LEAS-7227 se mueva de «En préstamo»."
   }
  ],
  "enlaces": [
@@ -2083,6 +2135,22 @@
    "quien": "pasada 16:10",
    "cuando": "2026-09-10",
    "nota": "Abierto el 10/09 a las 11:44 con la consola C03292 tras el aviso de Herve del 09/09 en «Smart Duck Technical Service»."
+  },
+  {
+   "centro": "Centro Unico Rende",
+   "cliente": "Centri Unico",
+   "leas": "LEAS-7568",
+   "quien": "Gonzalo",
+   "cuando": "2026-09-11",
+   "nota": "Gonzalo ató el punto del panel sin ticket de Rende a LEAS-7568 desde la casilla: «punto del panel sin ticket, va con este»."
+  },
+  {
+   "centro": "Centro Unico Palermo",
+   "cliente": "Centri Unico",
+   "leas": "LEAS-7416",
+   "quien": "Isaac",
+   "cuando": "2026-09-11",
+   "nota": "Isaac contestó el punto de Palermo (manípulo H00676) sobre LEAS-7416: ese es su ticket; la sustitución es LEAS-7418."
   }
  ],
  "que_es_esto_enlaces": "Enlaces aprendidos: centro -> ticket. Cuando un mensaje del chat nombra el centro pero no el LEAS ni la serie, se mira aqui ANTES de darlo por huerfano. Se anade uno cada vez que un tecnico elige un candidato o corrige un enlace. Aqui no se guardan conversaciones de clientes, solo el enlace.",
