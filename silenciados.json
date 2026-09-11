@@ -1,6 +1,6 @@
 {
  "version": 1,
- "actualizado": "2026-09-11 13:23",
+ "actualizado": "2026-09-11 13:38",
  "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
  "como_se_usa": [
   "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -1839,6 +1839,19 @@
    "quien": "Isaac",
    "cuando": "2026-09-11",
    "revive_si": "Pol confirma la recogida y la máquina llega a taller sin que LEAS-7227 se mueva de «En préstamo»."
+  },
+  {
+   "id": "7401-huerfano-recogida",
+   "que": "LEAS-7401 · subtarea de máquina de sustitución abierta y sin dueño con el padre LEAS-7272 ya cerrado (Finalizada hoy 09:53)",
+   "ambito": {
+    "leas": "LEAS-7401",
+    "serie": "SUSTAHRD005",
+    "tipo": "prestamo-huerfano"
+   },
+   "porque": "Isaac lo explicó en el propio ticket desde el panel el 11/09 a las 13:14: «se va a dar unos dias de plazo ya que estamos esperando que venga a mirar el transporte los daños que causaron; sino contestan hablaremos con Yolanda de Dinamica Impulso para recuperar la sustitución». A las 13:36 el ticket pasó a «Gestionada recogida». El punto se publicó a las 13:23, nueve minutos DESPUÉS de esa nota: salió ya contestado.",
+   "quien": "Isaac",
+   "cuando": "2026-09-11",
+   "revive_si": "LEAS-7401 sigue abierto y sin dueño pasados 5 días laborables sin nota nueva, o el transporte contesta y la recogida no se cierra."
   }
  ],
  "enlaces": [
