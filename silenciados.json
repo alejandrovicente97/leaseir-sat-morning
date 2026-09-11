@@ -1,6 +1,6 @@
 {
  "version": 1,
- "actualizado": "2026-09-11 14:01",
+ "actualizado": "2026-09-11T15:45",
  "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
  "como_se_usa": [
   "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -1820,12 +1820,13 @@
    "ambito": {
     "leas": "LEAS-7568",
     "centro": "Centro Unico Rende",
-    "tipo": "sin-ticket"
+    "serie": "SUSTSRF030",
+    "tipo": "averia-srf"
    },
    "porque": "Gonzalo abrió LEAS-7568 para este punto y lo dijo desde el panel el 11/09 a las 12:51: «punto del panel sin ticket, va con este». A las 12:57 lo cerró: «Se ha solucionado con videollamada». LEAS-7568 quedó en «Resuelto».",
    "quien": "Gonzalo",
    "cuando": "2026-09-11",
-   "revive_si": "Rende vuelve a escribir que el equipo de SRF sigue sin calentar."
+   "revive_si": "Rende vuelve a escribir que el equipo de SRF sigue sin calentar. PRECISION (11/09 15:45): este silenciado cubre SOLO la averia del SRF que Gonzalo resolvio por videollamada. La recogida de la maquina averiada y el envio de la sustitucion a Italia NO entran aqui: son logistica, siguen sin ticket abierto y salen por su lado."
   },
   {
    "id": "7227-pol-elha-recoge",
@@ -1866,6 +1867,45 @@
    "quien": "Gonzalo",
    "cuando": "2026-09-11",
    "revive_si": "Pasan 3 dias laborables sin que la recogida de la C00368 conste en ningun ticket, o el centro contesta y nadie lo recoge."
+  },
+  {
+   "id": "busnago-es-globo",
+   "que": "Centri Unico Busnago · «una intervencion entera de tecnico externo que no consta en ningun ticket»: no consta ningun ticket de Busnago en todo el proyecto",
+   "ambito": {
+    "cliente": "Centri Unico",
+    "centro": "Busnago",
+    "tipo": "sin-ticket"
+   },
+   "porque": "Borja lo aclaro en «SAT Leaseir - Herramienta Control Diario» el 11/09 a las 15:07-15:10: «Globo esta en busnago», «CC GLobo» y «Globo = Busnago». Busnago y Centro Unico Globo son el MISMO centro, y Globo si tiene tickets abiertos: LEAS-7518 y LEAS-7438. El punto de «no hay ticket de Busnago» era un falso «no esta en Jira» y se retiro en la pasada de las 15:52.",
+   "quien": "Borja",
+   "cuando": "2026-09-11",
+   "revive_si": "Aparece un centro llamado Busnago que el equipo confirme que NO es Globo. Ojo: esto NO silencia las incidencias de Globo (LEAS-7518 y LEAS-7438), que siguen vivas y salen por su lado."
+  },
+  {
+   "id": "7479-pasos-al-cliente",
+   "que": "LEAS-7479 Begoña Depil&Bell Vigo · en «Pendiente recogida» sin dueño y con el campo de tracking vacio",
+   "ambito": {
+    "leas": "LEAS-7479",
+    "centro": "Begoña Depil&Bell  Vigo",
+    "tipo": "track-vacio"
+   },
+   "porque": "Gonzalo escribio en el ticket el 10/09 a las 18:17: «Se le han pasado los pasos, pero no parece que los haya realizado correctamente, a la espera de actualizaciones». No es una recogida parada: se sigue intentando resolver en remoto con el cliente.",
+   "quien": "Gonzalo",
+   "cuando": "2026-09-11",
+   "revive_si": "El cliente confirma que ha hecho los pasos y el equipo sigue fallando, o pasan 3 dias laborables sin ninguna nota nueva en LEAS-7479."
+  },
+  {
+   "id": "6765-encuesta-votada",
+   "que": "LEAS-6765 Bella Forme (Casablanca) · la encuesta de Ernesto de las 12:55 en ENVIOS SAT LEASEIR sigue sin un solo voto y la direccion del ticket es solo «Casablanca, Marruecos»",
+   "ambito": {
+    "leas": "LEAS-6765",
+    "centro": "Bella Forme",
+    "tipo": "direccion-envio"
+   },
+   "porque": "Comprobado el 11/09 a las 15:35: la encuesta de «ENVIOS SAT LEASEIR» ya esta cerrada con resultado final («100% Si, 1 voto») y LEAS-6765 paso a «Inspeccion de salida» hoy a las 12:50.",
+   "quien": "Ernesto",
+   "cuando": "2026-09-11",
+   "revive_si": "El envio se devuelve o se para por direccion incompleta, o LEAS-6765 vuelve a «Pendiente» sin direccion completa."
   }
  ],
  "enlaces": [
@@ -2186,6 +2226,22 @@
    "quien": "Claude (cruce de campos)",
    "cuando": "2026-09-11",
    "nota": "LEAS-7518 lleva centro «Centro Unico Globo» y manipulo H00264, que es el que el centro reclamo el 11/09 a las 12:55 en «Centri Unico Italia - Leaseir». El otro abierto del centro es LEAS-7438 (manipulo H00674)."
+  },
+  {
+   "centro": "Centri Unico Busnago",
+   "cliente": "Beauty Cool Italia (Unico)",
+   "leas": "LEAS-7518",
+   "quien": "Borja",
+   "cuando": "2026-09-11",
+   "nota": "Busnago y Centro Unico Globo son el mismo centro (Borja, 11/09 15:07-15:10: «Globo esta en busnago», «CC GLobo», «Globo = Busnago»). LEAS-7518 es la incidencia del umbilical/gatillo."
+  },
+  {
+   "centro": "Centri Unico Busnago",
+   "cliente": "Beauty Cool Italia (Unico)",
+   "leas": "LEAS-7438",
+   "quien": "Borja",
+   "cuando": "2026-09-11",
+   "nota": "Segunda incidencia del mismo centro (Globo = Busnago): la pistola con Stop 6, pendiente de mandar sustitucion."
   }
  ],
  "que_es_esto_enlaces": "Enlaces aprendidos: centro -> ticket. Cuando un mensaje del chat nombra el centro pero no el LEAS ni la serie, se mira aqui ANTES de darlo por huerfano. Se anade uno cada vez que un tecnico elige un candidato o corrige un enlace. Aqui no se guardan conversaciones de clientes, solo el enlace.",
