@@ -1,6 +1,6 @@
 {
  "version": 1,
- "actualizado": "2026-09-11T15:45",
+ "actualizado": "2026-09-12T09:50",
  "que_es_esto": "Puntos que un humano ya ha explicado. La pasada tiene que leer este fichero ANTES de generar nada y no volver a sacar ninguno de ellos. Repetir un punto ya contestado es el peor fallo que puede cometer la herramienta: quema la confianza del equipo.",
  "como_se_usa": [
   "1. Antes de escribir un punto, comprobar si encaja con algún 'ambito' de esta lista. Encaja si coincide el LEAS, o si coinciden centro y tipo, o si coincide la serie.",
@@ -1906,6 +1906,128 @@
    "quien": "Ernesto",
    "cuando": "2026-09-11",
    "revive_si": "El envio se devuelve o se para por direccion incompleta, o LEAS-6765 vuelve a «Pendiente» sin direccion completa."
+  },
+  {
+   "id": "7518-globo-gatillo-cerrado",
+   "que": "LEAS-7518 Centri Unico Globo · el gatillo atascado, sin nota en el ticket",
+   "ambito": {
+    "leas": "LEAS-7518",
+    "centro": "Centri Unico Globo",
+    "tipo": "sin-movimiento"
+   },
+   "porque": "Gonzalo escribio desde el panel el 11/09 a las 16:20 «Estamos esperando a que quede una pieza de sustitucion libre para enviar» y el ticket paso a «Finalizado tecnico externo» a las 17:25, despues de que Borja le pidiera a las 15:53 en «SAT Centri Unico - Leaseir» «cierra el caso en Jira».",
+   "quien": "Gonzalo",
+   "cuando": "2026-09-11",
+   "revive_si": "LEAS-7518 se reabre, o el centro vuelve a avisar de que el gatillo falla."
+  },
+  {
+   "id": "7438-globo-susti-pedida",
+   "que": "LEAS-7438 Centri Unico Globo · la pieza de mano, sin dueno y sin sustitucion decidida",
+   "ambito": {
+    "leas": [
+     "LEAS-7438",
+     "LEAS-7575"
+    ],
+    "centro": "Centri Unico Globo",
+    "tipo": "sin-movimiento"
+   },
+   "porque": "El 11/09 a las 16:21 el ticket paso a «Pendiente recogida» a nombre de Gonzalo y se creo la subtarea de sustitucion LEAS-7575 en «Solicitado». Ya no esta ni huerfano ni sin decidir.",
+   "quien": "Gonzalo",
+   "cuando": "2026-09-11",
+   "revive_si": "LEAS-7575 sigue en «Solicitado» pasados 3 dias laborables desde el 11/09 sin serie prestada ni tracking."
+  },
+  {
+   "id": "7503-cibeles-a-taller",
+   "que": "LEAS-7503 Clinica Cibeles CC Holea · el centro escribio dos veces y seguia sin respuesta",
+   "ambito": {
+    "leas": "LEAS-7503",
+    "centro": "Clinica Cibeles Holea",
+    "tipo": "sin-respuesta-al-centro"
+   },
+   "porque": "Contestado el 11/09: Gonzalo a las 17:50 «Ya han recibido la consola y se ha metido el link de la etiqueta de recogida para que se la lleven» e Isaac a las 17:52 «se trae a taller». El campo de tracking ya tiene la etiqueta de DHL.",
+   "quien": "Gonzalo e Isaac",
+   "cuando": "2026-09-11",
+   "revive_si": "El centro vuelve a escribir sin respuesta, o pasan 3 dias laborables sin que la averiada salga del centro."
+  },
+  {
+   "id": "7470-bellaforme-pieza-con-consola",
+   "que": "LEAS-7470 Bella Forme · «Pendiente agendar llamada» 7 dias y sin dueno",
+   "ambito": {
+    "leas": "LEAS-7470",
+    "centro": "Bella Forme",
+    "tipo": "sin-tecnico"
+   },
+   "porque": "Gonzalo escribio desde el panel el 11/09 a las 17:34 «Se va a enviar la pieza con la consola que se devuelve a Bella Forme, para que lo cambien ellos» y el ticket paso a «Esperando inicio reparacion».",
+   "quien": "Gonzalo",
+   "cuando": "2026-09-11",
+   "revive_si": "La consola sale hacia Bella Forme sin la pieza, o pasan 3 dias laborables sin nota nueva."
+  },
+  {
+   "id": "7482-innet-semana-14",
+   "que": "LEAS-7482 Patricia Garcia Tamayo (BR Esthetic) · «Pendiente agendar llamada» 7 dias y sin dueno",
+   "ambito": {
+    "leas": "LEAS-7482",
+    "centro": "Patricia Garcia Tamayo",
+    "tipo": "sin-tecnico"
+   },
+   "porque": "Isaac escribio el 11/09 a las 18:20 «vamos a preparar el material para quitar la actualizacion y que vaya innet hacerlo. Se mandara el material la semana del 14 de septiembre», y el ticket paso a «Esperando respuesta cliente a presupuesto».",
+   "quien": "Isaac",
+   "cuando": "2026-09-11",
+   "revive_si": "Acaba la semana del 14 de septiembre sin que el material haya salido, o sin nota nueva."
+  },
+  {
+   "id": "7481-no-aplica-listo",
+   "que": "LEAS-7481 · comprobacion de cobro en «Solicitado» con el padre LEAS-7480 ya Cancelado",
+   "ambito": {
+    "leas": "LEAS-7481",
+    "tipo": "huerfana-administracion"
+   },
+   "porque": "Isaac lo cerro desde el panel el 11/09 a las 17:51 con «esto no aplica: listo».",
+   "quien": "Isaac",
+   "cuando": "2026-09-11",
+   "revive_si": "La subtarea sigue abierta dentro de un mes."
+  },
+  {
+   "id": "7561-princesa-recogida-puesta",
+   "que": "LEAS-7561 / LEAS-7563 Dermasana Princesa · la sustitucion salio y la subtarea seguia en «Solicitado» sin tracking",
+   "ambito": {
+    "leas": [
+     "LEAS-7561",
+     "LEAS-7563"
+    ],
+    "centro": "Dermasana Princesa",
+    "tipo": "sin-tracking"
+   },
+   "porque": "Gonzalo lo resolvio el 11/09: a las 16:51 puso en LEAS-7563 el live tracking de DHL y las series MHR91119 / MHP40551, y a las 16:53 escribio en LEAS-7561 «Esta puesta la recogida, metido en envios y con el tracking». LEAS-7563 esta en «Equipo enviado».",
+   "quien": "Gonzalo",
+   "cuando": "2026-09-11",
+   "revive_si": "La sustitucion consta entregada y pasan 3 dias laborables sin que se recoja la averiada."
+  },
+  {
+   "id": "7425-radiante-en-reparacion",
+   "que": "LEAS-7425 Radiante Estetica Avanzada (FC 00031) · SLA de reparacion pasado y sin nota desde el 01/09",
+   "ambito": {
+    "leas": "LEAS-7425",
+    "centro": "Radiante Estetica Avanzada",
+    "tipo": "reparacion-fuera-de-plazo"
+   },
+   "porque": "El ticket paso a «En reparacion» el 11/09 a las 14:03 con Fran asignado: se esta trabajando en el, aunque la ultima nota escrita sea del 01/09.",
+   "quien": "Fran",
+   "cuando": "2026-09-12",
+   "revive_si": "Pasan 3 dias laborables desde el 11/09 sin nota nueva ni cambio de estado."
+  },
+  {
+   "id": "7355-zurimed-diodo-en-fabricacion",
+   "que": "LEAS-7355 Zurimed Parque Principado · SLA de reparacion pasado y sin nota desde el 07/09",
+   "ambito": {
+    "leas": "LEAS-7355",
+    "centro": "Zurimed Parque principado",
+    "tipo": "reparacion-fuera-de-plazo"
+   },
+   "porque": "Esta parado esperando el diodo: Isaac escribio el 07/09 a las 15:28 «Vamos a ver si encontramos un diodo que podamos poner», y el 10/09 quedo explicado en su sustitucion LEAS-7356 que el diodo esta en fabricacion.",
+   "quien": "Isaac",
+   "cuando": "2026-09-12",
+   "revive_si": "Llega el diodo y pasan 3 dias laborables sin que la reparacion arranque."
   }
  ],
  "enlaces": [
